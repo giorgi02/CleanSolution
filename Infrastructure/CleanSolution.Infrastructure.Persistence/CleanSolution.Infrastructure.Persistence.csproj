@@ -4,4 +4,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\CleanSolution.Core.Application\CleanSolution.Core.Application.csproj" />
+  </ItemGroup>
+
 </Project>
