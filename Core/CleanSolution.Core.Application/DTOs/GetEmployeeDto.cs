@@ -12,8 +12,7 @@ namespace CleanSolution.Core.Application.DTOs
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Gender { get; set; }
-        public DateTime BirthDate { get; set; }
-        public int Age => DateTime.Now.Year - this.BirthDate.Year;
+        public int Age { get; set; }
         public GetPositionDto Position { get; set; }
     }
 }

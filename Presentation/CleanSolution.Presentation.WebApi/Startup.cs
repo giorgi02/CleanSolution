@@ -31,6 +31,7 @@ namespace CleanSolution.Presentation.WebApi
             services.AddSwaggerGen();
 
             services.AddPersistenceLayer(Configuration);
+            services.AddApplicatonLayer(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
