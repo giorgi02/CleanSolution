@@ -4,5 +4,27 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\CleanSolution.Core.Application\CleanSolution.Core.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\CleanSolution.Infrastructure.Files\CleanSolution.Infrastructure.Files.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\CleanSolution.Infrastructure.Identity\CleanSolution.Infrastructure.Identity.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\CleanSolution.Infrastructure.Persistence\CleanSolution.Infrastructure.Persistence.csproj" />
+  </ItemGroup>
+
 
 </Project>
