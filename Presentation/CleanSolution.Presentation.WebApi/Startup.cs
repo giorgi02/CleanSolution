@@ -1,4 +1,6 @@
 using CleanSolution.Core.Application;
+using CleanSolution.Infrastructure.Files;
+using CleanSolution.Infrastructure.Identity;
 using CleanSolution.Infrastructure.Persistence;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -32,8 +34,10 @@ namespace CleanSolution.Presentation.WebApi
 
             services.AddSwaggerGen();
 
-            services.AddPersistenceLayer(Configuration);
             services.AddApplicatonLayer(Configuration);
+            services.AddFilesLayer(Configuration);
+            services.AddIdentityLayer(Configuration);
+            services.AddPersistenceLayer(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

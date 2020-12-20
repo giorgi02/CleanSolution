@@ -1,5 +1,5 @@
-﻿using AutoMapper.Configuration;
-using CleanSolution.Core.Application.Interfaces.Contracts;
+﻿using CleanSolution.Core.Application.Interfaces.Contracts;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;

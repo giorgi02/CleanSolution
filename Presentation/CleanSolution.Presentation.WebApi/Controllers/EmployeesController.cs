@@ -1,11 +1,8 @@
 ﻿using CleanSolution.Core.Application.DTOs;
+using CleanSolution.Core.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CleanSolution.Presentation.WebApi.Controllers
 {
@@ -13,6 +10,12 @@ namespace CleanSolution.Presentation.WebApi.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
+        private readonly IUnitOfWork unit;
+
+        public EmployeesController(IUnitOfWork unit)
+        {
+            this.unit = unit;
+        }
         // GET: api/<EmployeesController>
         [HttpGet]
         public IEnumerable<GetEmployeeDto> Get()
