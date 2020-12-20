@@ -1,4 +1,4 @@
-﻿using CleanSolution.Core.Domain.Entities;
+﻿using CleanSolution.Core.Domain.Models;
 
 namespace CleanSolution.Core.Application.Interfaces.Repositories
 {

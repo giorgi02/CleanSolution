@@ -1,5 +1,5 @@
 ﻿using CleanSolution.Core.Application.Interfaces.Repositories;
-using CleanSolution.Core.Domain.Entities;
+using CleanSolution.Core.Domain.Models;
 
 namespace CleanSolution.Infrastructure.Persistence.Implementations.Repositories
 {
