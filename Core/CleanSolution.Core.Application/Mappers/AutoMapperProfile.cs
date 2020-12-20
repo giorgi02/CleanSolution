@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CleanSolution.Core.Application.DTOs;
-using CleanSolution.Core.Domain.Entities;
+using CleanSolution.Core.Domain.Models;
 using CleanSolution.Core.Domain.Enums;
 using System;
 

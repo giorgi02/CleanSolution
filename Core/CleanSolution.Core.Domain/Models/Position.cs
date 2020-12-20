@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CleanSolution.Core.Domain.Entities
+namespace CleanSolution.Core.Domain.Models
 {
     public class Position
     {
