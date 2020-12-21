@@ -5,7 +5,7 @@ using CleanSolution.Core.Domain.Enums;
 using System;
 using CleanSolution.Core.Application.Features.Positions.Commands;
 
-namespace CleanSolution.Core.Application.Mappers
+namespace CleanSolution.Core.Application.Mappings
 {
     public class AutoMapperProfile : Profile
     {
