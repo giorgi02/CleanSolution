@@ -1,5 +1,6 @@
 ﻿using CleanSolution.Core.Application.DTOs;
 using CleanSolution.Core.Application.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -10,11 +11,11 @@ namespace CleanSolution.Presentation.WebApi.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
-        private readonly IUnitOfWork unit;
+        private readonly IMediator mediator;
 
-        public EmployeesController(IUnitOfWork unit)
+        public EmployeesController(IMediator mediator)
         {
-            this.unit = unit;
+            this.mediator = mediator;
         }
         // GET: api/<EmployeesController>
         [HttpGet]

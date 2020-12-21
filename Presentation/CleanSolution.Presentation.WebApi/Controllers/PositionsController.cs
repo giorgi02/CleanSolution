@@ -1,5 +1,7 @@
 ﻿using CleanSolution.Core.Application.DTOs;
-using CleanSolution.Core.Application.Interfaces;
+using CleanSolution.Core.Application.Features.Positions.Commands;
+using CleanSolution.Core.Domain.Models;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -10,10 +12,10 @@ namespace CleanSolution.Presentation.WebApi.Controllers
     [ApiController]
     public class PositionsController : ControllerBase
     {
-        private readonly IUnitOfWork unit;
-        public PositionsController(IUnitOfWork unit)
+        private readonly IMediator mediator;
+        public PositionsController(IMediator mediator)
         {
-            this.unit = unit;
+            this.mediator = mediator;
         }
 
         // GET: api/<PositionsController>
@@ -32,8 +34,9 @@ namespace CleanSolution.Presentation.WebApi.Controllers
 
         // POST api/<PositionsController>
         [HttpPost]
-        public void Post([FromBody] SetPositionDto value)
+        public void Post([FromBody] CreatePositionRequest request)
         {
+            mediator.Send(request);    
         }
 
         // PUT api/<PositionsController>/5

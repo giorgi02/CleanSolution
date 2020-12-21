@@ -3,6 +3,7 @@ using CleanSolution.Core.Application.DTOs;
 using CleanSolution.Core.Domain.Models;
 using CleanSolution.Core.Domain.Enums;
 using System;
+using CleanSolution.Core.Application.Features.Positions.Commands;
 
 namespace CleanSolution.Core.Application.Mappers
 {
@@ -10,6 +11,7 @@ namespace CleanSolution.Core.Application.Mappers
     {
         public AutoMapperProfile()
         {
+            CreateMap<CreatePositionRequest, Position>();
             CreateMap<SetPositionDto, Position>();
             CreateMap<Position, GetPositionDto>();
 
