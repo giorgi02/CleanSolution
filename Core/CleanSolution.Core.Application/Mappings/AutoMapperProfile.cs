@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using CleanSolution.Core.Application.DTOs;
-using CleanSolution.Core.Domain.Models;
+using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Enums;
 using System;
-using CleanSolution.Core.Application.Features.Positions.Commands;
 
 namespace CleanSolution.Core.Application.Mappings
 {

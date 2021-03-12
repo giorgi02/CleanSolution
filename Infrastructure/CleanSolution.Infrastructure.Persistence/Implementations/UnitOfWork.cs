@@ -17,7 +17,7 @@ namespace CleanSolution.Infrastructure.Persistence.Implementations
         }
 
 
-        public IPositionRepository PositionRepository => positionRepository ??= new PositionRepository(context); 
-        public IEmployeeRepository EmployeeRepository => employeeRepository ??= new EmployeeRepository(context); 
+        public IPositionRepository PositionRepository => positionRepository ??= new PositionRepository(context);
+        public IEmployeeRepository EmployeeRepository => employeeRepository ??= new EmployeeRepository(context);
     }
 }

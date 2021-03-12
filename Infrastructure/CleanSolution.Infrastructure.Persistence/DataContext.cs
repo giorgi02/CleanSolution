@@ -1,4 +1,4 @@
-﻿using CleanSolution.Core.Domain.Models;
+﻿using CleanSolution.Core.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanSolution.Infrastructure.Persistence

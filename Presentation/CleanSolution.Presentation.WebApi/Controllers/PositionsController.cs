@@ -1,6 +1,5 @@
 ﻿using CleanSolution.Core.Application.DTOs;
 using CleanSolution.Core.Application.Features.Positions.Commands;
-using CleanSolution.Core.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -34,9 +33,9 @@ namespace CleanSolution.Presentation.WebApi.Controllers
 
         // POST api/<PositionsController>
         [HttpPost]
-        public void Post([FromBody] CreatePositionRequest request)
+        public void Post([FromBody] CreatePositionCommand.Request request)
         {
-            mediator.Send(request);    
+            mediator.Send(request);
         }
 
         // PUT api/<PositionsController>/5

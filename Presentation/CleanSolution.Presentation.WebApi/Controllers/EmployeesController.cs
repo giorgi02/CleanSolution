@@ -1,5 +1,4 @@
 ﻿using CleanSolution.Core.Application.DTOs;
-using CleanSolution.Core.Application.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
