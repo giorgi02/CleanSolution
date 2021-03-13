@@ -4,7 +4,7 @@ using CleanSolution.Infrastructure.Persistence.Implementations.Repositories;
 
 namespace CleanSolution.Infrastructure.Persistence.Implementations
 {
-    public class UnitOfWork : IUnitOfWork
+    internal class UnitOfWork : IUnitOfWork
     {
         private IPositionRepository positionRepository;
         private IEmployeeRepository employeeRepository;

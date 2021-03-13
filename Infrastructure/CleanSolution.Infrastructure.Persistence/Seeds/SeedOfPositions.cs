@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanSolution.Core.Application.Seeds
+namespace CleanSolution.Infrastructure.Persistence.Seeds
 {
-    public class SeedOfPositions
+    internal class SeedOfPositions
     {
     }
 }

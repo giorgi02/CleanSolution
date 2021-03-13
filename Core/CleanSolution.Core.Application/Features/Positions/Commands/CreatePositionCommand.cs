@@ -30,7 +30,7 @@ namespace CleanSolution.Core.Application.Features.Positions.Commands
             public Task<Unit> Handle(Request request, CancellationToken cancellationToken)
             {
                 var position = mapper.Map<Position>(request);
-                unit.PositionRepository.Create(position);
+                unit.PositionRepository.CreateAsync(position);
 
                 throw new NotImplementedException();
             }

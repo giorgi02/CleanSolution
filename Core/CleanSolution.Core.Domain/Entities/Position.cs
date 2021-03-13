@@ -1,10 +1,9 @@
-﻿using System;
+﻿using CleanSolution.Core.Domain.Basics;
 
 namespace CleanSolution.Core.Domain.Entities
 {
-    public class Position
+    public class Position : BaseEntity
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public double Salary { get; set; }
     }

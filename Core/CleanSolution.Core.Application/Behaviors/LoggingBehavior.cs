@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CleanSolution.Core.Application.Interfaces.Contracts;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Threading;
@@ -21,8 +22,8 @@ namespace CleanSolution.Core.Application.Behaviors
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
-            logger.LogInformation("request: method={@RequestMethod}, url={@RequestUrl}, type={@name}, body={@request}, userIpAddress={@IpAddress}, userPort={@Port}, accountType={@AccountType}, acountId={@AccountId}",
-                user.RequestMethod, user.RequestUrl, typeof(TRequest).Name, request, user.IpAddress, user.Port, user.AccountType.ToString(), user.AccountId);
+            logger.LogInformation("request: method={@RequestMethod}, url={@RequestUrl}, type={@name}, body={@request}, userIpAddress={@IpAddress}, userPort={@Port}, acountId={@AccountId}",
+                user.RequestMethod, user.RequestUrl, typeof(TRequest).Name, request, user.IpAddress, user.Port, user.AccountId);
 
             var response = await next();
 

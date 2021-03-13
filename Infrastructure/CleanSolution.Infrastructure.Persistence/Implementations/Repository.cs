@@ -1,12 +1,15 @@
 ﻿using CleanSolution.Core.Application.Interfaces;
+using CleanSolution.Core.Domain.Basics;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace CleanSolution.Infrastructure.Persistence.Implementations
 {
-    public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    internal abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
         private readonly DataContext context;
 
@@ -15,45 +18,58 @@ namespace CleanSolution.Infrastructure.Persistence.Implementations
             this.context = context;
         }
 
-
-        public virtual void Create(TEntity entity)
+        // create
+        public virtual async Task<int> CreateAsync(TEntity entity)
         {
             context.Set<TEntity>().Add(entity);
+            return await context.SaveChangesAsync();
         }
-
-
-        public virtual TEntity Read(Guid id)
+        // read
+        public virtual async Task<TEntity> ReadAsync(Guid id)
         {
-            return context.Set<TEntity>().Find(id);
+            return await context.Set<TEntity>().FindAsync(id);
         }
-        public virtual IEnumerable<TEntity> Read()
+        public virtual async Task<IEnumerable<TEntity>> ReadAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return context.Set<TEntity>();
+            return await context.Set<TEntity>().Where(predicate).ToListAsync();
         }
-        public virtual IEnumerable<TEntity> Read(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<IEnumerable<TEntity>> ReadAsync()
         {
-            return context.Set<TEntity>().Where(predicate);
+            return await context.Set<TEntity>().ToListAsync();
         }
-
-
-        public virtual void Update(TEntity entity)
+        // update
+        public virtual async Task<int> UpdateAsync(TEntity entity)
         {
             context.Set<TEntity>().Update(entity);
+            return await context.SaveChangesAsync();
         }
-        public virtual void Update(Guid id, TEntity entity)
+        public virtual async Task<int> UpdateAsync(Guid id, TEntity entity)
         {
             var existing = context.Set<TEntity>().Find(id);
             this.context.Entry(existing).CurrentValues.SetValues(entity);
+            return await context.SaveChangesAsync();
         }
-
-
-        public virtual void Delete(TEntity entity)
+        // delete
+        public virtual async Task<int> DeleteAsync(Guid id)
+        {
+            var item = await this.ReadAsync(id);
+            context.Set<TEntity>().Remove(item);
+            return await context.SaveChangesAsync();
+        }
+        public virtual async Task<int> DeleteAsync(TEntity entity)
         {
             context.Set<TEntity>().Remove(entity);
+            return await context.SaveChangesAsync();
         }
-        public virtual void Delete(Guid id)
+        // check
+        public virtual async Task<bool> CheckAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            context.Set<TEntity>().Remove(this.Read(id));
+            return await context.Set<TEntity>().AnyAsync(predicate);
+        }
+
+        public virtual async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await context.Set<TEntity>().CountAsync(predicate);
         }
     }
 }

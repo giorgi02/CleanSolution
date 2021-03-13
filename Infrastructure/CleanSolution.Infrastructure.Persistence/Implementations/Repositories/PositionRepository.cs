@@ -3,7 +3,7 @@ using CleanSolution.Core.Domain.Entities;
 
 namespace CleanSolution.Infrastructure.Persistence.Implementations.Repositories
 {
-    public class PositionRepository : Repository<Position>, IPositionRepository
+    internal class PositionRepository : Repository<Position>, IPositionRepository
     {
         public PositionRepository(DataContext context) : base(context)
         {
