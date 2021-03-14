@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using CleanSolution.Core.Application.DTOs;
-using CleanSolution.Core.Application.Features.Positions.Commands;
 using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Enums;
 using System;
@@ -11,7 +10,6 @@ namespace CleanSolution.Core.Application.Mappings
     {
         public AutoMapperProfile()
         {
-            CreateMap<CreatePositionCommand.Request, Position>();
             CreateMap<SetPositionDto, Position>();
             CreateMap<Position, GetPositionDto>();
 

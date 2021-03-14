@@ -17,14 +17,14 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
                 {
                     s.SwaggerDoc(name: name, new OpenApiInfo
                     {
-                        Title = "Workabroad Admin",
+                        Title = "CleanSolution.Presentation.WebApi",
                         Version = "v1.0",
-                        Description = "ASP.NET Core Web API ტექნოლოგიაზე შექმნილი Workabroad სერვისები დასაქმების ხელშეწყობის სახელმწიფო სააგენტოსთვის",
+                        Description = "ASP.NET Core Web API Clean Architecture",
                         Contact = new OpenApiContact
                         {
-                            Name = "SESA",
-                            Email = "sesa@ssa.gov.ge.com",
-                            Url = new Uri("http://ssa.gov.ge/")
+                            Name = "test",
+                            Email = "test@mail.com",
+                            Url = new Uri("http://test.com/")
                         }
                     });
                 }

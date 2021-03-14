@@ -16,7 +16,7 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
         /// <summary>
         /// ავთენთიფიკაციის პარამეტრების დამატება
         /// </summary>
-        public static void AddJwtAuthenticationConfigs(this IServiceCollection services, IConfiguration Configuration)
+        public static void AddJwtAuthenticationConfigs(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthentication(opt =>
             {
@@ -34,9 +34,9 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
                         ValidateIssuerSigningKey = true,
                         ClockSkew = TimeSpan.Zero, // ანულებს ტოკენის სიცოცხლის ხანგრძლივობას. დეფოლტად არის 5 წუთი
 
-                        ValidIssuer = Configuration["Token:Issuer"],
-                        ValidAudience = Configuration["Token:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:Key"]))
+                        ValidIssuer = configuration["Token:Issuer"],
+                        ValidAudience = configuration["Token:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:Key"]))
                     };
                 });
         }
@@ -76,9 +76,6 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
             IConfiguration configuration,
             string personId,
             string userName,
-            string firstName,
-            string lastName,
-            string privateNumber,
             string[] roles,
             string[] resources)
         {

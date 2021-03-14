@@ -1,6 +1,7 @@
 ﻿using CleanSolution.Core.Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 
 
@@ -12,37 +13,31 @@ namespace CleanSolution.Presentation.WebApi.Controllers
     {
         private readonly IMediator mediator;
 
-        public EmployeesController(IMediator mediator)
-        {
-            this.mediator = mediator;
-        }
-        // GET: api/<EmployeesController>
+        public EmployeesController(IMediator mediator) =>
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+
         [HttpGet]
         public IEnumerable<GetEmployeeDto> Get()
         {
             return null;
         }
 
-        // GET api/<EmployeesController>/5
         [HttpGet("{id}")]
         public GetEmployeeDto Get(int id)
         {
             return null;
         }
 
-        // POST api/<EmployeesController>
         [HttpPost]
         public void Post([FromBody] SetEmployeeDto value)
         {
         }
 
-        // PUT api/<EmployeesController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] SetEmployeeDto value)
         {
         }
 
-        // DELETE api/<EmployeesController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
