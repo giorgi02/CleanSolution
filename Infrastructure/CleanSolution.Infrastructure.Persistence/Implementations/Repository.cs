@@ -11,12 +11,9 @@ namespace CleanSolution.Infrastructure.Persistence.Implementations
 {
     internal abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
-        private readonly DataContext context;
+        protected readonly DataContext context;
+        public Repository(DataContext context) => this.context = context;
 
-        public Repository(DataContext context)
-        {
-            this.context = context;
-        }
 
         // create
         public virtual async Task<int> CreateAsync(TEntity entity)
@@ -25,7 +22,7 @@ namespace CleanSolution.Infrastructure.Persistence.Implementations
             return await context.SaveChangesAsync();
         }
         // read
-        public virtual async Task<TEntity> ReadAsync(Guid id)
+        public virtual async Task<TEntity> ReadAsync<TKey>(TKey id)
         {
             return await context.Set<TEntity>().FindAsync(id);
         }
@@ -43,14 +40,14 @@ namespace CleanSolution.Infrastructure.Persistence.Implementations
             context.Set<TEntity>().Update(entity);
             return await context.SaveChangesAsync();
         }
-        public virtual async Task<int> UpdateAsync(Guid id, TEntity entity)
+        public virtual async Task<int> UpdateAsync<TKey>(TKey id, TEntity entity)
         {
             var existing = context.Set<TEntity>().Find(id);
             this.context.Entry(existing).CurrentValues.SetValues(entity);
             return await context.SaveChangesAsync();
         }
         // delete
-        public virtual async Task<int> DeleteAsync(Guid id)
+        public virtual async Task<int> DeleteAsync<TKey>(TKey id)
         {
             var item = await this.ReadAsync(id);
             context.Set<TEntity>().Remove(item);

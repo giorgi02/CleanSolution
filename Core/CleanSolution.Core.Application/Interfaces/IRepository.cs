@@ -10,14 +10,14 @@ namespace CleanSolution.Core.Application.Interfaces
     {
         Task<int> CreateAsync(TEntity entity);
 
-        Task<TEntity> ReadAsync(Guid id);
+        Task<TEntity> ReadAsync<TKey>(TKey id);
         Task<IEnumerable<TEntity>> ReadAsync();
         Task<IEnumerable<TEntity>> ReadAsync(Expression<Func<TEntity, bool>> predicate);
 
         Task<int> UpdateAsync(TEntity entity);
-        Task<int> UpdateAsync(Guid id, TEntity entity);
+        Task<int> UpdateAsync<TKey>(TKey id, TEntity entity);
 
-        Task<int> DeleteAsync(Guid id);
+        Task<int> DeleteAsync<TKey>(TKey id);
         Task<int> DeleteAsync(TEntity entity);
 
         Task<bool> CheckAsync(Expression<Func<TEntity, bool>> predicate);
