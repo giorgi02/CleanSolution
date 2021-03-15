@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanSolution.Core.Applicat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanSolution.Infrastructure.Logger", "Infrastructure\CleanSolution.Infrastructure.Logger\CleanSolution.Infrastructure.Logger.csproj", "{1196BBA0-E3BF-4F99-A579-CC2A0092E5BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanSolution.Presentation.WebApi", "Presentation\CleanSolution.Presentation.WebApi\CleanSolution.Presentation.WebApi.csproj", "{33BCFADD-3CDF-4A0B-A47C-B36C81DB65BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanSolution.Presentation.WebApi", "Presentation\CleanSolution.Presentation.WebApi\CleanSolution.Presentation.WebApi.csproj", "{33BCFADD-3CDF-4A0B-A47C-B36C81DB65BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanSolution.Template", "CleanSolution.Template\CleanSolution.Template.csproj", "{5F467990-0E9F-4909-9D52-1B14746ECC05}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{33BCFADD-3CDF-4A0B-A47C-B36C81DB65BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33BCFADD-3CDF-4A0B-A47C-B36C81DB65BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33BCFADD-3CDF-4A0B-A47C-B36C81DB65BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F467990-0E9F-4909-9D52-1B14746ECC05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F467990-0E9F-4909-9D52-1B14746ECC05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F467990-0E9F-4909-9D52-1B14746ECC05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F467990-0E9F-4909-9D52-1B14746ECC05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
