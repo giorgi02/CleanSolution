@@ -1,22 +1,54 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="ProjectGroup" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
   <TemplateData>
-    <Name>CleanSolution.Template</Name>
-    <Description>CleanSolution.Template</Description>
-    <Icon>CleanSolution.Template.ico</Icon>
+    <Name>ASP.NET Core Web API (CleanArchitecture)</Name>
+    <Description>სუფთა არქიტექტურის შაბლონი</Description>
+    <Icon>Icon.ico</Icon>
     <ProjectType>CSharp</ProjectType>
     <LanguageTag>csharp</LanguageTag>
+    <ProjectTypeTag>Linux</ProjectTypeTag>
+    <ProjectTypeTag>macOS</ProjectTypeTag>
+    <ProjectTypeTag>Windows</ProjectTypeTag>
+    <ProjectTypeTag>Cloud</ProjectTypeTag>
+    <ProjectTypeTag>Service</ProjectTypeTag>
+    <ProjectTypeTag>Web</ProjectTypeTag>
     <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>
     <SortOrder>1000</SortOrder>
     <TemplateID>8bcb3172-dcca-408e-bdc5-94ee8be94775</TemplateID>
-    <CreateNewFolder>true</CreateNewFolder>
-    <DefaultName>CleanSolution.Template</DefaultName>
+    <CreateNewFolder>false</CreateNewFolder>
+    <DefaultName>CleanSolution</DefaultName>
     <ProvideDefaultName>true</ProvideDefaultName>
   </TemplateData>
   <TemplateContent>
-    <Project File="ProjectTemplate.csproj" ReplaceParameters="true">
-      <ProjectItem ReplaceParameters="true" TargetFileName="Properties\AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
-      <ProjectItem ReplaceParameters="true" OpenInEditor="true">Class1.cs</ProjectItem>
-    </Project>
+    <ProjectCollection>
+
+      <SolutionFolder Name="Core">
+        <ProjectTemplateLink ProjectName="$projectname$.Core.Domain">
+          Domain\MyTemplate.vstemplate
+        </ProjectTemplateLink>
+        <ProjectTemplateLink ProjectName="$projectname$.Core.Application" >
+          Application\MyTemplate.vstemplate
+        </ProjectTemplateLink>
+      </SolutionFolder>
+
+      <SolutionFolder Name="Infrastructure">
+        <ProjectTemplateLink ProjectName="$projectname$.Infrastructure.Persistence" >
+          Persistence\MyTemplate.vstemplate
+        </ProjectTemplateLink>
+        <ProjectTemplateLink ProjectName="$projectname$.Infrastructure.Logger">
+          Logger\MyTemplate.vstemplate
+        </ProjectTemplateLink>
+        <ProjectTemplateLink ProjectName="$projectname$.Infrastructure.File">
+          Files\MyTemplate.vstemplate
+        </ProjectTemplateLink>
+      </SolutionFolder>
+
+      <SolutionFolder Name="Presentation">
+        <ProjectTemplateLink ProjectName="$projectname$.Presentation.WebApi">
+          WebApi\MyTemplate.vstemplate
+        </ProjectTemplateLink>
+      </SolutionFolder>
+
+    </ProjectCollection>
   </TemplateContent>
 </VSTemplate>
