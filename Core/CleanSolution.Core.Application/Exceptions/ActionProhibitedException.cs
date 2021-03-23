@@ -7,7 +7,6 @@ namespace Workabroad.Core.Application.Exceptions
         public override HttpStatusCode StatusCode => HttpStatusCode.NotAcceptable;
 
         /// <summary>
-        /// მსგავსი მონაცემის არსებობა ბაზაში აკრძალულია
         /// მსგავსი მოქმედება აკრძალულია
         /// </summary>
         public ActionProhibitedException(string message) : base(message) { }

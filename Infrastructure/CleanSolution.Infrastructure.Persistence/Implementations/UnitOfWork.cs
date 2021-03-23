@@ -11,10 +11,7 @@ namespace CleanSolution.Infrastructure.Persistence.Implementations
 
 
         private readonly DataContext context;
-        public UnitOfWork(DataContext context)
-        {
-            this.context = context;
-        }
+        public UnitOfWork(DataContext context) => this.context = context;
 
 
         public IPositionRepository PositionRepository => positionRepository ??= new PositionRepository(context);

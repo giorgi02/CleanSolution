@@ -25,9 +25,4 @@
     <ProjectReference Include="..\CleanSolution.Core.Domain\CleanSolution.Core.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Employees\Commands\" />
-    <Folder Include="Features\Employees\Queries\" />
-  </ItemGroup>
-
 </Project>

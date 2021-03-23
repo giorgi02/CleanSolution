@@ -2,9 +2,9 @@
 
 namespace CleanSolution.Core.Application.Interfaces.Contracts
 {
-    public interface ICurrentUserService
+    public interface IActiveUserService
     {
-        public Guid AccountId { get; }
+        public Guid UserId { get; }
         public string IpAddress { get; }
         public int Port { get; }
         public string RequestUrl { get; }

@@ -7,7 +7,6 @@ namespace Workabroad.Core.Application.Exceptions
     {
         public abstract HttpStatusCode StatusCode { get; }
 
-
         public EntityValidationException(string message) : base(message) { }
     }
 }

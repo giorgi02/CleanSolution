@@ -11,6 +11,7 @@ namespace CleanSolution.Core.Domain.Entities
         public string LastName { get; set; }
         public Gender Gender { get; set; }
         public DateTime BirthDate { get; set; }
+        public string[] Phones { get; set; }
         public Address Address { get; set; }
         public Position Position { get; set; }
     }

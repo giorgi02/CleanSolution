@@ -1,6 +1,8 @@
 using CleanSolution.Core.Application;
+using CleanSolution.Core.Application.Interfaces.Contracts;
 using CleanSolution.Infrastructure.Files;
 using CleanSolution.Infrastructure.Persistence;
+using CleanSolution.Presentation.WebApi.Extensions.Services;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,6 +23,7 @@ namespace CleanSolution.Presentation.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddFluentValidation();
+            services.AddScoped<IActiveUserService, ActiveUserService>();
 
             services.AddSwaggerServices("CleanSolution v1");
 
