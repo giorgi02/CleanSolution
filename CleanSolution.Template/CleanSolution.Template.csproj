@@ -58,7 +58,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="AssemblyInfo.cs" />
-    <None Include="Class1.cs" />
     <None Include="ProjectTemplate.csproj" />
     <None Include="CleanSolution.Template.ico" />
   </ItemGroup>

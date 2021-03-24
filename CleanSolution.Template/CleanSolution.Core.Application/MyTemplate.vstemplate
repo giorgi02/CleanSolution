@@ -1,0 +1,75 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>CleanSolution.Core.Application</Name>
+    <Description>&lt;No description available&gt;</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>CleanSolution.Core.Application</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="CleanSolution.Core.Application.csproj" File="CleanSolution.Core.Application.csproj" ReplaceParameters="true">
+      <Folder Name="Behaviors" TargetFolderName="Behaviors">
+        <ProjectItem ReplaceParameters="true" TargetFileName="LoggingBehavior.cs">LoggingBehavior.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ValidationBehaviour.cs">ValidationBehaviour.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Commons" TargetFolderName="Commons">
+        <ProjectItem ReplaceParameters="true" TargetFileName="Pagination.cs">Pagination.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Result.cs">Result.cs</ProjectItem>
+      </Folder>
+      <Folder Name="DTOs" TargetFolderName="DTOs">
+        <ProjectItem ReplaceParameters="true" TargetFileName="GetEmployeeDto.cs">GetEmployeeDto.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="GetPaginationDto.cs">GetPaginationDto.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="GetPositionDto.cs">GetPositionDto.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="SetEmployeeDto.cs">SetEmployeeDto.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="SetPositionDto.cs">SetPositionDto.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Exceptions" TargetFolderName="Exceptions">
+        <ProjectItem ReplaceParameters="true" TargetFileName="ActionProhibitedException.cs">ActionProhibitedException.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="EntityAlreadyExistsException.cs">EntityAlreadyExistsException.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="EntityNotFoundException.cs">EntityNotFoundException.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="EntityValidationException.cs">EntityValidationException.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ServiceUnavailableException.cs">ServiceUnavailableException.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Features" TargetFolderName="Features">
+        <Folder Name="Employees" TargetFolderName="Employees">
+          <Folder Name="Commands" TargetFolderName="Commands">
+            <ProjectItem ReplaceParameters="true" TargetFileName="CreateEmployeeCommand.cs">CreateEmployeeCommand.cs</ProjectItem>
+          </Folder>
+          <Folder Name="Queries" TargetFolderName="Queries">
+            <ProjectItem ReplaceParameters="true" TargetFileName="GetEmployeeQuery.cs">GetEmployeeQuery.cs</ProjectItem>
+            <ProjectItem ReplaceParameters="true" TargetFileName="GetEmployeesQuery.cs">GetEmployeesQuery.cs</ProjectItem>
+          </Folder>
+        </Folder>
+        <Folder Name="Positions" TargetFolderName="Positions">
+          <Folder Name="Queries" TargetFolderName="Queries">
+            <ProjectItem ReplaceParameters="true" TargetFileName="GetPositionQuery.cs">GetPositionQuery.cs</ProjectItem>
+          </Folder>
+        </Folder>
+      </Folder>
+      <Folder Name="Interfaces" TargetFolderName="Interfaces">
+        <Folder Name="Contracts" TargetFolderName="Contracts">
+          <ProjectItem ReplaceParameters="true" TargetFileName="IActiveUserService.cs">IActiveUserService.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="IFileManager.cs">IFileManager.cs</ProjectItem>
+        </Folder>
+        <Folder Name="Repositories" TargetFolderName="Repositories">
+          <ProjectItem ReplaceParameters="true" TargetFileName="IEmployeeRepository.cs">IEmployeeRepository.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="IPositionRepository.cs">IPositionRepository.cs</ProjectItem>
+        </Folder>
+        <ProjectItem ReplaceParameters="true" TargetFileName="IRepository.cs">IRepository.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="IUnitOfWork.cs">IUnitOfWork.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Mappings" TargetFolderName="Mappings">
+        <ProjectItem ReplaceParameters="true" TargetFileName="AutoMapperProfile.cs">AutoMapperProfile.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="ServiceExtensions.cs">ServiceExtensions.cs</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

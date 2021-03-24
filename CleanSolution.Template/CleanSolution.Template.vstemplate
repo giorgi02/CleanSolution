@@ -24,28 +24,28 @@
 
       <SolutionFolder Name="Core">
         <ProjectTemplateLink ProjectName="$projectname$.Core.Domain">
-          Domain\MyTemplate.vstemplate
+          CleanSolution.Core.Domain\MyTemplate.vstemplate
         </ProjectTemplateLink>
         <ProjectTemplateLink ProjectName="$projectname$.Core.Application" >
-          Application\MyTemplate.vstemplate
+          CleanSolution.Core.Application\MyTemplate.vstemplate
         </ProjectTemplateLink>
       </SolutionFolder>
 
       <SolutionFolder Name="Infrastructure">
         <ProjectTemplateLink ProjectName="$projectname$.Infrastructure.Persistence" >
-          Persistence\MyTemplate.vstemplate
+          CleanSolution.Infrastructure.Persistence\MyTemplate.vstemplate
         </ProjectTemplateLink>
         <ProjectTemplateLink ProjectName="$projectname$.Infrastructure.Logger">
-          Logger\MyTemplate.vstemplate
+          CleanSolution.Infrastructure.Logger\MyTemplate.vstemplate
         </ProjectTemplateLink>
         <ProjectTemplateLink ProjectName="$projectname$.Infrastructure.File">
-          Files\MyTemplate.vstemplate
+          CleanSolution.Infrastructure.Files\MyTemplate.vstemplate
         </ProjectTemplateLink>
       </SolutionFolder>
 
       <SolutionFolder Name="Presentation">
         <ProjectTemplateLink ProjectName="$projectname$.Presentation.WebApi">
-          WebApi\MyTemplate.vstemplate
+          CleanSolution.Presentation.WebApi\MyTemplate.vstemplate
         </ProjectTemplateLink>
       </SolutionFolder>
 
