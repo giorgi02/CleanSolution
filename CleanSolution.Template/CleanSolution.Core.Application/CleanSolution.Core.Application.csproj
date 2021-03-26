@@ -22,7 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CleanSolution.Core.Domain\CleanSolution.Core.Domain.csproj" />
+    <!--<ProjectReference Include="..\CleanSolution.Core.Domain\CleanSolution.Core.Domain.csproj" />-->
+    <ProjectReference Include="..\$projectname$.Core.Domain\$safeprojectname$.Core.Domain.csproj" />
   </ItemGroup>
 
 </Project>

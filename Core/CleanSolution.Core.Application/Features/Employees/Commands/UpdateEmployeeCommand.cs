@@ -1,42 +1,41 @@
 ﻿using AutoMapper;
 using CleanSolution.Core.Application.Interfaces;
-using CleanSolution.Core.Application.Interfaces.Contracts;
 using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Enums;
 using FluentValidation;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace CleanSolution.Core.Application.Features.Employees.Commands
 {
-    public class CreateEmployeeCommand
+    public class UpdateEmployeeCommand
     {
         public class Request : IRequest
         {
-            public IFormFile Picture { get; set; }
+            public Guid EmployeeId { get; private set; }
+
             public string PrivateNumber { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public Gender Gender { get; set; }
-            public DateTime? BirthDate { get; set; }
+            public DateTime BirthDate { get; set; }
             public string[] Phones { get; set; }
             public Address Address { get; set; }
             public Guid PositionId { get; set; }
+
+            public void SetId(Guid employeeId) => this.EmployeeId = employeeId;
         }
 
         public class Handler : IRequestHandler<Request>
         {
             private readonly IUnitOfWork unit;
-            private readonly IFileManager fileManager;
             private readonly IMapper mapper;
 
-            public Handler(IUnitOfWork unit, IFileManager fileManager, IMapper mapper)
+            public Handler(IUnitOfWork unit, IMapper mapper)
             {
                 this.unit = unit;
-                this.fileManager = fileManager;
                 this.mapper = mapper;
             }
             public async Task<Unit> Handle(Request request, CancellationToken cancellationToken)
@@ -44,9 +43,7 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
                 var employee = mapper.Map<Employee>(request);
                 employee.Position = await unit.PositionRepository.ReadAsync(request.PositionId);
 
-                employee.PictureFileName = fileManager.SaveFile(request.Picture);
-
-                await unit.EmployeeRepository.CreateAsync(employee);
+                await unit.EmployeeRepository.UpdateAsync(employee);
 
                 return await Task.FromResult(Unit.Value);
             }
