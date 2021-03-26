@@ -4,6 +4,6 @@ namespace CleanSolution.Core.Application.Interfaces.Contracts
 {
     public interface IFileManager
     {
-        public string SaveFile(IFormFile file);
+        string SaveFile(IFormFile file);
     }
 }

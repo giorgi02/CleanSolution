@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CleanSolution.Core.Application.Commons;
 using CleanSolution.Core.Application.DTOs;
+using CleanSolution.Core.Application.Features.Employees.Commands;
 using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Enums;
 using System;
@@ -13,6 +14,8 @@ namespace CleanSolution.Core.Application.Mappings
         {
             CreateMap<SetPositionDto, Position>();
             CreateMap<SetEmployeeDto, Employee>();
+            CreateMap<CreateEmployeeCommand.Request, Employee>();
+            CreateMap<UpdateEmployeeCommand.Request, Employee>();
 
 
             CreateMap(typeof(Pagination<>), typeof(GetPaginationDto<>));

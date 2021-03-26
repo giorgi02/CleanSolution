@@ -15,6 +15,8 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
             {
                 foreach (var name in options)
                 {
+                    s.CustomSchemaIds(x => x.FullName.Substring(x.FullName.LastIndexOf('.') + 1).Replace('+', '.'));
+
                     s.SwaggerDoc(name: name, new OpenApiInfo
                     {
                         Title = "CleanSolution.Presentation.WebApi",

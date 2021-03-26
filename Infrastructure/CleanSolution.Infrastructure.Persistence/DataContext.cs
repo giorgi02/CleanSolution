@@ -56,6 +56,7 @@ namespace CleanSolution.Infrastructure.Persistence
                     break;
                 case EntityState.Deleted:
                     entry.State = EntityState.Unchanged;
+
                     // შეიცვლება მხოლოდ ქვემოთ ჩამოთვლილი ველები
                     entry.Entity.DateDeleted = DateTime.UtcNow;
                     entry.Entity.DeletedBy = user.UserId;

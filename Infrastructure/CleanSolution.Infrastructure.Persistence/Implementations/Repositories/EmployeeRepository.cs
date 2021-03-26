@@ -27,9 +27,9 @@ namespace CleanSolution.Infrastructure.Persistence.Implementations.Repositories
             return await Pagination<Employee>.CreateAsync(employees, pageIndex, pageSize);
         }
 
-        public async Task<Pagination<Employee>> SearchAsync(int pageIndex, int pageSize, string firatName = null, string lastName = null)
+        public async Task<Pagination<Employee>> SearchAsync(int pageIndex, int pageSize, string text)
         {
-            var employees = this.Including.Where(x => x.FirstName == firatName || x.LastName == lastName);
+            var employees = this.Including.Where(x => x.PrivateNumber == text || x.FirstName == text || x.LastName == text);
 
             return await Pagination<Employee>.CreateAsync(employees, pageIndex, pageSize);
         }

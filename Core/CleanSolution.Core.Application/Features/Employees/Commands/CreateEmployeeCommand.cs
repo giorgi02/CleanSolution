@@ -44,7 +44,7 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
                 var employee = mapper.Map<Employee>(request);
                 employee.Position = await unit.PositionRepository.ReadAsync(request.PositionId);
 
-                employee.PictureFileName = fileManager.SaveFile(request.Picture);
+                employee.PictureName = fileManager.SaveFile(request.Picture);
 
                 await unit.EmployeeRepository.CreateAsync(employee);
 

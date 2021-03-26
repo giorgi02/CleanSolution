@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using CleanSolution.Core.Application.Interfaces.Contracts;
+﻿using CleanSolution.Core.Application.Interfaces.Contracts;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Threading;
@@ -11,13 +10,11 @@ namespace CleanSolution.Core.Application.Behaviors
     {
         private readonly ILogger<LoggingBehavior<TRequest, TResponse>> logger;
         private readonly IActiveUserService user;
-        private readonly IMapper mapper;
 
-        public LoggingBehavior(ILogger<LoggingBehavior<TRequest, TResponse>> logger, IActiveUserService user, IMapper mapper)
+        public LoggingBehavior(ILogger<LoggingBehavior<TRequest, TResponse>> logger, IActiveUserService user)
         {
             this.logger = logger;
             this.user = user;
-            this.mapper = mapper;
         }
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
