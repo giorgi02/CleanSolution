@@ -3,6 +3,7 @@ using CleanSolution.Core.Application.Interfaces.Repositories;
 using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,8 +13,15 @@ namespace CleanSolution.Infrastructure.Persistence.Implementations.Repositories
     {
         public EmployeeRepository(DataContext context) : base(context) { }
 
+
         private IQueryable<Employee> Including =>
             this.context.Employes.Include(x => x.Position);
+
+
+        public override async Task<Employee> ReadAsync(Guid id)
+        {
+            return await this.Including.FirstOrDefaultAsync(x => x.Id == id);
+        }
 
         public async Task<Pagination<Employee>> FilterAsync(int pageIndex, int pageSize, string privateNumber = null, string firatName = null, string lastName = null, Gender? gender = null)
         {

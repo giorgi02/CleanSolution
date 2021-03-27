@@ -46,7 +46,7 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
 
                 await unit.EmployeeRepository.UpdateAsync(employee);
 
-                return await Task.FromResult(Unit.Value);
+                return Unit.Value;
             }
         }
 

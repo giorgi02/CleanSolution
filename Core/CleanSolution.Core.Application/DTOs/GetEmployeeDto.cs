@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CleanSolution.Core.Domain.Entities;
+using System;
 
 namespace CleanSolution.Core.Application.DTOs
 {
@@ -10,6 +11,7 @@ namespace CleanSolution.Core.Application.DTOs
         public string LastName { get; set; }
         public string Gender { get; set; }
         public int Age { get; set; }
+        public Address Address { get; set; }
         public GetPositionDto Position { get; set; }
     }
 }

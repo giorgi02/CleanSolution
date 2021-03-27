@@ -22,7 +22,7 @@ namespace CleanSolution.Presentation.WebApi.Controllers
 
 
         [HttpGet]
-        public async Task<IEnumerable<GetEmployeeDto>> Get(GetEmployeesQuery.Request request)
+        public async Task<IEnumerable<GetEmployeeDto>> Get([FromQuery] GetEmployeesQuery.Request request)
         {
             var result = await mediator.Send(request);
 
@@ -39,8 +39,8 @@ namespace CleanSolution.Presentation.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<GetEmployeeDto> Get(Guid Id) =>
-            await mediator.Send(new GetEmployeeQuery.Request(Id));
+        public async Task<GetEmployeeDto> Get([FromRoute] Guid id) =>
+            await mediator.Send(new GetEmployeeQuery.Request(id));
 
         [HttpPost]
         public async Task Post([FromForm] CreateEmployeeCommand.Request request) =>

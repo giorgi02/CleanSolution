@@ -31,7 +31,7 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
 
                 await unit.EmployeeRepository.DeleteAsync(request.EmploueeId);
 
-                return await Task.FromResult(Unit.Value);
+                return Unit.Value;
             }
         }
     }

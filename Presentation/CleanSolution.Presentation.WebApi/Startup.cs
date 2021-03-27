@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Workabroad.Presentation.Admin.Extensions.Middlewares;
 using Workabroad.Presentation.Admin.Extensions.Services;
 
 namespace CleanSolution.Presentation.WebApi
@@ -40,6 +41,8 @@ namespace CleanSolution.Presentation.WebApi
                 app.UseDeveloperExceptionPage();
                 app.UseSwaggerMiddleware("CleanSolution v1");
             }
+
+            app.UseMiddleware<ExceptionHandler>();
 
             app.UseHttpsRedirection();
 
