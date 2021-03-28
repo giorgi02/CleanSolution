@@ -13,8 +13,8 @@ namespace CleanSolution.Infrastructure.Persistence.Configurations
             builder.Property(x => x.Salary).IsRequired();
 
             builder.HasData(
-                SeedOfPositions.Developer,
-                SeedOfPositions.Tester
+                PositionSeed.Developer,
+                PositionSeed.Tester
                 );
         }
     }
