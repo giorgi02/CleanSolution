@@ -5,7 +5,6 @@ using CleanSolution.Core.Domain.Enums;
 using FluentValidation;
 using MediatR;
 using System;
-using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 

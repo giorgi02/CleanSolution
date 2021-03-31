@@ -6,9 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using static CleanSolution.Core.Application.Features.Employees.Commands.CreateEmployeeCommand;
-using static CleanSolution.Core.Application.Features.Employees.Commands.UpdateEmployeeCommand;
-using static CleanSolution.Core.Application.Features.Employees.Queries.GetEmployeesQuery;
 
 namespace CleanSolution.Presentation.WebApi.Controllers
 {

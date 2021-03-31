@@ -49,6 +49,7 @@ namespace Workabroad.Presentation.Admin.Extensions.Middlewares
                     break;
                 case Exception _:
                     logger.LogError(exception, exception.Message);
+                    exception = new Exception("Internal Server Error");
                     break;
             }
 
