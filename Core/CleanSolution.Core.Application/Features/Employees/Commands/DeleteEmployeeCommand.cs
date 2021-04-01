@@ -11,9 +11,9 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
     {
         public class Request : IRequest
         {
-            public Guid EmploueeId { get; private set; }
+            public Guid EmployeeId { get; private set; }
 
-            public Request(Guid employeeId) => this.EmploueeId = employeeId;
+            public Request(Guid employeeId) => this.EmployeeId = employeeId;
         }
 
         public class Handler : IRequestHandler<Request>
@@ -25,11 +25,11 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
 
             public async Task<Unit> Handle(Request request, CancellationToken cancellationToken)
             {
-                var isRecord = await unit.EmployeeRepository.CheckAsync(x => x.Id == request.EmploueeId);
+                var isRecord = await unit.EmployeeRepository.CheckAsync(x => x.Id == request.EmployeeId);
                 if (isRecord)
                     throw new EntityNotFoundException("ჩანაწერი ვერ მოიძებნა");
 
-                await unit.EmployeeRepository.DeleteAsync(request.EmploueeId);
+                await unit.EmployeeRepository.DeleteAsync(request.EmployeeId);
 
                 return Unit.Value;
             }
