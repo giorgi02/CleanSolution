@@ -18,14 +18,14 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
         /// </summary>
         public static void AddJwtAuthenticationConfigs(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddAuthentication(opt =>
+            services.AddAuthentication(options =>
             {
-                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-                .AddJwtBearer(options =>
+                .AddJwtBearer(cfg =>
                 {
-                    options.TokenValidationParameters = new TokenValidationParameters
+                    cfg.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateActor = false,
                         ValidateIssuer = true,
@@ -54,6 +54,9 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
                     .Build();
 
                 // მისი გამოყენება მოხდება [Authorize(Policy = "EditUsersPolicy")] ატრიბუტით
+                options.AddPolicy("Agent", policy => policy.RequireClaim("roles", "Agent"));
+                options.AddPolicy("AllowedPeople", policy => policy.RequireClaim("id", "1", "2", "3", "4"));
+
                 options.AddPolicy("EditPolicy", policy =>
                 {
                     policy.RequireAssertion(con => con.User.HasClaim(x => x.Type == "resources" && x.Value == "user.edit"));

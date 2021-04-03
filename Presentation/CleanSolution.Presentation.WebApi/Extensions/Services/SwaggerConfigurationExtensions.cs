@@ -13,10 +13,20 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
             // Swagger-ის გენერატორის რეგისტრაცია, 1 ან მეტი Swagger დოკუმენტის განსაზღვრა
             services.AddSwaggerGen(s =>
             {
+                // DTO კლასის სახელების დაგენერირების წესის განსაზღვრა
+                s.CustomSchemaIds(x => x.FullName.Substring(x.FullName.LastIndexOf('.') + 1).Replace('+', '.'));
+                // ავტორიზაციის წესების განსაზღვრა
+                s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please enter JWT with Bearer into field",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
+                });
+      
+                // მეთოდების დახარისხება სხვადასხვა სექციებად
                 foreach (var name in options)
                 {
-                    s.CustomSchemaIds(x => x.FullName.Substring(x.FullName.LastIndexOf('.') + 1).Replace('+', '.'));
-
                     s.SwaggerDoc(name: name, new OpenApiInfo
                     {
                         Title = "CleanSolution.Presentation.WebApi",
@@ -29,6 +39,8 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
                             Url = new Uri("http://test.com/")
                         }
                     });
+
+
                 }
             });
         }

@@ -4,6 +4,7 @@ namespace CleanSolution.Core.Domain.Basics
 {
     public abstract class AuditableEntity : BaseEntity
     {
+        public virtual Guid Version { get; set; } = Guid.NewGuid();
         public virtual DateTime DateCreated { get; set; } = DateTime.UtcNow;
         public virtual Guid? CreatedBy { get; set; }
 
