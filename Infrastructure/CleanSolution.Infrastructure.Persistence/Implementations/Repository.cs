@@ -68,5 +68,10 @@ namespace CleanSolution.Infrastructure.Persistence.Implementations
         {
             return await context.Set<TEntity>().CountAsync(predicate);
         }
+        // todo: კეთდება C# ის ახალი ფუნქციონალით, შვილით გადატვირთვა
+        public virtual object Test()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

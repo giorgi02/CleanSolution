@@ -23,5 +23,8 @@ namespace CleanSolution.Core.Application.Interfaces
         Task<bool> CheckAsync(Expression<Func<TEntity, bool>> predicate);
 
         Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate);
+
+        // todo: კეთდება C# ის ახალი ფუნქციონალით, შვილით გადატვირთვა
+        object Test();
     }
 }
