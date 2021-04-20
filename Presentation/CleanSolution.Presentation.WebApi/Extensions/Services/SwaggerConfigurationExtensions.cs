@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
@@ -15,15 +16,29 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
             {
                 // DTO კლასის სახელების დაგენერირების წესის განსაზღვრა
                 s.CustomSchemaIds(x => x.FullName.Substring(x.FullName.LastIndexOf('.') + 1).Replace('+', '.'));
+
                 // ავტორიზაციის წესების განსაზღვრა
-                s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                var jwtSecurityScheme = new OpenApiSecurityScheme
                 {
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    Name = "JWT Authentication",
                     In = ParameterLocation.Header,
-                    Description = "Please enter JWT with Bearer into field",
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey
+                    Type = SecuritySchemeType.Http,
+                    Description = "ქვედა ტექსტბოქსში ჩაწერეთ **_მხოლოდ_** თქვენი JWT Bearer token !",
+
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+                s.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+                s.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    { jwtSecurityScheme, Array.Empty<string>() }
                 });
-      
+
                 // მეთოდების დახარისხება სხვადასხვა სექციებად
                 foreach (var name in options)
                 {
