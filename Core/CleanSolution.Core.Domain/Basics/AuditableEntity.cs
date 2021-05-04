@@ -4,7 +4,12 @@ namespace CleanSolution.Core.Domain.Basics
 {
     public abstract class AuditableEntity : BaseEntity
     {
-        public virtual Guid Version { get; set; } = Guid.NewGuid();
+        /// <summary>
+        /// ჩანაწერის ცვლილების რიგითი ნომერი
+        /// გვიცავს გაუთვალისწინებელი, განმეორებითი Update -სბისგან
+        /// </summary>
+        public virtual int Version { get; set; } = 1;
+
         public virtual DateTime DateCreated { get; set; } = DateTime.UtcNow;
         public virtual Guid? CreatedBy { get; set; }
 
