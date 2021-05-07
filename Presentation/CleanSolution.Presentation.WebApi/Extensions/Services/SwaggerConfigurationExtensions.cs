@@ -15,7 +15,7 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
             services.AddSwaggerGen(c =>
             {
                 // DTO კლასის სახელების დაგენერირების წესის განსაზღვრა
-                c.CustomSchemaIds(x => x.FullName.Substring(x.FullName.LastIndexOf('.') + 1).Replace('+', '.'));
+                c.CustomSchemaIds(x => x.FullName[(x.FullName.LastIndexOf('.') + 1)..].Replace('+', '.'));
 
                 // ავტორიზაციის წესების განსაზღვრა
                 var jwtSecurityScheme = new OpenApiSecurityScheme

@@ -2,10 +2,10 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Workabroad.Core.Application.Exceptions;
 
@@ -58,7 +58,7 @@ namespace Workabroad.Presentation.Admin.Extensions.Middlewares
             context.Response.StatusCode = statusCode;
 
             await context.Response.WriteAsync(
-            JsonConvert.SerializeObject(Result.Failure(
+            JsonSerializer.Serialize(Result.Failure(
                 titleText: titleText,
                 statusCode: statusCode,
                 traceId: traceId,

@@ -16,8 +16,8 @@ namespace CleanSolution.Presentation.WebApi
 {
     public class Startup
     {
-        public IConfiguration configuration { get; }
-        public Startup(IConfiguration configuration) => this.configuration = configuration;
+        public IConfiguration Configuration { get; }
+        public Startup(IConfiguration configuration) => this.Configuration = configuration;
 
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -28,9 +28,9 @@ namespace CleanSolution.Presentation.WebApi
 
             services.AddSwaggerServices("CleanSolution v1");
 
-            services.AddApplicatonLayer(configuration);
-            services.AddFilesLayer(configuration);
-            services.AddPersistenceLayer(configuration);
+            services.AddApplicatonLayer(Configuration);
+            services.AddFilesLayer(Configuration);
+            services.AddPersistenceLayer(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
