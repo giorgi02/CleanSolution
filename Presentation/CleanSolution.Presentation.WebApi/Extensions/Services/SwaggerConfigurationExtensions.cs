@@ -12,10 +12,10 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
         public static void AddSwaggerServices(this IServiceCollection services, params string[] options)
         {
             // Swagger-ის გენერატორის რეგისტრაცია, 1 ან მეტი Swagger დოკუმენტის განსაზღვრა
-            services.AddSwaggerGen(s =>
+            services.AddSwaggerGen(c =>
             {
                 // DTO კლასის სახელების დაგენერირების წესის განსაზღვრა
-                s.CustomSchemaIds(x => x.FullName.Substring(x.FullName.LastIndexOf('.') + 1).Replace('+', '.'));
+                c.CustomSchemaIds(x => x.FullName.Substring(x.FullName.LastIndexOf('.') + 1).Replace('+', '.'));
 
                 // ავტორიზაციის წესების განსაზღვრა
                 var jwtSecurityScheme = new OpenApiSecurityScheme
@@ -33,8 +33,8 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
                         Type = ReferenceType.SecurityScheme
                     }
                 };
-                s.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
-                s.AddSecurityRequirement(new OpenApiSecurityRequirement
+                c.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     { jwtSecurityScheme, Array.Empty<string>() }
                 });
@@ -42,7 +42,7 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
                 // მეთოდების დახარისხება სხვადასხვა სექციებად
                 foreach (var name in options)
                 {
-                    s.SwaggerDoc(name: name, new OpenApiInfo
+                    c.SwaggerDoc(name: name, new OpenApiInfo
                     {
                         Title = "CleanSolution.Presentation.WebApi",
                         Version = "v1.0",
@@ -63,11 +63,11 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
         public static IApplicationBuilder UseSwaggerMiddleware(this IApplicationBuilder app, params string[] options)
         {
             app.UseSwagger();
-            app.UseSwaggerUI(s =>
+            app.UseSwaggerUI(c =>
             {
                 foreach (var name in options)
                 {
-                    s.SwaggerEndpoint(
+                    c.SwaggerEndpoint(
                         url: $"/swagger/{name}/swagger.json",
                         name: name);
                 }
