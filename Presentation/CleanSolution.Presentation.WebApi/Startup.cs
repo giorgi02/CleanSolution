@@ -1,4 +1,4 @@
-using CleanSolution.Core.Application;
+﻿using CleanSolution.Core.Application;
 using CleanSolution.Core.Application.Interfaces.Contracts;
 using CleanSolution.Infrastructure.Files;
 using CleanSolution.Infrastructure.Persistence;
@@ -24,6 +24,9 @@ namespace CleanSolution.Presentation.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddFluentValidation();
+
+            // todo: მივაქციო ყურადღება, ზოგგან მუშაობს ზოგგან არა
+            services.AddHttpContextAccessor(); // IHttpContextAccessor -ის ინექციისთვის
             services.AddScoped<IActiveUserService, ActiveUserService>();
 
             services.AddSwaggerServices("CleanSolution v1");

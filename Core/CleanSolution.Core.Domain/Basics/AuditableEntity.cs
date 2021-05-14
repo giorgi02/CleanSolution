@@ -6,7 +6,7 @@ namespace CleanSolution.Core.Domain.Basics
     {
         /// <summary>
         /// ჩანაწერის ცვლილების რიგითი ნომერი
-        /// გვიცავს გაუთვალისწინებელი, განმეორებითი Update -სბისგან
+        /// გვიცავს გაუთვალისწინებელი, განმეორებითი Update -ებისგან
         /// </summary>
         public virtual int Version { get; set; } = 1;
 
