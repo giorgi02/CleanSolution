@@ -29,6 +29,7 @@ namespace CleanSolution.Presentation.WebApi
             services.AddHttpContextAccessor(); // IHttpContextAccessor -ის ინექციისთვის
             services.AddScoped<IActiveUserService, ActiveUserService>();
 
+            services.ConfigureCors();
             services.AddSwaggerServices("CleanSolution v1");
 
             services.AddApplicatonLayer(Configuration);

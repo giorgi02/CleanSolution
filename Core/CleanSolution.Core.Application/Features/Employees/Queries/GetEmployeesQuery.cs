@@ -13,11 +13,11 @@ namespace CleanSolution.Core.Application.Features.Employees.Queries
     {
         public class Request : IRequest<GetPaginationDto<GetEmployeeDto>>
         {
-            public int pageIndex { get; set; }
-            public int pageSize { get; set; }
+            public int PageIndex { get; set; }
+            public int PageSize { get; set; }
 
             public string PrivateNumber { get; set; }
-            public string FiratName { get; set; }
+            public string FirstName { get; set; }
             public string LastName { get; set; }
             public Gender? Gender { get; set; }
         }
@@ -35,7 +35,7 @@ namespace CleanSolution.Core.Application.Features.Employees.Queries
 
             public async Task<GetPaginationDto<GetEmployeeDto>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var employees = await unit.EmployeeRepository.FilterAsync(request.pageIndex, request.pageSize, firatName: request.FiratName);
+                var employees = await unit.EmployeeRepository.FilterAsync(request.PageIndex, request.PageSize, firatName: request.FirstName);
 
                 return mapper.Map<GetPaginationDto<GetEmployeeDto>>(employees);
             }
@@ -45,8 +45,8 @@ namespace CleanSolution.Core.Application.Features.Employees.Queries
         {
             public Validator()
             {
-                RuleFor(x => x.pageIndex).GreaterThanOrEqualTo(1).WithMessage("მიუთითეთ გვერდის ნომერი");
-                RuleFor(x => x.pageSize).GreaterThan(0).WithMessage("მიუთითეთ გვერდის ზომა");
+                RuleFor(x => x.PageIndex).GreaterThanOrEqualTo(1).WithMessage("მიუთითეთ გვერდის ნომერი");
+                RuleFor(x => x.PageSize).GreaterThan(0).WithMessage("მიუთითეთ გვერდის ზომა");
             }
         }
     }

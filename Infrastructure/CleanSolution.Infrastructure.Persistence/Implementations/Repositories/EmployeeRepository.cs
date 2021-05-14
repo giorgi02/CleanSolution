@@ -23,11 +23,11 @@ namespace CleanSolution.Infrastructure.Persistence.Implementations.Repositories
             return await this.Including.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<Pagination<Employee>> FilterAsync(int pageIndex, int pageSize, string privateNumber = null, string firatName = null, string lastName = null, Gender? gender = null)
+        public async Task<Pagination<Employee>> FilterAsync(int pageIndex, int pageSize, string privateNumber = null, string firstName = null, string lastName = null, Gender? gender = null)
         {
             var employees = this.Including.Where(x =>
                 (privateNumber == null || x.PrivateNumber == privateNumber) &&
-                (firatName == null || x.FirstName == firatName) &&
+                (firstName == null || x.FirstName == firstName) &&
                 (lastName == null || x.LastName == lastName) &&
                 (gender == null || x.Gender == gender)
             );

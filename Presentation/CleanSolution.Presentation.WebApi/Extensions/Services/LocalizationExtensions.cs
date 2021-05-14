@@ -10,7 +10,7 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
     }
     public static class LocalizationExtensions
     {
-        private static readonly Dictionary<string, byte> CultureMap = new Dictionary<string, byte>()
+        private static readonly Dictionary<string, byte> CultureMap = new()
         {
             ["ka-GE"] = (byte)Cultures.Geo,
             ["en-US"] = (byte)Cultures.Eng
