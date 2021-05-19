@@ -2,7 +2,7 @@
 
 namespace Workabroad.Core.Application.Exceptions
 {
-    public class ServiceUnavailableException : EntityValidationException
+    public class ServiceUnavailableException : ApplicationBaseException
     {
         public override HttpStatusCode StatusCode => HttpStatusCode.ServiceUnavailable;
 

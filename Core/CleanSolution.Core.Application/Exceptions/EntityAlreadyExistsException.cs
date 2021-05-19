@@ -2,7 +2,7 @@
 
 namespace Workabroad.Core.Application.Exceptions
 {
-    public class EntityAlreadyExistsException : EntityValidationException
+    public class EntityAlreadyExistsException : ApplicationBaseException
     {
         public override HttpStatusCode StatusCode => HttpStatusCode.BadRequest;
 

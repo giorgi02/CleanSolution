@@ -40,7 +40,7 @@ namespace Workabroad.Presentation.Admin.Extensions.Middlewares
 
             switch (exception)
             {
-                case EntityValidationException e:
+                case ApplicationBaseException e:
                     titleText = "One or more validation errors occurred.";
                     statusCode = (int)e.StatusCode;
                     break;

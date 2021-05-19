@@ -2,7 +2,7 @@
 
 namespace Workabroad.Core.Application.Exceptions
 {
-    public class EntityNotFoundException : EntityValidationException
+    public class EntityNotFoundException : ApplicationBaseException
     {
         public override HttpStatusCode StatusCode => HttpStatusCode.NotFound;
 

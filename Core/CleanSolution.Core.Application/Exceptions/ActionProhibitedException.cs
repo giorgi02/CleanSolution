@@ -2,7 +2,7 @@
 
 namespace Workabroad.Core.Application.Exceptions
 {
-    public class ActionProhibitedException : EntityValidationException
+    public class ActionProhibitedException : ApplicationBaseException
     {
         public override HttpStatusCode StatusCode => HttpStatusCode.NotAcceptable;
 
