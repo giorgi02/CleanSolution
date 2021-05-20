@@ -68,7 +68,7 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
                 foreach (var name in options)
                 {
                     c.SwaggerEndpoint(
-                        url: $"/swagger/{name}/swagger.json",
+                        url: $"{name}/swagger.json",
                         name: name);
                 }
             });
