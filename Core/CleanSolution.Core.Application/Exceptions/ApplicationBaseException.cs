@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace Workabroad.Core.Application.Exceptions
+namespace CleanSolution.Core.Application.Exceptions
 {
     public abstract class ApplicationBaseException : Exception
     {

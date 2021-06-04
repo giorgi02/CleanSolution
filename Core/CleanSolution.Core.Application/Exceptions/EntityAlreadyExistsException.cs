@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Workabroad.Core.Application.Exceptions
+namespace CleanSolution.Core.Application.Exceptions
 {
     public class EntityAlreadyExistsException : ApplicationBaseException
     {
