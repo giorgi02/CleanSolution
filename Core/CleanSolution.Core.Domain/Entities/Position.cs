@@ -4,7 +4,7 @@ namespace CleanSolution.Core.Domain.Entities
 {
     public class Position : BaseEntity
     {
-        public string Name { get; private set; }
-        public double Salary { get; private set; }
+        public string Name { get; init; }
+        public double Salary { get; init; } 
     }
 }

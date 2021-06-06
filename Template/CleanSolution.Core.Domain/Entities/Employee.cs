@@ -1,8 +1,8 @@
-﻿using CleanSolution.Core.Domain.Basics;
-using CleanSolution.Core.Domain.Enums;
+﻿using $safeprojectname$.Basics;
+using $safeprojectname$.Enums;
 using System;
 
-namespace CleanSolution.Core.Domain.Entities
+namespace $safeprojectname$.Entities
 {
     public class Employee : AuditableEntity
     {

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="ProjectGroup" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+  <TemplateData>
+
+    <Name>ASP.NET Core Web API (CleanArchitecture)</Name>
+    <Description>სუფთა არქიტექტურის შაბლონი</Description>
+    <TemplateID>CleanSolution.WebApi.CSharp</TemplateID>
+    <DefaultName>CleanSolution</DefaultName>
+
+    <Icon>Icon.ico</Icon>
+
+    <ProjectType>CSharp</ProjectType>
+    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+    <SortOrder>100</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <LanguageTag>C#</LanguageTag>
+
+    <ProjectTypeTag>Linux</ProjectTypeTag>
+    <ProjectTypeTag>macOS</ProjectTypeTag>
+    <ProjectTypeTag>Windows</ProjectTypeTag>
+    <ProjectTypeTag>Cloud</ProjectTypeTag>
+    <ProjectTypeTag>Service</ProjectTypeTag>
+    <ProjectTypeTag>Web</ProjectTypeTag>
+    <ProjectTypeTag>API</ProjectTypeTag>
+
+  </TemplateData>
+  <TemplateContent>
+    <ProjectCollection>
+
+      <SolutionFolder Name="Presentation">
+        <ProjectTemplateLink ProjectName="$projectname$.Presentation.WebApi">
+          CleanSolution.Presentation.WebApi\MyTemplate.vstemplate
+        </ProjectTemplateLink>
+      </SolutionFolder>
+
+      <SolutionFolder Name="Infrastructure">
+        <ProjectTemplateLink ProjectName="$projectname$.Infrastructure.Persistence" >
+          CleanSolution.Infrastructure.Persistence\MyTemplate.vstemplate
+        </ProjectTemplateLink>
+        <ProjectTemplateLink ProjectName="$projectname$.Infrastructure.Logger">
+          CleanSolution.Infrastructure.Logger\MyTemplate.vstemplate
+        </ProjectTemplateLink>
+        <ProjectTemplateLink ProjectName="$projectname$.Infrastructure.File">
+          CleanSolution.Infrastructure.Files\MyTemplate.vstemplate
+        </ProjectTemplateLink>
+      </SolutionFolder>
+
+      <SolutionFolder Name="Core">
+        <ProjectTemplateLink ProjectName="$projectname$.Core.Domain">
+          CleanSolution.Core.Domain\MyTemplate.vstemplate
+        </ProjectTemplateLink>
+        <ProjectTemplateLink ProjectName="$projectname$.Core.Application" >
+          CleanSolution.Core.Application\MyTemplate.vstemplate
+        </ProjectTemplateLink>
+      </SolutionFolder>
+
+    </ProjectCollection>
+  </TemplateContent>
+</VSTemplate>

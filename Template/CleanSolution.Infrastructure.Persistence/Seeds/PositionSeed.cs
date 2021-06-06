@@ -1,7 +1,7 @@
 ﻿using CleanSolution.Core.Domain.Entities;
 using System;
 
-namespace CleanSolution.Infrastructure.Persistence.Seeds
+namespace $safeprojectname$.Seeds
 {
     internal static class PositionSeed
     {
