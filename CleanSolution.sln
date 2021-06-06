@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Template", "Template", "{DB
 		Template\clean-architecture.png = Template\clean-architecture.png
 		Template\CleanSolution.Template.vstemplate = Template\CleanSolution.Template.vstemplate
 		Template\Icon.ico = Template\Icon.ico
-		Template\Info.Md = Template\Info.Md
+		Template\README.Md = Template\README.Md
 	EndProjectSection
 EndProject
 Global
