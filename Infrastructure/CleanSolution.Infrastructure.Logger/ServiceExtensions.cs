@@ -37,18 +37,26 @@ namespace Workabroad.Infrastructure.Logger
                 {
                     new SqlColumn
                     {
-                        ColumnName = "AccountType",
-                        PropertyName = "AccountType",
+                        ColumnName = "UserId",
+                        DataType = SqlDbType.UniqueIdentifier,
+                        NonClusteredIndex = true,
+                        AllowNull = true
+                    },
+                    new SqlColumn
+                    {
+                        ColumnName = "Method",
+                        PropertyName = "RequestMethod",
                         DataType = SqlDbType.NVarChar,
-                        DataLength = 32,
+                        DataLength = 16,
                         NonClusteredIndex = false,
                         AllowNull = true
                     },
                     new SqlColumn
                     {
-                        ColumnName = "AccountId",
-                        DataType = SqlDbType.UniqueIdentifier,
-                        NonClusteredIndex = true,
+                        ColumnName = "TraceId",
+                        DataType = SqlDbType.NVarChar,
+                        DataLength = 32,
+                        NonClusteredIndex = false,
                         AllowNull = true
                     }
                 }

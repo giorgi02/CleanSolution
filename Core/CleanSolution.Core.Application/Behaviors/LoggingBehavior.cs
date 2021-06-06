@@ -19,8 +19,9 @@ namespace CleanSolution.Core.Application.Behaviors
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
-            logger.LogInformation("request: method={@RequestMethod}, url={@RequestUrl}, type={@name}, body={@request}, userIpAddress={@IpAddress}, userPort={@Port}, acountId={@AccountId}",
-                user.RequestMethod, user.RequestUrl, typeof(TRequest).Name, request, user.IpAddress, user.Port, user.UserId);
+            logger.LogInformation("request: url={@RequestUrl}, method={@RequestMethod}, type={@name}, body={@request}, userIpAddress={@IpAddress}, userPort={@Port}, userId={@UserId}",
+              user.RequestUrl, user.RequestMethod, typeof(TRequest).Name, request, user.IpAddress, user.Port, user.UserId);
+
 
             var response = await next();
 

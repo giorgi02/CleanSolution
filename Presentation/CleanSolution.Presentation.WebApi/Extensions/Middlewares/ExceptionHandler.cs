@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Workabroad.Core.Application.Exceptions;
 
 namespace Workabroad.Presentation.Admin.Extensions.Middlewares
 {
