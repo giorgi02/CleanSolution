@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json;
 
 namespace CleanSolution.Core.Domain.Basics
 {
@@ -19,12 +20,12 @@ namespace CleanSolution.Core.Domain.Basics
             if (other == null || this.GetType() != other.GetType())
                 return false;
 
-            var compareTo = other as BaseEntity;
+            var otherEntity = other as BaseEntity;
 
-            if (ReferenceEquals(this, other as BaseEntity))
+            if (object.ReferenceEquals(this, otherEntity))
                 return true;
 
-            return compareTo != null && this.Id.Equals(compareTo.Id);
+            return otherEntity != null && this.Id.Equals(otherEntity.Id);
         }
 
         public static bool operator ==(BaseEntity left, BaseEntity right) => (left, right) switch
@@ -36,6 +37,7 @@ namespace CleanSolution.Core.Domain.Basics
 
         public static bool operator !=(BaseEntity left, BaseEntity right) => !(left == right);
 
-        public override string ToString() => $"{this.GetType().Name} \"id\" : {this.Id}";
+        public override string ToString() => JsonSerializer.Serialize<object>(this);
+
     }
 }

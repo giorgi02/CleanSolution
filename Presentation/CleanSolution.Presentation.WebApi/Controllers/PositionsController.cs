@@ -19,6 +19,7 @@ namespace CleanSolution.Presentation.WebApi.Controllers
 
 
         [HttpGet]
-        public async Task<IEnumerable<GetPositionDto>> Get() => await mediator.Send(new GetPositionQuery.Request());
+        public async Task<IEnumerable<GetPositionDto>> Get() =>
+            await mediator.Send(new GetPositionQuery.Request());
     }
 }
