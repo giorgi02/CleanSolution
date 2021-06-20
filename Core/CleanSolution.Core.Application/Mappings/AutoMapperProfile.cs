@@ -15,7 +15,8 @@ namespace CleanSolution.Core.Application.Mappings
             CreateMap<SetPositionDto, Position>();
             CreateMap<SetEmployeeDto, Employee>();
             CreateMap<CreateEmployeeCommand.Request, Employee>();
-            CreateMap<UpdateEmployeeCommand.Request, Employee>();
+            CreateMap<UpdateEmployeeCommand.Request, Employee>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.EmployeeId));
 
 
             CreateMap(typeof(Pagination<>), typeof(GetPaginationDto<>));

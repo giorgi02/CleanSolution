@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanSolution.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210606090857_initialization")]
+    [Migration("20210611195557_initialization")]
     partial class initialization
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,6 +77,7 @@ namespace CleanSolution.Infrastructure.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Version")
+                        .IsConcurrencyToken()
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -110,13 +111,13 @@ namespace CleanSolution.Infrastructure.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("15770657-fd70-4f63-b41e-5a9e46fb2708"),
+                            Id = new Guid("5b22fe4a-3c07-4e8b-b0d2-3e64f503979c"),
                             Name = "პროგრამისტი",
                             Salary = 2000.0
                         },
                         new
                         {
-                            Id = new Guid("f5b8c239-d5c1-42bc-96b5-d7316f93e375"),
+                            Id = new Guid("8c6f3e3a-8fca-429e-a3c5-78217a5fcc34"),
                             Name = "ტესტერი",
                             Salary = 1000.0
                         });

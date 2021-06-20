@@ -31,6 +31,10 @@ namespace CleanSolution.Infrastructure.Persistence.Configurations
             builder.OwnsOne(x => x.Address).Property(x => x.Street).HasMaxLength(100);
             #endregion
 
+            #region Concurrency Token ველის მონიშვნა (ოპტიმისტური კონკურენცია)
+            builder.Property(o => o.Version).IsConcurrencyToken(true);
+            #endregion
+
             builder.HasQueryFilter(x => !x.DateDeleted.HasValue);
         }
     }

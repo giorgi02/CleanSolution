@@ -44,6 +44,8 @@ namespace CleanSolution.Infrastructure.Persistence
                     entry.Entity.CreatedBy = user.UserId;
                     break;
                 case EntityState.Modified:
+                    entry.Entity.Version++;
+
                     entry.Entity.DateUpdated = DateTime.UtcNow;
                     entry.Entity.UpdatedBy = user.UserId;
 

@@ -43,7 +43,7 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
                 var employee = mapper.Map<Employee>(request);
                 employee.Position = await unit.PositionRepository.ReadAsync(request.PositionId);
 
-                await unit.EmployeeRepository.UpdateAsync(employee);
+                await unit.EmployeeRepository.UpdateAsync(request.EmployeeId, employee);
 
                 return Unit.Value;
             }

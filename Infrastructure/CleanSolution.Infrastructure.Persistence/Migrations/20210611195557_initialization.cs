@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CleanSolution.Infrastructure.Persistence.Migrations
 {
@@ -57,12 +57,12 @@ namespace CleanSolution.Infrastructure.Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "Positions",
                 columns: new[] { "Id", "Name", "Salary" },
-                values: new object[] { new Guid("15770657-fd70-4f63-b41e-5a9e46fb2708"), "პროგრამისტი", 2000.0 });
+                values: new object[] { new Guid("5b22fe4a-3c07-4e8b-b0d2-3e64f503979c"), "პროგრამისტი", 2000.0 });
 
             migrationBuilder.InsertData(
                 table: "Positions",
                 columns: new[] { "Id", "Name", "Salary" },
-                values: new object[] { new Guid("f5b8c239-d5c1-42bc-96b5-d7316f93e375"), "ტესტერი", 1000.0 });
+                values: new object[] { new Guid("8c6f3e3a-8fca-429e-a3c5-78217a5fcc34"), "ტესტერი", 1000.0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employes_PositionId",
