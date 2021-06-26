@@ -49,6 +49,7 @@ namespace CleanSolution.Presentation.WebApi
             app.UseMiddleware<ExceptionHandler>();
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseRouting();
 

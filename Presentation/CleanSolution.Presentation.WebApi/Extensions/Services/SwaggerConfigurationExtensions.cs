@@ -65,6 +65,8 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
+                c.InjectStylesheet("/SwaggerDark.css"); // შავი ფონის დაყენება
+
                 foreach (var name in options)
                 {
                     c.SwaggerEndpoint(
