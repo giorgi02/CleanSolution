@@ -1,5 +1,6 @@
 ﻿using CleanSolution.Core.Application.Exceptions;
 using CleanSolution.Core.Application.Interfaces;
+using CleanSolution.Core.Application.Resources;
 using MediatR;
 using System;
 using System.Threading;
@@ -27,7 +28,7 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
             {
                 var isRecord = await unit.EmployeeRepository.CheckAsync(x => x.Id == request.EmployeeId);
                 if (isRecord)
-                    throw new EntityNotFoundException("ჩანაწერი ვერ მოიძებნა");
+                    throw new EntityNotFoundException(Texts.exception_data_not_found);
 
                 await unit.EmployeeRepository.DeleteAsync(request.EmployeeId);
 

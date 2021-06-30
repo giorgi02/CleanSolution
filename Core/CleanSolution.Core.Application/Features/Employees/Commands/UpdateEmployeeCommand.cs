@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CleanSolution.Core.Application.Interfaces;
+using CleanSolution.Core.Application.Resources;
 using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Enums;
 using FluentValidation;
@@ -58,9 +59,9 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
                 this.unit = unit;
 
                 RuleFor(x => x.PrivateNumber)
-                    .NotNull().WithMessage("პირადი ნომერი ცარიელია")
-                    .Length(11).WithMessage("პირადი ნომერი უნდა შედგებოდეს 11 სიმბოლოსგან")
-                    .Matches("^[0-9]*$").WithMessage("პირადი ნომერი უნდა შედგებოდეს მხოლოდ ციფრებისგან");
+                    .NotNull().WithMessage(Texts.validation_privatenumber_is_empty)
+                    .Length(11).WithMessage(Texts.validation_privatenumber_is_11_symbol)
+                    .Matches("^[0-9]*$").WithMessage(Texts.validation_privatenumber_is_digits);
 
                 RuleFor(x => x.FirstName)
                     .NotEmpty().WithMessage("სახელის ველი ცარიელია");
