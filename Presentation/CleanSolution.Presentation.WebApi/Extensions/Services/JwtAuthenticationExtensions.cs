@@ -34,9 +34,9 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
                         ValidateIssuerSigningKey = true,
                         ClockSkew = TimeSpan.Zero, // ანულებს ტოკენის სიცოცხლის ხანგრძლივობას. დეფოლტად არის 5 წუთი
 
-                        ValidIssuer = configuration["Token:Issuer"],
-                        ValidAudience = configuration["Token:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:Key"]))
+                        ValidIssuer = configuration["JwtSettings:Issuer"],
+                        ValidAudience = configuration["JwtSettings:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]))
                     };
                 });
         }
@@ -97,15 +97,15 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
 
 
             // ქმნის JWT ხელმოწერას
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:Key"]));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]));
             var signinCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var jwt = new JwtSecurityToken
                 (
                     claims: claims,
                     expires: DateTime.UtcNow.AddHours(1),
-                    issuer: configuration["Token:Issuer"],
-                    audience: configuration["Token:Audience"],
+                    issuer: configuration["JwtSettings:Issuer"],
+                    audience: configuration["JwtSettings:Audience"],
                     signingCredentials: signinCredentials
                 );
 
