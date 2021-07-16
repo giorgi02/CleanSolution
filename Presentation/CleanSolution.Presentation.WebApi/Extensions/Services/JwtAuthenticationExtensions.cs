@@ -14,7 +14,7 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
     public static class JwtAuthenticationExtensions
     {
         /// <summary>
-        /// ავთენთიფიკაციის პარამეტრების დამატება
+        /// ავთენთიფიკაციის პარამეტრების დამატება (ტოკენის ვალიდურობის შემოწმება)
         /// </summary>
         public static void AddJwtAuthenticationConfigs(this IServiceCollection services, IConfiguration configuration)
         {
@@ -42,7 +42,7 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
         }
 
         /// <summary>
-        /// ავტორიზაციის პარამეტრების დამატება
+        /// ავტორიზაციის პარამეტრების დამატება (მეთოდებზე დაშვების შემოწმება)
         /// </summary>
         public static void AddJwtAuthorizationConfigs(this IServiceCollection services)
         {
@@ -90,7 +90,7 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
 
 
             foreach (var role in roles)
-                claims.Add(new Claim("roles", role));
+                claims.Add(new Claim(ClaimTypes.Role, role));
 
             foreach (var resource in resources)
                 claims.Add(new Claim("resources", resource));

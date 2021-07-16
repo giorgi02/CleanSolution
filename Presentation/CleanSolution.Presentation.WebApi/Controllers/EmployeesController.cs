@@ -2,6 +2,7 @@
 using CleanSolution.Core.Application.Features.Employees.Commands;
 using CleanSolution.Core.Application.Features.Employees.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,7 @@ namespace CleanSolution.Presentation.WebApi.Controllers
             await mediator.Send(request);
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "EditPolicy")]
         public async Task Put(Guid id, [FromBody] UpdateEmployeeCommand.Request request)
         {
             request.SetId(id);
@@ -52,6 +54,7 @@ namespace CleanSolution.Presentation.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrator")]
         public async Task Delete(Guid id) =>
             await mediator.Send(new DeleteEmployeeCommand.Request(id));
     }

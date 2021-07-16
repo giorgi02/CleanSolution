@@ -9,7 +9,7 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
         {
             services.AddCors(options =>
             {
-                options.AddPolicy(name: "AnyPolicy", builder => builder
+                options.AddPolicy(name: "CorsPolicy", builder => builder
                     .AllowAnyOrigin() // დაშვება ეძლევა მოთხოვნას ნებისმიერი წყაროდან
                     .AllowAnyMethod() // დაშვებას იძლევა HTTP ყველა მეთოდზე
                     .AllowAnyHeader()

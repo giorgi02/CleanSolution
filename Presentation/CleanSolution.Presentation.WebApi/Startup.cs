@@ -51,8 +51,11 @@ namespace CleanSolution.Presentation.WebApi
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseCors("CorsPolicy");
+
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
