@@ -13,9 +13,9 @@ namespace CleanSolution.Core.Application.Features.Employees.Queries
     {
         public class Request : IRequest<GetEmployeeDto>
         {
-            public Guid EmploueeId { get; private set; }
+            public Guid EmployeeId { get; private set; }
 
-            public Request(Guid employeeId) => this.EmploueeId = employeeId;
+            public Request(Guid employeeId) => this.EmployeeId = employeeId;
         }
 
         public class Handler : IRequestHandler<Request, GetEmployeeDto>
@@ -31,7 +31,7 @@ namespace CleanSolution.Core.Application.Features.Employees.Queries
 
             public async Task<GetEmployeeDto> Handle(Request request, CancellationToken cancellationToken)
             {
-                var application = await unit.EmployeeRepository.ReadAsync(request.EmploueeId);
+                var application = await unit.EmployeeRepository.ReadAsync(request.EmployeeId);
                 if (application == null)
                     throw new EntityNotFoundException("ჩანაწერი ვერ მოიძებნა");
 

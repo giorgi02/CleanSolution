@@ -6,5 +6,6 @@ namespace CleanSolution.Core.Application.Interfaces
     {
         public IPositionRepository PositionRepository { get; }
         public IEmployeeRepository EmployeeRepository { get; }
+        public ILogEventRepository LogObjectRepository { get; }
     }
 }

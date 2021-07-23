@@ -17,9 +17,5 @@ namespace CleanSolution.Core.Domain.Entities
         public Position Position { get; set; }
         public string PictureName { get; set; }
 
-        //public void SetPosition(Position position)
-        //{
-        //    this.Position = position;
-        //}
     }
 }

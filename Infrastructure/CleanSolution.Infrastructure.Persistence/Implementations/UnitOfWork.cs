@@ -8,6 +8,7 @@ namespace CleanSolution.Infrastructure.Persistence.Implementations
     {
         private IPositionRepository positionRepository;
         private IEmployeeRepository employeeRepository;
+        private ILogEventRepository logObjectRepository;
 
 
         private readonly DataContext context;
@@ -16,5 +17,6 @@ namespace CleanSolution.Infrastructure.Persistence.Implementations
 
         public IPositionRepository PositionRepository => positionRepository ??= new PositionRepository(context);
         public IEmployeeRepository EmployeeRepository => employeeRepository ??= new EmployeeRepository(context);
+        public ILogEventRepository LogObjectRepository => logObjectRepository ??= new LogEventRepository(context);
     }
 }

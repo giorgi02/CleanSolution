@@ -16,6 +16,7 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
         public class Request : IRequest
         {
             public Guid EmployeeId { get; private set; }
+            public int Version { get; set; }
 
             public string PrivateNumber { get; set; }
             public string FirstName { get; set; }

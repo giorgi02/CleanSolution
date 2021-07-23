@@ -16,7 +16,7 @@ namespace CleanSolution.Infrastructure.EventSourcing
             eventStoreConnection.ConnectAsync().GetAwaiter().GetResult();
 
             services.AddSingleton(eventStoreConnection);
-            services.AddTransient<AggregateRepository>();
+            //services.AddTransient<AggregateRepository>();
         }
     }
 }

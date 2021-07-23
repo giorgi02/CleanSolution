@@ -40,12 +40,16 @@ namespace CleanSolution.Presentation.WebApi.Controllers
         public async Task<GetEmployeeDto> Get([FromRoute] Guid id) =>
             await mediator.Send(new GetEmployeeQuery.Request(id));
 
+        [HttpGet("history/{id}")]
+        public async Task<GetEmployeeDto> GetHistory([FromRoute] Guid id, [FromQuery] int? version, DateTime? actTime) =>
+            await mediator.Send(new GetEmployeeHistoryQuery.Request(id, version, actTime));
+
         [HttpPost]
         public async Task Post([FromForm] CreateEmployeeCommand.Request request) =>
             await mediator.Send(request);
 
         [HttpPut("{id}")]
-        [Authorize(Policy = "EditPolicy")]
+        //[Authorize(Policy = "EditPolicy")]
         public async Task Put(Guid id, [FromBody] UpdateEmployeeCommand.Request request)
         {
             request.SetId(id);
