@@ -11,7 +11,7 @@ using System.Text;
 
 namespace Workabroad.Presentation.Admin.Extensions.Services
 {
-    public static class JwtAuthenticationExtensions
+    public static class JwtValidationExtensions
     {
         /// <summary>
         /// ავთენთიფიკაციის პარამეტრების დამატება (ტოკენის ვალიდურობის შემოწმება)
@@ -82,7 +82,7 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
             string[] roles,
             string[] resources)
         {
-            List<Claim> claims = new List<Claim>()
+            List<Claim> claims = new()
             {
                 new Claim(ClaimTypes.NameIdentifier, personId),
                 new Claim("UserName", userName)

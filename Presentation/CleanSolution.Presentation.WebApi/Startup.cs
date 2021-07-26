@@ -2,6 +2,7 @@
 using CleanSolution.Core.Application.Interfaces.Contracts;
 using CleanSolution.Infrastructure.Files;
 using CleanSolution.Infrastructure.Persistence;
+using CleanSolution.Presentation.WebApi.Extensions.Middlewares;
 using CleanSolution.Presentation.WebApi.Extensions.Services;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -29,8 +30,10 @@ namespace CleanSolution.Presentation.WebApi
             services.AddHttpContextAccessor(); // IHttpContextAccessor -ის ინექციისთვის
             services.AddScoped<IActiveUserService, ActiveUserService>();
 
-            services.ConfigureCors();
+            services.AddConfigureCors();
+            services.AddConfigureHealthChecks(Configuration);
             services.AddSwaggerServices("CleanSolution v1");
+
 
             services.AddApplicatonLayer(Configuration);
             services.AddFilesLayer(Configuration);
@@ -60,6 +63,8 @@ namespace CleanSolution.Presentation.WebApi
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapCustomHealthCheck();
+
                 endpoints.MapControllers();
             });
         }

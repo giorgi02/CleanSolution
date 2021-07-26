@@ -5,7 +5,7 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
 {
     public static class ServiceExtensions
     {
-        public static void ConfigureCors(this IServiceCollection services)
+        public static void AddConfigureCors(this IServiceCollection services)
         {
             services.AddCors(options =>
             {

@@ -8,7 +8,7 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
         Geo = 1,
         Eng = 2
     }
-    public static class LocalizationExtensions
+    public static class LocalizationService
     {
         private static readonly Dictionary<string, byte> CultureMap = new()
         {
