@@ -1,5 +1,4 @@
 ﻿using CleanSolution.Core.Application.Interfaces.Repositories;
-using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System;

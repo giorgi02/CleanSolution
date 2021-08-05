@@ -48,6 +48,33 @@ namespace CleanSolution.Presentation.WebApi.Controllers
         public async Task Post([FromForm] CreateEmployeeCommand.Request request) =>
             await mediator.Send(request);
 
+        /// <summary>
+        /// თანამშრომლის კორექტირება
+        /// </summary>
+        /// <remarks>
+        /// Request-ის მაგალითი:
+        /// 
+        ///     PUT /Employee
+        ///     {
+        ///         "version": 0,
+        ///         "privateNumber": "00000000001",
+        ///         "firstName": "Jon",
+        ///         "lastName": "Doe",
+        ///         "gender": 1,
+        ///         "birthDate": "2000-01-01",
+        ///         "phones": [
+        ///            "123456789"
+        ///         ],
+        ///         "address": {
+        ///            "city": "Foo",
+        ///            "street": "Foo #2"
+        ///         },
+        ///         "positionId": "5b22fe4a-3c07-4e8b-b0d2-3e64f503979c"
+        ///     }
+        /// </remarks>
+        /// <param name="id">5b22fe4a-3c07-4e8b-b0d2-3e64f503979a</param>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         //[Authorize(Policy = "EditPolicy")]
         public async Task Put(Guid id, [FromBody] UpdateEmployeeCommand.Request request)

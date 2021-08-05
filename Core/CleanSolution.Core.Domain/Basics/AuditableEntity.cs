@@ -1,5 +1,4 @@
-﻿using CleanSolution.Core.Domain.Entities;
-using CleanSolution.Core.Domain.Functions;
+﻿using CleanSolution.Core.Domain.Functions;
 using CleanSolution.Core.Domain.Helpers;
 using System;
 using System.Collections.Generic;

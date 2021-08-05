@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
+using System.IO;
+using System.Reflection;
 
 namespace Workabroad.Presentation.Admin.Extensions.Services
 {
@@ -54,9 +56,12 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
                             Url = new Uri("http://test.com/")
                         }
                     });
-
-
                 }
+
+                // დკომენტარების დაყენება Swagger JSON და UI–თვის.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         }
         // middleware
