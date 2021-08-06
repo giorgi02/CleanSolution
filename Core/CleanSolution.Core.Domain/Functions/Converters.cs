@@ -1,29 +1,26 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Text.Json;
 
 namespace CleanSolution.Core.Domain.Functions
 {
     public static class Converters
     {
-        public static object ConvertStringTo(this string value, Type type)
+        // todo: დავხვეწო ეს მეთოდი
+        public static object ConvertFromString(this string value, Type type)
         {
-            if (type == typeof(Guid) || type == typeof(Guid?))
-            {
-                return Guid.Parse(value);
-            }
-            else if (type.IsEnum)
+            if (type.IsArray)
             {
                 return JsonSerializer.Deserialize(value, type);
             }
-            else if (type.IsArray)
+            else  //if (TypeDescriptor.GetConverter(typeof(string)).CanConvertTo(type))
             {
-                return JsonSerializer.Deserialize(value, type);
+                return TypeDescriptor.GetConverter(type).ConvertFromString(value);
             }
-            else
-            {
-                Type t = Nullable.GetUnderlyingType(type) ?? type;
-                return (value == null) ? null : Convert.ChangeType(value, t);
-            }
+            //else
+            //{
+            //    throw new Exception($"მოცემული ტიპის: {type.FullName} კონვერტაცია შეუძლებელია, ჩაამატეთ მექანიკურად");
+            //}
         }
     }
 }

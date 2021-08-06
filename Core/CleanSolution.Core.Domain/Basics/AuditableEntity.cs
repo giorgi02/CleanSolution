@@ -38,7 +38,7 @@ namespace CleanSolution.Core.Domain.Basics
             {
                 var property = this.GetType().GetProperty(item.Key);
 
-                var value = item.Value.ToString().ConvertStringTo(property.PropertyType);
+                var value = item.Value.ToString().ConvertFromString(property.PropertyType);
                 property.SetValue(this, value);
             }
         }
