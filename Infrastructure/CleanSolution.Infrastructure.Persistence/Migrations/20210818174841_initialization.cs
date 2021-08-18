@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CleanSolution.Infrastructure.Persistence.Migrations
 {
@@ -7,6 +7,22 @@ namespace CleanSolution.Infrastructure.Persistence.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "LogEvents",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ObjectType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ObjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EventBody = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Version = table.Column<int>(type: "int", nullable: false),
+                    ActTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LogEvents", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Positions",
                 columns: table => new
@@ -57,12 +73,12 @@ namespace CleanSolution.Infrastructure.Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "Positions",
                 columns: new[] { "Id", "Name", "Salary" },
-                values: new object[] { new Guid("5b22fe4a-3c07-4e8b-b0d2-3e64f503979c"), "პროგრამისტი", 2000.0 });
+                values: new object[] { new Guid("4208fc3c-78fd-44c4-8762-7c74c70b3ba1"), "პროგრამისტი", 2000.0 });
 
             migrationBuilder.InsertData(
                 table: "Positions",
                 columns: new[] { "Id", "Name", "Salary" },
-                values: new object[] { new Guid("8c6f3e3a-8fca-429e-a3c5-78217a5fcc34"), "ტესტერი", 1000.0 });
+                values: new object[] { new Guid("ee2736c3-4563-45a8-ae80-05d7fcb61fc6"), "ტესტერი", 1000.0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employes_PositionId",
@@ -80,6 +96,9 @@ namespace CleanSolution.Infrastructure.Persistence.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Employes");
+
+            migrationBuilder.DropTable(
+                name: "LogEvents");
 
             migrationBuilder.DropTable(
                 name: "Positions");

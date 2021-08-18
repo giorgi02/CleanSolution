@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanSolution.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210611195557_initialization")]
+    [Migration("20210818174841_initialization")]
     partial class initialization
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace CleanSolution.Infrastructure.Persistence.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.6")
+                .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("CleanSolution.Core.Domain.Entities.Employee", b =>
@@ -111,16 +111,42 @@ namespace CleanSolution.Infrastructure.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5b22fe4a-3c07-4e8b-b0d2-3e64f503979c"),
+                            Id = new Guid("4208fc3c-78fd-44c4-8762-7c74c70b3ba1"),
                             Name = "პროგრამისტი",
                             Salary = 2000.0
                         },
                         new
                         {
-                            Id = new Guid("8c6f3e3a-8fca-429e-a3c5-78217a5fcc34"),
+                            Id = new Guid("ee2736c3-4563-45a8-ae80-05d7fcb61fc6"),
                             Name = "ტესტერი",
                             Salary = 1000.0
                         });
+                });
+
+            modelBuilder.Entity("CleanSolution.Core.Domain.Helpers.LogEvent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ActTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EventBody")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ObjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ObjectType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LogEvents");
                 });
 
             modelBuilder.Entity("CleanSolution.Core.Domain.Entities.Employee", b =>

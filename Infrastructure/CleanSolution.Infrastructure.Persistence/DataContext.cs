@@ -62,7 +62,7 @@ namespace CleanSolution.Infrastructure.Persistence
                     entry.Property(nameof(AuditableEntity.DateDeleted)).IsModified = false;
 
                     // ცვლილებების ლოგირება
-                    logEvent(entry);
+                    logEvents(entry);
                     break;
                 case EntityState.Deleted:
                     entry.State = EntityState.Unchanged;
@@ -72,13 +72,13 @@ namespace CleanSolution.Infrastructure.Persistence
                     entry.Entity.DeletedBy = user.UserId;
 
                     // ცვლილებების ლოგირება
-                    logEvent(entry);
+                    logEvents(entry);
                     break;
             };
         }
 
         // EventSource ის შენახვა
-        private void logEvent(EntityEntry<AuditableEntity> entry)
+        private void logEvents(EntityEntry<AuditableEntity> entry)
         {
             // ცვლილებების ლოგირება
             Dictionary<string, object> @events = new();
