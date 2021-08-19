@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
 using System;
 using System.Collections.ObjectModel;
@@ -12,21 +13,19 @@ namespace Workabroad.Infrastructure.Logger
     {
         public static void AddLoggerLayer(this IServiceCollection services, IConfiguration configuration)
         {
-            ServiceExtensions.LogToSql(configuration);
-            //ServiceExtensions.LogToSeq(configuration);
+            //ServiceExtensions.LogToSql(configuration);
+            ServiceExtensions.LogToSeq(configuration);
         }
-
+        // დაილოგება SqlServer მონაცემთა ბაზაში
         private static void LogToSql(IConfiguration configuration)
         {
-            //პროექტის გაშვებამდე ლოგის შესაქმნელად:
+            //// პროექტის გაშვებამდე ლოგის შესაქმნელად:
             //var appSettings = new ConfigurationBuilder()
             //    .SetBasePath(Directory.GetCurrentDirectory())
             //    .AddJsonFile("appsettings.json")
             //    .Build();
 
-
             var logDb = configuration.GetConnectionString("DefaultConnection");
-
 
             var sinkOpts = new MSSqlServerSinkOptions
             {
@@ -69,23 +68,27 @@ namespace Workabroad.Infrastructure.Logger
             };
 
             // we don't need XML data
-            //columnOpts.Store.Remove(StandardColumn.Properties);
+            columnOpts.Store.Remove(StandardColumn.Properties);
             // we do want JSON data
             columnOpts.Store.Add(StandardColumn.LogEvent);
 
             Log.Logger = new LoggerConfiguration()
-                    .ReadFrom.Configuration(configuration)
+                    //.ReadFrom.Configuration(configuration)
+                    .MinimumLevel.Information()
+                    .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
                     .WriteTo.MSSqlServer(
                         connectionString: logDb,
                         sinkOptions: sinkOpts,
                         columnOptions: columnOpts)
                     .CreateLogger();
         }
-
+        // დაილოგება Seq ლოგების მენეჯერში
         private static void LogToSeq(IConfiguration configuration)
         {
             Log.Logger = new LoggerConfiguration()
-                    .ReadFrom.Configuration(configuration)
+                    //.ReadFrom.Configuration(configuration)
+                    .MinimumLevel.Information()
+                    .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
                     .WriteTo.Seq("http://localhost:5341")
                     .CreateLogger();
         }
