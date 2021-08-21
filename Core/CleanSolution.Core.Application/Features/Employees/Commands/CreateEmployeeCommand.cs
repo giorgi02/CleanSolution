@@ -7,6 +7,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,10 +22,16 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public Gender Gender { get; set; }
+            public ICollection<Language> Languages { get; set; }
             public DateTime? BirthDate { get; set; }
             public string[] Phones { get; set; }
             public Address Address { get; set; }
             public Guid PositionId { get; set; }
+
+            public Request()
+            {
+                this.Languages = new HashSet<Language>();
+            }
         }
 
         public class Handler : IRequestHandler<Request>

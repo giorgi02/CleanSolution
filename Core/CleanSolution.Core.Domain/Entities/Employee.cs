@@ -12,10 +12,10 @@ namespace CleanSolution.Core.Domain.Entities
         public Gender Gender { get; private set; }
         public DateTime BirthDate { get; private set; }
         public string[] Phones { get; private set; }
+        public Language Language { get; set; }
         public Address Address { get; private set; }
 
         public Position Position { get; set; }
         public string PictureName { get; set; }
-
     }
 }
