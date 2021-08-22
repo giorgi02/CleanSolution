@@ -44,8 +44,9 @@ namespace CleanSolution.Infrastructure.Persistence.Migrations
                     PrivateNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false),
                     BirthDate = table.Column<DateTime>(type: "date", nullable: false),
+                    Gender = table.Column<byte>(type: "tinyint", nullable: false),
+                    Language = table.Column<byte>(type: "tinyint", nullable: false),
                     Phones = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     Address_City = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Address_Street = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
@@ -73,12 +74,12 @@ namespace CleanSolution.Infrastructure.Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "Positions",
                 columns: new[] { "Id", "Name", "Salary" },
-                values: new object[] { new Guid("4208fc3c-78fd-44c4-8762-7c74c70b3ba1"), "პროგრამისტი", 2000.0 });
+                values: new object[] { new Guid("53c161b8-415e-402d-80c1-da798aa3d047"), "პროგრამისტი", 2000.0 });
 
             migrationBuilder.InsertData(
                 table: "Positions",
                 columns: new[] { "Id", "Name", "Salary" },
-                values: new object[] { new Guid("ee2736c3-4563-45a8-ae80-05d7fcb61fc6"), "ტესტერი", 1000.0 });
+                values: new object[] { new Guid("90c8f00f-f112-4929-b630-c174899e9f17"), "ტესტერი", 1000.0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employes_PositionId",

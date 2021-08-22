@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanSolution.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210818174841_initialization")]
+    [Migration("20210822071909_initialization")]
     partial class initialization
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace CleanSolution.Infrastructure.Persistence.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.8")
+                .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("CleanSolution.Core.Domain.Entities.Employee", b =>
@@ -50,8 +50,11 @@ namespace CleanSolution.Infrastructure.Persistence.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
+                    b.Property<byte>("Gender")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte>("Language")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -111,13 +114,13 @@ namespace CleanSolution.Infrastructure.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4208fc3c-78fd-44c4-8762-7c74c70b3ba1"),
+                            Id = new Guid("53c161b8-415e-402d-80c1-da798aa3d047"),
                             Name = "პროგრამისტი",
                             Salary = 2000.0
                         },
                         new
                         {
-                            Id = new Guid("ee2736c3-4563-45a8-ae80-05d7fcb61fc6"),
+                            Id = new Guid("90c8f00f-f112-4929-b630-c174899e9f17"),
                             Name = "ტესტერი",
                             Salary = 1000.0
                         });

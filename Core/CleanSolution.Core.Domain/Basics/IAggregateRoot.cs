@@ -1,6 +1,4 @@
 ﻿namespace CleanSolution.Core.Domain.Basics
 {
-    public interface AggregateRoot
-    {
-    }
+    public interface IAggregateRoot { }
 }

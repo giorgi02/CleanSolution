@@ -81,7 +81,8 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
                 RuleFor(x => x.Gender).IsInEnum().WithMessage("მიუთითეთ სქესი სწორად");
 
                 RuleFor(x => x.BirthDate)
-                    .Must(y => y < DateTime.Now).WithMessage("მიუთითეთ დაბადების თარიღი სწორად");
+                    .Must(y => y < DateTime.Now).WithMessage("მიუთითეთ დაბადების თარიღი სწორად")
+                    .Must(y => y > DateTime.Now.AddYears(-18) || y < DateTime.Now.AddYears(-100)).WithMessage("ამ ასაკის პიროვნება არ შეიძლება იყოს დასაქმებული");
 
                 RuleFor(x => x.PositionId)
                     .MustAsync(IfExistPosition).WithMessage("მიუთითეთ პოზიცია სწორად");

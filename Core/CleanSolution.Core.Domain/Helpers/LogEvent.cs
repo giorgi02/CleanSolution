@@ -12,8 +12,10 @@ namespace CleanSolution.Core.Domain.Helpers
         public int Version { get; set; }
         public DateTime ActTime { get; set; }
 
-        public LogEvent() { }
+
+        private LogEvent() { /* for deserialization & ORMs */}
         public LogEvent(AuditableEntity aggregate)
+            : this()
         {
             this.ObjectType = aggregate.GetType().Name;
             this.ObjectId = aggregate.Id;

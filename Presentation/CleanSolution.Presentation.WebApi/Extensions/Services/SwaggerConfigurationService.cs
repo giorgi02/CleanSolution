@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
@@ -8,7 +7,7 @@ using System.Reflection;
 
 namespace Workabroad.Presentation.Admin.Extensions.Services
 {
-    public static class SwaggerConfigurationExtensions
+    public static class SwaggerConfigurationService
     {
         // services
         public static void AddSwaggerServices(this IServiceCollection services, params string[] options)
@@ -63,24 +62,6 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
-        }
-        // middleware
-        public static IApplicationBuilder UseSwaggerMiddleware(this IApplicationBuilder app, params string[] options)
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.InjectStylesheet("/SwaggerDark.css"); // შავი ფონის დაყენება
-
-                foreach (var name in options)
-                {
-                    c.SwaggerEndpoint(
-                        url: $"{name}/swagger.json",
-                        name: name);
-                }
-            });
-
-            return app;
         }
     }
 }

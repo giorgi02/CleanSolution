@@ -2,6 +2,7 @@
 using CleanSolution.Core.Domain.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace CleanSolution.Core.Domain.Basics
 {
@@ -27,7 +28,7 @@ namespace CleanSolution.Core.Domain.Basics
         {
             foreach (var e in events)
             {
-                var @event = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object>>(e.EventBody);
+                var @event = JsonSerializer.Deserialize<Dictionary<string, object>>(e.EventBody);
                 When(@event);
             }
         }
