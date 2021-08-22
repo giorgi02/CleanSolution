@@ -1,4 +1,5 @@
 ﻿using CleanSolution.Core.Domain.Basics;
+using System;
 
 namespace CleanSolution.Core.Domain.Entities
 {
@@ -13,6 +14,13 @@ namespace CleanSolution.Core.Domain.Entities
         {
             this.Name = name;
             this.Salary = salary;
+        }
+
+        public void Deconstruct(out Guid id, out string name, out double salary)
+        {
+            id = this.Id;
+            name = this.Name;
+            salary = this.Salary;
         }
     }
 }

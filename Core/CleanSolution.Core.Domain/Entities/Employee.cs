@@ -34,5 +34,20 @@ namespace CleanSolution.Core.Domain.Entities
             this.Position = position;
             this.PictureName = pictureName;
         }
+
+        public void Deconstruct(out Guid id, out string privateNumber, out string firstName, out string lastName, out Gender gender, out DateTime birthDate, out string[] phones, out Language language, out Address address, out Position position, out string pictureName)
+        {
+            id = this.Id;
+            privateNumber = this.PrivateNumber;
+            firstName = this.FirstName;
+            lastName = this.LastName;
+            gender = this.Gender;
+            birthDate = this.BirthDate;
+            phones = this.Phones;
+            language = this.Language;
+            address = this.Address;
+            position = this.Position;
+            pictureName = this.PictureName;
+        }
     }
 }

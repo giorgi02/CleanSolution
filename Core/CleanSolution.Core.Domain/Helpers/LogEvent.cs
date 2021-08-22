@@ -22,5 +22,15 @@ namespace CleanSolution.Core.Domain.Helpers
             this.Version = aggregate.Version;
             this.ActTime = DateTime.Now;
         }
+
+        public void Deconstruct(out Guid id, out string objectType, out Guid objectId, out string eventBody, out int version, out DateTime actTime)
+        {
+            id = this.Id;
+            objectType = this.ObjectType;
+            objectId = this.ObjectId;
+            eventBody = this.EventBody;
+            version = this.Version;
+            actTime = this.ActTime;
+        }
     }
 }
