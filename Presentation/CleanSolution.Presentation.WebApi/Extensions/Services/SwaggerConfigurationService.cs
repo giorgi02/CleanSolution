@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Reflection;
 
-namespace Workabroad.Presentation.Admin.Extensions.Services
+namespace Workabroad.Presentation.WebApi.Extensions.Services
 {
     public static class SwaggerConfigurationService
     {

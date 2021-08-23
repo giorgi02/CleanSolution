@@ -4,7 +4,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Workabroad.Presentation.Admin.Extensions.Services;
+using Workabroad.Presentation.WebApi.Extensions.Services;
 
 namespace CleanSolution.Presentation.WebApi.Extensions
 {

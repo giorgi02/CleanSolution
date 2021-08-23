@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Workabroad.Infrastructure.Logger;
-using Workabroad.Presentation.Admin.Extensions.Middlewares;
+using Workabroad.Presentation.WebApi.Extensions.Middlewares;
 
 namespace CleanSolution.Presentation.WebApi
 {

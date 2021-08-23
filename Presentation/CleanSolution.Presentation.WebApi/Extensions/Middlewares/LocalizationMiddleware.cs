@@ -7,7 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Workabroad.Presentation.Admin.Extensions.Middlewares
+namespace Workabroad.Presentation.WebApi.Extensions.Middlewares
 {
     public static class RequestLocalizationMiddleware
     {

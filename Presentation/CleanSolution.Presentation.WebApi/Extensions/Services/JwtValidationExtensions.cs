@@ -9,7 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Workabroad.Presentation.Admin.Extensions.Services
+namespace Workabroad.Presentation.WebApi.Extensions.Services
 {
     public static class JwtValidationExtensions
     {

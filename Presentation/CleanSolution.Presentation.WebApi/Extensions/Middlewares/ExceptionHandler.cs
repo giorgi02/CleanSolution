@@ -9,7 +9,7 @@ using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Workabroad.Presentation.Admin.Extensions.Middlewares
+namespace Workabroad.Presentation.WebApi.Extensions.Middlewares
 {
     public class ExceptionHandler
     {

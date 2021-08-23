@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 
-namespace Workabroad.Presentation.Admin.Extensions.Services
+namespace Workabroad.Presentation.WebApi.Extensions.Services
 {
     public enum Cultures : byte
     {
