@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
 using System;
 using System.Collections.ObjectModel;
@@ -73,9 +72,7 @@ namespace Workabroad.Infrastructure.Logger
             columnOpts.Store.Add(StandardColumn.LogEvent);
 
             Log.Logger = new LoggerConfiguration()
-                    //.ReadFrom.Configuration(configuration)
-                    .MinimumLevel.Information()
-                    .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
+                    .ReadFrom.Configuration(configuration)
                     .WriteTo.MSSqlServer(
                         connectionString: logDb,
                         sinkOptions: sinkOpts,
@@ -86,9 +83,7 @@ namespace Workabroad.Infrastructure.Logger
         private static void LogToSeq(IConfiguration configuration)
         {
             Log.Logger = new LoggerConfiguration()
-                    //.ReadFrom.Configuration(configuration)
-                    .MinimumLevel.Information()
-                    .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
+                    .ReadFrom.Configuration(configuration)
                     .WriteTo.Seq("http://localhost:5341")
                     .CreateLogger();
         }

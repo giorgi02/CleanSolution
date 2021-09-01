@@ -41,10 +41,12 @@ namespace Workabroad.Presentation.WebApi.Extensions.Middlewares
             switch (exception)
             {
                 case ApplicationBaseException e:
+                    logger.LogWarning(exception, nameof(ApplicationBaseException));
                     titleText = "One or more validation errors occurred.";
                     statusCode = (int)e.StatusCode;
                     break;
                 case ValidationException _:
+                    logger.LogWarning(exception, nameof(ValidationException));
                     statusCode = (int)HttpStatusCode.BadRequest;
                     break;
                 case Exception _:
