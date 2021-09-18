@@ -1,6 +1,7 @@
 ﻿using CleanSolution.Core.Domain.Basics;
 using CleanSolution.Core.Domain.Enums;
 using System;
+using System.Linq.Expressions;
 
 namespace CleanSolution.Core.Domain.Entities
 {
@@ -49,5 +50,26 @@ namespace CleanSolution.Core.Domain.Entities
             position = this.Position;
             pictureName = this.PictureName;
         }
+
+
+        public Expression<Func<Employee, bool>> ToFilterExpression() =>
+            x => (this.Id == default || x.Id == this.Id)
+            && (this.PrivateNumber == default || x.PrivateNumber == this.PrivateNumber)
+            && (this.FirstName == default || x.FirstName == this.FirstName)
+            && (this.LastName == default || x.LastName == this.LastName)
+            && (this.BirthDate == default || x.BirthDate == this.BirthDate)
+            && (this.Gender == default || x.Gender == this.Gender)
+            && (this.LastName == default || x.LastName == this.LastName)
+            && (this.PictureName == default || x.PictureName == this.PictureName);
+
+        public Expression<Func<Employee, bool>> ToSearchExpression() =>
+            x => x.Id == this.Id
+            || x.PrivateNumber == this.PrivateNumber
+            || x.FirstName == this.FirstName
+            || x.LastName == this.LastName
+            || x.BirthDate == this.BirthDate
+            || x.Gender == this.Gender
+            || x.LastName == this.LastName
+            || x.PictureName == this.PictureName;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CleanSolution.Core.Domain.Basics;
 using System;
+using System.Linq.Expressions;
 
 namespace CleanSolution.Core.Domain.Entities
 {
@@ -22,5 +23,15 @@ namespace CleanSolution.Core.Domain.Entities
             name = this.Name;
             salary = this.Salary;
         }
+
+        public Expression<Func<Position, bool>> ToFilterExpression() =>
+            x => (this.Id == default || x.Id == this.Id)
+            && (this.Name == default || x.Name == this.Name)
+            && (this.Salary == default || x.Salary == this.Salary);
+
+        public Expression<Func<Position, bool>> ToSearchExpression() =>
+            x => x.Id == this.Id
+            || x.Name == this.Name
+            || x.Salary == this.Salary;
     }
 }
