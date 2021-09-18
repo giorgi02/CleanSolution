@@ -39,6 +39,12 @@ namespace CleanSolution.Infrastructure.Persistence.Implementations
         {
             context.Set<TEntity>().Update(entity);
             return await context.SaveChangesAsync();
+        }       
+        // todo: შევამოწმო ეს მეთოდი
+        public virtual async Task<int> UpdateAsync2(TEntity entity)
+        {
+            context.Entry(entity).State = EntityState.Modified;
+            return await context.SaveChangesAsync();
         }
         public virtual async Task<int> UpdateAsync(Guid id, TEntity entity)
         {
