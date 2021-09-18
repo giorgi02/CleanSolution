@@ -28,12 +28,13 @@ namespace Workabroad.Presentation.WebApi.Extensions.Services
                     cfg.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateActor = false,
+
+                        ValidateLifetime = true,
                         ValidateIssuer = true,
                         ValidateAudience = true,
-                        ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ClockSkew = TimeSpan.Zero, // ანულებს ტოკენის სიცოცხლის ხანგრძლივობას. დეფოლტად არის 5 წუთი
 
+                        ClockSkew = TimeSpan.Zero, // ანულებს ტოკენის სიცოცხლის ხანგრძლივობას. დეფოლტად არის 5 წუთი
                         ValidIssuer = configuration["JwtSettings:Issuer"],
                         ValidAudience = configuration["JwtSettings:Audience"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]))
@@ -77,17 +78,16 @@ namespace Workabroad.Presentation.WebApi.Extensions.Services
         /// </summary>
         public static string GenerateJwtToken(
             IConfiguration configuration,
-            string personId,
+            string userId,
             string userName,
             string[] roles,
             string[] resources)
         {
             List<Claim> claims = new()
             {
-                new Claim(ClaimTypes.NameIdentifier, personId),
+                new Claim(ClaimTypes.NameIdentifier, userId),
                 new Claim("UserName", userName)
             };
-
 
             foreach (var role in roles)
                 claims.Add(new Claim(ClaimTypes.Role, role));
