@@ -40,9 +40,9 @@ namespace CleanSolution.Core.Application.Features.Employees.Queries
 
             public async Task<GetPaginationDto<GetEmployeeDto>> Handle(Request request, CancellationToken cancellationToken)
             {
-                Language? languages = null;
+                Language languages = Language.None;
                 foreach (var language in request.Languages)
-                    languages = (languages ?? 0) | language;
+                    languages |= language;
 
                 var employees = await unit.EmployeeRepository.FilterAsync(request.PageIndex, request.PageSize, firatName: request.FirstName, language: languages);
 

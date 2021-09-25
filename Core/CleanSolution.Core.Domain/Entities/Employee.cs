@@ -7,7 +7,7 @@ namespace CleanSolution.Core.Domain.Entities
 {
     public class Employee : AuditableEntity, IAggregateRoot
     {
-        public string PrivateNumber { get; init; }
+        public string PrivateNumber { get; private init; }
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public DateTime BirthDate { get; private set; }

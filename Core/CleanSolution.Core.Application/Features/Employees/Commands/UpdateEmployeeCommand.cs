@@ -49,6 +49,8 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
                 var employee = mapper.Map<Employee>(request);
                 employee.Position = await unit.PositionRepository.ReadAsync(request.PositionId);
 
+                cancellationToken.ThrowIfCancellationRequested();
+
                 await unit.EmployeeRepository.UpdateAsync(request.EmployeeId, employee);
 
                 return Unit.Value;

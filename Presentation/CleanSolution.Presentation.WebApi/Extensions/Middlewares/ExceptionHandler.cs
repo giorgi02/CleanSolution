@@ -34,24 +34,28 @@ namespace Workabroad.Presentation.WebApi.Extensions.Middlewares
 
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            string titleText = "Internal Server Error.";
-            var statusCode = (int)HttpStatusCode.InternalServerError;
+            string titleText = "One or more validation errors occurred.";
+            var statusCode = (int)HttpStatusCode.BadRequest;
             var traceId = Activity.Current?.Id ?? context?.TraceIdentifier;
 
             switch (exception)
             {
                 case ApplicationBaseException e:
                     logger.LogWarning(exception, nameof(ApplicationBaseException));
-                    titleText = "One or more validation errors occurred.";
                     statusCode = (int)e.StatusCode;
                     break;
                 case ValidationException _:
                     logger.LogWarning(exception, nameof(ValidationException));
-                    statusCode = (int)HttpStatusCode.BadRequest;
+                    break;
+                case OperationCanceledException _:
+                    logger.LogError(exception, exception.Message);
+                    titleText = "Operation Is Canceled.";
                     break;
                 case Exception _:
                     logger.LogError(exception, exception.Message);
-                    exception = new Exception("Internal Server Error");
+                    exception = new Exception("Internal Server Error.");
+                    titleText = "Internal Server Error.";
+                    statusCode = (int)HttpStatusCode.InternalServerError;
                     break;
             }
 

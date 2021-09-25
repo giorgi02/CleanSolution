@@ -6,8 +6,8 @@ namespace CleanSolution.Core.Domain.Entities
 {
     public class Position : BaseEntity
     {
-        public string Name { get; init; }
-        public double Salary { get; init; }
+        public string Name { get; private init; }
+        public double Salary { get; private init; }
 
         private Position() { /* for deserialization & ORMs */}
         public Position(string name, double salary)

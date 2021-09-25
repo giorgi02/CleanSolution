@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CleanSolution.Presentation.WebApi.Controllers
@@ -41,12 +42,12 @@ namespace CleanSolution.Presentation.WebApi.Controllers
             await mediator.Send(new GetEmployeeQuery.Request(id));
 
         [HttpGet("history/{id}")]
-        public async Task<GetEmployeeDto> GetHistory([FromRoute] Guid id, [FromQuery] int? version, DateTime? actTime) =>
-            await mediator.Send(new GetEmployeeHistoryQuery.Request(id, version, actTime));
+        public async Task<GetEmployeeDto> GetHistory([FromRoute] Guid id, [FromQuery] int? version, DateTime? actTime, CancellationToken cancellationToken = default) =>
+            await mediator.Send(new GetEmployeeHistoryQuery.Request(id, version, actTime), cancellationToken);
 
         [HttpPost]
-        public async Task Post([FromForm] CreateEmployeeCommand.Request request) =>
-            await mediator.Send(request);
+        public async Task Post([FromForm] CreateEmployeeCommand.Request request, CancellationToken cancellationToken = default) =>
+            await mediator.Send(request, cancellationToken);
 
         /// <summary>
         /// თანამშრომლის კორექტირება
@@ -77,11 +78,11 @@ namespace CleanSolution.Presentation.WebApi.Controllers
         /// <returns></returns>
         [HttpPut("{id}")]
         //[Authorize(Policy = "EditPolicy")]
-        public async Task Put(Guid id, [FromBody] UpdateEmployeeCommand.Request request)
+        public async Task Put(Guid id, [FromBody] UpdateEmployeeCommand.Request request, CancellationToken cancellationToken = default)
         {
             request.SetId(id);
 
-            await mediator.Send(request);
+            await mediator.Send(request, cancellationToken);
         }
 
         [HttpDelete("{id}")]

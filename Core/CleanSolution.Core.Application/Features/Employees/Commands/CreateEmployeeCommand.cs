@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,8 +19,12 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
         public class Request : IRequest
         {
             public IFormFile Picture { get; set; }
+            [Required]
+            [StringLength(maximumLength: 11, MinimumLength = 11, ErrorMessage = "პირადი ნომერი უნდა შედგებოდეს 11 სიმბოლოსგან")]
             public string PrivateNumber { get; set; }
+            [Required]
             public string FirstName { get; set; }
+            [Required]
             public string LastName { get; set; }
             public Gender Gender { get; set; }
             public ICollection<Language> Languages { get; set; }
@@ -51,6 +56,8 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
                 var employee = mapper.Map<Employee>(request);
                 employee.Position = await unit.PositionRepository.ReadAsync(request.PositionId);
 
+                cancellationToken.ThrowIfCancellationRequested();
+
                 employee.PictureName = fileManager.SaveFile(request.Picture);
 
                 await unit.EmployeeRepository.CreateAsync(employee);
@@ -69,7 +76,7 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
 
                 RuleFor(x => x.PrivateNumber)
                     .NotNull().WithMessage("პირადი ნომერი ცარიელია")
-                    .Length(11).WithMessage("პირადი ნომერი უნდა შედგებოდეს 11 სიმბოლოსგან")
+                    //.Length(11).WithMessage("პირადი ნომერი უნდა შედგებოდეს 11 სიმბოლოსგან")
                     .Matches("^[0-9]*$").WithMessage("პირადი ნომერი უნდა შედგებოდეს მხოლოდ ციფრებისგან");
 
                 RuleFor(x => x.FirstName)

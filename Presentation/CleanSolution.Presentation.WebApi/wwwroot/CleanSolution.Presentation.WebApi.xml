@@ -4,7 +4,7 @@
         <name>CleanSolution.Presentation.WebApi</name>
     </assembly>
     <members>
-        <member name="M:CleanSolution.Presentation.WebApi.Controllers.EmployeesController.Put(System.Guid,CleanSolution.Core.Application.Features.Employees.Commands.UpdateEmployeeCommand.Request)">
+        <member name="M:CleanSolution.Presentation.WebApi.Controllers.EmployeesController.Put(System.Guid,CleanSolution.Core.Application.Features.Employees.Commands.UpdateEmployeeCommand.Request,System.Threading.CancellationToken)">
             <summary>
             თანამშრომლის კორექტირება
             </summary>

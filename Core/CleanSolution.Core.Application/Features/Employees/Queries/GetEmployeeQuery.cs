@@ -32,8 +32,7 @@ namespace CleanSolution.Core.Application.Features.Employees.Queries
             public async Task<GetEmployeeDto> Handle(Request request, CancellationToken cancellationToken)
             {
                 var application = await unit.EmployeeRepository.ReadAsync(request.EmployeeId);
-                if (application == null)
-                    throw new EntityNotFoundException("ჩანაწერი ვერ მოიძებნა");
+                if (application == null) throw new EntityNotFoundException("ჩანაწერი ვერ მოიძებნა");
 
                 return await Task.FromResult(mapper.Map<GetEmployeeDto>(application));
             }

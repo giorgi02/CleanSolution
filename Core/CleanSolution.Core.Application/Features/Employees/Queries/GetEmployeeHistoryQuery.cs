@@ -45,14 +45,18 @@ namespace CleanSolution.Core.Application.Features.Employees.Queries
                 if (employee == null)
                     throw new EntityNotFoundException("ჩანაწერი ვერ მოიძებნა");
 
+                cancellationToken.ThrowIfCancellationRequested();
+
                 var histroies = await unit.LogObjectRepository.GetEvents(request.EmployeeId, nameof(Employee), request.Version, request.ActTime);
 
                 if (histroies == null)
-                    return await Task.FromResult(mapper.Map<GetEmployeeDto>(employee));
+                    return mapper.Map<GetEmployeeDto>(employee);
+
+                cancellationToken.ThrowIfCancellationRequested();
 
                 employee.Load(histroies.OrderByDescending(x => x.Version).ToList());
 
-                return await Task.FromResult(mapper.Map<GetEmployeeDto>(employee));
+                return mapper.Map<GetEmployeeDto>(employee);
             }
         }
     }
