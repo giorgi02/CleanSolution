@@ -64,7 +64,7 @@ namespace Workabroad.Presentation.WebApi.Extensions.Middlewares
             context.Response.StatusCode = statusCode;
 
             await context.Response.WriteAsync(
-            JsonSerializer.Serialize(Result.Failure(
+            JsonSerializer.Serialize(Response.Failure(
                 titleText: titleText,
                 statusCode: statusCode,
                 traceId: traceId,

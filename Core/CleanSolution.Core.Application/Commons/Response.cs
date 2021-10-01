@@ -2,7 +2,7 @@
 
 namespace CleanSolution.Core.Application.Commons
 {
-    public static class Result
+    public static class Response
     {
         public static object Success(bool isSuccess, params string[] messages) => new
         {
