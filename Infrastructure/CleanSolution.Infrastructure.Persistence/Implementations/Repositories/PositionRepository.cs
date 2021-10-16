@@ -10,7 +10,7 @@ namespace CleanSolution.Infrastructure.Persistence.Implementations.Repositories
         // todo: კეთდება C# ის ახალი ფუნქციონალით, შვილით გადატვირთვა
         public override PositionRepository Test()
         {
-            return new PositionRepository(context);
+            return new PositionRepository(_context);
         }
     }
 }

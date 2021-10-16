@@ -15,7 +15,7 @@ namespace CleanSolution.Infrastructure.Persistence.Implementations.Repositories
 
 
         private IQueryable<Employee> Including =>
-            this.context.Employes.Include(x => x.Position);
+            _context.Employes.Include(x => x.Position);
 
 
         public override async Task<Employee> ReadAsync(Guid id)

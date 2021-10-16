@@ -11,30 +11,26 @@ namespace CleanSolution.Core.Application.Features.Employees.Queries
 {
     public class GetEmployeeQuery
     {
-        public class Request : IRequest<GetEmployeeDto>
-        {
-            public Guid EmployeeId { get; private set; }
+        public record Request(Guid EmployeeId) : IRequest<GetEmployeeDto>;
 
-            public Request(Guid employeeId) => this.EmployeeId = employeeId;
-        }
 
         public class Handler : IRequestHandler<Request, GetEmployeeDto>
         {
-            private readonly IUnitOfWork unit;
-            private readonly IMapper mapper;
+            private readonly IUnitOfWork _unit;
+            private readonly IMapper _mapper;
 
             public Handler(IUnitOfWork unit, IMapper mapper)
             {
-                this.unit = unit;
-                this.mapper = mapper;
+                _unit = unit;
+                _mapper = mapper;
             }
 
             public async Task<GetEmployeeDto> Handle(Request request, CancellationToken cancellationToken)
             {
-                var application = await unit.EmployeeRepository.ReadAsync(request.EmployeeId);
+                var application = await _unit.EmployeeRepository.ReadAsync(request.EmployeeId);
                 if (application == null) throw new EntityNotFoundException("ჩანაწერი ვერ მოიძებნა");
 
-                return await Task.FromResult(mapper.Map<GetEmployeeDto>(application));
+                return await Task.FromResult(_mapper.Map<GetEmployeeDto>(application));
             }
         }
     }

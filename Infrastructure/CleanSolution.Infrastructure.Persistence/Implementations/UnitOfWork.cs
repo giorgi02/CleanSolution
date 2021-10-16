@@ -1,22 +1,28 @@
 ﻿using CleanSolution.Core.Application.Interfaces;
 using CleanSolution.Core.Application.Interfaces.Repositories;
 using CleanSolution.Infrastructure.Persistence.Implementations.Repositories;
+using System;
+using System.Threading.Tasks;
 
 namespace CleanSolution.Infrastructure.Persistence.Implementations
 {
-    internal class UnitOfWork : IUnitOfWork
+    internal class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private IPositionRepository positionRepository;
-        private IEmployeeRepository employeeRepository;
-        private ILogEventRepository logObjectRepository;
+        private IPositionRepository _positionRepository;
+        private IEmployeeRepository _employeeRepository;
+        private ILogEventRepository _logObjectRepository;
 
 
-        private readonly DataContext context;
-        public UnitOfWork(DataContext context) => this.context = context;
+        private readonly DataContext _context;
+        public UnitOfWork(DataContext context) => this._context = context;
 
 
-        public IPositionRepository PositionRepository => positionRepository ??= new PositionRepository(context);
-        public IEmployeeRepository EmployeeRepository => employeeRepository ??= new EmployeeRepository(context);
-        public ILogEventRepository LogObjectRepository => logObjectRepository ??= new LogEventRepository(context);
+        public IPositionRepository PositionRepository => _positionRepository ??= new PositionRepository(_context);
+        public IEmployeeRepository EmployeeRepository => _employeeRepository ??= new EmployeeRepository(_context);
+        public ILogEventRepository LogObjectRepository => _logObjectRepository ??= new LogEventRepository(_context);
+
+
+        public async Task CompleteAsync() => await _context.SaveChangesAsync();
+        public void Dispose() => _context.Dispose();
     }
 }

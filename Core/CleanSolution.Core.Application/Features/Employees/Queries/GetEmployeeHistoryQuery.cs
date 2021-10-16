@@ -13,50 +13,40 @@ namespace CleanSolution.Core.Application.Features.Employees.Queries
 {
     public class GetEmployeeHistoryQuery
     {
-        public class Request : IRequest<GetEmployeeDto>
-        {
-            public Guid EmployeeId { get; set; }
-            public int? Version { get; set; }
-            public DateTime? ActTime { get; set; }
+        public record Request(Guid EmployeeId, int? Version, DateTime? ActTime)
+            : IRequest<GetEmployeeDto>;
 
-            public Request(Guid employeeId, int? version, DateTime? actTime)
-            {
-                EmployeeId = employeeId;
-                Version = version;
-                ActTime = actTime;
-            }
-        }
 
         public class Handler : IRequestHandler<Request, GetEmployeeDto>
         {
-            private readonly IUnitOfWork unit;
-            private readonly IMapper mapper;
+            private readonly IUnitOfWork _unit;
+            private readonly IMapper _mapper;
 
             public Handler(IUnitOfWork unit, IMapper mapper)
             {
-                this.unit = unit;
-                this.mapper = mapper;
+                _unit = unit;
+                _mapper = mapper;
             }
 
             public async Task<GetEmployeeDto> Handle(Request request, CancellationToken cancellationToken)
             {
-                var employee = await unit.EmployeeRepository.ReadAsync(request.EmployeeId);
+                var employee = await _unit.EmployeeRepository.ReadAsync(request.EmployeeId);
 
                 if (employee == null)
                     throw new EntityNotFoundException("ჩანაწერი ვერ მოიძებნა");
 
                 cancellationToken.ThrowIfCancellationRequested();
 
-                var histroies = await unit.LogObjectRepository.GetEvents(request.EmployeeId, nameof(Employee), request.Version, request.ActTime);
+                var histroies = await _unit.LogObjectRepository.GetEvents(request.EmployeeId, nameof(Employee), request.Version, request.ActTime);
 
                 if (histroies == null)
-                    return mapper.Map<GetEmployeeDto>(employee);
+                    return _mapper.Map<GetEmployeeDto>(employee);
 
                 cancellationToken.ThrowIfCancellationRequested();
 
                 employee.Load(histroies.OrderByDescending(x => x.Version).ToList());
 
-                return mapper.Map<GetEmployeeDto>(employee);
+                return _mapper.Map<GetEmployeeDto>(employee);
             }
         }
     }

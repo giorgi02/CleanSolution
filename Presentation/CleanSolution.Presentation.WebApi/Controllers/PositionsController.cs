@@ -12,14 +12,14 @@ namespace CleanSolution.Presentation.WebApi.Controllers
     [ApiController]
     public class PositionsController : ControllerBase
     {
-        private readonly IMediator mediator;
+        private readonly IMediator _mediator;
 
         public PositionsController(IMediator mediator) =>
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
 
-        [HttpGet]
+        [HttpGet(Name = "GetPositions")]
         public async Task<IEnumerable<GetPositionDto>> Get() =>
-            await mediator.Send(new GetPositionQuery.Request());
+            await _mediator.Send(new GetPositionQuery.Request());
     }
 }

@@ -34,24 +34,26 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
             public void SetId(Guid employeeId) => this.EmployeeId = employeeId;
         }
 
+
         public class Handler : IRequestHandler<Request>
         {
-            private readonly IUnitOfWork unit;
-            private readonly IMapper mapper;
+            private readonly IUnitOfWork _unit;
+            private readonly IMapper _mapper;
 
             public Handler(IUnitOfWork unit, IMapper mapper)
             {
-                this.unit = unit;
-                this.mapper = mapper;
+                _unit = unit;
+                _mapper = mapper;
             }
+
             public async Task<Unit> Handle(Request request, CancellationToken cancellationToken)
             {
-                var employee = mapper.Map<Employee>(request);
-                employee.Position = await unit.PositionRepository.ReadAsync(request.PositionId);
+                var employee = _mapper.Map<Employee>(request);
+                employee.Position = await _unit.PositionRepository.ReadAsync(request.PositionId);
 
                 cancellationToken.ThrowIfCancellationRequested();
 
-                await unit.EmployeeRepository.UpdateAsync(request.EmployeeId, employee);
+                await _unit.EmployeeRepository.UpdateAsync(request.EmployeeId, employee);
 
                 return Unit.Value;
             }
@@ -59,11 +61,11 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
 
         public class Validator : AbstractValidator<Request>
         {
-            private readonly IUnitOfWork unit;
+            private readonly IUnitOfWork _unit;
 
             public Validator(IUnitOfWork unit)
             {
-                this.unit = unit;
+                _unit = unit;
 
                 RuleFor(x => x.PrivateNumber)
                     .NotNull().WithMessage(Texts.validation_privatenumber_is_empty)
@@ -87,7 +89,7 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
 
             private async Task<bool> IfExistPosition(Guid positionId, CancellationToken cancellationToken)
             {
-                return await unit.PositionRepository.CheckAsync(x => x.Id == positionId);
+                return await _unit.PositionRepository.CheckAsync(x => x.Id == positionId);
             }
         }
     }

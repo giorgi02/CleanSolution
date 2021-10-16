@@ -16,7 +16,7 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
 {
     public class CreateEmployeeCommand
     {
-        public class Request : IRequest
+        public class Request : IRequest<Guid>
         {
             public IFormFile Picture { get; set; }
             [Required]
@@ -39,40 +39,42 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
             }
         }
 
-        public class Handler : IRequestHandler<Request>
+
+        public class Handler : IRequestHandler<Request, Guid>
         {
-            private readonly IUnitOfWork unit;
-            private readonly IFileManager fileManager;
-            private readonly IMapper mapper;
+            private readonly IUnitOfWork _unit;
+            private readonly IFileManager _fileManager;
+            private readonly IMapper _mapper;
 
             public Handler(IUnitOfWork unit, IFileManager fileManager, IMapper mapper)
             {
-                this.unit = unit;
-                this.fileManager = fileManager;
-                this.mapper = mapper;
+                _unit = unit;
+                _fileManager = fileManager;
+                _mapper = mapper;
             }
-            public async Task<Unit> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<Guid> Handle(Request request, CancellationToken cancellationToken)
             {
-                var employee = mapper.Map<Employee>(request);
-                employee.Position = await unit.PositionRepository.ReadAsync(request.PositionId);
+                var employee = _mapper.Map<Employee>(request);
+                employee.Position = await _unit.PositionRepository.ReadAsync(request.PositionId);
 
                 cancellationToken.ThrowIfCancellationRequested();
 
-                employee.PictureName = fileManager.SaveFile(request.Picture);
+                employee.PictureName = _fileManager.SaveFile(request.Picture);
 
-                await unit.EmployeeRepository.CreateAsync(employee);
+                await _unit.EmployeeRepository.CreateAsync(employee);
 
-                return Unit.Value;
+                return employee.Id;
             }
         }
 
+
         public class Validator : AbstractValidator<Request>
         {
-            private readonly IUnitOfWork unit;
+            private readonly IUnitOfWork _unit;
 
             public Validator(IUnitOfWork unit)
             {
-                this.unit = unit;
+                _unit = unit;
 
                 RuleFor(x => x.PrivateNumber)
                     .NotNull().WithMessage("პირადი ნომერი ცარიელია")
@@ -97,7 +99,7 @@ namespace CleanSolution.Core.Application.Features.Employees.Commands
 
             private async Task<bool> IfExistPosition(Guid positionId, CancellationToken cancellationToken)
             {
-                return await unit.PositionRepository.CheckAsync(x => x.Id == positionId);
+                return await _unit.PositionRepository.CheckAsync(x => x.Id == positionId);
             }
         }
     }
