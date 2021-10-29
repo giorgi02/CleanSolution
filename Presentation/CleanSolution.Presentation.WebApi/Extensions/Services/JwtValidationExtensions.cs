@@ -98,7 +98,7 @@ namespace Workabroad.Presentation.WebApi.Extensions.Services
 
             // ქმნის JWT ხელმოწერას
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]));
-            var signinCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var signinCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.RsaSha256);
 
             var jwt = new JwtSecurityToken
                 (
