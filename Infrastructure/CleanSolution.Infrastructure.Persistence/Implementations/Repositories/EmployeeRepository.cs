@@ -15,7 +15,7 @@ namespace CleanSolution.Infrastructure.Persistence.Implementations.Repositories
 
 
         private IQueryable<Employee> Including =>
-            this.context.Employes.Include(x => x.Position);
+            _context.Employes.Include(x => x.Position);
 
 
         public override async Task<Employee> ReadAsync(Guid id)
@@ -23,13 +23,14 @@ namespace CleanSolution.Infrastructure.Persistence.Implementations.Repositories
             return await this.Including.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<Pagination<Employee>> FilterAsync(int pageIndex, int pageSize, string privateNumber = null, string firstName = null, string lastName = null, Gender? gender = null)
+        public async Task<Pagination<Employee>> FilterAsync(int pageIndex, int pageSize, string privateNumber = null, string firstName = null, string lastName = null, Gender? gender = null, Language? language = null)
         {
             var employees = this.Including.Where(x =>
                 (privateNumber == null || x.PrivateNumber == privateNumber) &&
                 (firstName == null || x.FirstName == firstName) &&
                 (lastName == null || x.LastName == lastName) &&
-                (gender == null || x.Gender == gender)
+                (gender == null || x.Gender == gender) &&
+                (language == null || x.Language.HasFlag(language))
             );
 
             return await Pagination<Employee>.CreateAsync(employees, pageIndex, pageSize);

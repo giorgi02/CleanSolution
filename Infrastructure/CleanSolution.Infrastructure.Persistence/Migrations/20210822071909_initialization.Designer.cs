@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanSolution.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210611195557_initialization")]
+    [Migration("20210822071909_initialization")]
     partial class initialization
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace CleanSolution.Infrastructure.Persistence.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.6")
+                .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("CleanSolution.Core.Domain.Entities.Employee", b =>
@@ -50,8 +50,11 @@ namespace CleanSolution.Infrastructure.Persistence.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
+                    b.Property<byte>("Gender")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte>("Language")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -111,16 +114,42 @@ namespace CleanSolution.Infrastructure.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5b22fe4a-3c07-4e8b-b0d2-3e64f503979c"),
+                            Id = new Guid("53c161b8-415e-402d-80c1-da798aa3d047"),
                             Name = "პროგრამისტი",
                             Salary = 2000.0
                         },
                         new
                         {
-                            Id = new Guid("8c6f3e3a-8fca-429e-a3c5-78217a5fcc34"),
+                            Id = new Guid("90c8f00f-f112-4929-b630-c174899e9f17"),
                             Name = "ტესტერი",
                             Salary = 1000.0
                         });
+                });
+
+            modelBuilder.Entity("CleanSolution.Core.Domain.Helpers.LogEvent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ActTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EventBody")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ObjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ObjectType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LogEvents");
                 });
 
             modelBuilder.Entity("CleanSolution.Core.Domain.Entities.Employee", b =>

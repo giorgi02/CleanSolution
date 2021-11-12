@@ -5,6 +5,7 @@ using CleanSolution.Core.Application.Features.Employees.Commands;
 using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Enums;
 using System;
+using System.Collections.Generic;
 
 namespace CleanSolution.Core.Application.Mappings
 {
@@ -14,9 +15,12 @@ namespace CleanSolution.Core.Application.Mappings
         {
             CreateMap<SetPositionDto, Position>();
             CreateMap<SetEmployeeDto, Employee>();
-            CreateMap<CreateEmployeeCommand.Request, Employee>();
+            CreateMap<CreateEmployeeCommand.Request, Employee>()
+                .ForMember(dest => dest.Language, opt => opt.MapFrom(src => LanguagesToLanguage(src.Languages)));
+
             CreateMap<UpdateEmployeeCommand.Request, Employee>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.EmployeeId));
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.EmployeeId))
+                .ForMember(dest => dest.Language, opt => opt.MapFrom(src => LanguagesToLanguage(src.Languages)));
 
 
             CreateMap(typeof(Pagination<>), typeof(GetPaginationDto<>));
@@ -24,6 +28,14 @@ namespace CleanSolution.Core.Application.Mappings
             CreateMap<Employee, GetEmployeeDto>()
                 .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender == Gender.Male ? "კაცი" : "ქალი"))
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => DateTime.Now.Year - src.BirthDate.Year));
+        }
+
+        private Language LanguagesToLanguage(ICollection<Language> languages)
+        {
+            Language language = Language.None;
+            foreach (var item in languages)
+                language |= item;
+            return language;
         }
     }
 }

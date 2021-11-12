@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 
-namespace Workabroad.Presentation.Admin.Extensions.Services
+namespace Workabroad.Presentation.WebApi.Extensions.Services
 {
     public enum Cultures : byte
     {
         Geo = 1,
         Eng = 2
     }
-    public static class LocalizationExtensions
+    public static class LocalizationService
     {
         private static readonly Dictionary<string, byte> CultureMap = new()
         {

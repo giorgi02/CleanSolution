@@ -1,16 +1,15 @@
 ﻿using CleanSolution.Core.Application;
-using CleanSolution.Core.Application.Interfaces.Contracts;
 using CleanSolution.Infrastructure.Files;
 using CleanSolution.Infrastructure.Persistence;
-using CleanSolution.Presentation.WebApi.Extensions.Services;
-using FluentValidation.AspNetCore;
+using CleanSolution.Presentation.WebApi.Extensions;
+using CleanSolution.Presentation.WebApi.Extensions.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Workabroad.Presentation.Admin.Extensions.Middlewares;
-using Workabroad.Presentation.Admin.Extensions.Services;
+using Workabroad.Infrastructure.Logger;
+using Workabroad.Presentation.WebApi.Extensions.Middlewares;
 
 namespace CleanSolution.Presentation.WebApi
 {
@@ -23,17 +22,12 @@ namespace CleanSolution.Presentation.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddFluentValidation();
-
-            // todo: მივაქციო ყურადღება, ზოგგან მუშაობს ზოგგან არა
-            services.AddHttpContextAccessor(); // IHttpContextAccessor -ის ინექციისთვის
-            services.AddScoped<IActiveUserService, ActiveUserService>();
-
-            services.ConfigureCors();
-            services.AddSwaggerServices("CleanSolution v1");
+            services.AddThisLayer(Configuration);
 
             services.AddApplicatonLayer(Configuration);
+
             services.AddFilesLayer(Configuration);
+            services.AddLoggerLayer(Configuration);
             services.AddPersistenceLayer(Configuration);
         }
 
@@ -51,12 +45,17 @@ namespace CleanSolution.Presentation.WebApi
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseCors("CorsPolicy");
+
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapCustomHealthCheck();
+
                 endpoints.MapControllers();
             });
         }

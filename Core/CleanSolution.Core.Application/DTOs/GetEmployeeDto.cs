@@ -11,6 +11,7 @@ namespace CleanSolution.Core.Application.DTOs
         public string LastName { get; set; }
         public string Gender { get; set; }
         public int Age { get; set; }
+        public string[] Phones { get; set; }
         public Address Address { get; set; }
         public GetPositionDto Position { get; set; }
     }

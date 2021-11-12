@@ -7,6 +7,7 @@ namespace CleanSolution.Core.Domain.Basics
     {
         public virtual Guid Id { get; init; }
 
+
         public override int GetHashCode()
         {
             var hash = new HashCode();
@@ -15,6 +16,7 @@ namespace CleanSolution.Core.Domain.Basics
         }
 
         public bool Equals(BaseEntity other) => this.Equals((object)other);
+
         public override bool Equals(object other)
         {
             if (other == null || this.GetType() != other.GetType())
@@ -38,6 +40,5 @@ namespace CleanSolution.Core.Domain.Basics
         public static bool operator !=(BaseEntity left, BaseEntity right) => !(left == right);
 
         public override string ToString() => JsonSerializer.Serialize<object>(this);
-
     }
 }

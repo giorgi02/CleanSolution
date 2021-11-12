@@ -9,12 +9,12 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Workabroad.Presentation.Admin.Extensions.Services
+namespace Workabroad.Presentation.WebApi.Extensions.Services
 {
-    public static class JwtAuthenticationExtensions
+    public static class JwtValidationExtensions
     {
         /// <summary>
-        /// ავთენთიფიკაციის პარამეტრების დამატება
+        /// ავთენთიფიკაციის პარამეტრების დამატება (ტოკენის ვალიდურობის შემოწმება)
         /// </summary>
         public static void AddJwtAuthenticationConfigs(this IServiceCollection services, IConfiguration configuration)
         {
@@ -28,21 +28,22 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
                     cfg.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateActor = false,
+
+                        ValidateLifetime = true,
                         ValidateIssuer = true,
                         ValidateAudience = true,
-                        ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ClockSkew = TimeSpan.Zero, // ანულებს ტოკენის სიცოცხლის ხანგრძლივობას. დეფოლტად არის 5 წუთი
 
-                        ValidIssuer = configuration["Token:Issuer"],
-                        ValidAudience = configuration["Token:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:Key"]))
+                        ClockSkew = TimeSpan.Zero, // ანულებს ტოკენის სიცოცხლის ხანგრძლივობას. დეფოლტად არის 5 წუთი
+                        ValidIssuer = configuration["JwtSettings:Issuer"],
+                        ValidAudience = configuration["JwtSettings:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]))
                     };
                 });
         }
 
         /// <summary>
-        /// ავტორიზაციის პარამეტრების დამატება
+        /// ავტორიზაციის პარამეტრების დამატება (მეთოდებზე დაშვების შემოწმება)
         /// </summary>
         public static void AddJwtAuthorizationConfigs(this IServiceCollection services)
         {
@@ -77,35 +78,34 @@ namespace Workabroad.Presentation.Admin.Extensions.Services
         /// </summary>
         public static string GenerateJwtToken(
             IConfiguration configuration,
-            string personId,
+            string userId,
             string userName,
             string[] roles,
             string[] resources)
         {
-            List<Claim> claims = new List<Claim>()
+            List<Claim> claims = new()
             {
-                new Claim(ClaimTypes.NameIdentifier, personId),
+                new Claim(ClaimTypes.NameIdentifier, userId),
                 new Claim("UserName", userName)
             };
 
-
             foreach (var role in roles)
-                claims.Add(new Claim("roles", role));
+                claims.Add(new Claim(ClaimTypes.Role, role));
 
             foreach (var resource in resources)
                 claims.Add(new Claim("resources", resource));
 
 
             // ქმნის JWT ხელმოწერას
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:Key"]));
-            var signinCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]));
+            var signinCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.RsaSha256);
 
             var jwt = new JwtSecurityToken
                 (
                     claims: claims,
                     expires: DateTime.UtcNow.AddHours(1),
-                    issuer: configuration["Token:Issuer"],
-                    audience: configuration["Token:Audience"],
+                    issuer: configuration["JwtSettings:Issuer"],
+                    audience: configuration["JwtSettings:Audience"],
                     signingCredentials: signinCredentials
                 );
 

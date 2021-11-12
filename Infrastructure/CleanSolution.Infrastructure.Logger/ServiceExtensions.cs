@@ -12,19 +12,23 @@ namespace Workabroad.Infrastructure.Logger
     {
         public static void AddLoggerLayer(this IServiceCollection services, IConfiguration configuration)
         {
-            //პროექტის გაშვებამდე ლოგის შესაქმნელად:
-            /*            var appSettings = new ConfigurationBuilder()
-                            .SetBasePath(Directory.GetCurrentDirectory())
-                            .AddJsonFile("appsettings.json")
-                            .Build();*/
+            //ServiceExtensions.LogToSql(configuration);
+            ServiceExtensions.LogToSeq(configuration);
+        }
+        // დაილოგება SqlServer მონაცემთა ბაზაში
+        private static void LogToSql(IConfiguration configuration)
+        {
+            //// პროექტის გაშვებამდე ლოგის შესაქმნელად:
+            //var appSettings = new ConfigurationBuilder()
+            //    .SetBasePath(Directory.GetCurrentDirectory())
+            //    .AddJsonFile("appsettings.json")
+            //    .Build();
 
-
-            var logDB = configuration.GetConnectionString("DefaultConnection");
-
+            var logDb = configuration.GetConnectionString("DefaultConnection");
 
             var sinkOpts = new MSSqlServerSinkOptions
             {
-                TableName = "LogEvents",
+                TableName = "LogActions",
                 SchemaName = "dbo",
                 AutoCreateSqlTable = true,
                 BatchPostingLimit = 1000,
@@ -63,16 +67,24 @@ namespace Workabroad.Infrastructure.Logger
             };
 
             // we don't need XML data
-            //columnOpts.Store.Remove(StandardColumn.Properties);
+            columnOpts.Store.Remove(StandardColumn.Properties);
             // we do want JSON data
             columnOpts.Store.Add(StandardColumn.LogEvent);
 
             Log.Logger = new LoggerConfiguration()
                     .ReadFrom.Configuration(configuration)
                     .WriteTo.MSSqlServer(
-                        connectionString: logDB,
+                        connectionString: logDb,
                         sinkOptions: sinkOpts,
                         columnOptions: columnOpts)
+                    .CreateLogger();
+        }
+        // დაილოგება Seq ლოგების მენეჯერში
+        private static void LogToSeq(IConfiguration configuration)
+        {
+            Log.Logger = new LoggerConfiguration()
+                    .ReadFrom.Configuration(configuration)
+                    .WriteTo.Seq("http://localhost:5341")
                     .CreateLogger();
         }
     }

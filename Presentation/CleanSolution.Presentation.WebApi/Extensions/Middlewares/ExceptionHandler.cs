@@ -9,7 +9,7 @@ using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Workabroad.Presentation.Admin.Extensions.Middlewares
+namespace Workabroad.Presentation.WebApi.Extensions.Middlewares
 {
     public class ExceptionHandler
     {
@@ -34,22 +34,28 @@ namespace Workabroad.Presentation.Admin.Extensions.Middlewares
 
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            string titleText = "Internal Server Error.";
-            var statusCode = (int)HttpStatusCode.InternalServerError;
+            string titleText = "One or more validation errors occurred.";
+            var statusCode = (int)HttpStatusCode.BadRequest;
             var traceId = Activity.Current?.Id ?? context?.TraceIdentifier;
 
             switch (exception)
             {
                 case ApplicationBaseException e:
-                    titleText = "One or more validation errors occurred.";
+                    logger.LogWarning(exception, nameof(ApplicationBaseException));
                     statusCode = (int)e.StatusCode;
                     break;
                 case ValidationException _:
-                    statusCode = (int)HttpStatusCode.BadRequest;
+                    logger.LogWarning(exception, nameof(ValidationException));
+                    break;
+                case OperationCanceledException _:
+                    logger.LogError(exception, exception.Message);
+                    titleText = "Operation Is Canceled.";
                     break;
                 case Exception _:
                     logger.LogError(exception, exception.Message);
-                    exception = new Exception("Internal Server Error");
+                    exception = new Exception("Internal Server Error.");
+                    titleText = "Internal Server Error.";
+                    statusCode = (int)HttpStatusCode.InternalServerError;
                     break;
             }
 
@@ -58,7 +64,7 @@ namespace Workabroad.Presentation.Admin.Extensions.Middlewares
             context.Response.StatusCode = statusCode;
 
             await context.Response.WriteAsync(
-            JsonSerializer.Serialize(Result.Failure(
+            JsonSerializer.Serialize(Response.Failure(
                 titleText: titleText,
                 statusCode: statusCode,
                 traceId: traceId,

@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using CleanSolution.Core.Application.Behaviors;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,9 @@ namespace CleanSolution.Core.Application
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
         }
     }
 }

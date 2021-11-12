@@ -1,4 +1,8 @@
-﻿using System;
+﻿using CleanSolution.Core.Domain.Functions;
+using CleanSolution.Core.Domain.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Text.Json;
 
 namespace CleanSolution.Core.Domain.Basics
 {
@@ -8,7 +12,7 @@ namespace CleanSolution.Core.Domain.Basics
         /// ჩანაწერის ცვლილების რიგითი ნომერი
         /// გვიცავს გაუთვალისწინებელი, განმეორებითი Update -ებისგან
         /// </summary>
-        public virtual int Version { get; set; } = 1;
+        public virtual int Version { get; set; } = 0;
 
         public virtual DateTime DateCreated { get; set; } = DateTime.UtcNow;
         public virtual Guid? CreatedBy { get; set; }
@@ -18,5 +22,26 @@ namespace CleanSolution.Core.Domain.Basics
 
         public virtual DateTime? DateDeleted { get; set; }
         public virtual Guid? DeletedBy { get; set; }
+
+
+        public void Load(IEnumerable<LogEvent> events)
+        {
+            foreach (var e in events)
+            {
+                var @event = JsonSerializer.Deserialize<Dictionary<string, object>>(e.EventBody);
+                When(@event);
+            }
+        }
+
+        protected void When(Dictionary<string, object> @event)
+        {
+            foreach (var item in @event)
+            {
+                var property = this.GetType().GetProperty(item.Key);
+
+                var value = item.Value.ToString().ConvertFromString(property.PropertyType);
+                property.SetValue(this, value);
+            }
+        }
     }
 }

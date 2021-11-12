@@ -10,20 +10,22 @@ namespace CleanSolution.Core.Application.Features.Positions.Queries
 {
     public class GetPositionQuery
     {
-        public class Request : IRequest<IEnumerable<GetPositionDto>> { }
+        public record Request() : IRequest<IEnumerable<GetPositionDto>>;
+
 
         public class Handler : IRequestHandler<Request, IEnumerable<GetPositionDto>>
         {
-            private readonly IUnitOfWork unit;
-            private readonly IMapper mapper;
+            private readonly IUnitOfWork _unit;
+            private readonly IMapper _mapper;
 
-            public Handler(IUnitOfWork unit, IMapper mapper) => (this.unit, this.mapper) = (unit, mapper);
+            public Handler(IUnitOfWork unit, IMapper mapper) =>
+                (_unit, _mapper) = (unit, mapper);
 
             public async Task<IEnumerable<GetPositionDto>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var positions = await unit.PositionRepository.ReadAsync();
+                var positions = await _unit.PositionRepository.ReadAsync();
 
-                return mapper.Map<IEnumerable<GetPositionDto>>(positions);
+                return _mapper.Map<IEnumerable<GetPositionDto>>(positions);
             }
         }
     }
