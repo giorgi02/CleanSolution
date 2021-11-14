@@ -1,14 +1,12 @@
 ﻿using System.Net;
 
-namespace CleanSolution.Core.Application.Exceptions
+namespace CleanSolution.Core.Application.Exceptions;
+public class ActionProhibitedException : ApplicationBaseException
 {
-    public class ActionProhibitedException : ApplicationBaseException
-    {
-        public override HttpStatusCode StatusCode => HttpStatusCode.NotAcceptable;
+    public override HttpStatusCode StatusCode => HttpStatusCode.NotAcceptable;
 
-        /// <summary>
-        /// მსგავსი მოქმედება აკრძალულია
-        /// </summary>
-        public ActionProhibitedException(string message) : base(message) { }
-    }
+    /// <summary>
+    /// მსგავსი მოქმედება აკრძალულია
+    /// </summary>
+    public ActionProhibitedException(string message) : base(message) { }
 }

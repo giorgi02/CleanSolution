@@ -1,14 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Features\Positions\NewFolder\**" />
-    <EmbeddedResource Remove="Features\Positions\NewFolder\**" />
-    <None Remove="Features\Positions\NewFolder\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
@@ -16,9 +12,6 @@
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.3.4" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.11" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,17 +19,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Resources\Texts.Designer.cs">
+    <Compile Update="Resources\text_exceptions.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Texts.resx</DependentUpon>
+      <DependentUpon>text_exceptions.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\text_validations.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>text_validations.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Resources\Texts.resx">
+    <EmbeddedResource Update="Resources\text_exceptions.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Texts.Designer.cs</LastGenOutput>
+      <LastGenOutput>text_exceptions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\text_validations.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>text_validations.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

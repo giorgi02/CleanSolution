@@ -1,35 +1,57 @@
-﻿using CleanSolution.Core.Application.Interfaces.Contracts;
+﻿using CleanSolution.Core.Application.Commons;
+using CleanSolution.Core.Application.DTOs;
+using CleanSolution.Core.Application.Interfaces.Contracts;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace CleanSolution.Core.Application.Behaviors
+namespace CleanSolution.Core.Application.Behaviors;
+public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
 {
-    public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    private readonly ILogger<LoggingBehavior<TRequest, TResponse>> logger;
+    private readonly IActiveUserService user;
+
+    public LoggingBehavior(ILogger<LoggingBehavior<TRequest, TResponse>> logger, IActiveUserService user)
     {
-        private readonly ILogger<LoggingBehavior<TRequest, TResponse>> logger;
-        private readonly IActiveUserService user;
+        this.logger = logger;
+        this.user = user;
+    }
 
-        public LoggingBehavior(ILogger<LoggingBehavior<TRequest, TResponse>> logger, IActiveUserService user)
+    public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+    {
+        logger.LogInformation("request: url={@RequestUrl}, method={@RequestMethod}, type={@type}, body={@body}, userIpAddress={@IpAddress}, userPort={@Port}, userId={@UserId}",
+             user.RequestUrl, user.RequestMethod, typeof(TRequest).FullName, request, user.IpAddress, user.Port, user.UserId);
+
+        var response = await next();
+
+        logger.LogInformation("response: type={@type}, body={@body}", typeof(TResponse).FullName, this.LogResponse(response));
+
+        return response;
+    }
+
+    // თუ პასუხი მასივია, მთელი ობიექტი რომ არ დალოგირდეს, ტოვებს მხოლოდ მცირე ნაწილს
+    private object LogResponse(TResponse response)
+    {
+        if (new[] { typeof(Pagination<>).Name, typeof(GetPaginationDto<>).Name }.Contains(typeof(TResponse).Name))
         {
-            this.logger = logger;
-            this.user = user;
+            dynamic res = response;
+
+            return new
+            {
+                Items = default(IList<object>),
+
+                res.PageIndex,
+                res.PageSize,
+
+                res.TotalPages,
+                res.TotalCount,
+
+                res.HasPreviousPage,
+                res.HasNextPage
+            };
         }
-
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        else
         {
-            logger.LogInformation("request: url={@RequestUrl}, method={@RequestMethod}, type={@name}, body={@request}, userIpAddress={@IpAddress}, userPort={@Port}, userId={@UserId}",
-              user.RequestUrl, user.RequestMethod, typeof(TRequest).Name, request, user.IpAddress, user.Port, user.UserId);
-
-
-            var response = await next();
-
-            //logger.LogInformation("response: method={@RequestMethod}, url={@RequestUrl}, type={@name}, body={@response}, accountType={@AccountType}, acountId={@AccountId}",
-            //    user.RequestMethod, user.RequestUrl, typeof(TResponse).Name, logResponse(response), user.AccountType.ToString(), user.AccountId);
-
             return response;
         }
-
     }
 }

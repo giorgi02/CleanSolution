@@ -1,8 +1,6 @@
-﻿namespace CleanSolution.Core.Domain.Enums
+﻿namespace CleanSolution.Core.Domain.Enums;
+public enum Gender : byte
 {
-    public enum Gender : byte
-    {
-        Female = 0,
-        Male = 1
-    }
+    Female = 0,
+    Male = 1
 }

@@ -3,22 +3,16 @@
   <Class Name="CleanSolution.Core.Domain.Entities.Employee">
     <Position X="4.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAEAAAAAAAACgAAAAAAQAAAAAAAACAAAAAAAAAAg=</HashCode>
+      <HashCode>IAAAAEgACAAAAACgAAAAgAQAAAAAAAQCAAAAoAAAAAg=</HashCode>
       <FileName>Entities\Employee.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="CleanSolution.Core.Domain.Entities.Position">
     <Position X="2.75" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAACAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAACAAAAAAAAAAAAAAgAQAAAAAAAQAAAAAgAAAAAA=</HashCode>
       <FileName>Entities\Position.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="CleanSolution.Core.Domain.Entities.Address">
-    <Position X="6.25" Y="2.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAIAAAAAQAA=</HashCode>
-      <FileName>Entities\Address.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Enum Name="CleanSolution.Core.Domain.Enums.Gender">

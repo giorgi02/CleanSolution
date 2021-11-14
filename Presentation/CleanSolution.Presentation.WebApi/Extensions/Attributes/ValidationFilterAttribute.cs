@@ -1,21 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Workabroad.Presentation.WebApi.Extensions.Attributes
+namespace Workabroad.Presentation.WebApi.Extensions.Attributes;
+public class ValidationFilterAttribute : IActionFilter
 {
-    public class ValidationFilterAttribute : IActionFilter
+    public void OnActionExecuted(ActionExecutedContext context)
     {
-        public void OnActionExecuted(ActionExecutedContext context)
-        {
 
-        }
+    }
 
-        public void OnActionExecuting(ActionExecutingContext context)
+    public void OnActionExecuting(ActionExecutingContext context)
+    {
+        if (!context.ModelState.IsValid)
         {
-            if (!context.ModelState.IsValid)
-            {
-                context.Result = new BadRequestObjectResult(context.ModelState);
-            }
+            context.Result = new BadRequestObjectResult(context.ModelState);
         }
     }
 }

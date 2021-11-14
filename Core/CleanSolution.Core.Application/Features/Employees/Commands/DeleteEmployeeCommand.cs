@@ -2,32 +2,27 @@
 using CleanSolution.Core.Application.Interfaces;
 using CleanSolution.Core.Application.Resources;
 using MediatR;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace CleanSolution.Core.Application.Features.Employees.Commands
+namespace CleanSolution.Core.Application.Features.Employees.Commands;
+public class DeleteEmployeeCommand
 {
-    public class DeleteEmployeeCommand
+    public record Request(Guid EmployeeId) : IRequest;
+
+
+    public class Handler : IRequestHandler<Request>
     {
-        public record Request(Guid EmployeeId) : IRequest;
+        private readonly IUnitOfWork _unit;
+        public Handler(IUnitOfWork unit) => _unit = unit;
 
-
-        public class Handler : IRequestHandler<Request>
+        public async Task<Unit> Handle(Request request, CancellationToken cancellationToken)
         {
-            private readonly IUnitOfWork _unit;
-            public Handler(IUnitOfWork unit) => _unit = unit;
+            var isRecord = await _unit.EmployeeRepository.CheckAsync(x => x.Id == request.EmployeeId);
 
-            public async Task<Unit> Handle(Request request, CancellationToken cancellationToken)
-            {
-                var isRecord = await _unit.EmployeeRepository.CheckAsync(x => x.Id == request.EmployeeId);
+            if (isRecord) throw new EntityNotFoundException(text_exceptions.exception_data_not_found);
 
-                if (isRecord) throw new EntityNotFoundException(Texts.exception_data_not_found);
+            await _unit.EmployeeRepository.DeleteAsync(request.EmployeeId);
 
-                await _unit.EmployeeRepository.DeleteAsync(request.EmployeeId);
-
-                return Unit.Value;
-            }
+            return Unit.Value;
         }
     }
 }

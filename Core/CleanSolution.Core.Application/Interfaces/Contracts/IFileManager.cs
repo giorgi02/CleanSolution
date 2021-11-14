@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace CleanSolution.Core.Application.Interfaces.Contracts
+namespace CleanSolution.Core.Application.Interfaces.Contracts;
+public interface IFileManager
 {
-    public interface IFileManager
-    {
-        string SaveFile(IFormFile file);
-    }
+    string SaveFile(IFormFile file);
 }

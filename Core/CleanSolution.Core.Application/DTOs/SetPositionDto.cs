@@ -1,8 +1,6 @@
-﻿namespace CleanSolution.Core.Application.DTOs
+﻿namespace CleanSolution.Core.Application.DTOs;
+public class SetPositionDto
 {
-    public class SetPositionDto
-    {
-        public string Name { get; set; }
-        public double Salary { get; set; }
-    }
+    public string Name { get; set; }
+    public double Salary { get; set; }
 }

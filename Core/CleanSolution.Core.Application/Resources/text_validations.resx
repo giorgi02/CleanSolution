@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="exception_data_not_found" xml:space="preserve">
-    <value>ჩანაწერი ვერ მოიძებნა</value>
-  </data>
   <data name="validation_privatenumber_is_11_symbol" xml:space="preserve">
     <value>პირადი ნომერი უნდა შედგებოდეს 11 სიმბოლოსგან</value>
   </data>

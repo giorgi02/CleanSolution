@@ -1,11 +1,7 @@
-﻿using System;
-
-namespace CleanSolution.Core.Application.DTOs
+﻿namespace CleanSolution.Core.Application.DTOs;
+public class GetPositionDto
 {
-    public class GetPositionDto
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public double Salary { get; set; }
-    }
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public double Salary { get; set; }
 }

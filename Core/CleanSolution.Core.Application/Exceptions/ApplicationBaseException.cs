@@ -1,12 +1,9 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 
-namespace CleanSolution.Core.Application.Exceptions
+namespace CleanSolution.Core.Application.Exceptions;
+public abstract class ApplicationBaseException : Exception
 {
-    public abstract class ApplicationBaseException : Exception
-    {
-        public abstract HttpStatusCode StatusCode { get; }
+    public abstract HttpStatusCode StatusCode { get; }
 
-        public ApplicationBaseException(string message) : base(message) { }
-    }
+    public ApplicationBaseException(string message) : base(message) { }
 }

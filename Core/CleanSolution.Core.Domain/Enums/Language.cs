@@ -1,19 +1,15 @@
-﻿using System;
-
-namespace CleanSolution.Core.Domain.Enums
+﻿namespace CleanSolution.Core.Domain.Enums;
+[Flags]
+public enum Language : byte
 {
-    [Flags]
-    public enum Language : byte
-    {
-        None = 0,
+    None = 0,
 
-        Georgian = 1,
-        English = 2,
-        Russian = 4,
-        German = 8,
-        French = 16,
-        Chinese = 32,
+    Georgian = 1,
+    English = 2,
+    Russian = 4,
+    German = 8,
+    French = 16,
+    Chinese = 32,
 
-        All = Georgian + English + Russian + German + French + Chinese
-    }
+    All = Georgian + English + Russian + German + French + Chinese
 }

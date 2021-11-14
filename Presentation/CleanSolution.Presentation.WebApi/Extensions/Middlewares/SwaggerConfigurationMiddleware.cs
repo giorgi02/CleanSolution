@@ -1,26 +1,22 @@
-﻿using Microsoft.AspNetCore.Builder;
-
-namespace CleanSolution.Presentation.WebApi.Extensions.Middlewares
+﻿namespace CleanSolution.Presentation.WebApi.Extensions.Middlewares;
+public static class SwaggerConfigurationMiddleware
 {
-    public static class SwaggerConfigurationMiddleware
+    // middleware
+    public static IApplicationBuilder UseSwaggerMiddleware(this IApplicationBuilder app, params string[] options)
     {
-        // middleware
-        public static IApplicationBuilder UseSwaggerMiddleware(this IApplicationBuilder app, params string[] options)
+        app.UseSwagger();
+        app.UseSwaggerUI(c =>
         {
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.InjectStylesheet("/SwaggerDark.css"); // შავი ფონის დაყენება
+            c.InjectStylesheet("/SwaggerDark.css"); // შავი ფონის დაყენება
 
                 foreach (var name in options)
-                {
-                    c.SwaggerEndpoint(
-                        url: $"{name}/swagger.json",
-                        name: name);
-                }
-            });
+            {
+                c.SwaggerEndpoint(
+                    url: $"{name}/swagger.json",
+                    name: name);
+            }
+        });
 
-            return app;
-        }
+        return app;
     }
 }

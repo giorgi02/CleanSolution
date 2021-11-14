@@ -1,50 +1,45 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace CleanSolution.Core.Domain.Basics
+﻿namespace CleanSolution.Core.Domain.Basics;
+public abstract class ValueObject
 {
-    public abstract class ValueObject
+    protected abstract IEnumerable<object> GetEqualityComponents();
+
+
+    protected static bool EqualOperator(ValueObject left, ValueObject right)
     {
-        protected abstract IEnumerable<object> GetEqualityComponents();
-
-
-        protected static bool EqualOperator(ValueObject left, ValueObject right)
+        if (left is null ^ right is null)
         {
-            if (left is null ^ right is null)
-            {
-                return false;
-            }
-
-            return left?.Equals(right) != false;
+            return false;
         }
 
-        protected static bool NotEqualOperator(ValueObject left, ValueObject right)
+        return left?.Equals(right) != false;
+    }
+
+    protected static bool NotEqualOperator(ValueObject left, ValueObject right)
+    {
+        return !(EqualOperator(left, right));
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj == null || obj.GetType() != this.GetType())
         {
-            return !(EqualOperator(left, right));
+            return false;
         }
 
-        public override bool Equals(object obj)
-        {
-            if (obj == null || obj.GetType() != this.GetType())
-            {
-                return false;
-            }
+        var that = (ValueObject)obj;
 
-            var other = (ValueObject)obj;
+        return this.GetEqualityComponents().SequenceEqual(that.GetEqualityComponents());
+    }
 
-            return this.GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
-        }
+    public override int GetHashCode()
+    {
+        return this.GetEqualityComponents()
+            .Select(x => x != null ? x.GetHashCode() : 0)
+            .Aggregate((x, y) => x ^ y);
+    }
 
-        public override int GetHashCode()
-        {
-            return this.GetEqualityComponents()
-                .Select(x => x != null ? x.GetHashCode() : 0)
-                .Aggregate((x, y) => x ^ y);
-        }
-
-        public ValueObject GetCopy()
-        {
-            return this.MemberwiseClone() as ValueObject;
-        }
+    public ValueObject GetCopy()
+    {
+        return (ValueObject)this.MemberwiseClone();
     }
 }

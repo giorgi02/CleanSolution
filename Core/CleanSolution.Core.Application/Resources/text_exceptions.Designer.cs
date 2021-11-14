@@ -19,17 +19,17 @@ namespace CleanSolution.Core.Application.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Texts {
+    internal class text_exceptions {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Texts() {
+        internal text_exceptions() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace CleanSolution.Core.Application.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CleanSolution.Core.Application.Resources.Texts", typeof(Texts).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CleanSolution.Core.Application.Resources.text_exceptions", typeof(text_exceptions).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -66,33 +66,6 @@ namespace CleanSolution.Core.Application.Resources {
         internal static string exception_data_not_found {
             get {
                 return ResourceManager.GetString("exception_data_not_found", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to პირადი ნომერი უნდა შედგებოდეს 11 სიმბოლოსგან.
-        /// </summary>
-        internal static string validation_privatenumber_is_11_symbol {
-            get {
-                return ResourceManager.GetString("validation_privatenumber_is_11_symbol", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to პირადი ნომერი უნდა შედგებოდეს მხოლოდ ციფრებისგან.
-        /// </summary>
-        internal static string validation_privatenumber_is_digits {
-            get {
-                return ResourceManager.GetString("validation_privatenumber_is_digits", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to პირადი ნომერი ცარიელია.
-        /// </summary>
-        internal static string validation_privatenumber_is_empty {
-            get {
-                return ResourceManager.GetString("validation_privatenumber_is_empty", resourceCulture);
             }
         }
     }
