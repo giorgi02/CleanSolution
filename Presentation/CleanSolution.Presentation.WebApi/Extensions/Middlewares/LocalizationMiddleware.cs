@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 
-namespace Workabroad.Presentation.WebApi.Extensions.Middlewares;
+namespace CleanSolution.Presentation.WebApi.Extensions.Middlewares;
 public static class RequestLocalizationMiddleware
 {
     public static void UseRequestLocalizationMiddleware(this IApplicationBuilder app)

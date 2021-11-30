@@ -1,31 +1,32 @@
-﻿using AutoMapper;
-using CleanSolution.Core.Application.Interfaces;
+﻿using CleanSolution.Core.Application.Interfaces;
 using CleanSolution.Core.Application.Resources;
 using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Enums;
-using FluentValidation;
-using MediatR;
 
 namespace CleanSolution.Core.Application.Features.Employees.Commands;
-public class UpdateEmployeeCommand
+public sealed class UpdateEmployeeCommand
 {
     public class Request : IRequest
     {
         public Guid EmployeeId { get; private set; }
         public int Version { get; set; }
 
-        public string PrivateNumber { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string? PrivateNumber { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
         public Gender Gender { get; set; }
         public ICollection<Language> Languages { get; set; }
         public DateTime BirthDate { get; set; }
         public string[] Phones { get; set; }
-        public Address Address { get; set; }
+        public Address? Address { get; set; }
         public Guid PositionId { get; set; }
 
 
-        public Request() => this.Languages = new HashSet<Language>();
+        public Request()
+        {
+            this.Languages = new HashSet<Language>();
+            this.Phones = Array.Empty<string>();
+        }
         public void SetId(Guid employeeId) => this.EmployeeId = employeeId;
     }
 

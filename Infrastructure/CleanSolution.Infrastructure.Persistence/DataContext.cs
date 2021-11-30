@@ -3,16 +3,15 @@ using CleanSolution.Core.Domain.Basics;
 using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Helpers;
 using CleanSolution.Infrastructure.Persistence.Configurations;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Text.Json;
 
 namespace CleanSolution.Infrastructure.Persistence;
 internal class DataContext : DbContext
 {
-    public DbSet<Employee> Employes { get; set; }
-    public DbSet<Position> Positions { get; set; }
-    public DbSet<LogEvent> LogEvents { get; set; }
+    public DbSet<Employee> Employes => Set<Employee>();
+    public DbSet<Position> Positions => Set<Position>();
+    public DbSet<LogEvent> LogEvents => Set<LogEvent>();
 
 
     private readonly IActiveUserService user;
@@ -78,7 +77,7 @@ internal class DataContext : DbContext
         Dictionary<string, object> @events = new();
 
         foreach (var item in entry.Properties.Where(x => x.IsModified == true))
-            @events.Add(item.Metadata.Name, item.OriginalValue);
+            @events.Add(item.Metadata.Name, item.OriginalValue!);
 
         this.LogEvents.Add(new(entry.Entity)
         {

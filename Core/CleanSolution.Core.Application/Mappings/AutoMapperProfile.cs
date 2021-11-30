@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using CleanSolution.Core.Application.Commons;
+﻿using CleanSolution.Core.Application.Commons;
 using CleanSolution.Core.Application.DTOs;
 using CleanSolution.Core.Application.Features.Employees.Commands;
 using CleanSolution.Core.Domain.Entities;
@@ -27,7 +26,7 @@ public class AutoMapperProfile : Profile
             .ForMember(dest => dest.Age, opt => opt.MapFrom(src => DateTime.Now.Year - src.BirthDate.Year));
     }
 
-    private Language LanguagesToLanguage(ICollection<Language> languages)
+    private static Language LanguagesToLanguage(ICollection<Language> languages)
     {
         Language language = Language.None;
         foreach (var item in languages)

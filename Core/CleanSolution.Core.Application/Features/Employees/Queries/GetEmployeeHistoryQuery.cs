@@ -1,12 +1,10 @@
-﻿using AutoMapper;
-using CleanSolution.Core.Application.DTOs;
+﻿using CleanSolution.Core.Application.DTOs;
 using CleanSolution.Core.Application.Exceptions;
 using CleanSolution.Core.Application.Interfaces;
 using CleanSolution.Core.Domain.Entities;
-using MediatR;
 
 namespace CleanSolution.Core.Application.Features.Employees.Queries;
-public class GetEmployeeHistoryQuery
+public sealed class GetEmployeeHistoryQuery
 {
     public record Request(Guid EmployeeId, int? Version, DateTime? ActTime)
         : IRequest<GetEmployeeDto>;
@@ -27,7 +25,7 @@ public class GetEmployeeHistoryQuery
         {
             var employee = await _unit.EmployeeRepository.ReadAsync(request.EmployeeId);
 
-            if (employee == null)
+            if (employee is null)
                 throw new EntityNotFoundException("ჩანაწერი ვერ მოიძებნა");
 
             cancellationToken.ThrowIfCancellationRequested();

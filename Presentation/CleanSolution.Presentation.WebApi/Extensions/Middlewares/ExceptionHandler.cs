@@ -3,9 +3,8 @@ using CleanSolution.Core.Application.Exceptions;
 using FluentValidation;
 using System.Diagnostics;
 using System.Net;
-using System.Text.Json;
 
-namespace Workabroad.Presentation.WebApi.Extensions.Middlewares;
+namespace CleanSolution.Presentation.WebApi.Extensions.Middlewares;
 public class ExceptionHandler
 {
     private readonly RequestDelegate next;
@@ -13,7 +12,6 @@ public class ExceptionHandler
 
     public ExceptionHandler(RequestDelegate next, ILogger<ExceptionHandler> logger) =>
         (this.next, this.logger) = (next, logger);
-
 
     public async Task InvokeAsync(HttpContext context)
     {
@@ -41,6 +39,7 @@ public class ExceptionHandler
                 break;
             case ValidationException e:
                 logger.LogWarning(e, nameof(ValidationException));
+                statusCode = StatusCodes.Status422UnprocessableEntity;
                 break;
             case OperationCanceledException e:
                 logger.LogWarning(e, nameof(OperationCanceledException));
@@ -50,14 +49,14 @@ public class ExceptionHandler
             case Exception e:
                 logger.LogError(e, e.Message);
                 exception = new Exception("Internal Server Error.");
-                titleText = "Internal Server Error.";
+                titleText = "Server Error.";
                 statusCode = (int)HttpStatusCode.InternalServerError;
                 break;
         }
 
 
-        context.Response.ContentType = "application/json";
-        context.Response.StatusCode = statusCode;
+        context!.Response.ContentType = "application/json";
+        context!.Response.StatusCode = statusCode;
 
         await context.Response.WriteAsync(
         JsonSerializer.Serialize(Response.Failure(

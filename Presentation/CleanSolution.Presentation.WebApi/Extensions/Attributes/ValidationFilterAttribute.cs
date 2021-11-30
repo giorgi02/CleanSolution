@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Workabroad.Presentation.WebApi.Extensions.Attributes;
+namespace CleanSolution.Presentation.WebApi.Extensions.Attributes;
 public class ValidationFilterAttribute : IActionFilter
 {
     public void OnActionExecuted(ActionExecutedContext context)

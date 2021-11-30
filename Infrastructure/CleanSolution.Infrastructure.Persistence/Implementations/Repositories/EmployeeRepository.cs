@@ -2,7 +2,6 @@
 using CleanSolution.Core.Application.Interfaces.Repositories;
 using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Enums;
-using Microsoft.EntityFrameworkCore;
 
 namespace CleanSolution.Infrastructure.Persistence.Implementations.Repositories;
 internal class EmployeeRepository : Repository<Employee>, IEmployeeRepository
@@ -19,7 +18,7 @@ internal class EmployeeRepository : Repository<Employee>, IEmployeeRepository
         return await this.Including.FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<Pagination<Employee>> FilterAsync(int pageIndex, int pageSize, string privateNumber = null, string firstName = null, string lastName = null, Gender? gender = null, Language? language = null)
+    public async Task<Pagination<Employee>> FilterAsync(int pageIndex, int pageSize, string? privateNumber = null, string? firstName = null, string? lastName = null, Gender? gender = null, Language? language = null)
     {
         var employees = this.Including.Where(x =>
             (privateNumber == null || x.PrivateNumber == privateNumber) &&

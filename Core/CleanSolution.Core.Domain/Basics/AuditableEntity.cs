@@ -25,8 +25,9 @@ public abstract class AuditableEntity : BaseEntity
     {
         foreach (var e in events)
         {
-            var @event = JsonSerializer.Deserialize<Dictionary<string, object>>(e.EventBody);
-            When(@event);
+            var @event = JsonSerializer.Deserialize<Dictionary<string, object>>(e.EventBody!);
+
+            if (@event != null) When(@event);
         }
     }
 

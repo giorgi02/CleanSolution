@@ -1,8 +1,10 @@
-﻿using CleanSolution.Core.Application.Interfaces.Contracts;
+﻿global using System.Reflection;
+global using System.Text;
+global using System.Text.Json;
+using CleanSolution.Core.Application.Interfaces.Contracts;
 using CleanSolution.Presentation.WebApi.Extensions.Services;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Mvc.Formatters;
-using Workabroad.Presentation.WebApi.Extensions.Services;
+
 
 namespace CleanSolution.Presentation.WebApi.Extensions;
 public static class ServiceExtensions

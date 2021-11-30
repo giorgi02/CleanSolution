@@ -1,6 +1,5 @@
 ﻿using CleanSolution.Core.Application.Interfaces;
 using CleanSolution.Core.Domain.Basics;
-using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace CleanSolution.Infrastructure.Persistence.Implementations;
@@ -44,6 +43,8 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where T
     public virtual async Task<int> UpdateAsync(Guid id, TEntity entity)
     {
         var existing = await _context.Set<TEntity>().FindAsync(id);
+        if (existing is null) return 0;
+
         _context.Entry(existing).CurrentValues.SetValues(entity);
         return await _context.SaveChangesAsync();
     }
@@ -51,6 +52,8 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where T
     public virtual async Task<int> DeleteAsync(Guid id)
     {
         var item = await this.ReadAsync(id);
+        if (item is null) return 0;
+
         _context.Set<TEntity>().Remove(item);
         return await _context.SaveChangesAsync();
     }

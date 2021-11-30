@@ -3,25 +3,26 @@
 namespace CleanSolution.Core.Domain.Helpers;
 public class LogEvent
 {
-    public Guid Id { get; set; }
-    public string ObjectType { get; set; }
-    public Guid ObjectId { get; set; }
-    public string EventBody { get; set; }
-    public int Version { get; set; }
-    public DateTime ActTime { get; set; }
+    public Guid Id { get; private set; } = Guid.NewGuid();
+    public string ObjectType { get; private set; }
+    public Guid ObjectId { get; private set; }
+    public string? EventBody { get; init; }
+    public int Version { get; private set; }
+    public DateTime ActTime { get; private set; } = DateTime.Now;
 
 
-    private LogEvent() { /* for deserialization & ORMs */}
     public LogEvent(AuditableEntity aggregate)
-        : this()
+        : this(aggregate.GetType().Name, aggregate.Id, aggregate.Version) { }
+
+    private LogEvent(string objectType, Guid objectId, int version)
     {
-        this.ObjectType = aggregate.GetType().Name;
-        this.ObjectId = aggregate.Id;
-        this.Version = aggregate.Version;
-        this.ActTime = DateTime.Now;
+        this.ObjectType = objectType;
+        this.ObjectId = objectId;
+        this.Version = version;
     }
 
-    public void Deconstruct(out Guid id, out string objectType, out Guid objectId, out string eventBody, out int version, out DateTime actTime)
+
+    public void Deconstruct(out Guid id, out string objectType, out Guid objectId, out string? eventBody, out int version, out DateTime actTime)
     {
         id = this.Id;
         objectType = this.ObjectType;

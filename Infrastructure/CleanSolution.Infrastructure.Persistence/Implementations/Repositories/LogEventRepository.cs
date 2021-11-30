@@ -1,6 +1,5 @@
 ﻿using CleanSolution.Core.Application.Interfaces.Repositories;
 using CleanSolution.Core.Domain.Helpers;
-using Microsoft.EntityFrameworkCore;
 
 namespace CleanSolution.Infrastructure.Persistence.Implementations.Repositories;
 internal class LogEventRepository : ILogEventRepository

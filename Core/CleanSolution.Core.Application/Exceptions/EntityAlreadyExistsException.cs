@@ -1,7 +1,5 @@
-﻿using System.Net;
-
-namespace CleanSolution.Core.Application.Exceptions;
-public class EntityAlreadyExistsException : ApplicationBaseException
+﻿namespace CleanSolution.Core.Application.Exceptions;
+public sealed class EntityAlreadyExistsException : ApplicationBaseException
 {
     public override HttpStatusCode StatusCode => HttpStatusCode.BadRequest;
 

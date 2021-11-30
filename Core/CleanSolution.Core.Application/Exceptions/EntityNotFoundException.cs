@@ -1,7 +1,5 @@
-﻿using System.Net;
-
-namespace CleanSolution.Core.Application.Exceptions;
-public class EntityNotFoundException : ApplicationBaseException
+﻿namespace CleanSolution.Core.Application.Exceptions;
+public sealed class EntityNotFoundException : ApplicationBaseException
 {
     public override HttpStatusCode StatusCode => HttpStatusCode.NotFound;
 

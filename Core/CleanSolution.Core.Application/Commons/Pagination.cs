@@ -25,7 +25,7 @@ public class Pagination<T>
     public static Task<Pagination<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
     {
         var count = source.Count();
-        var items = source.Take(((pageIndex - 1) * pageSize)..pageSize).ToList();
+        var items = source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
 
         return Task.Run(() => new Pagination<T>(items, count, pageIndex, pageSize));
     }

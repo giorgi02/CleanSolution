@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Workabroad.Presentation.WebApi.Extensions.Services;
+namespace CleanSolution.Presentation.WebApi.Extensions.Services;
 public enum Cultures : byte
 {
     Geo = 1,

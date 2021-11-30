@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using System.Text;
-using System.Text.Json;
 
 namespace CleanSolution.Presentation.WebApi.Extensions.Middlewares;
 public static class HealthChecksMiddleware

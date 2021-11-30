@@ -1,10 +1,9 @@
 ﻿using CleanSolution.Core.Application.Exceptions;
 using CleanSolution.Core.Application.Interfaces;
 using CleanSolution.Core.Application.Resources;
-using MediatR;
 
 namespace CleanSolution.Core.Application.Features.Employees.Commands;
-public class DeleteEmployeeCommand
+public sealed class DeleteEmployeeCommand
 {
     public record Request(Guid EmployeeId) : IRequest;
 
@@ -17,6 +16,8 @@ public class DeleteEmployeeCommand
         public async Task<Unit> Handle(Request request, CancellationToken cancellationToken)
         {
             var isRecord = await _unit.EmployeeRepository.CheckAsync(x => x.Id == request.EmployeeId);
+
+            cancellationToken.ThrowIfCancellationRequested();
 
             if (isRecord) throw new EntityNotFoundException(text_exceptions.exception_data_not_found);
 

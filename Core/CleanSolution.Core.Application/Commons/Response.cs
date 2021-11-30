@@ -7,7 +7,7 @@ public static class Response
         messages
     };
 
-    public static object Failure(string titleText, int statusCode, string traceId, params string[] messages) => new
+    public static object Failure(string titleText, int statusCode, string? traceId, params string[] messages) => new
     {
         type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
         title = titleText,
@@ -19,7 +19,7 @@ public static class Response
         }
     };
 
-    public static object Failure(string titleText, int statusCode, string traceId, Exception exception) => new
+    public static object Failure(string titleText, int statusCode, string? traceId, Exception exception) => new
     {
         type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
         title = titleText,

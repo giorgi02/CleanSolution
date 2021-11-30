@@ -9,7 +9,7 @@ public static class SwaggerConfigurationMiddleware
         {
             c.InjectStylesheet("/SwaggerDark.css"); // შავი ფონის დაყენება
 
-                foreach (var name in options)
+            foreach (var name in options)
             {
                 c.SwaggerEndpoint(
                     url: $"{name}/swagger.json",

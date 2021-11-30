@@ -1,12 +1,9 @@
-﻿using AutoMapper;
-using CleanSolution.Core.Application.DTOs;
+﻿using CleanSolution.Core.Application.DTOs;
 using CleanSolution.Core.Application.Interfaces;
 using CleanSolution.Core.Domain.Enums;
-using FluentValidation;
-using MediatR;
 
 namespace CleanSolution.Core.Application.Features.Employees.Queries;
-public class GetEmployeesQuery
+public sealed class GetEmployeesQuery
 {
     public class Request : IRequest<GetPaginationDto<GetEmployeeDto>>
     {

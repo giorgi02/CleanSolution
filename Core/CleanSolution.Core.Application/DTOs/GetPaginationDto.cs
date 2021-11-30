@@ -11,4 +11,6 @@ public class GetPaginationDto<T>
 
     public bool HasPreviousPage { get; set; }
     public bool HasNextPage { get; set; }
+
+    public GetPaginationDto() => this.Items = new List<T>();
 }

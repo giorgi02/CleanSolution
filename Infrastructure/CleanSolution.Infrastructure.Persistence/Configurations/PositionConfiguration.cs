@@ -1,6 +1,5 @@
 ﻿using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Infrastructure.Persistence.Seeds;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CleanSolution.Infrastructure.Persistence.Configurations;

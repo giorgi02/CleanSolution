@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
-namespace Workabroad.Infrastructure.Logger;
+namespace CleanSolution.Infrastructure.Logger;
 public static class ServiceExtensions
 {
     //public static void AddLoggerLayer(this IServiceCollection services, IConfiguration configuration)

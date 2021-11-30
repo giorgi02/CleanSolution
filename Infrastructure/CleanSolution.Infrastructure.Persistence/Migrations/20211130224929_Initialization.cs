@@ -1,8 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
 
 namespace CleanSolution.Infrastructure.Persistence.Migrations
 {
-    public partial class initialization : Migration
+    public partial class Initialization : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +14,7 @@ namespace CleanSolution.Infrastructure.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ObjectType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ObjectType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ObjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EventBody = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Version = table.Column<int>(type: "int", nullable: false),
@@ -46,7 +49,7 @@ namespace CleanSolution.Infrastructure.Persistence.Migrations
                     BirthDate = table.Column<DateTime>(type: "date", nullable: false),
                     Gender = table.Column<byte>(type: "tinyint", nullable: false),
                     Language = table.Column<byte>(type: "tinyint", nullable: false),
-                    Phones = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    Phones = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Address_City = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Address_Street = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     PositionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -66,8 +69,7 @@ namespace CleanSolution.Infrastructure.Persistence.Migrations
                         name: "FK_Employes_Positions_PositionId",
                         column: x => x.PositionId,
                         principalTable: "Positions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(

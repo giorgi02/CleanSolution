@@ -1,11 +1,10 @@
 ﻿using CleanSolution.Core.Application.Commons;
 using CleanSolution.Core.Application.DTOs;
 using CleanSolution.Core.Application.Interfaces.Contracts;
-using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace CleanSolution.Core.Application.Behaviors;
-public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
 {
     private readonly ILogger<LoggingBehavior<TRequest, TResponse>> logger;
     private readonly IActiveUserService user;
@@ -29,11 +28,11 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
     }
 
     // თუ პასუხი მასივია, მთელი ობიექტი რომ არ დალოგირდეს, ტოვებს მხოლოდ მცირე ნაწილს
-    private object LogResponse(TResponse response)
+    private object? LogResponse(TResponse response)
     {
         if (new[] { typeof(Pagination<>).Name, typeof(GetPaginationDto<>).Name }.Contains(typeof(TResponse).Name))
         {
-            dynamic res = response;
+            dynamic res = response!;
 
             return new
             {

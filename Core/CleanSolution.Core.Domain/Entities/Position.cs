@@ -7,9 +7,9 @@ public class Position : BaseEntity
     public string Name { get; private init; }
     public double Salary { get; private init; }
 
-    private Position() { /* for deserialization & ORMs */}
+
+    private Position() { /* for deserialization "AutoMapper" */ }
     public Position(string name, double salary)
-        : this()
     {
         this.Name = name;
         this.Salary = salary;

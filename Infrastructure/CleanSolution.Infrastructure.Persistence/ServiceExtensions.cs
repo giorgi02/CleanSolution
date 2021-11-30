@@ -1,6 +1,6 @@
-﻿using CleanSolution.Core.Application.Interfaces;
+﻿global using Microsoft.EntityFrameworkCore;
+using CleanSolution.Core.Application.Interfaces;
 using CleanSolution.Infrastructure.Persistence.Implementations;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

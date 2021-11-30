@@ -15,6 +15,6 @@ public class PositionsController : ControllerBase
 
 
     [HttpGet(Name = "GetPositions")]
-    public async Task<IEnumerable<GetPositionDto>> Get() =>
-        await _mediator.Send(new GetPositionQuery.Request());
+    public async Task<IEnumerable<GetPositionDto>> Get(CancellationToken cancellationToken = default) =>
+        await _mediator.Send(new GetPositionQuery.Request(), cancellationToken);
 }

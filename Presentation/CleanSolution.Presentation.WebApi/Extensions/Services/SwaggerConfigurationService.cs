@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
-using System.Reflection;
 
-namespace Workabroad.Presentation.WebApi.Extensions.Services;
+namespace CleanSolution.Presentation.WebApi.Extensions.Services;
 public static class SwaggerConfigurationService
 {
     // services
@@ -13,11 +12,11 @@ public static class SwaggerConfigurationService
         // Swagger-ის გენერატორის რეგისტრაცია, 1 ან მეტი Swagger დოკუმენტის განსაზღვრა
         services.AddSwaggerGen(c =>
         {
-                // DTO კლასის სახელების დაგენერირების წესის განსაზღვრა
-                c.CustomSchemaIds(x => x.FullName[(x.FullName.LastIndexOf('.') + 1)..].Replace('+', '.'));
+            // DTO კლასის სახელების დაგენერირების წესის განსაზღვრა
+            c.CustomSchemaIds(x => x.FullName?[(x.FullName.LastIndexOf('.') + 1)..].Replace('+', '.'));
 
-                // ავტორიზაციის წესების განსაზღვრა
-                var jwtSecurityScheme = new OpenApiSecurityScheme
+            // ავტორიზაციის წესების განსაზღვრა
+            var securityScheme = new OpenApiSecurityScheme
             {
                 Scheme = "bearer",
                 BearerFormat = "JWT",
@@ -32,14 +31,13 @@ public static class SwaggerConfigurationService
                     Type = ReferenceType.SecurityScheme
                 }
             };
-            c.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+            c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
             c.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
-                    { jwtSecurityScheme, Array.Empty<string>() }
+                    { securityScheme, Array.Empty<string>() }
             });
-
-                // მეთოდების დახარისხება სხვადასხვა სექციებად
-                foreach (var name in options)
+            // მეთოდების დახარისხება სხვადასხვა სექციებად
+            foreach (var name in options)
             {
                 c.SwaggerDoc(name: name, new OpenApiInfo
                 {
@@ -55,8 +53,8 @@ public static class SwaggerConfigurationService
                 });
             }
 
-                // დკომენტარების დაყენება Swagger JSON და UI–თვის.
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            // დკომენტარების დაყენება Swagger JSON და UI–თვის.
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
             c.IncludeXmlComments(xmlPath);
         });

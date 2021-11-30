@@ -1,6 +1,9 @@
-﻿using CleanSolution.Core.Application.Behaviors;
-using FluentValidation;
-using MediatR;
+﻿global using AutoMapper;
+global using FluentValidation;
+global using MediatR;
+global using System.Net;
+
+using CleanSolution.Core.Application.Behaviors;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;

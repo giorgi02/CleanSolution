@@ -1,7 +1,5 @@
-﻿using System.Net;
-
-namespace CleanSolution.Core.Application.Exceptions;
-public class ActionProhibitedException : ApplicationBaseException
+﻿namespace CleanSolution.Core.Application.Exceptions;
+public sealed class ActionProhibitedException : ApplicationBaseException
 {
     public override HttpStatusCode StatusCode => HttpStatusCode.NotAcceptable;
 

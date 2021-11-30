@@ -16,9 +16,9 @@ public class EmployeesController : ControllerBase
 
 
     [HttpGet(Name = "GetEmployees")]
-    public async Task<IEnumerable<GetEmployeeDto>> Get([FromQuery] GetEmployeesQuery.Request request)
+    public async Task<IEnumerable<GetEmployeeDto>> Get([FromQuery] GetEmployeesQuery.Request request, CancellationToken cancellationToken = default)
     {
-        var result = await _mediator.Send(request);
+        var result = await _mediator.Send(request, cancellationToken);
 
         Response.Headers.Add("PageIndex", result.PageIndex.ToString());
         Response.Headers.Add("PageSize", result.PageSize.ToString());
@@ -33,8 +33,8 @@ public class EmployeesController : ControllerBase
     }
 
     [HttpGet("{id}", Name = "GetEmployeeById")]
-    public async Task<GetEmployeeDto> Get([FromRoute] Guid id) =>
-        await _mediator.Send(new GetEmployeeQuery.Request(id));
+    public async Task<GetEmployeeDto> Get([FromRoute] Guid id, CancellationToken cancellationToken = default) =>
+        await _mediator.Send(new GetEmployeeQuery.Request(id), cancellationToken);
 
     [HttpGet("history/{id}", Name = "GetEmployeeHistoryById")]
     public async Task<GetEmployeeDto> GetHistory([FromRoute] Guid id, [FromQuery] int? version, DateTime? actTime, CancellationToken cancellationToken = default) =>
@@ -79,16 +79,22 @@ public class EmployeesController : ControllerBase
     /// <returns></returns>
     [HttpPut("{id}", Name = "UpdateEmployee")]
     //[Authorize(Policy = "EditPolicy")]
+    //[Authorize(Roles = "editor, admin")]
     public async Task Update([FromRoute] Guid id, [FromBody] UpdateEmployeeCommand.Request request, CancellationToken cancellationToken = default)
     {
         request.SetId(id);
 
         await _mediator.Send(request, cancellationToken);
     }
-
+    //// todo: ეს მეთოდი ბოლომდე დავამუშაო
+    //[HttpPatch("{id}", Name = "EditEmployee")]
+    //public async Task Edit([FromRoute] Guid id, [FromBody] JsonPatchDocument<EditEmployeeCommand.Request> request, CancellationToken cancellationToken = default)
+    //{
+    //    await _mediator.Send(request, cancellationToken);
+    //}
 
     [HttpDelete("{id}", Name = "DeleteEmployee")]
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "admin")]
     public async Task Delete([FromRoute] Guid id) =>
         await _mediator.Send(new DeleteEmployeeCommand.Request(id));
 }

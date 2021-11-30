@@ -5,9 +5,9 @@ using CleanSolution.Infrastructure.Persistence.Implementations.Repositories;
 namespace CleanSolution.Infrastructure.Persistence.Implementations;
 internal class UnitOfWork : IUnitOfWork, IDisposable
 {
-    private IPositionRepository _positionRepository;
-    private IEmployeeRepository _employeeRepository;
-    private ILogEventRepository _logObjectRepository;
+    private IPositionRepository? _positionRepository;
+    private IEmployeeRepository? _employeeRepository;
+    private ILogEventRepository? _logObjectRepository;
 
 
     private readonly DataContext _context;

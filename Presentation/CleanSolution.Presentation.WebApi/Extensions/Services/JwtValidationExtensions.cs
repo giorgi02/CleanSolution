@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 
-namespace Workabroad.Presentation.WebApi.Extensions.Services;
+namespace CleanSolution.Presentation.WebApi.Extensions.Services;
 public static class JwtValidationExtensions
 {
     /// <summary>
@@ -30,7 +29,7 @@ public static class JwtValidationExtensions
                     ValidateIssuerSigningKey = true,
 
                     ClockSkew = TimeSpan.Zero, // ანულებს ტოკენის სიცოცხლის ხანგრძლივობას. დეფოლტად არის 5 წუთი
-                        ValidIssuer = configuration["JwtSettings:Issuer"],
+                    ValidIssuer = configuration["JwtSettings:Issuer"],
                     ValidAudience = configuration["JwtSettings:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]))
                 };
@@ -49,21 +48,21 @@ public static class JwtValidationExtensions
                 .RequireAuthenticatedUser()
                 .Build();
 
-                // მისი გამოყენება მოხდება [Authorize(Policy = "EditUsersPolicy")] ატრიბუტით
-                options.AddPolicy("Agent", policy => policy.RequireClaim("roles", "Agent"));
-            options.AddPolicy("AllowedPeople", policy => policy.RequireClaim("id", "1", "2", "3", "4"));
+            // მისი გამოყენება მოხდება [Authorize(Policy = "EditUsersPolicy")] ატრიბუტით
+            options.AddPolicy("Agent", policy => policy.RequireClaim("roles", "Agent"));
 
-            options.AddPolicy("EditPolicy", policy =>
+            options.AddPolicy("CreateUser", policy => policy.RequireClaim("resources", "create:user"));
+            options.AddPolicy("UpdateUser", policy => policy.RequireClaim("resources", "update:user"));
+            options.AddPolicy("DeleteUser", policy => policy.RequireClaim("resources", "delete:user"));
+
+            options.AddPolicy("AllowedPeople", policy =>
             {
-                policy.RequireAssertion(con => con.User.HasClaim(x => x.Type == "resources" && x.Value == "user.edit"));
+                policy.RequireClaim("id", "1", "2", "3", "4");
             });
-            options.AddPolicy("DeletePolicy", policy =>
+
+            options.AddPolicy("TestPolicy", policy =>
             {
-                policy.RequireAssertion(con => con.User.HasClaim(x => x.Type == "resources" && x.Value == "user.delete"));
-            });
-            options.AddPolicy("ViewPolicy", policy =>
-            {
-                policy.RequireAssertion(con => con.User.HasClaim(x => x.Type == "resources" && x.Value == "user.view"));
+                policy.RequireAssertion(con => con.User.HasClaim(x => x.Type == "resources" && x.Value == "create:user"));
             });
         });
     }
@@ -93,17 +92,17 @@ public static class JwtValidationExtensions
 
         // ქმნის JWT ხელმოწერას
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]));
-        var signinCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.RsaSha256);
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.RsaSha256);
 
-        var jwt = new JwtSecurityToken
+        var tokenDescriptor = new JwtSecurityToken
             (
                 claims: claims,
                 expires: DateTime.UtcNow.AddHours(1),
                 issuer: configuration["JwtSettings:Issuer"],
                 audience: configuration["JwtSettings:Audience"],
-                signingCredentials: signinCredentials
+                signingCredentials: credentials
             );
 
-        return new JwtSecurityTokenHandler().WriteToken(jwt);
+        return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
     }
 }

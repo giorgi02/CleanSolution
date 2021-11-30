@@ -1,36 +1,34 @@
-﻿using AutoMapper;
-using CleanSolution.Core.Application.Interfaces;
+﻿using CleanSolution.Core.Application.Interfaces;
 using CleanSolution.Core.Application.Interfaces.Contracts;
 using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Enums;
-using FluentValidation;
-using MediatR;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace CleanSolution.Core.Application.Features.Employees.Commands;
-public class CreateEmployeeCommand
+public sealed class CreateEmployeeCommand
 {
     public class Request : IRequest<Guid>
     {
-        public IFormFile Picture { get; set; }
+        public IFormFile? Picture { get; set; }
         [Required]
         [StringLength(maximumLength: 11, MinimumLength = 11, ErrorMessage = "პირადი ნომერი უნდა შედგებოდეს 11 სიმბოლოსგან")]
-        public string PrivateNumber { get; set; }
+        public string? PrivateNumber { get; set; }
         [Required]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
         [Required]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
         public Gender Gender { get; set; }
         public ICollection<Language> Languages { get; set; }
         public DateTime? BirthDate { get; set; }
         public string[] Phones { get; set; }
-        public Address Address { get; set; }
+        public Address? Address { get; set; }
         public Guid PositionId { get; set; }
 
         public Request()
         {
             this.Languages = new HashSet<Language>();
+            this.Phones = Array.Empty<string>();
         }
     }
 
@@ -54,7 +52,10 @@ public class CreateEmployeeCommand
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            employee.PictureName = _fileManager.SaveFile(request.Picture);
+            if (request.Picture != null)
+                employee.PictureName = _fileManager.SaveFile(request.Picture);
+
+            cancellationToken.ThrowIfCancellationRequested();
 
             await _unit.EmployeeRepository.CreateAsync(employee);
 

@@ -1,11 +1,10 @@
 using CleanSolution.Core.Application;
 using CleanSolution.Infrastructure.Files;
+using CleanSolution.Infrastructure.Logger;
 using CleanSolution.Infrastructure.Persistence;
 using CleanSolution.Presentation.WebApi.Extensions;
 using CleanSolution.Presentation.WebApi.Extensions.Middlewares;
 using Serilog;
-using Workabroad.Infrastructure.Logger;
-using Workabroad.Presentation.WebApi.Extensions.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +22,6 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
     app.UseSwaggerMiddleware("CleanSolution v1");
 }
 

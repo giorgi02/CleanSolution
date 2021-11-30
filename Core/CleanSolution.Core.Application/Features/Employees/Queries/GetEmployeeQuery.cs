@@ -1,11 +1,9 @@
-﻿using AutoMapper;
-using CleanSolution.Core.Application.DTOs;
+﻿using CleanSolution.Core.Application.DTOs;
 using CleanSolution.Core.Application.Exceptions;
 using CleanSolution.Core.Application.Interfaces;
-using MediatR;
 
 namespace CleanSolution.Core.Application.Features.Employees.Queries;
-public class GetEmployeeQuery
+public sealed class GetEmployeeQuery
 {
     public record Request(Guid EmployeeId) : IRequest<GetEmployeeDto>;
 

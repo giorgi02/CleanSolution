@@ -56,17 +56,17 @@
             გამოძახება: https://localhost:44377/health/ready
             </summary>
         </member>
-        <member name="M:Workabroad.Presentation.WebApi.Extensions.Services.JwtValidationExtensions.AddJwtAuthenticationConfigs(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:CleanSolution.Presentation.WebApi.Extensions.Services.JwtValidationExtensions.AddJwtAuthenticationConfigs(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             ავთენთიფიკაციის პარამეტრების დამატება (ტოკენის ვალიდურობის შემოწმება)
             </summary>
         </member>
-        <member name="M:Workabroad.Presentation.WebApi.Extensions.Services.JwtValidationExtensions.AddJwtAuthorizationConfigs(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:CleanSolution.Presentation.WebApi.Extensions.Services.JwtValidationExtensions.AddJwtAuthorizationConfigs(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             ავტორიზაციის პარამეტრების დამატება (მეთოდებზე დაშვების შემოწმება)
             </summary>
         </member>
-        <member name="M:Workabroad.Presentation.WebApi.Extensions.Services.JwtValidationExtensions.GenerateJwtToken(Microsoft.Extensions.Configuration.IConfiguration,System.String,System.String,System.String[],System.String[])">
+        <member name="M:CleanSolution.Presentation.WebApi.Extensions.Services.JwtValidationExtensions.GenerateJwtToken(Microsoft.Extensions.Configuration.IConfiguration,System.String,System.String,System.String[],System.String[])">
             <summary>
             ტოკენის გენერირება
             </summary>

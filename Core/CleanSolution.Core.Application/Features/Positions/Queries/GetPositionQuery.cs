@@ -1,10 +1,8 @@
-﻿using AutoMapper;
-using CleanSolution.Core.Application.DTOs;
+﻿using CleanSolution.Core.Application.DTOs;
 using CleanSolution.Core.Application.Interfaces;
-using MediatR;
 
 namespace CleanSolution.Core.Application.Features.Positions.Queries;
-public class GetPositionQuery
+public sealed class GetPositionQuery
 {
     public record Request() : IRequest<IEnumerable<GetPositionDto>>;
 
