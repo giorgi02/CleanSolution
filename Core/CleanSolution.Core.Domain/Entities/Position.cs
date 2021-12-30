@@ -8,7 +8,6 @@ public class Position : BaseEntity
     public double Salary { get; private init; }
 
 
-    private Position() { /* for deserialization "AutoMapper" */ }
     public Position(string name, double salary)
     {
         this.Name = name;

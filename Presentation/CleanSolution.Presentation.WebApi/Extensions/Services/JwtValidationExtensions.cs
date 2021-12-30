@@ -92,7 +92,7 @@ public static class JwtValidationExtensions
 
         // ქმნის JWT ხელმოწერას
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]));
-        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.RsaSha256);
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
         var tokenDescriptor = new JwtSecurityToken
             (

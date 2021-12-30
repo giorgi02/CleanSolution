@@ -1,4 +1,5 @@
-﻿using CleanSolution.Core.Application.Interfaces;
+﻿using CleanSolution.Core.Application.DTOs;
+using CleanSolution.Core.Application.Interfaces;
 using CleanSolution.Core.Application.Resources;
 using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Enums;
@@ -6,7 +7,7 @@ using CleanSolution.Core.Domain.Enums;
 namespace CleanSolution.Core.Application.Features.Employees.Commands;
 public sealed class UpdateEmployeeCommand
 {
-    public class Request : IRequest
+    public class Request : IRequest<GetEmployeeDto>
     {
         public Guid EmployeeId { get; private set; }
         public int Version { get; set; }
@@ -31,7 +32,7 @@ public sealed class UpdateEmployeeCommand
     }
 
 
-    public class Handler : IRequestHandler<Request>
+    public class Handler : IRequestHandler<Request, GetEmployeeDto>
     {
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
@@ -42,16 +43,21 @@ public sealed class UpdateEmployeeCommand
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(Request request, CancellationToken cancellationToken)
+        public async Task<GetEmployeeDto> Handle(Request request, CancellationToken cancellationToken)
         {
-            var employee = _mapper.Map<Employee>(request);
+            var employee = new Employee(request.PrivateNumber!, request.FirstName!, request.LastName!, request.BirthDate, request.Gender)
+            {
+                Id = request.EmployeeId,
+                Version = request.Version
+            };
+            employee.SetLanguages(request.Languages);
             employee.Position = await _unit.PositionRepository.ReadAsync(request.PositionId);
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            await _unit.EmployeeRepository.UpdateAsync(request.EmployeeId, employee);
+            await _unit.EmployeeRepository.UpdateAsync(employee);
 
-            return Unit.Value;
+            return _mapper.Map<GetEmployeeDto>(employee);
         }
     }
 

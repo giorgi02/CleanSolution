@@ -4,7 +4,7 @@ using CleanSolution.Core.Application.Interfaces;
 namespace CleanSolution.Core.Application.Features.Positions.Queries;
 public sealed class GetPositionQuery
 {
-    public record Request() : IRequest<IEnumerable<GetPositionDto>>;
+    public record class Request() : IRequest<IEnumerable<GetPositionDto>>;
 
 
     public class Handler : IRequestHandler<Request, IEnumerable<GetPositionDto>>

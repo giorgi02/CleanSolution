@@ -1,5 +1,6 @@
 ﻿using CleanSolution.Core.Application.Interfaces;
 using CleanSolution.Core.Domain.Basics;
+using CleanSolution.Core.Domain.Helpers;
 using System.Linq.Expressions;
 
 namespace CleanSolution.Infrastructure.Persistence.Implementations;
@@ -34,18 +35,18 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where T
         _context.Set<TEntity>().Update(entity);
         return await _context.SaveChangesAsync();
     }
-    // todo: შევამოწმო ეს მეთოდი
-    public virtual async Task<int> UpdateAsync2(TEntity entity)
-    {
-        _context.Entry(entity).State = EntityState.Modified;
-        return await _context.SaveChangesAsync();
-    }
     public virtual async Task<int> UpdateAsync(Guid id, TEntity entity)
     {
         var existing = await _context.Set<TEntity>().FindAsync(id);
         if (existing is null) return 0;
 
         _context.Entry(existing).CurrentValues.SetValues(entity);
+        return await _context.SaveChangesAsync();
+    }
+    // todo: შევამოწმო ეს მეთოდი
+    public virtual async Task<int> UpdateSimpleAsync(TEntity entity)
+    {
+        _context.Entry(entity).State = EntityState.Modified;
         return await _context.SaveChangesAsync();
     }
     // delete
@@ -72,6 +73,17 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where T
     {
         return await _context.Set<TEntity>().CountAsync(predicate);
     }
+
+    public async Task<IEnumerable<LogEvent>> GetEventsAsync(Guid id, int? version = null, DateTime? actTime = null)
+    {
+        return await _context.LogEvents
+            .Where(x => x.ObjectId == id &&
+                x.ObjectType == typeof(TEntity).Name &&
+                (version == null || x.Version >= version) &&
+                (actTime == null || x.ActTime >= actTime))
+            .ToListAsync();
+    }
+
     // todo: კეთდება C# ის ახალი ფუნქციონალით, შვილით გადატვირთვა
     public virtual object Test()
     {

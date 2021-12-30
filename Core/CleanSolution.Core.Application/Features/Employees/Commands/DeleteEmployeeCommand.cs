@@ -5,7 +5,7 @@ using CleanSolution.Core.Application.Resources;
 namespace CleanSolution.Core.Application.Features.Employees.Commands;
 public sealed class DeleteEmployeeCommand
 {
-    public record Request(Guid EmployeeId) : IRequest;
+    public record class Request(Guid EmployeeId) : IRequest;
 
 
     public class Handler : IRequestHandler<Request>

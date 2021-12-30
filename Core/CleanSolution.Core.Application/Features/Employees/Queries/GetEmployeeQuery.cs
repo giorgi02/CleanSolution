@@ -5,7 +5,7 @@ using CleanSolution.Core.Application.Interfaces;
 namespace CleanSolution.Core.Application.Features.Employees.Queries;
 public sealed class GetEmployeeQuery
 {
-    public record Request(Guid EmployeeId) : IRequest<GetEmployeeDto>;
+    public record class Request(Guid EmployeeId) : IRequest<GetEmployeeDto>;
 
 
     public class Handler : IRequestHandler<Request, GetEmployeeDto>

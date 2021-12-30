@@ -55,7 +55,7 @@ internal class DataContext : DbContext
                 entry.Property(nameof(AuditableEntity.DateDeleted)).IsModified = false;
 
                 // ცვლილებების ლოგირება
-                SaveEvents(entry);
+                AppendEvents(entry);
                 break;
             case EntityState.Deleted:
                 entry.State = EntityState.Unchanged;
@@ -65,13 +65,13 @@ internal class DataContext : DbContext
                 entry.Entity.DeletedBy = user.UserId;
 
                 // ცვლილებების ლოგირება
-                SaveEvents(entry);
+                AppendEvents(entry);
                 break;
         };
     }
 
     // EventSource ის შენახვა
-    private void SaveEvents(EntityEntry<AuditableEntity> entry)
+    private void AppendEvents(EntityEntry<AuditableEntity> entry)
     {
         // ცვლილებების ლოგირება
         Dictionary<string, object> @events = new();

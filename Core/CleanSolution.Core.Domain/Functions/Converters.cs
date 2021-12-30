@@ -5,6 +5,9 @@ namespace CleanSolution.Core.Domain.Functions;
 public static class Converters
 {
     // todo: დავხვეწო ეს მეთოდი
+    /// <summary>
+    /// string-ისგან ობიექტის ფორმირება
+    /// </summary>
     public static object? ConvertFromString(this string value, Type? type)
     {
         if (type == null) return null;

@@ -20,7 +20,7 @@ public sealed class CreateEmployeeCommand
         public string? LastName { get; set; }
         public Gender Gender { get; set; }
         public ICollection<Language> Languages { get; set; }
-        public DateTime? BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
         public string[] Phones { get; set; }
         public Address? Address { get; set; }
         public Guid PositionId { get; set; }
@@ -37,17 +37,16 @@ public sealed class CreateEmployeeCommand
     {
         private readonly IUnitOfWork _unit;
         private readonly IFileManager _fileManager;
-        private readonly IMapper _mapper;
 
-        public Handler(IUnitOfWork unit, IFileManager fileManager, IMapper mapper)
+        public Handler(IUnitOfWork unit, IFileManager fileManager)
         {
             _unit = unit;
             _fileManager = fileManager;
-            _mapper = mapper;
         }
         public async Task<Guid> Handle(Request request, CancellationToken cancellationToken)
         {
-            var employee = _mapper.Map<Employee>(request);
+            var employee = new Employee(request.PrivateNumber!, request.FirstName!, request.LastName!, request.BirthDate, request.Gender);
+            employee.SetLanguages(request.Languages);
             employee.Position = await _unit.PositionRepository.ReadAsync(request.PositionId);
 
             cancellationToken.ThrowIfCancellationRequested();

@@ -1,4 +1,4 @@
 ﻿namespace CleanSolution.Core.Domain.Entities
 {
-    public record Address(string City, string Street);
+    public record class Address(string City, string Street);
 }

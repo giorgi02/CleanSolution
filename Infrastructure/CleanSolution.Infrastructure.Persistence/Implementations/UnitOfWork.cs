@@ -7,7 +7,6 @@ internal class UnitOfWork : IUnitOfWork, IDisposable
 {
     private IPositionRepository? _positionRepository;
     private IEmployeeRepository? _employeeRepository;
-    private ILogEventRepository? _logObjectRepository;
 
 
     private readonly DataContext _context;
@@ -16,7 +15,6 @@ internal class UnitOfWork : IUnitOfWork, IDisposable
 
     public IPositionRepository PositionRepository => _positionRepository ??= new PositionRepository(_context);
     public IEmployeeRepository EmployeeRepository => _employeeRepository ??= new EmployeeRepository(_context);
-    public ILogEventRepository LogObjectRepository => _logObjectRepository ??= new LogEventRepository(_context);
 
 
     public async Task CompleteAsync() => await _context.SaveChangesAsync();
