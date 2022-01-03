@@ -20,14 +20,8 @@ public class EmployeesController : ControllerBase
     {
         var result = await _mediator.Send(request, cancellationToken);
 
-        Response.Headers.Add("PageIndex", result.PageIndex.ToString());
-        Response.Headers.Add("PageSize", result.PageSize.ToString());
-
-        Response.Headers.Add("TotalPages", result.TotalPages.ToString());
-        Response.Headers.Add("TotalCount", result.TotalCount.ToString());
-
-        Response.Headers.Add("HasPreviousPage", result.HasPreviousPage.ToString());
-        Response.Headers.Add("HasNextPage", result.HasNextPage.ToString());
+        foreach (var param in result.GetParams())
+            Response.Headers.Add(param);
 
         return result.Items;
     }
@@ -80,11 +74,11 @@ public class EmployeesController : ControllerBase
     [HttpPut("{id}", Name = "UpdateEmployee")]
     //[Authorize(Policy = "EditPolicy")]
     //[Authorize(Roles = "editor, admin")]
-    public async Task Update([FromRoute] Guid id, [FromBody] UpdateEmployeeCommand.Request request, CancellationToken cancellationToken = default)
+    public async Task<GetEmployeeDto> Update([FromRoute] Guid id, [FromBody] UpdateEmployeeCommand.Request request, CancellationToken cancellationToken = default)
     {
         request.SetId(id);
 
-        await _mediator.Send(request, cancellationToken);
+        return await _mediator.Send(request, cancellationToken);
     }
     //// todo: ეს მეთოდი ბოლომდე დავამუშაო
     //[HttpPatch("{id}", Name = "EditEmployee")]

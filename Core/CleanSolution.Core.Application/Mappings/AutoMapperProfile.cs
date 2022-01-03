@@ -8,7 +8,7 @@ public class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {
-        CreateMap(typeof(Pagination<>), typeof(GetPaginationDto<>));
+        CreateMap(typeof(Pagination<>), typeof(Pagination<>));
 
         CreateMap<SetPositionDto, Position>();
         CreateMap<SetEmployeeDto, Employee>();

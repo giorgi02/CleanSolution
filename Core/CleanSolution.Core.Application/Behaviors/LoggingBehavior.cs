@@ -1,5 +1,4 @@
 ﻿using CleanSolution.Core.Application.Commons;
-using CleanSolution.Core.Application.DTOs;
 using CleanSolution.Core.Application.Interfaces.Contracts;
 using Microsoft.Extensions.Logging;
 
@@ -30,7 +29,7 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
     // თუ პასუხი მასივია, მთელი ობიექტი რომ არ დალოგირდეს, ტოვებს მხოლოდ მცირე ნაწილს
     private object? LogResponse(TResponse response)
     {
-        if (new[] { typeof(Pagination<>).Name, typeof(GetPaginationDto<>).Name }.Contains(typeof(TResponse).Name))
+        if (typeof(Pagination<>).Name == typeof(TResponse).Name)
         {
             dynamic res = response!;
 

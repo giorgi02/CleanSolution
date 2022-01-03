@@ -19,9 +19,9 @@ public class Employee : AuditableEntity, IAggregateRoot
     public string? PictureName { get; set; }
 
 
-//#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-//    private Employee() { /* for deserialization "AutoMapper" */ }
-//#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    //#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    //    private Employee() { /* for deserialization "AutoMapper" */ }
+    //#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public Employee(string privateNumber, string firstName, string lastName, DateTime birthDate, Gender gender)
     {
         this.PrivateNumber = privateNumber;
@@ -32,7 +32,7 @@ public class Employee : AuditableEntity, IAggregateRoot
         this.Language = Language.None;
         this.Phones = Array.Empty<string>();
     }
-    public Employee(string privateNumber, string firstName, string lastName, DateTime birthDate, Gender gender, 
+    public Employee(string privateNumber, string firstName, string lastName, DateTime birthDate, Gender gender,
         Language language, string[] phones, Address? address, Position? position, string? pictureName)
      : this(privateNumber, firstName, lastName, birthDate, gender)
     {
