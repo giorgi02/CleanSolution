@@ -117,13 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="record_not_found" xml:space="preserve">
+    <value>The record could not be found</value>
+  </data>
   <data name="validation_privatenumber_is_11_symbol" xml:space="preserve">
-    <value>პირადი ნომერი უნდა შედგებოდეს 11 სიმბოლოსგან</value>
+    <value>The personal number must consist of 11 characters</value>
   </data>
   <data name="validation_privatenumber_is_digits" xml:space="preserve">
-    <value>პირადი ნომერი უნდა შედგებოდეს მხოლოდ ციფრებისგან</value>
+    <value>The personal number should consist of numbers only</value>
   </data>
   <data name="validation_privatenumber_is_empty" xml:space="preserve">
-    <value>პირადი ნომერი ცარიელია</value>
+    <value>The personal number is empty</value>
   </data>
 </root>

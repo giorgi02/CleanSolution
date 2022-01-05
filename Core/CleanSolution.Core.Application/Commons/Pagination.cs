@@ -40,13 +40,13 @@ public class Pagination<T>
 
     public Dictionary<string, StringValues> GetParams() => new()
     {
-        { nameof(this.PageIndex), this.PageIndex.ToString() },
-        { nameof(this.PageSize), this.PageSize.ToString() },
+        [nameof(PageIndex)] = PageIndex.ToString(),
+        [nameof(PageSize)] = PageSize.ToString(),
 
-        { nameof(this.TotalPages), this.TotalPages.ToString() },
-        { nameof(this.TotalCount), this.TotalCount.ToString() },
+        [nameof(TotalPages)] = TotalPages.ToString(),
+        [nameof(TotalCount)] = TotalCount.ToString(),
 
-        { nameof(this.HasPreviousPage), this.HasPreviousPage.ToString() },
-        { nameof(this.HasNextPage), this.HasNextPage.ToString() },
+        [nameof(HasPreviousPage)] = HasPreviousPage.ToString(),
+        [nameof(HasNextPage)] = HasNextPage.ToString(),
     };
 }

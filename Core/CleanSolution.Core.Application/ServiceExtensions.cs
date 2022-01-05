@@ -14,7 +14,7 @@ public static class ServiceExtensions
     public static void AddApplicatonLayer(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddMediatR(Assembly.GetExecutingAssembly());
-        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));

@@ -20,6 +20,8 @@ public static class ServiceExtensions
         services.AddConfigureCors(configuration);
         services.AddConfigureHealthChecks(configuration);
         services.AddSwaggerServices("CleanSolution v1");
+
+        services.AddLocalizeConfiguration(configuration);
     }
 
     private static void AddConfigureCors(this IServiceCollection services, IConfiguration configuration)

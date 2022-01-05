@@ -1,8 +1,8 @@
 ﻿using CleanSolution.Core.Application.DTOs;
 using CleanSolution.Core.Application.Interfaces;
-using CleanSolution.Core.Application.Resources;
 using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Enums;
+using Microsoft.Extensions.Localization;
 
 namespace CleanSolution.Core.Application.Features.Employees.Commands;
 public sealed class UpdateEmployeeCommand
@@ -65,14 +65,14 @@ public sealed class UpdateEmployeeCommand
     {
         private readonly IUnitOfWork _unit;
 
-        public Validator(IUnitOfWork unit)
+        public Validator(IUnitOfWork unit, IStringLocalizer<Localize.Resource> localizer)
         {
             _unit = unit;
 
             RuleFor(x => x.PrivateNumber)
-                .NotNull().WithMessage(text_validations.validation_privatenumber_is_empty)
-                .Length(11).WithMessage(text_validations.validation_privatenumber_is_11_symbol)
-                .Matches("^[0-9]*$").WithMessage(text_validations.validation_privatenumber_is_digits);
+                .NotNull().WithMessage(localizer["validation_privatenumber_is_empty"])
+                .Length(11).WithMessage(localizer["validation_privatenumber_is_11_symbol"])
+                .Matches("^[0-9]*$").WithMessage(localizer["validation_privatenumber_is_digits"]);
 
             RuleFor(x => x.FirstName)
                 .NotEmpty().WithMessage("სახელის ველი ცარიელია");

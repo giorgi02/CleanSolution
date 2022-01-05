@@ -1,6 +1,7 @@
 ﻿using CleanSolution.Core.Application.DTOs;
 using CleanSolution.Core.Application.Exceptions;
 using CleanSolution.Core.Application.Interfaces;
+using Microsoft.Extensions.Localization;
 
 namespace CleanSolution.Core.Application.Features.Employees.Queries;
 public sealed class GetEmployeeHistoryQuery
@@ -13,11 +14,13 @@ public sealed class GetEmployeeHistoryQuery
     {
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
+        private readonly IStringLocalizer<Localize.Resource> _localizer;
 
-        public Handler(IUnitOfWork unit, IMapper mapper)
+        public Handler(IUnitOfWork unit, IMapper mapper, IStringLocalizer<Localize.Resource> localizer)
         {
             _unit = unit;
             _mapper = mapper;
+            _localizer = localizer;
         }
 
         public async Task<GetEmployeeDto> Handle(Request request, CancellationToken cancellationToken)
@@ -25,7 +28,7 @@ public sealed class GetEmployeeHistoryQuery
             var employee = await _unit.EmployeeRepository.ReadAsync(request.EmployeeId);
 
             if (employee is null)
-                throw new EntityNotFoundException("ჩანაწერი ვერ მოიძებნა");
+                throw new EntityNotFoundException(_localizer["record_not_found"]);
 
             cancellationToken.ThrowIfCancellationRequested();
 

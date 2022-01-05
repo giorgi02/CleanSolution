@@ -1,19 +1,39 @@
-﻿using System.Globalization;
+﻿using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 namespace CleanSolution.Presentation.WebApi.Extensions.Services;
-public enum Cultures : byte
-{
-    Geo = 1,
-    Eng = 2
-}
 public static class LocalizationService
 {
-    private static readonly Dictionary<string, byte> CultureMap = new()
+    public static void AddLocalizeConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
-        ["ka-GE"] = (byte)Cultures.Geo,
-        ["en-US"] = (byte)Cultures.Eng
-    };
+        services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-    public static byte ToCultureID(this CultureInfo culture) =>
-        CultureMap.TryGetValue(culture.Name, out var id) ? id : (byte)Cultures.Geo;
+        services.Configure<RequestLocalizationOptions>(options =>
+        {
+            var cultures = new[]
+            {
+                new CultureInfo("en-US"),
+                new CultureInfo("ka-GE"),
+            };
+
+            options.SupportedCultures = cultures;
+            options.SupportedUICultures = cultures;
+
+            options.DefaultRequestCulture = new RequestCulture("en-US");
+
+            // საკუთარი კონფიგურაცია, მაგალითად ენის Headers-იდან ამოღება
+            //options.RequestCultureProviders.Insert(0, new CustomRequestCultureProvider(async context =>
+            //{
+            //    var languages = context.Request.Headers["Accept-Language"].ToString();
+            //    var currentLanguage = languages.Split(',').FirstOrDefault();
+
+            //    if (!supportedCultures.Select(x => x.Name).Contains(currentLanguage))
+            //    {
+            //        currentLanguage = "en-US";
+            //    }
+
+            //    return await Task.FromResult(new ProviderCultureResult(currentLanguage, currentLanguage));
+            //}));
+        });
+    }
 }

@@ -18,28 +18,4 @@
     <ProjectReference Include="..\CleanSolution.Core.Domain\CleanSolution.Core.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Resources\text_exceptions.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>text_exceptions.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\text_validations.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>text_validations.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\text_exceptions.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>text_exceptions.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\text_validations.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>text_validations.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-
 </Project>
