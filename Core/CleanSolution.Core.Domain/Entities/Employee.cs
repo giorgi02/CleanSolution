@@ -76,7 +76,9 @@ public class Employee : AuditableEntity, IAggregateRoot
         && (this.BirthDate == default || x.BirthDate == this.BirthDate)
         && (this.Gender == default || x.Gender == this.Gender)
         && (this.LastName == default || x.LastName == this.LastName)
-        && (this.PictureName == default || x.PictureName == this.PictureName);
+        && (this.PictureName == default || x.PictureName == this.PictureName)
+        && (this.Address == default || x.Address == this.Address)
+        && (this.Position != null && this.Position.ToFilterExpression().Compile().Invoke(x.Position!));
 
     public Expression<Func<Employee, bool>> ToSearchExpression() =>
         x => x.Id == this.Id
@@ -86,5 +88,7 @@ public class Employee : AuditableEntity, IAggregateRoot
         || x.BirthDate == this.BirthDate
         || x.Gender == this.Gender
         || x.LastName == this.LastName
-        || x.PictureName == this.PictureName;
+        || x.PictureName == this.PictureName
+        || x.Address == this.Address
+        || (this.Position != null && this.Position.ToSearchExpression().Compile().Invoke(x.Position!));
 }

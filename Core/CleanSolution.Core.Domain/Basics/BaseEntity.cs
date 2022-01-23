@@ -28,14 +28,14 @@ public abstract class BaseEntity
         return otherEntity is not null && this.Id.Equals(otherEntity.Id);
     }
 
-    public static bool operator ==(BaseEntity left, BaseEntity right) => (left, right) switch
+    public static bool operator ==(BaseEntity? left, BaseEntity? right) => (left, right) switch
     {
         (null, null) => true,
         ({ }, { }) => left.Equals(right),
         _ => false
     };
 
-    public static bool operator !=(BaseEntity left, BaseEntity right) => !(left == right);
+    public static bool operator !=(BaseEntity? left, BaseEntity? right) => !(left == right);
 
     public override string ToString() => JsonSerializer.Serialize<object>(this);
 }

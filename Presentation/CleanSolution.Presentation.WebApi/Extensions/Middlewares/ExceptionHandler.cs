@@ -37,17 +37,17 @@ public class ExceptionHandler
                 logger.LogWarning(e, nameof(ApplicationBaseException));
                 statusCode = (int)e.StatusCode;
                 break;
-            case ValidationException e:
-                logger.LogWarning(e, nameof(ValidationException));
+            case ValidationException:
+                logger.LogWarning(exception, nameof(ValidationException));
                 statusCode = StatusCodes.Status422UnprocessableEntity;
                 break;
-            case OperationCanceledException e:
-                logger.LogWarning(e, nameof(OperationCanceledException));
+            case OperationCanceledException:
+                logger.LogWarning(exception, nameof(OperationCanceledException));
                 exception = new Exception("Operation Is Canceled.");
                 titleText = "Operation Is Canceled.";
                 break;
-            case Exception e:
-                logger.LogError(e, e.Message);
+            case Exception:
+                logger.LogError(exception, exception?.Message);
                 exception = new Exception("Internal Server Error.");
                 titleText = "Server Error.";
                 statusCode = (int)HttpStatusCode.InternalServerError;

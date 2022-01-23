@@ -3,7 +3,7 @@ using CleanSolution.Core.Application.Interfaces.Contracts;
 using Microsoft.Extensions.Logging;
 
 namespace CleanSolution.Core.Application.Behaviors;
-public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
+public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull, IRequest<TResponse>
 {
     private readonly ILogger<LoggingBehavior<TRequest, TResponse>> logger;
     private readonly IActiveUserService user;
