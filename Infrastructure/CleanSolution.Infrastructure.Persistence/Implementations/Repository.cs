@@ -10,6 +10,20 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where T
     public Repository(DataContext context) => _context = context;
 
 
+    // სრული დაფარვა, ახდენს ყველა იმ კლასთან Include() რომელსაც კი შეიცავს მოცემული კლასი
+    public IQueryable<TEntity> Including<TEntity>(IQueryable<TEntity> query) where TEntity : class
+    {
+        foreach (var item in query)
+        {
+            foreach (var property in item.GetType().GetProperties())
+                if (property.PropertyType.IsClass && property.PropertyType != typeof(string))
+                    query = query.Include(property.Name);
+            break;
+        }
+
+        return query;
+    }
+
     // create
     public virtual async Task<int> CreateAsync(TEntity entity)
     {

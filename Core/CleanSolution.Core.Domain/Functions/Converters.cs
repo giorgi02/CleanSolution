@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
+using System.Text;
 using System.Text.Json;
 
 namespace CleanSolution.Core.Domain.Functions;
 public static class Converters
 {
-    // todo: დავხვეწო ეს მეთოდი
     /// <summary>
     /// string-ისგან ობიექტის ფორმირება
     /// </summary>
@@ -25,4 +25,62 @@ public static class Converters
         //    throw new Exception($"მოცემული ტიპის: {type.FullName} კონვერტაცია შეუძლებელია, ჩაამატეთ მექანიკურად");
         //}
     }
+
+    /// <summary>
+    /// ასაკის მნიშვნელობის გადაყვანა დაბადების თარიღში
+    /// </summary>
+    public static DateTime? ToBirthDate(this int? age)
+    {
+        age = age == 0 ? null : age;
+        return age != null ? DateTime.Now.AddYears(-age.Value) : default(DateTime?);
+    }
+
+    public static string ConvertToEng(this string geoText)
+    {
+        var engText = new StringBuilder();
+
+        foreach (var item in geoText.ToCharArray())
+        {
+            engText.Append(item switch
+            {
+                'ა' => "a",
+                'ბ' => "b",
+                'გ' => "g",
+                'დ' => "d",
+                'ე' => "e",
+                'ვ' => "v",
+                'ზ' => "z",
+                'თ' => "th",
+                'ი' => "i",
+                'კ' => "k",
+                'ლ' => "l",
+                'მ' => "m",
+                'ნ' => "n",
+                'ო' => "o",
+                'პ' => "p",
+                'ჟ' => "zh",
+                'რ' => "r",
+                'ს' => "s",
+                'ტ' => "t",
+                'უ' => "u",
+                'ფ' => "ph",
+                'ქ' => "q",
+                'ღ' => "gh",
+                'ყ' => "y",
+                'ჩ' => "ch",
+                'ც' => "ts",
+                'შ' => "sh",
+                'ძ' => "dz",
+                'წ' => "w",
+                'ჭ' => "ch",
+                'ხ' => "kh",
+                'ჯ' => "j",
+                'ჰ' => "h",
+
+                var x => x
+            });
+        }
+        return engText.ToString();
+    }
+
 }

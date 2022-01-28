@@ -2,21 +2,29 @@
 using System.Reflection;
 using System.Text;
 
-namespace CleanSolution.Infrastructure.Persistence.Extensions;
-internal static class IQueryableExtensions
+namespace CleanSolution.Core.Domain.Functions;
+internal static class DataSorter
 {
-    // სრული დაფარვა, ახდენს ყველა იმ კლასთან Include() რომელსაც კი შეიცავს მოცემული კლასი
-    internal static IQueryable<TEntity> Including<TEntity>(this IQueryable<TEntity> query) where TEntity : class
+    /// <summary>
+    /// foreach
+    /// </summary>
+    public static void ForEach<T>(this IEnumerable<T> collection, Action<T> action)
     {
-        foreach (var item in query)
+        foreach (var item in collection)
         {
-            foreach (var property in item.GetType().GetProperties())
-                if (property.PropertyType.IsClass && property.PropertyType != typeof(string))
-                    query = query.Include(property.Name);
-            break;
+            action(item);
         }
+    }
 
-        return query;
+    public static TSource? FindSingle<TSource>(this IQueryable<TSource> source, int id)
+    {
+        if (source == null) throw new NullReferenceException("source");
+        foreach (TSource element in source)
+        {
+            if ((int?)element?.GetType()?.GetProperty("Id")?.GetValue(element) == id)
+                return element;
+        }
+        return default;
     }
 
     /// <summary>

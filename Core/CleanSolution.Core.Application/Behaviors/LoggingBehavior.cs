@@ -21,13 +21,13 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
 
         var response = await next();
 
-        logger.LogInformation("response: type={@type}, body={@body}", typeof(TResponse).FullName, this.LogResponse(response));
+        logger.LogInformation("response: type={@type}, body={@body}", typeof(TResponse).FullName, this.ResponseFilter(response));
 
         return response;
     }
 
     // თუ პასუხი მასივია, მთელი ობიექტი რომ არ დალოგირდეს, ტოვებს მხოლოდ მცირე ნაწილს
-    private object? LogResponse(TResponse response)
+    private object? ResponseFilter(TResponse response)
     {
         if (typeof(Pagination<>).Name == typeof(TResponse).Name)
         {
