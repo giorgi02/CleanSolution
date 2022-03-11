@@ -4,6 +4,9 @@ using System.Globalization;
 namespace CleanSolution.Presentation.WebApi.Extensions.Services;
 public static class LocalizationService
 {
+    /// <summary>
+    /// გამოძახება: Headers["Accept-Language"] = "ka-GE"
+    /// </summary>
     public static void AddLocalizeConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddLocalization(options => options.ResourcesPath = "Resources");

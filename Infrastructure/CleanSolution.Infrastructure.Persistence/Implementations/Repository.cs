@@ -11,7 +11,7 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where T
 
 
     // სრული დაფარვა, ახდენს ყველა იმ კლასთან Include() რომელსაც კი შეიცავს მოცემული კლასი
-    public IQueryable<TEntity> Including<TEntity>(IQueryable<TEntity> query) where TEntity : class
+    protected virtual IQueryable<TEntity> Including(IQueryable<TEntity> query)
     {
         foreach (var item in query)
         {

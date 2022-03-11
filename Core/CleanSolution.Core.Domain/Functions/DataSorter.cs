@@ -1,4 +1,5 @@
-﻿using System.Linq.Dynamic.Core;
+﻿using CleanSolution.Core.Domain.Basics;
+using System.Linq.Dynamic.Core;
 using System.Reflection;
 using System.Text;
 
@@ -16,14 +17,12 @@ internal static class DataSorter
         }
     }
 
-    public static TSource? FindSingle<TSource>(this IQueryable<TSource> source, int id)
+    public static TSource? FindSingle<TSource>(this IQueryable<TSource> source, Guid id) where TSource : BaseEntity
     {
-        if (source == null) throw new NullReferenceException("source");
+        if (source == null) throw new NullReferenceException(nameof(source));
         foreach (TSource element in source)
-        {
-            if ((int?)element?.GetType()?.GetProperty("Id")?.GetValue(element) == id)
-                return element;
-        }
+            if (element.Id == id) return element;
+
         return default;
     }
 

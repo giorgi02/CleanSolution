@@ -26,15 +26,6 @@ public static class Converters
         //}
     }
 
-    /// <summary>
-    /// ასაკის მნიშვნელობის გადაყვანა დაბადების თარიღში
-    /// </summary>
-    public static DateTime? ToBirthDate(this int? age)
-    {
-        age = age == 0 ? null : age;
-        return age != null ? DateTime.Now.AddYears(-age.Value) : default(DateTime?);
-    }
-
     public static string ConvertToEng(this string geoText)
     {
         var engText = new StringBuilder();

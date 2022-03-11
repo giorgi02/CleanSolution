@@ -18,13 +18,13 @@ public static class HttpQueryStrings
 
     private static StringBuilder ToQueryString<T>(this T obj, string prefix = "") where T : class
     {
-        StringBuilder gatherer = new StringBuilder();
+        StringBuilder gatherer = new();
 
         foreach (var p in obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
         {
-            if (p.GetValue(obj, new object[0]) != null)
+            if (p.GetValue(obj, Array.Empty<object>()) != null)
             {
-                var value = p.GetValue(obj, new object[0]);
+                var value = p.GetValue(obj, Array.Empty<object>());
 
                 // DateTime[]
                 if (p.PropertyType.IsArray && value?.GetType() == typeof(DateTime[]))

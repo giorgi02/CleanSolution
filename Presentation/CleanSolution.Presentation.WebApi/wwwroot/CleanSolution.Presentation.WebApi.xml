@@ -71,5 +71,10 @@
             ტოკენის გენერირება
             </summary>
         </member>
+        <member name="M:CleanSolution.Presentation.WebApi.Extensions.Services.LocalizationService.AddLocalizeConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            გამოძახება: Headers["Accept-Language"] = "ka-GE"
+            </summary>
+        </member>
     </members>
 </doc>
