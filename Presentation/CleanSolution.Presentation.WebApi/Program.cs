@@ -1,3 +1,4 @@
+using AspNetCoreRateLimit;
 using CleanSolution.Core.Application;
 using CleanSolution.Infrastructure.Files;
 using CleanSolution.Infrastructure.Logger;
@@ -36,6 +37,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseIpRateLimiting();
 
 app.UseCors("CorsPolicy");
 

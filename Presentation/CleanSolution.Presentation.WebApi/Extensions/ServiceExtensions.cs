@@ -1,6 +1,7 @@
 ﻿global using System.Reflection;
 global using System.Text;
 global using System.Text.Json;
+using AspNetCoreRateLimit;
 using CleanSolution.Core.Application.Interfaces.Contracts;
 using CleanSolution.Presentation.WebApi.Extensions.Services;
 using FluentValidation.AspNetCore;
@@ -13,7 +14,6 @@ public static class ServiceExtensions
     {
         services.AddControllers().AddFluentValidation();
 
-        // todo: მივაქციო ყურადღება, ზოგგან მუშაობს ზოგგან არა
         services.AddHttpContextAccessor(); // IHttpContextAccessor -ის ინექციისთვის
         services.AddScoped<IActiveUserService, ActiveUserService>();
 
@@ -22,7 +22,12 @@ public static class ServiceExtensions
         services.AddSwaggerServices("CleanSolution v1");
 
         services.AddLocalizeConfiguration(configuration);
+
+        services.AddMemoryCache();
+
+        services.AddConfigureRateLimiting(configuration);
     }
+
 
     private static void AddConfigureCors(this IServiceCollection services, IConfiguration configuration)
     {
@@ -36,7 +41,24 @@ public static class ServiceExtensions
         });
     }
 
-    //private static void ConfigureXml(this IServiceCollection services)
+    private static void AddConfigureRateLimiting(this IServiceCollection services, IConfiguration configuration)
+    {
+        //load general configuration from appsettings.json
+        services.Configure<IpRateLimitOptions>(configuration.GetSection("IpRateLimiting"));
+
+        // inject counter and rules
+        services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+        services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+
+        // configuration (resolvers, counter key builders)
+        services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+        services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+
+        // inject counter and rules stores
+        services.AddInMemoryRateLimiting();
+    }
+
+    //private static void AddConfigureXml(this IServiceCollection services)
     //{
     //    services.AddMvc(options =>
     //    {
