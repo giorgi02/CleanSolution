@@ -22,7 +22,7 @@ public sealed class GetEmployeesQuery
     }
 
 
-    public class Handler : IRequestHandler<Request, Pagination<GetEmployeeDto>>
+    public sealed class Handler : IRequestHandler<Request, Pagination<GetEmployeeDto>>
     {
         private readonly IEmployeeRepository _repository;
         private readonly IMapper _mapper;
@@ -45,7 +45,7 @@ public sealed class GetEmployeesQuery
         }
     }
 
-    public class Validator : AbstractValidator<Request>
+    public sealed class Validator : AbstractValidator<Request>
     {
         public Validator()
         {

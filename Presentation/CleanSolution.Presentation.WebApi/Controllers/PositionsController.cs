@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CleanSolution.Presentation.WebApi.Controllers;
 [Route("api/[controller]")]
 [ApiController]
-public class PositionsController : ControllerBase
+public sealed class PositionsController : ControllerBase
 {
     private readonly IMediator _mediator;
 

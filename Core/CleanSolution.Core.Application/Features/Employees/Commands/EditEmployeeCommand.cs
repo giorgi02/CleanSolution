@@ -29,7 +29,7 @@ public class EditEmployeeCommand
     }
 
 
-    public class Handler : IRequestHandler<Request>
+    public sealed class Handler : IRequestHandler<Request>
     {
         public Handler()
         {

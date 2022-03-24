@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CleanSolution.Presentation.WebApi.Controllers;
 [Route("api/[controller]")]
 [ApiController]
-public class EmployeesController : ControllerBase
+public sealed class EmployeesController : ControllerBase
 {
     private readonly IMediator _mediator;
     public EmployeesController(IMediator mediator) =>

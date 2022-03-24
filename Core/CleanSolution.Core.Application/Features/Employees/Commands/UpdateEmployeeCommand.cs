@@ -32,7 +32,7 @@ public sealed class UpdateEmployeeCommand
     }
 
 
-    public class Handler : IRequestHandler<Request, GetEmployeeDto>
+    public sealed class Handler : IRequestHandler<Request, GetEmployeeDto>
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IPositionRepository _positionRepository;
@@ -57,13 +57,13 @@ public sealed class UpdateEmployeeCommand
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            await _employeeRepository.UpdateAsync(employee);
+            await _employeeRepository.UpdateAsync(employee, cancellationToken);
 
             return _mapper.Map<GetEmployeeDto>(employee);
         }
     }
 
-    public class Validator : AbstractValidator<Request>
+    public sealed class Validator : AbstractValidator<Request>
     {
         private readonly IPositionRepository _positionRepository;
 

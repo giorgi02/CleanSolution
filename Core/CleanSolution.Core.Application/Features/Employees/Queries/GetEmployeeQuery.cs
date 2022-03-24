@@ -8,7 +8,7 @@ public sealed class GetEmployeeQuery
     public record class Request(Guid EmployeeId) : IRequest<GetEmployeeDto>;
 
 
-    public class Handler : IRequestHandler<Request, GetEmployeeDto>
+    public sealed class Handler : IRequestHandler<Request, GetEmployeeDto>
     {
         private readonly IEmployeeRepository _repository;
         private readonly IMapper _mapper;

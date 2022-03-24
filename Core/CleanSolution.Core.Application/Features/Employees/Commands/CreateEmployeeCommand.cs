@@ -33,7 +33,7 @@ public sealed class CreateEmployeeCommand
     }
 
 
-    public class Handler : IRequestHandler<Request, Guid>
+    public sealed class Handler : IRequestHandler<Request, Guid>
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IPositionRepository _positionRepository;
@@ -58,14 +58,14 @@ public sealed class CreateEmployeeCommand
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            await _employeeRepository.CreateAsync(employee);
+            await _employeeRepository.CreateAsync(employee, cancellationToken);
 
             return employee.Id;
         }
     }
 
 
-    public class Validator : AbstractValidator<Request>
+    public sealed class Validator : AbstractValidator<Request>
     {
         private readonly IPositionRepository _positionRepository;
 

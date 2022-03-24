@@ -4,7 +4,7 @@ using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Enums;
 
 namespace CleanSolution.Infrastructure.Persistence.Implementations.Repositories;
-internal class EmployeeRepository : Repository<Employee>, IEmployeeRepository
+internal sealed class EmployeeRepository : Repository<Employee>, IEmployeeRepository
 {
     public EmployeeRepository(DataContext context) : base(context) { }
 

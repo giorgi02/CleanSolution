@@ -3,7 +3,7 @@ using CleanSolution.Infrastructure.Persistence.Seeds;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CleanSolution.Infrastructure.Persistence.Configurations;
-internal class PositionConfiguration : IEntityTypeConfiguration<Position>
+internal sealed class PositionConfiguration : IEntityTypeConfiguration<Position>
 {
     public void Configure(EntityTypeBuilder<Position> builder)
     {

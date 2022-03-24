@@ -8,7 +8,7 @@ public sealed class DeleteEmployeeCommand
     public record class Request(Guid EmployeeId) : IRequest;
 
 
-    public class Handler : AsyncRequestHandler<Request>
+    public sealed class Handler : AsyncRequestHandler<Request>
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IStringLocalizer<Localize.Resource> _localizer;
@@ -27,7 +27,7 @@ public sealed class DeleteEmployeeCommand
 
             if (isRecord) throw new EntityNotFoundException(_localizer["exception_data_not_found"]);
 
-            await _employeeRepository.DeleteAsync(request.EmployeeId);
+            await _employeeRepository.DeleteAsync(request.EmployeeId, cancellationToken);
         }
     }
 }

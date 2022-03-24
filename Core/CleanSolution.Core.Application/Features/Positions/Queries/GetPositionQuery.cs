@@ -7,7 +7,7 @@ public sealed class GetPositionQuery
     public record class Request() : IRequest<IEnumerable<GetPositionDto>>;
 
 
-    public class Handler : IRequestHandler<Request, IEnumerable<GetPositionDto>>
+    public sealed class Handler : IRequestHandler<Request, IEnumerable<GetPositionDto>>
     {
         private readonly IPositionRepository _repository;
         private readonly IMapper _mapper;

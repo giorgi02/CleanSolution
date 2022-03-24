@@ -4,14 +4,11 @@ using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Enums;
 
 namespace CleanSolution.Core.Application.Mappings;
-public class AutoMapperProfile : Profile
+public sealed class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {
         CreateMap(typeof(Pagination<>), typeof(Pagination<>));
-
-        CreateMap<SetPositionDto, Position>();
-        CreateMap<SetEmployeeDto, Employee>();
 
         CreateMap<Position, GetPositionDto>();
         CreateMap<Employee, GetEmployeeDto>()
