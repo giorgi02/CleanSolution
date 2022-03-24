@@ -4,19 +4,19 @@ namespace CleanSolution.Core.Application.Behaviors;
 public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
        where TRequest : class, IRequest<TResponse>
 {
-    private readonly IEnumerable<IValidator<TRequest>> validators;
+    private readonly IEnumerable<IValidator<TRequest>> _validators;
 
     public ValidationBehaviour(IEnumerable<IValidator<TRequest>> validators) =>
-        this.validators = validators;
+        _validators = validators ?? throw new ArgumentNullException(nameof(validators));
 
 
     public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
     {
-        if (validators.Any())
+        if (_validators.Any())
         {
             var context = new ValidationContext<TRequest>(request);
 
-            var validationResults = await Task.WhenAll(validators.Select(v => v.ValidateAsync(context, cancellationToken)));
+            var validationResults = await Task.WhenAll(_validators.Select(v => v.ValidateAsync(context, cancellationToken)));
 
             var errorsDictionary = validationResults
                 .SelectMany(r => r.Errors)

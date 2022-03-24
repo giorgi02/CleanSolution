@@ -1,6 +1,6 @@
 ﻿using CleanSolution.Core.Application.DTOs;
 using CleanSolution.Core.Application.Exceptions;
-using CleanSolution.Core.Application.Interfaces;
+using CleanSolution.Core.Application.Interfaces.Repositories;
 
 namespace CleanSolution.Core.Application.Features.Employees.Queries;
 public sealed class GetEmployeeQuery
@@ -10,18 +10,18 @@ public sealed class GetEmployeeQuery
 
     public class Handler : IRequestHandler<Request, GetEmployeeDto>
     {
-        private readonly IUnitOfWork _unit;
+        private readonly IEmployeeRepository _repository;
         private readonly IMapper _mapper;
 
-        public Handler(IUnitOfWork unit, IMapper mapper)
+        public Handler(IEmployeeRepository repository, IMapper mapper)
         {
-            _unit = unit;
-            _mapper = mapper;
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<GetEmployeeDto> Handle(Request request, CancellationToken cancellationToken)
         {
-            var application = await _unit.EmployeeRepository.ReadAsync(request.EmployeeId);
+            var application = await _repository.ReadAsync(request.EmployeeId);
             if (application is null) throw new EntityNotFoundException("ჩანაწერი ვერ მოიძებნა");
 
             return await Task.FromResult(_mapper.Map<GetEmployeeDto>(application));

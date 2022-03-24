@@ -5,18 +5,18 @@ using System.Linq.Expressions;
 namespace CleanSolution.Core.Application.Interfaces;
 public interface IRepository<TKey, TEntity> where TEntity : BaseEntity
 {
-    Task<int> CreateAsync(TEntity entity);
+    Task<int> CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
 
     Task<TEntity?> ReadAsync(TKey id);
     Task<IEnumerable<TEntity>> ReadAsync();
     Task<IEnumerable<TEntity>> ReadAsync(Expression<Func<TEntity, bool>> predicate);
 
-    Task<int> UpdateAsync(TEntity entity);
-    Task<int> UpdateAsync(TKey id, TEntity entity);
-    Task<int> UpdateSimpleAsync(TEntity entity);
+    Task<int> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default);
+    Task<int> UpdateAsync(TKey id, TEntity entity, CancellationToken cancellationToken = default);
+    Task<int> UpdateSimpleAsync(TEntity entity, CancellationToken cancellationToken = default);
 
-    Task<int> DeleteAsync(TKey id);
-    Task<int> DeleteAsync(TEntity entity);
+    Task<int> DeleteAsync(TKey id, CancellationToken cancellationToken = default);
+    Task<int> DeleteAsync(TEntity entity, CancellationToken cancellationToken = default);
 
     Task<bool> CheckAsync(Expression<Func<TEntity, bool>> predicate);
 

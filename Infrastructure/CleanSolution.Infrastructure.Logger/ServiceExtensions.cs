@@ -5,24 +5,12 @@ using Serilog;
 namespace CleanSolution.Infrastructure.Logger;
 public static class ServiceExtensions
 {
-    //public static void AddLoggerLayer(this IServiceCollection services, IConfiguration configuration)
-    //{
-    //    ServiceExtensions.LogToSeq(configuration);
-    //}
-
-    //// დაილოგება Seq ლოგების მენეჯერში
-    //private static void LogToSeq(IConfiguration configuration)
-    //{
-    //    Log.Logger = new LoggerConfiguration()
-    //            .ReadFrom.Configuration(configuration)
-    //            .WriteTo.Seq("http://localhost:5341")
-    //            .CreateLogger();
-    //}
-
+    // დაილოგება Seq ლოგების მენეჯერში
     public static void AddLoggerLayer(this IHostBuilder host, IConfiguration configuration)
     {
         host.UseSerilog((context, config) => config
             .ReadFrom.Configuration(configuration)
-            .WriteTo.Seq("http://localhost:5341"));
+            .Enrich.WithProperty("Project", "[CleanSolution]")
+            .WriteTo.Seq("http://localhost:5341", period: new TimeSpan(0, 0, 10)));
     }
 }

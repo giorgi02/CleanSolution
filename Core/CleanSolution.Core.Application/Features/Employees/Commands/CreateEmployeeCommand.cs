@@ -1,5 +1,5 @@
-﻿using CleanSolution.Core.Application.Interfaces;
-using CleanSolution.Core.Application.Interfaces.Contracts;
+﻿using CleanSolution.Core.Application.Interfaces.Contracts;
+using CleanSolution.Core.Application.Interfaces.Repositories;
 using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Enums;
 using Microsoft.AspNetCore.Http;
@@ -35,19 +35,21 @@ public sealed class CreateEmployeeCommand
 
     public class Handler : IRequestHandler<Request, Guid>
     {
-        private readonly IUnitOfWork _unit;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IPositionRepository _positionRepository;
         private readonly IFileManager _fileManager;
 
-        public Handler(IUnitOfWork unit, IFileManager fileManager)
+        public Handler(IEmployeeRepository employeeRepository, IPositionRepository positionRepository, IFileManager fileManager)
         {
-            _unit = unit;
-            _fileManager = fileManager;
+            _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
+            _positionRepository = positionRepository ?? throw new ArgumentNullException(nameof(positionRepository));
+            _fileManager = fileManager ?? throw new ArgumentNullException(nameof(fileManager));
         }
         public async Task<Guid> Handle(Request request, CancellationToken cancellationToken)
         {
             var employee = new Employee(request.PrivateNumber!, request.FirstName!, request.LastName!, request.BirthDate, request.Gender);
             employee.SetLanguages(request.Languages);
-            employee.Position = await _unit.PositionRepository.ReadAsync(request.PositionId);
+            employee.Position = await _positionRepository.ReadAsync(request.PositionId);
 
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -56,7 +58,7 @@ public sealed class CreateEmployeeCommand
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            await _unit.EmployeeRepository.CreateAsync(employee);
+            await _employeeRepository.CreateAsync(employee);
 
             return employee.Id;
         }
@@ -65,11 +67,11 @@ public sealed class CreateEmployeeCommand
 
     public class Validator : AbstractValidator<Request>
     {
-        private readonly IUnitOfWork _unit;
+        private readonly IPositionRepository _positionRepository;
 
-        public Validator(IUnitOfWork unit)
+        public Validator(IPositionRepository positionRepository)
         {
-            _unit = unit;
+            _positionRepository = positionRepository;
 
             RuleFor(x => x.PrivateNumber)
                 .NotNull().WithMessage("პირადი ნომერი ცარიელია")
@@ -94,7 +96,7 @@ public sealed class CreateEmployeeCommand
 
         private async Task<bool> IfExistPosition(Guid positionId, CancellationToken cancellationToken)
         {
-            return await _unit.PositionRepository.CheckAsync(x => x.Id == positionId);
+            return await _positionRepository.CheckAsync(x => x.Id == positionId);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using CleanSolution.Core.Application.Commons;
 using CleanSolution.Core.Application.DTOs;
-using CleanSolution.Core.Application.Interfaces;
+using CleanSolution.Core.Application.Interfaces.Repositories;
 using CleanSolution.Core.Domain.Enums;
 
 namespace CleanSolution.Core.Application.Features.Employees.Queries;
@@ -24,13 +24,13 @@ public sealed class GetEmployeesQuery
 
     public class Handler : IRequestHandler<Request, Pagination<GetEmployeeDto>>
     {
-        private readonly IUnitOfWork _unit;
+        private readonly IEmployeeRepository _repository;
         private readonly IMapper _mapper;
 
-        public Handler(IUnitOfWork unit, IMapper mapper)
+        public Handler(IEmployeeRepository repository, IMapper mapper)
         {
-            _unit = unit;
-            _mapper = mapper;
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<Pagination<GetEmployeeDto>> Handle(Request request, CancellationToken cancellationToken)
@@ -39,7 +39,7 @@ public sealed class GetEmployeesQuery
             foreach (var language in request.Languages)
                 languages |= language;
 
-            var employees = await _unit.EmployeeRepository.FilterAsync(request.PageIndex, request.PageSize, firatName: request.FirstName, language: languages);
+            var employees = await _repository.FilterAsync(request.PageIndex, request.PageSize, firatName: request.FirstName, language: languages);
 
             return _mapper.Map<Pagination<GetEmployeeDto>>(employees);
         }

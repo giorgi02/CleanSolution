@@ -17,19 +17,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{C724FE0B-4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{B366BF68-B766-44E5-9BDA-1BE55BBA0866}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanSolution.Core.Domain", "Core\CleanSolution.Core.Domain\CleanSolution.Core.Domain.csproj", "{F9A9C80E-6225-4549-A845-AA9FC7D48290}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanSolution.Core.Domain", "Core\CleanSolution.Core.Domain\CleanSolution.Core.Domain.csproj", "{F9A9C80E-6225-4549-A845-AA9FC7D48290}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanSolution.Core.Application", "Core\CleanSolution.Core.Application\CleanSolution.Core.Application.csproj", "{5D56D4B2-324E-403B-8205-2D380E068EB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanSolution.Core.Application", "Core\CleanSolution.Core.Application\CleanSolution.Core.Application.csproj", "{5D56D4B2-324E-403B-8205-2D380E068EB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanSolution.Infrastructure.Persistence", "Infrastructure\CleanSolution.Infrastructure.Persistence\CleanSolution.Infrastructure.Persistence.csproj", "{5A6D8FF6-E80A-4D62-9DDA-F2990BD5034C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanSolution.Infrastructure.Persistence", "Infrastructure\CleanSolution.Infrastructure.Persistence\CleanSolution.Infrastructure.Persistence.csproj", "{5A6D8FF6-E80A-4D62-9DDA-F2990BD5034C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanSolution.Infrastructure.Logger", "Infrastructure\CleanSolution.Infrastructure.Logger\CleanSolution.Infrastructure.Logger.csproj", "{DD595CA5-F636-40B5-9209-9C2208FB631F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanSolution.Infrastructure.Logger", "Infrastructure\CleanSolution.Infrastructure.Logger\CleanSolution.Infrastructure.Logger.csproj", "{DD595CA5-F636-40B5-9209-9C2208FB631F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanSolution.Infrastructure.EventSourcing", "Infrastructure\CleanSolution.Infrastructure.EventSourcing\CleanSolution.Infrastructure.EventSourcing.csproj", "{71AA3F2E-139A-4049-8BF7-C8C4EB61BEC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanSolution.Infrastructure.EventSourcing", "Infrastructure\CleanSolution.Infrastructure.EventSourcing\CleanSolution.Infrastructure.EventSourcing.csproj", "{71AA3F2E-139A-4049-8BF7-C8C4EB61BEC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanSolution.Infrastructure.Files", "Infrastructure\CleanSolution.Infrastructure.Files\CleanSolution.Infrastructure.Files.csproj", "{0A6D51C9-BC7F-4D07-983B-C65B68429EDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanSolution.Infrastructure.Files", "Infrastructure\CleanSolution.Infrastructure.Files\CleanSolution.Infrastructure.Files.csproj", "{0A6D51C9-BC7F-4D07-983B-C65B68429EDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanSolution.Presentation.WebApi", "Presentation\CleanSolution.Presentation.WebApi\CleanSolution.Presentation.WebApi.csproj", "{C792E255-D7FC-4662-9D32-637487E463A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanSolution.Presentation.WebApi", "Presentation\CleanSolution.Presentation.WebApi\CleanSolution.Presentation.WebApi.csproj", "{C792E255-D7FC-4662-9D32-637487E463A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

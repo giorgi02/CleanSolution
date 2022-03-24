@@ -6,23 +6,23 @@ namespace CleanSolution.Core.Application.Behaviors;
 public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : notnull, IRequest<TResponse>
 {
-    private readonly ILogger<LoggingBehavior<TRequest, TResponse>> logger;
-    private readonly IActiveUserService user;
+    private readonly ILogger<LoggingBehavior<TRequest, TResponse>> _logger;
+    private readonly IActiveUserService _user;
 
     public LoggingBehavior(ILogger<LoggingBehavior<TRequest, TResponse>> logger, IActiveUserService user)
     {
-        this.logger = logger;
-        this.user = user;
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _user = user ?? throw new ArgumentNullException(nameof(user));
     }
 
     public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
     {
-        logger.LogInformation("=> request: url={@RequestUrl}, method={@RequestMethod}, type={@type}, body={@body}, userIpAddress={@IpAddress}, userPort={@Port}, userId={@UserId}",
-             user.RequestUrl, user.RequestMethod, typeof(TRequest).FullName, request, user.IpAddress, user.Port, user.UserId);
+        _logger.LogInformation("-> request: url={@RequestUrl}, method={@RequestMethod}, type={@type}, body={@body}, userIpAddress={@IpAddress}, userPort={@Port}, userId={@UserId}",
+              _user.RequestUrl, _user.RequestMethod, typeof(TRequest).FullName, request, _user.IpAddress, _user.Port, _user.UserId);
 
         var response = await next();
 
-        logger.LogInformation("<= response: type={@type}, body={@body}", typeof(TResponse).FullName, ResponseFilter(response));
+        _logger.LogInformation("<- response: type={@type}, body={@body}", typeof(TResponse).FullName, ResponseFilter(response));
 
         return response;
     }

@@ -1,5 +1,5 @@
 ﻿using CleanSolution.Core.Application.DTOs;
-using CleanSolution.Core.Application.Interfaces;
+using CleanSolution.Core.Application.Interfaces.Repositories;
 
 namespace CleanSolution.Core.Application.Features.Positions.Queries;
 public sealed class GetPositionQuery
@@ -9,15 +9,18 @@ public sealed class GetPositionQuery
 
     public class Handler : IRequestHandler<Request, IEnumerable<GetPositionDto>>
     {
-        private readonly IUnitOfWork _unit;
+        private readonly IPositionRepository _repository;
         private readonly IMapper _mapper;
 
-        public Handler(IUnitOfWork unit, IMapper mapper) =>
-            (_unit, _mapper) = (unit, mapper);
+        public Handler(IPositionRepository repository, IMapper mapper)
+        {
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        }
 
         public async Task<IEnumerable<GetPositionDto>> Handle(Request request, CancellationToken cancellationToken)
         {
-            var positions = await _unit.PositionRepository.ReadAsync();
+            var positions = await _repository.ReadAsync();
 
             return _mapper.Map<IEnumerable<GetPositionDto>>(positions);
         }

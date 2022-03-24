@@ -1,5 +1,5 @@
 ﻿using CleanSolution.Core.Application.DTOs;
-using CleanSolution.Core.Application.Interfaces;
+using CleanSolution.Core.Application.Interfaces.Repositories;
 using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Enums;
 using Microsoft.Extensions.Localization;
@@ -34,13 +34,15 @@ public sealed class UpdateEmployeeCommand
 
     public class Handler : IRequestHandler<Request, GetEmployeeDto>
     {
-        private readonly IUnitOfWork _unit;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IPositionRepository _positionRepository;
         private readonly IMapper _mapper;
 
-        public Handler(IUnitOfWork unit, IMapper mapper)
+        public Handler(IEmployeeRepository employeeRepository, IPositionRepository positionRepository, IMapper mapper)
         {
-            _unit = unit;
-            _mapper = mapper;
+            _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
+            _positionRepository = positionRepository ?? throw new ArgumentNullException(nameof(positionRepository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<GetEmployeeDto> Handle(Request request, CancellationToken cancellationToken)
@@ -51,11 +53,11 @@ public sealed class UpdateEmployeeCommand
                 Version = request.Version
             };
             employee.SetLanguages(request.Languages);
-            employee.Position = await _unit.PositionRepository.ReadAsync(request.PositionId);
+            employee.Position = await _positionRepository.ReadAsync(request.PositionId);
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            await _unit.EmployeeRepository.UpdateAsync(employee);
+            await _employeeRepository.UpdateAsync(employee);
 
             return _mapper.Map<GetEmployeeDto>(employee);
         }
@@ -63,11 +65,11 @@ public sealed class UpdateEmployeeCommand
 
     public class Validator : AbstractValidator<Request>
     {
-        private readonly IUnitOfWork _unit;
+        private readonly IPositionRepository _positionRepository;
 
-        public Validator(IUnitOfWork unit, IStringLocalizer<Localize.Resource> localizer)
+        public Validator(IPositionRepository positionRepository, IStringLocalizer<Localize.Resource> localizer)
         {
-            _unit = unit;
+            _positionRepository = positionRepository;
 
             RuleFor(x => x.PrivateNumber)
                 .NotNull().WithMessage(localizer["validation_privatenumber_is_empty"])
@@ -91,7 +93,7 @@ public sealed class UpdateEmployeeCommand
 
         private async Task<bool> IfExistPosition(Guid positionId, CancellationToken cancellationToken)
         {
-            return await _unit.PositionRepository.CheckAsync(x => x.Id == positionId);
+            return await _positionRepository.CheckAsync(x => x.Id == positionId);
         }
     }
 }
