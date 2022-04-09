@@ -25,7 +25,7 @@ public sealed class DeleteEmployeeCommand
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            if (isRecord) throw new EntityNotFoundException(_localizer["exception_data_not_found"]);
+            if (!isRecord) throw new EntityNotFoundException(_localizer["record_not_found"]);
 
             await _employeeRepository.DeleteAsync(request.EmployeeId, cancellationToken);
         }

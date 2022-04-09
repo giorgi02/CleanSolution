@@ -26,46 +26,32 @@ public class ExceptionHandler
 
     private async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        var traceId = Activity.Current?.Id ?? context?.TraceIdentifier;
-        var titleText = "One or more validation errors occurred.";
-        var statusCode = (int)HttpStatusCode.BadRequest;
-        var errors = new Dictionary<string, string[]>(1);
+        var responce = ResponseFactory.CreateFailure(Activity.Current?.Id ?? context?.TraceIdentifier);
 
         switch (exception)
         {
             case EntityValidationException e:
-                logger.LogWarning(e, nameof(EntityValidationException));
-                statusCode = (int)e.StatusCode;
-                errors = new Dictionary<string, string[]>(e.Errors);
+                logger.LogWarning(e, "{@ex} {@TraceId}", nameof(EntityValidationException), responce.TraceId);
+                responce.SetStatus(e.StatusCode).SetErrors(e.Errors);
                 break;
             case ApplicationBaseException e:
-                logger.LogWarning(e, nameof(ApplicationBaseException));
-                statusCode = (int)e.StatusCode;
-                errors.TryAdd("messages", new string[] { e.Message });
+                logger.LogWarning(e, "{@ex} {@TraceId}", nameof(ApplicationBaseException), responce.TraceId);
+                responce.SetStatus(e.StatusCode).SetErrors(e.Message);
                 break;
-            case OperationCanceledException:
-                logger.LogWarning(exception, nameof(OperationCanceledException));
-                titleText = "Operation Is Canceled.";
-                errors.TryAdd("messages", new string[] { "Operation Is Canceled." });
+            case OperationCanceledException e:
+                logger.LogWarning(e, "{@ex} {@TraceId}", nameof(OperationCanceledException), responce.TraceId);
+                responce.SetTitle("Operation Is Canceled.").SetErrors("Operation Is Canceled.");
                 break;
             case Exception:
-                logger.LogError(exception, nameof(Exception));
-                titleText = "Server Error.";
-                statusCode = (int)HttpStatusCode.InternalServerError;
-                errors.TryAdd("messages", new string[] { "Internal Server Error." });
+                logger.LogError(exception, "{@ex} {@TraceId}", nameof(Exception), responce.TraceId);
+                responce.SetTitle("Server Error.").SetStatus(HttpStatusCode.InternalServerError).SetErrors("Internal Server Error.");
                 break;
         }
 
 
         context!.Response.ContentType = "application/json";
-        context!.Response.StatusCode = statusCode;
+        context!.Response.StatusCode = responce.Status;
 
-        await context.Response.WriteAsync(
-        JsonSerializer.Serialize(Response.Failure(
-            titleText: titleText,
-            statusCode: statusCode,
-            traceId: traceId,
-            errors: errors
-        )));
+        await context.Response.WriteAsync(JsonSerializer.Serialize(responce));
     }
 }

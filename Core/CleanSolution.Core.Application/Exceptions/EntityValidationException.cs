@@ -1,10 +1,8 @@
 ﻿namespace CleanSolution.Core.Application.Exceptions;
-/// <summary>
-/// Fluent Validation -ის იმიტაცია
-/// </summary>
 public sealed class EntityValidationException : ApplicationBaseException
 {
     public override HttpStatusCode StatusCode => HttpStatusCode.BadRequest;
+
     /// <summary>
     /// Fluent Validation -ის იმიტაცია
     /// </summary>

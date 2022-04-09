@@ -1,10 +1,10 @@
 ﻿namespace CleanSolution.Core.Application.Exceptions;
-public sealed class ActionProhibitedException : ApplicationBaseException
+public sealed class OperationRejectedException : ApplicationBaseException
 {
     public override HttpStatusCode StatusCode => HttpStatusCode.NotAcceptable;
 
     /// <summary>
     /// მსგავსი მოქმედება აკრძალულია
     /// </summary>
-    public ActionProhibitedException(string message) : base(message) { }
+    public OperationRejectedException(string message) : base(message) { }
 }

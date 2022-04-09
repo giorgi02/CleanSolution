@@ -1,4 +1,5 @@
 ﻿using CleanSolution.Core.Application.Commons;
+using CleanSolution.Core.Application.Exceptions;
 using CleanSolution.Core.Application.Interfaces.Repositories;
 using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Enums;
@@ -36,5 +37,15 @@ internal sealed class EmployeeRepository : Repository<Employee>, IEmployeeReposi
         var employees = this.Including().Where(x => x.PrivateNumber == text || x.FirstName == text || x.LastName == text);
 
         return await Pagination<Employee>.CreateAsync(employees, pageIndex, pageSize);
+    }
+
+    public override async Task<int> UpdateAsync(Guid id, Employee employee, CancellationToken cancellationToken = default)
+    {
+        var existing = await _context.Employes.FindAsync(id);
+        if (existing is null || existing.Version != employee.Version)
+            throw new DataObsoleteException("ასეთი ობიექტი ან არ არსებობს ან უკვე შეცვლილია");
+
+        _context.Entry(existing).CurrentValues.SetValues(employee);
+        return await _context.SaveChangesAsync(cancellationToken);
     }
 }
