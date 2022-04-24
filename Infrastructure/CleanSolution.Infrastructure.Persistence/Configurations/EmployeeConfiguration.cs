@@ -11,6 +11,8 @@ internal sealed class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
         builder.Property(x => x.LastName).HasMaxLength(100).IsRequired();
         builder.Property(x => x.BirthDate).HasColumnType("date");
 
+        builder.Navigation(x => x.Position).AutoInclude();
+
         #region აღწერილია: უნიკალური და არაკლასტერიზებული ინდექსები
         builder.HasIndex(x => x.PrivateNumber).IsUnique();
         #endregion
