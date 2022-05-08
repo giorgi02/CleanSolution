@@ -8,9 +8,9 @@ public static class ServiceExtensions
     public static void AddEventSourcingLayer(this IServiceCollection services, IConfiguration configuration)
     {
         var eventStoreConnection = EventStoreConnection.Create(
-            connectionString: configuration.GetValue<string>("EventStore:ConnectionString"),
+            connectionString: configuration["EventStore:ConnectionString"],
             builder: ConnectionSettings.Create().KeepReconnecting(),
-            connectionName: configuration.GetValue<string>("EventStore:ConnectionName"));
+            connectionName: configuration["EventStore:ConnectionName"]);
 
         eventStoreConnection.ConnectAsync().GetAwaiter().GetResult();
 
