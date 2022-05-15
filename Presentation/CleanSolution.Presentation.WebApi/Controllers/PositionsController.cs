@@ -2,6 +2,7 @@
 using CleanSolution.Core.Application.Features.Positions.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace CleanSolution.Presentation.WebApi.Controllers;
 [Route("api/[controller]")]
@@ -9,12 +10,19 @@ namespace CleanSolution.Presentation.WebApi.Controllers;
 public sealed class PositionsController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly IMemoryCache _cache;
 
-    public PositionsController(IMediator mediator) =>
+    public PositionsController(IMediator mediator, IMemoryCache cache)
+    {
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-
+        _cache = cache ?? throw new ArgumentNullException(nameof(cache));
+    }
 
     [HttpGet(Name = "GetPositions")]
     public async Task<IEnumerable<GetPositionDto>> Get(CancellationToken cancellationToken = default) =>
-        await _mediator.Send(new GetPositionQuery.Request(), cancellationToken);
+        await _cache.GetOrCreateAsync("positions", async entry =>
+        {
+            entry.SlidingExpiration = TimeSpan.FromHours(1);
+            return await _mediator.Send(new GetPositionQuery.Request(), cancellationToken);
+        });
 }
