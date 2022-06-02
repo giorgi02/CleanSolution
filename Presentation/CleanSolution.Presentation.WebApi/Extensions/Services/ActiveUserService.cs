@@ -1,4 +1,4 @@
-﻿using CleanSolution.Core.Application.Interfaces.Contracts;
+﻿using CleanSolution.Core.Application.Interfaces.Services;
 using System.Security.Claims;
 
 namespace CleanSolution.Presentation.WebApi.Extensions.Services;

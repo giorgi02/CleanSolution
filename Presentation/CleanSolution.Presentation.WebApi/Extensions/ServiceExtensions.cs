@@ -1,8 +1,10 @@
 ﻿global using System.Reflection;
 global using System.Text;
 global using System.Text.Json;
+
 using AspNetCoreRateLimit;
-using CleanSolution.Core.Application.Interfaces.Contracts;
+using CleanSolution.Core.Application.Interfaces.Services;
+using CleanSolution.Presentation.WebApi.Extensions.Configurations;
 using CleanSolution.Presentation.WebApi.Extensions.Services;
 using FluentValidation.AspNetCore;
 
@@ -17,9 +19,9 @@ public static class ServiceExtensions
         services.AddHttpContextAccessor(); // IHttpContextAccessor -ის ინექციისთვის
         services.AddScoped<IActiveUserService, ActiveUserService>();
 
-        services.AddConfigureCors(configuration);
+        services.AddConfigureCors();
+        services.AddSwaggerServices();
         services.AddConfigureHealthChecks(configuration);
-        services.AddSwaggerServices("CleanSolution v1");
 
         services.AddLocalizeConfiguration(configuration);
 
@@ -29,7 +31,7 @@ public static class ServiceExtensions
     }
 
 
-    private static void AddConfigureCors(this IServiceCollection services, IConfiguration configuration)
+    private static void AddConfigureCors(this IServiceCollection services)
     {
         services.AddCors(options =>
         {

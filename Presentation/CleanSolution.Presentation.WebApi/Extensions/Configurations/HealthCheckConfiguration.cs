@@ -1,9 +1,34 @@
 ﻿using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace CleanSolution.Presentation.WebApi.Extensions.Middlewares;
-public static class HealthChecksMiddleware
+namespace CleanSolution.Presentation.WebApi.Extensions.Configurations;
+
+public static class HealthCheckConfiguration
 {
+    /// <summary>
+    /// ჯანმრთელობის შემოწმება (მოიცავს middleware -საც)
+    /// გამოძახება: https://localhost:44377/health/ready
+    /// </summary>
+    public static void AddConfigureHealthChecks(this IServiceCollection services, IConfiguration configuration)
+    {
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        var downstreamServiceUrl = configuration["DownstreamService:BaseUrl"];
+
+        services.AddHealthChecks()
+          .AddUrlGroup(
+             new Uri($"{downstreamServiceUrl}"),
+             name: "Downstream API Health Check",
+             failureStatus: HealthStatus.Unhealthy,
+             timeout: TimeSpan.FromSeconds(3),
+             tags: new string[] { "services" })
+          .AddSqlServer(
+             connectionString,
+             name: "Database",
+             failureStatus: HealthStatus.Degraded,
+             timeout: TimeSpan.FromSeconds(1),
+             tags: new string[] { "services" });
+    }
+
     /// <summary>
     /// ჯანმრთელობის შემოწმება (middleware)
     /// Adds a Health Check endpoint to the <see cref="IEndpointRouteBuilder"/> with the specified template.

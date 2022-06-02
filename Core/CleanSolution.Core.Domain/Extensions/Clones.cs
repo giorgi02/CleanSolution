@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace CleanSolution.Core.Domain.Functions
+namespace CleanSolution.Core.Domain.Extensions
 {
     public static class Clones
     {

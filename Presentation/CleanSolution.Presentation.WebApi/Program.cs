@@ -4,6 +4,7 @@ using CleanSolution.Infrastructure.Files;
 using CleanSolution.Infrastructure.Logger;
 using CleanSolution.Infrastructure.Persistence;
 using CleanSolution.Presentation.WebApi.Extensions;
+using CleanSolution.Presentation.WebApi.Extensions.Configurations;
 using CleanSolution.Presentation.WebApi.Extensions.Middlewares;
 using Serilog;
 
@@ -23,7 +24,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwaggerMiddleware("CleanSolution v1");
+    app.UseSwaggerMiddleware();
 }
 
 // todo: დავაკვირდე ამ middleware-ს

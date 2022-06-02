@@ -1,5 +1,5 @@
-﻿using CleanSolution.Core.Application.Interfaces.Contracts;
-using CleanSolution.Core.Application.Interfaces.Repositories;
+﻿using CleanSolution.Core.Application.Interfaces.Repositories;
+using CleanSolution.Core.Application.Interfaces.Services;
 using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Enums;
 using Microsoft.AspNetCore.Http;

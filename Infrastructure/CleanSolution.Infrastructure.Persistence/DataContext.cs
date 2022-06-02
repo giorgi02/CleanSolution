@@ -1,4 +1,4 @@
-﻿using CleanSolution.Core.Application.Interfaces.Contracts;
+﻿using CleanSolution.Core.Application.Interfaces.Services;
 using CleanSolution.Core.Domain.Basics;
 using CleanSolution.Core.Domain.Entities;
 using CleanSolution.Core.Domain.Helpers;

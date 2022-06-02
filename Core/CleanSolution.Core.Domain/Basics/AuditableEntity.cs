@@ -1,4 +1,4 @@
-﻿using CleanSolution.Core.Domain.Functions;
+﻿using CleanSolution.Core.Domain.Extensions;
 using CleanSolution.Core.Domain.Helpers;
 using System.Text.Json;
 

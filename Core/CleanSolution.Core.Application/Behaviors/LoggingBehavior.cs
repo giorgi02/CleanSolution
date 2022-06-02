@@ -1,5 +1,5 @@
 ﻿using CleanSolution.Core.Application.Commons;
-using CleanSolution.Core.Application.Interfaces.Contracts;
+using CleanSolution.Core.Application.Interfaces.Services;
 using Microsoft.Extensions.Logging;
 
 namespace CleanSolution.Core.Application.Behaviors;

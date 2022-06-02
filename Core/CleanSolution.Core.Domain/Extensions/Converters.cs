@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace CleanSolution.Core.Domain.Functions;
+namespace CleanSolution.Core.Domain.Extensions;
 public static class Converters
 {
     /// <summary>

@@ -1,8 +1,7 @@
 ﻿using System.Reflection;
 using System.Text;
-using System.Text.Json;
 
-namespace CleanSolution.Core.Domain.Functions;
+namespace CleanSolution.Core.Domain.Extensions;
 public static class HttpQueryStrings
 {
     private static readonly StringBuilder _query = new();
@@ -54,16 +53,4 @@ public static class HttpQueryStrings
             }
         }
     }
-
-    #region HttpClient Extensions
-    public static async Task<T?> ReadContentAs<T>(this HttpResponseMessage response)
-    {
-        if (!response.IsSuccessStatusCode)
-            throw new ApplicationException($"Something went wrong calling the API: {response.ReasonPhrase}");
-
-        var dataAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-        return JsonSerializer.Deserialize<T>(dataAsString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-    }
-    #endregion
 }

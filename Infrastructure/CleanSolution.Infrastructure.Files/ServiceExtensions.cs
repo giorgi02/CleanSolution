@@ -1,4 +1,4 @@
-﻿using CleanSolution.Core.Application.Interfaces.Contracts;
+﻿using CleanSolution.Core.Application.Interfaces.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

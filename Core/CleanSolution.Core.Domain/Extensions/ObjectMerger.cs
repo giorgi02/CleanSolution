@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace CleanSolution.Core.Domain.Functions;
+namespace CleanSolution.Core.Domain.Extensions;
 public static class ObjectMerger
 {
     public static TDest ApplyTo<TDest, TSrc>(this TDest dest, TSrc src) where TDest : class where TSrc : class

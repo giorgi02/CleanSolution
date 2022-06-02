@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 
-namespace CleanSolution.Presentation.WebApi.Extensions.Services;
-public static class SwaggerConfigurationService
+namespace CleanSolution.Presentation.WebApi.Extensions.Configurations;
+public static class SwaggerConfiguration
 {
+    private readonly static string[] _options = { "CleanSolution v1" };
+
     // services
-    public static void AddSwaggerServices(this IServiceCollection services, params string[] options)
+    public static void AddSwaggerServices(this IServiceCollection services)
     {
         services.AddEndpointsApiExplorer();
 
@@ -37,13 +39,13 @@ public static class SwaggerConfigurationService
                     { securityScheme, Array.Empty<string>() }
             });
             // მეთოდების დახარისხება სხვადასხვა სექციებად
-            foreach (var name in options)
+            foreach (var name in _options)
             {
                 c.SwaggerDoc(name: name, new OpenApiInfo
                 {
                     Title = "CleanSolution.Presentation.WebApi",
                     Version = "v1.0",
-                    Description = "ASP.NET Core Web API Clean Architecture",
+                    Description = "ASP.NET Core Web API - CleanSolution",
                     Contact = new OpenApiContact
                     {
                         Name = "test",
@@ -58,5 +60,24 @@ public static class SwaggerConfigurationService
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
             c.IncludeXmlComments(xmlPath);
         });
+    }
+
+    // middleware
+    public static IApplicationBuilder UseSwaggerMiddleware(this IApplicationBuilder app)
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI(c =>
+        {
+            c.InjectStylesheet("/SwaggerDark.css"); // შავი ფონის დაყენება
+
+            foreach (var name in _options)
+            {
+                c.SwaggerEndpoint(
+                    url: $"{name}/swagger.json",
+                    name: name);
+            }
+        });
+
+        return app;
     }
 }

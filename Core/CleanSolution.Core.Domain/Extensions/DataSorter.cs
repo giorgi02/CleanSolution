@@ -3,7 +3,7 @@ using System.Linq.Dynamic.Core;
 using System.Reflection;
 using System.Text;
 
-namespace CleanSolution.Core.Domain.Functions;
+namespace CleanSolution.Core.Domain.Extensions;
 internal static class DataSorter
 {
     /// <summary>
