@@ -1,6 +1,7 @@
 ﻿using CleanSolution.Core.Application.DTOs;
 using CleanSolution.Core.Application.Features.Employees.Commands;
 using CleanSolution.Core.Application.Features.Employees.Queries;
+using CleanSolution.Core.Domain.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,8 +21,7 @@ public sealed class EmployeesController : ControllerBase
     {
         var result = await _mediator.Send(request, cancellationToken);
 
-        foreach (var param in result.GetParams())
-            Response.Headers.Add(param);
+        result.GetParams().ForEach(param => Response.Headers.Add(param));
 
         return result.Items;
     }

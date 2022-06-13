@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Text;
 
 namespace CleanSolution.Core.Domain.Extensions;
-internal static class DataSorter
+public static class CollectionsUtils
 {
     /// <summary>
     /// foreach
