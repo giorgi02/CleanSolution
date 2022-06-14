@@ -7,7 +7,7 @@ using Microsoft.Extensions.Localization;
 namespace CleanSolution.Core.Application.Features.Employees.Commands;
 public sealed class UpdateEmployeeCommand
 {
-    public class Request : IRequest<GetEmployeeDto>
+    public sealed record class Request : IRequest<GetEmployeeDto>
     {
         public Guid EmployeeId { get; private set; }
         public int Version { get; set; }
@@ -28,6 +28,7 @@ public sealed class UpdateEmployeeCommand
             this.Languages = new HashSet<Language>();
             this.Phones = Array.Empty<string>();
         }
+
         public void SetId(Guid employeeId) => this.EmployeeId = employeeId;
     }
 

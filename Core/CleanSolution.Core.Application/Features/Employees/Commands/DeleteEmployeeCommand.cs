@@ -5,7 +5,7 @@ using Microsoft.Extensions.Localization;
 namespace CleanSolution.Core.Application.Features.Employees.Commands;
 public sealed class DeleteEmployeeCommand
 {
-    public record class Request(Guid EmployeeId) : IRequest;
+    public sealed record class Request(Guid EmployeeId) : IRequest;
 
 
     public sealed class Handler : AsyncRequestHandler<Request>

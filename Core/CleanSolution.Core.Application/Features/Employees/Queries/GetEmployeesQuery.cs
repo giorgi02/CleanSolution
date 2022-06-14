@@ -6,7 +6,7 @@ using CleanSolution.Core.Domain.Enums;
 namespace CleanSolution.Core.Application.Features.Employees.Queries;
 public sealed class GetEmployeesQuery
 {
-    public class Request : IRequest<Pagination<GetEmployeeDto>>
+    public sealed record class Request : IRequest<Pagination<GetEmployeeDto>>
     {
         public int PageIndex { get; set; }
         public int PageSize { get; set; }

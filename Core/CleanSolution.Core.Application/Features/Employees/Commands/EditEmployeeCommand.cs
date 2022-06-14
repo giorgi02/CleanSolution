@@ -4,7 +4,7 @@ using CleanSolution.Core.Domain.Enums;
 namespace CleanSolution.Core.Application.Features.Employees.Commands;
 public class EditEmployeeCommand
 {
-    public class Request : IRequest
+    public sealed record class Request : IRequest
     {
         public Guid EmployeeId { get; private set; }
         public int Version { get; set; }
@@ -25,6 +25,7 @@ public class EditEmployeeCommand
             this.Languages = new HashSet<Language>();
             this.Phones = Array.Empty<string>();
         }
+
         public void SetId(Guid employeeId) => this.EmployeeId = employeeId;
     }
 

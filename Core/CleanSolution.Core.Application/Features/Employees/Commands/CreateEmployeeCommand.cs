@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 namespace CleanSolution.Core.Application.Features.Employees.Commands;
 public sealed class CreateEmployeeCommand
 {
-    public class Request : IRequest<Guid>
+    public sealed record class Request : IRequest<Guid>
     {
         public IFormFile? Picture { get; set; }
         [Required]
@@ -39,11 +39,11 @@ public sealed class CreateEmployeeCommand
         private readonly IPositionRepository _positionRepository;
         private readonly IDocumentService _documentService;
 
-        public Handler(IEmployeeRepository employeeRepository, IPositionRepository positionRepository, IDocumentService fileManager)
+        public Handler(IEmployeeRepository employeeRepository, IPositionRepository positionRepository, IDocumentService documentService)
         {
             _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
             _positionRepository = positionRepository ?? throw new ArgumentNullException(nameof(positionRepository));
-            _documentService = fileManager ?? throw new ArgumentNullException(nameof(fileManager));
+            _documentService = documentService ?? throw new ArgumentNullException(nameof(documentService));
         }
         public async Task<Guid> Handle(Request request, CancellationToken cancellationToken)
         {
