@@ -37,13 +37,13 @@ public sealed class CreateEmployeeCommand
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IPositionRepository _positionRepository;
-        private readonly IFileManager _fileManager;
+        private readonly IDocumentService _documentService;
 
-        public Handler(IEmployeeRepository employeeRepository, IPositionRepository positionRepository, IFileManager fileManager)
+        public Handler(IEmployeeRepository employeeRepository, IPositionRepository positionRepository, IDocumentService fileManager)
         {
             _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
             _positionRepository = positionRepository ?? throw new ArgumentNullException(nameof(positionRepository));
-            _fileManager = fileManager ?? throw new ArgumentNullException(nameof(fileManager));
+            _documentService = fileManager ?? throw new ArgumentNullException(nameof(fileManager));
         }
         public async Task<Guid> Handle(Request request, CancellationToken cancellationToken)
         {
@@ -54,7 +54,7 @@ public sealed class CreateEmployeeCommand
             cancellationToken.ThrowIfCancellationRequested();
 
             if (request.Picture != null)
-                employee.PictureName = _fileManager.SaveFile(request.Picture);
+                employee.PictureName = await _documentService.SaveAsync(request.Picture.FileName, "", request.Picture.OpenReadStream());
 
             cancellationToken.ThrowIfCancellationRequested();
 

@@ -1,19 +1,18 @@
 using AspNetCoreRateLimit;
 using CleanSolution.Core.Application;
-using CleanSolution.Infrastructure.Files;
+using CleanSolution.Infrastructure.Documents;
 using CleanSolution.Infrastructure.Logger;
 using CleanSolution.Infrastructure.Persistence;
 using CleanSolution.Presentation.WebApi.Extensions;
 using CleanSolution.Presentation.WebApi.Extensions.Configurations;
 using CleanSolution.Presentation.WebApi.Extensions.Middlewares;
-using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddApplicatonLayer(builder.Configuration);
 
-builder.Services.AddFilesLayer(builder.Configuration);
+builder.Services.AddDocumentsLayer(builder.Configuration);
 builder.Host.AddLoggerLayer(builder.Configuration);
 builder.Services.AddPersistenceLayer(builder.Configuration);
 

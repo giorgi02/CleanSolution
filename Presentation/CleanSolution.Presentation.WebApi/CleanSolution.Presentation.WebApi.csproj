@@ -36,8 +36,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\CleanSolution.Core.Application\CleanSolution.Core.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\CleanSolution.Infrastructure.Documents\CleanSolution.Infrastructure.Documents.csproj" />
     <ProjectReference Include="..\..\Infrastructure\CleanSolution.Infrastructure.EventSourcing\CleanSolution.Infrastructure.EventSourcing.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\CleanSolution.Infrastructure.Files\CleanSolution.Infrastructure.Files.csproj" />
     <ProjectReference Include="..\..\Infrastructure\CleanSolution.Infrastructure.Logger\CleanSolution.Infrastructure.Logger.csproj" />
     <ProjectReference Include="..\..\Infrastructure\CleanSolution.Infrastructure.Persistence\CleanSolution.Infrastructure.Persistence.csproj" />
   </ItemGroup>

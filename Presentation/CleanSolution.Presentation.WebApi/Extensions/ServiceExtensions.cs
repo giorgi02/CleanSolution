@@ -1,4 +1,5 @@
-﻿global using System.Reflection;
+﻿global using Serilog;
+global using System.Reflection;
 global using System.Text;
 global using System.Text.Json;
 
@@ -39,7 +40,10 @@ public static class ServiceExtensions
                 .AllowAnyOrigin() // დაშვება ეძლევა მოთხოვნას ნებისმიერი წყაროდან
                 .AllowAnyMethod() // დაშვებას იძლევა HTTP ყველა მეთოდზე
                 .AllowAnyHeader()
-                .WithExposedHeaders("AccessToken", "PageIndex", "PageSize", "TotalPages", "TotalCount", "HasPreviousPage", "HasNextPage"));
+                .WithExposedHeaders("AccessToken",
+                "PageIndex", "PageSize",
+                "TotalPages", "TotalCount",
+                "HasPreviousPage", "HasNextPage"));
         });
     }
 
