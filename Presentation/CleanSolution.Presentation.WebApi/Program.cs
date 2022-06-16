@@ -6,6 +6,7 @@ using CleanSolution.Infrastructure.Persistence;
 using CleanSolution.Presentation.WebApi.Extensions;
 using CleanSolution.Presentation.WebApi.Extensions.Configurations;
 using CleanSolution.Presentation.WebApi.Extensions.Middlewares;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,11 @@ builder.Services.AddPersistenceLayer(builder.Configuration);
 
 builder.Services.AddThisLayer(builder.Configuration);
 
+
 var app = builder.Build();
+
+
+app.UseRequestLocalization(app.Services.GetService<IOptions<RequestLocalizationOptions>>()!.Value);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
