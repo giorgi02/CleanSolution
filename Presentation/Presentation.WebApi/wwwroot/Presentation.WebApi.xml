@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Presentation.WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:Presentation.WebApi.Controllers.EmployeesController.Update(System.Guid,Core.Application.Features.Employees.Commands.UpdateEmployeeCommand.Request,System.Threading.CancellationToken)">
+            <summary>
+            თანამშრომლის კორექტირება
+            </summary>
+            <remarks>
+            Request-ის მაგალითი:
+            
+                PUT /Employee
+                {
+                    "version": 0,
+                    "privateNumber": "00000000001",
+                    "firstName": "Jon",
+                    "lastName": "Doe",
+                    "gender": 1,
+                    "birthDate": "2000-01-01",
+                    "phones": [
+                       "123456789"
+                    ],
+                    "address": {
+                       "city": "Foo",
+                       "street": "Foo #2"
+                    },
+                    "positionId": "5b22fe4a-3c07-4e8b-b0d2-3e64f503979c"
+                }
+            </remarks>
+            <param name="id">5b22fe4a-3c07-4e8b-b0d2-3e64f503979a</param>
+            <param name="request"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Presentation.WebApi.Extensions.Configurations.HealthCheckConfiguration.AddConfigureHealthChecks(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            ჯანმრთელობის შემოწმება (მოიცავს middleware -საც)
+            გამოძახება: https://localhost:44377/health/ready
+            </summary>
+        </member>
+        <member name="M:Presentation.WebApi.Extensions.Configurations.HealthCheckConfiguration.MapCustomHealthCheck(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder,System.String,System.String)">
+            <summary>
+            ჯანმრთელობის შემოწმება (middleware)
+            Adds a Health Check endpoint to the <see cref="T:Microsoft.AspNetCore.Routing.IEndpointRouteBuilder"/> with the specified template.
+            </summary>
+            <param name="endpoints">The <see cref="T:Microsoft.AspNetCore.Routing.IEndpointRouteBuilder"/> to add endpoint to.</param>
+            <param name="pattern">The URL pattern of the liveness endpoint.</param>
+            <param name="servicesPattern">The URL pattern of the readiness endpoint.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Presentation.WebApi.Extensions.Services.ActiveUserService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor)">
+            <summary>
+            იუზერის მონაცემების და მოთხოვნის ინფორმაციის ამოღება
+            საჭიროა ორივე კონსტრუქტორი: პირველი IoC კონტეინერისთვის გამოიყენება, მეორე ხელიტ შექმნისთვის.
+            </summary>
+        </member>
+        <member name="M:Presentation.WebApi.Extensions.Services.JwtValidationExtensions.AddJwtAuthenticationConfigs(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            ავთენთიფიკაციის პარამეტრების დამატება (ტოკენის ვალიდურობის შემოწმება)
+            </summary>
+        </member>
+        <member name="M:Presentation.WebApi.Extensions.Services.JwtValidationExtensions.AddJwtAuthorizationConfigs(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            ავტორიზაციის პარამეტრების დამატება (მეთოდებზე დაშვების შემოწმება)
+            </summary>
+        </member>
+        <member name="M:Presentation.WebApi.Extensions.Services.JwtValidationExtensions.GenerateJwtToken(Microsoft.Extensions.Configuration.IConfiguration,System.String,System.String,System.String[],System.String[])">
+            <summary>
+            ტოკენის გენერირება
+            </summary>
+        </member>
+        <member name="M:Presentation.WebApi.Extensions.Services.LocalizationService.AddLocalizeConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            გამოძახება: Headers["Accept-Language"] = "ka-GE"
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -4,7 +4,7 @@
 
     <Name>ASP.NET Core Web API (CleanArchitecture)</Name>
     <Description>სუფთა არქიტექტურის შაბლონი</Description>
-    <TemplateID>CleanSolution.WebApi.CSharp</TemplateID>
+    <TemplateID>WebApi.CSharp</TemplateID>
     <DefaultName>CleanSolution</DefaultName>
 
     <Icon>Icon.ico</Icon>
@@ -32,28 +32,28 @@
 
       <SolutionFolder Name="Presentation">
         <ProjectTemplateLink ProjectName="$projectname$.Presentation.WebApi">
-          CleanSolution.Presentation.WebApi\MyTemplate.vstemplate
+          Presentation.WebApi\MyTemplate.vstemplate
         </ProjectTemplateLink>
       </SolutionFolder>
 
       <SolutionFolder Name="Infrastructure">
         <ProjectTemplateLink ProjectName="$projectname$.Infrastructure.Persistence" >
-          CleanSolution.Infrastructure.Persistence\MyTemplate.vstemplate
+          Infrastructure.Persistence\MyTemplate.vstemplate
         </ProjectTemplateLink>
         <ProjectTemplateLink ProjectName="$projectname$.Infrastructure.Logger">
-          CleanSolution.Infrastructure.Logger\MyTemplate.vstemplate
+          Infrastructure.Logger\MyTemplate.vstemplate
         </ProjectTemplateLink>
         <ProjectTemplateLink ProjectName="$projectname$.Infrastructure.File">
-          CleanSolution.Infrastructure.Files\MyTemplate.vstemplate
+          Infrastructure.Files\MyTemplate.vstemplate
         </ProjectTemplateLink>
       </SolutionFolder>
 
       <SolutionFolder Name="Core">
         <ProjectTemplateLink ProjectName="$projectname$.Core.Domain">
-          CleanSolution.Core.Domain\MyTemplate.vstemplate
+          Core.Domain\MyTemplate.vstemplate
         </ProjectTemplateLink>
         <ProjectTemplateLink ProjectName="$projectname$.Core.Application" >
-          CleanSolution.Core.Application\MyTemplate.vstemplate
+          Core.Application\MyTemplate.vstemplate
         </ProjectTemplateLink>
       </SolutionFolder>
 
