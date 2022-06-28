@@ -24,7 +24,7 @@ public class ActionLoggingAttribute : ActionFilterAttribute
 
 
             _logger.LogInformation("*-> request= url: {@RequestUrl}, method: {@RequestMethod}, type: {@Type}, {@ActionArguments}, {@IpAddress}, {@Port}, {@Scheme}, {@Host}, {@Path}, {@UserId}",
-                _user.RequestUrl, _user.RequestMethod, request.ContentType, context.ActionArguments, _user.IpAddress, _user.Port, _user.Scheme, _user.Host, _user.Path, _user.UserId);
+                _user.RequestedUrl, _user.RequestedMethod, request.ContentType, context.ActionArguments, _user.IpAddress, _user.Port, _user.Scheme, _user.Host, _user.Path, _user.UserId);
         }
 
         return base.OnActionExecutionAsync(context, next);
@@ -32,7 +32,6 @@ public class ActionLoggingAttribute : ActionFilterAttribute
 
     public override void OnActionExecuted(ActionExecutedContext context)
     {
-
         if (!context.ActionDescriptor.FilterDescriptors.Any(x => x.Filter is SkipActionLoggingAttribute))
         {
             var request = context.HttpContext.Request;

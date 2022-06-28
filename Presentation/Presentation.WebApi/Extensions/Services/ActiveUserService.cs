@@ -17,12 +17,12 @@ public class ActiveUserService : IActiveUserService
         this.IpAddress = context.Connection.RemoteIpAddress?.MapToIPv4().ToString();
         this.Port = context.Connection?.RemotePort ?? 0;
 
-        //this.RequestUrl = $"{context.Request.Scheme}://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}";
+
         this.Scheme = context.Request.Scheme;
         this.Host = Convert.ToString(context.Request.Host);
         this.Path = context.Request.Path;
         this.QueryString = Convert.ToString(context.Request.QueryString);
-        this.RequestMethod = context.Request.Method;
+        this.RequestedMethod = context.Request.Method;
     }
 
 
@@ -33,8 +33,8 @@ public class ActiveUserService : IActiveUserService
     public string? Scheme { get; }
     public string? Host { get; }
     public string? Path { get; }
-    private string? QueryString;
+    private readonly string? QueryString;
 
-    public string? RequestUrl => $"{this.Scheme}://{this.Host}{this.Path}{this.QueryString}";
-    public string? RequestMethod { get; }
+    public string? RequestedUrl => $"{this.Scheme}://{this.Host}{this.Path}{this.QueryString}";
+    public string? RequestedMethod { get; }
 }

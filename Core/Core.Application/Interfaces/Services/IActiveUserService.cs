@@ -9,6 +9,6 @@ public interface IActiveUserService
     public string? Host { get; }
     public string? Path { get; }
 
-    string? RequestUrl { get; }
-    string? RequestMethod { get; }
+    string? RequestedUrl { get; }
+    string? RequestedMethod { get; }
 }
