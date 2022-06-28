@@ -5,9 +5,10 @@ global using System.Text.Json;
 
 using AspNetCoreRateLimit;
 using Core.Application.Interfaces.Services;
+using FluentValidation.AspNetCore;
+using Presentation.WebApi.Extensions.Attributes;
 using Presentation.WebApi.Extensions.Configurations;
 using Presentation.WebApi.Extensions.Services;
-using FluentValidation.AspNetCore;
 
 
 namespace Presentation.WebApi.Extensions;
@@ -15,7 +16,8 @@ public static class ServiceExtensions
 {
     public static void AddThisLayer(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddControllers().AddFluentValidation();
+        services.AddControllers(options => options.Filters.Add(typeof(ActionLoggingAttribute)))
+            .AddFluentValidation();
 
         services.AddHttpContextAccessor(); // IHttpContextAccessor -ის ინექციისთვის
         services.AddScoped<IActiveUserService, ActiveUserService>();

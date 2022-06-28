@@ -3,10 +3,10 @@ using Core.Application;
 using Infrastructure.Documents;
 using Infrastructure.Logger;
 using Infrastructure.Persistence;
+using Microsoft.Extensions.Options;
 using Presentation.WebApi.Extensions;
 using Presentation.WebApi.Extensions.Configurations;
 using Presentation.WebApi.Extensions.Middlewares;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
