@@ -5,7 +5,7 @@ using Microsoft.Extensions.Localization;
 namespace Core.Application.Features.Employees.Commands;
 public sealed class DeleteEmployeeCommand
 {
-    public sealed record class Request(Guid EmployeeId) : IRequest;
+    public record struct Request(Guid EmployeeId) : IRequest;
 
 
     public sealed class Handler : AsyncRequestHandler<Request>

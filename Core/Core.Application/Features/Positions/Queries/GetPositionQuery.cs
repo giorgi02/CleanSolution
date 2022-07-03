@@ -4,7 +4,7 @@ using Core.Application.Interfaces.Repositories;
 namespace Core.Application.Features.Positions.Queries;
 public sealed class GetPositionQuery
 {
-    public sealed record class Request : IRequest<IEnumerable<GetPositionDto>>;
+    public record struct Request : IRequest<IEnumerable<GetPositionDto>>;
 
 
     public sealed class Handler : IRequestHandler<Request, IEnumerable<GetPositionDto>>

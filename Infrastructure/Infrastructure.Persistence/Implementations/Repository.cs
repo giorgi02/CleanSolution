@@ -88,7 +88,7 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where T
         return await _context.Set<TEntity>().CountAsync(predicate);
     }
 
-    public async Task<IEnumerable<LogEvent>> GetEventsAsync(Guid id, int? version = null, DateTime? actTime = null)
+    public async Task<IEnumerable<LogEvent>> GetAggregateEventsAsync(Guid id, int? version = null, DateTime? actTime = null)
     {
         return await _context.LogEvents
             .Where(x => x.ObjectId == id &&

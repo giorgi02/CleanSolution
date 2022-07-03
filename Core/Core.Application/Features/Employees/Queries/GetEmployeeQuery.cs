@@ -5,7 +5,7 @@ using Core.Application.Interfaces.Repositories;
 namespace Core.Application.Features.Employees.Queries;
 public sealed class GetEmployeeQuery
 {
-    public sealed record class Request(Guid EmployeeId) : IRequest<GetEmployeeDto>;
+    public record struct Request(Guid EmployeeId) : IRequest<GetEmployeeDto>;
 
 
     public sealed class Handler : IRequestHandler<Request, GetEmployeeDto>

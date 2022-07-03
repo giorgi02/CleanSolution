@@ -6,7 +6,8 @@ using Microsoft.Extensions.Localization;
 namespace Core.Application.Features.Employees.Queries;
 public sealed class GetEmployeeHistoryQuery
 {
-    public sealed record class Request(Guid EmployeeId, int? Version, DateTime? ActTime) : IRequest<GetEmployeeDto>;
+    public record struct Request(Guid EmployeeId, int? Version, DateTime? ActTime) : IRequest<GetEmployeeDto>;
+
 
     public sealed class Handler : IRequestHandler<Request, GetEmployeeDto>
     {
@@ -30,7 +31,7 @@ public sealed class GetEmployeeHistoryQuery
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            var histories = await _repository.GetEventsAsync(request.EmployeeId, request.Version, request.ActTime);
+            var histories = await _repository.GetAggregateEventsAsync(request.EmployeeId, request.Version, request.ActTime);
 
             if (histories == null)
                 return _mapper.Map<GetEmployeeDto>(employee);
