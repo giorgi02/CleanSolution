@@ -28,7 +28,7 @@ public static class JwtValidationExtensions
                     ValidateAudience = true,
                     ValidateIssuerSigningKey = true,
 
-                    ClockSkew = TimeSpan.Zero, // ანულებს ტოკენის სიცოცხლის ხანგრძლივობას. დეფოლტად არის 5 წუთი
+                    //ClockSkew = TimeSpan.Zero, // ანულებს ტოკენის სიცოცხლის ხანგრძლივობას. დეფოლტად არის 5 წუთი
                     ValidIssuer = configuration["JwtSettings:Issuer"],
                     ValidAudience = configuration["JwtSettings:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]))
@@ -43,7 +43,7 @@ public static class JwtValidationExtensions
     {
         services.AddAuthorization(options =>
         {
-            options.DefaultPolicy = new AuthorizationPolicyBuilder()
+            options.FallbackPolicy = new AuthorizationPolicyBuilder()
                 .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
                 .RequireAuthenticatedUser()
                 .Build();
