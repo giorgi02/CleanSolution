@@ -1,7 +1,7 @@
-﻿using Core.Domain.Basics;
+﻿//using Core.Domain.Basics;
 
-namespace Core.Domain.Events;
+//namespace Core.Domain.Events;
 
-internal record class CreateEmployeeEvent : Event
-{
-}
+//internal record class CreateEmployeeEvent : Event
+//{
+//}

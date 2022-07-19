@@ -22,7 +22,7 @@ public static class ServiceExtensions
         services.AddHttpContextAccessor(); // IHttpContextAccessor -ის ინექციისთვის
         services.AddScoped<IActiveUserService, ActiveUserService>();
 
-        services.AddConfigureCors();
+        services.AddConfigureCors(configuration);
         services.AddSwaggerServices();
         services.AddConfigureHealthChecks(configuration);
 
@@ -34,18 +34,16 @@ public static class ServiceExtensions
     }
 
 
-    private static void AddConfigureCors(this IServiceCollection services)
+    private static void AddConfigureCors(this IServiceCollection services, IConfiguration configuration)
     {
+        string[] exposedHeaders = configuration.GetSection("ExposedHeaders").Get<string[]>();
         services.AddCors(options =>
         {
-            options.AddPolicy(name: "CorsPolicy", builder => builder
+            options.AddPolicy(name: "CorsPolicy", configure => configure
                 .AllowAnyOrigin() // დაშვება ეძლევა მოთხოვნას ნებისმიერი წყაროდან
                 .AllowAnyMethod() // დაშვებას იძლევა HTTP ყველა მეთოდზე
                 .AllowAnyHeader()
-                .WithExposedHeaders("AccessToken",
-                "PageIndex", "PageSize",
-                "TotalPages", "TotalCount",
-                "HasPreviousPage", "HasNextPage"));
+                .WithExposedHeaders(exposedHeaders));
         });
     }
 
