@@ -31,28 +31,28 @@
     <ProjectCollection>
 
       <SolutionFolder Name="Presentation">
-        <ProjectTemplateLink ProjectName="$projectname$.Presentation.WebApi">
+        <ProjectTemplateLink ProjectName="Presentation.WebApi">
           Presentation.WebApi\MyTemplate.vstemplate
         </ProjectTemplateLink>
       </SolutionFolder>
 
       <SolutionFolder Name="Infrastructure">
-        <ProjectTemplateLink ProjectName="$projectname$.Infrastructure.Persistence" >
+        <ProjectTemplateLink ProjectName="Infrastructure.Persistence" >
           Infrastructure.Persistence\MyTemplate.vstemplate
         </ProjectTemplateLink>
-        <ProjectTemplateLink ProjectName="$projectname$.Infrastructure.Logger">
-          Infrastructure.Logger\MyTemplate.vstemplate
+        <ProjectTemplateLink ProjectName="Infrastructure.Logger">
+          Infrastructure.Persistence\MyTemplate.vstemplate
         </ProjectTemplateLink>
-        <ProjectTemplateLink ProjectName="$projectname$.Infrastructure.File">
-          Infrastructure.Files\MyTemplate.vstemplate
+        <ProjectTemplateLink ProjectName="Infrastructure.Documents">
+          Infrastructure.Persistence\MyTemplate.vstemplate
         </ProjectTemplateLink>
       </SolutionFolder>
 
       <SolutionFolder Name="Core">
-        <ProjectTemplateLink ProjectName="$projectname$.Core.Domain">
+        <ProjectTemplateLink ProjectName="Core.Domain">
           Core.Domain\MyTemplate.vstemplate
         </ProjectTemplateLink>
-        <ProjectTemplateLink ProjectName="$projectname$.Core.Application" >
+        <ProjectTemplateLink ProjectName="Core.Application" >
           Core.Application\MyTemplate.vstemplate
         </ProjectTemplateLink>
       </SolutionFolder>
