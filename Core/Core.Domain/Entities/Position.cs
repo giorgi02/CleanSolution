@@ -6,6 +6,7 @@ public class Position : BaseEntity
 {
     public string Name { get; private init; }
     public double Salary { get; private init; }
+    public byte? SortIndex { get; set; }
 
 
     public Position(string name, double salary)
