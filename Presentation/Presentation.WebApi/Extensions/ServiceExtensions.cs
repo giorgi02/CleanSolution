@@ -16,8 +16,9 @@ public static class ServiceExtensions
 {
     public static void AddThisLayer(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddControllers(options => options.Filters.Add(typeof(ActionLoggingAttribute)))
-            .AddFluentValidation();
+        services.AddControllers(options => options.Filters.Add(typeof(ActionLoggingAttribute)));
+
+        services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 
         services.AddHttpContextAccessor(); // IHttpContextAccessor -ის ინექციისთვის
         services.AddScoped<IActiveUserService, ActiveUserService>();
