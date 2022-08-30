@@ -34,8 +34,6 @@ if (app.Environment.IsDevelopment())
 // todo: დავაკვირდე ამ middleware-ს
 app.UseSerilogRequestLogging();
 
-app.UseRequestLocalization();
-
 app.UseMiddleware<ExceptionHandler>();
 
 app.UseHttpsRedirection();

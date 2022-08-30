@@ -43,6 +43,8 @@ public class ExceptionHandler
                 responce.SetTitle("Operation Is Canceled.").SetErrors("Operation Is Canceled.");
                 break;
             case Exception:
+                // todo: დავაკვირდე ამ მეთოდს (Demystify)
+                exception.Demystify();
                 logger.LogError(exception, "{@ex} {@TraceId}", nameof(Exception), responce.TraceId);
                 responce.SetTitle("Server Error.").SetStatus(HttpStatusCode.InternalServerError).SetErrors("Internal Server Error.");
                 break;

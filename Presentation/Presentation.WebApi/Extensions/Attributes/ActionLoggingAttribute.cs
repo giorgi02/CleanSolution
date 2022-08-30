@@ -45,7 +45,6 @@ public class ActionLoggingAttribute : ActionFilterAttribute
 
             var duration = (DateTime.Now - Convert.ToDateTime(context.HttpContext.Items[DurationKey])).TotalMilliseconds;
 
-            // todo: დასამატებელია Type და Body ის სწორად დამუშავება
             _logger.LogInformation("<-* response= type: {@Type}, StatusCode: {@StatusCode}, {@Body}, {@Duration}", response.ContentType, response.StatusCode, body, duration);
         }
 

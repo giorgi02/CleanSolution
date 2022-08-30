@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Net.Http.Headers;
 
 namespace Presentation.WebApi.Extensions.Attributes
 {
@@ -14,7 +15,7 @@ namespace Presentation.WebApi.Extensions.Attributes
             var allowAnonymous = context.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
             if (allowAnonymous) return;
 
-            var token = Convert.ToString(context.HttpContext.Request.Headers["Authorization"]);
+            var token = Convert.ToString(context.HttpContext.Request.Headers[HeaderNames.Authorization]);
 
             await Task.Delay(0);
 

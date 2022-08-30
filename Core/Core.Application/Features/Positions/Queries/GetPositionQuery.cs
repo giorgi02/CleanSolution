@@ -2,7 +2,7 @@
 using Core.Application.Interfaces.Repositories;
 
 namespace Core.Application.Features.Positions.Queries;
-public sealed class GetPositionQuery
+public abstract class GetPositionQuery
 {
     public record struct Request : IRequest<IEnumerable<GetPositionDto>>;
 

@@ -41,10 +41,11 @@ public static class ServiceExtensions
         services.AddCors(options =>
         {
             options.AddPolicy(name: "CorsPolicy", configure => configure
+                //.WithHeaders(HeaderNames.ContentType, HeaderNames.Accept)
                 .AllowAnyOrigin() // დაშვება ეძლევა მოთხოვნას ნებისმიერი წყაროდან
-                .AllowAnyMethod() // დაშვებას იძლევა HTTP ყველა მეთოდზე
-                .AllowAnyHeader()
-                .WithExposedHeaders(exposedHeaders));
+                .AllowAnyMethod() // დაშვებას იძლევა HTTP ყველა მეთოდზე ("GET", "POST" ..)
+                .AllowAnyHeader() // დაშვება Request-ის Header-ებზე, ძირითადად გამოიყენება preflight ის დროს [OPTIONS] მეთოდისთვის
+                .WithExposedHeaders(exposedHeaders)); // დაშვება Response-ის სპეციფიურ Header-ებზე
         });
     }
 
