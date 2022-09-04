@@ -1,5 +1,5 @@
 ﻿using Core.Application.DTOs;
-using Core.Application.Features.Positions.Queries;
+using Core.Application.Interactors.Positions.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;

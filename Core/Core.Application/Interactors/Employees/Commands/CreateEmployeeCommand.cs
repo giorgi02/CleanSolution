@@ -5,7 +5,7 @@ using Core.Domain.Enums;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace Core.Application.Features.Employees.Commands;
+namespace Core.Application.Interactors.Employees.Commands;
 public sealed class CreateEmployeeCommand
 {
     public sealed record class Request : IRequest<Guid>

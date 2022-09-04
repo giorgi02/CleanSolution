@@ -3,6 +3,7 @@ using Core.Application;
 using Infrastructure.Documents;
 using Infrastructure.Logger;
 using Infrastructure.Persistence;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Options;
 using Presentation.WebApi.Extensions;
 using Presentation.WebApi.Extensions.Configurations;
@@ -22,8 +23,13 @@ builder.Services.AddThisLayer(builder.Configuration);
 
 var app = builder.Build();
 
-
 app.UseRequestLocalization(app.Services.GetService<IOptions<RequestLocalizationOptions>>()!.Value);
+
+// უნარჩუნებს მომხმარებლის ნამდვილ IP-ებს proxy-ის დროს
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

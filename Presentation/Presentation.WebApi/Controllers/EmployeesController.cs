@@ -1,6 +1,6 @@
 ﻿using Core.Application.DTOs;
-using Core.Application.Features.Employees.Commands;
-using Core.Application.Features.Employees.Queries;
+using Core.Application.Interactors.Employees.Commands;
+using Core.Application.Interactors.Employees.Queries;
 using Core.Domain.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

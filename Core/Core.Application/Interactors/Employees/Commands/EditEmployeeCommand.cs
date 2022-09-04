@@ -1,7 +1,7 @@
 ﻿using Core.Domain.Entities;
 using Core.Domain.Enums;
 
-namespace Core.Application.Features.Employees.Commands;
+namespace Core.Application.Interactors.Employees.Commands;
 public class EditEmployeeCommand
 {
     public sealed record class Request : IRequest

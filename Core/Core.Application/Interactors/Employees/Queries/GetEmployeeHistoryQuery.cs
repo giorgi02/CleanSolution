@@ -3,7 +3,7 @@ using Core.Application.Exceptions;
 using Core.Application.Interfaces.Repositories;
 using Microsoft.Extensions.Localization;
 
-namespace Core.Application.Features.Employees.Queries;
+namespace Core.Application.Interactors.Employees.Queries;
 public sealed class GetEmployeeHistoryQuery
 {
     public record struct Request(Guid EmployeeId, int? Version, DateTime? ActTime) : IRequest<GetEmployeeDto>;

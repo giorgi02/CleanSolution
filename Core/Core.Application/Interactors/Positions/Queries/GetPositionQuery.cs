@@ -1,7 +1,7 @@
 ﻿using Core.Application.DTOs;
 using Core.Application.Interfaces.Repositories;
 
-namespace Core.Application.Features.Positions.Queries;
+namespace Core.Application.Interactors.Positions.Queries;
 public abstract class GetPositionQuery
 {
     public record struct Request : IRequest<IEnumerable<GetPositionDto>>;

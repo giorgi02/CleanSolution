@@ -2,7 +2,7 @@
 using Core.Application.Interfaces.Repositories;
 using Microsoft.Extensions.Localization;
 
-namespace Core.Application.Features.Employees.Commands;
+namespace Core.Application.Interactors.Employees.Commands;
 public sealed class DeleteEmployeeCommand
 {
     public record struct Request(Guid EmployeeId) : IRequest;
