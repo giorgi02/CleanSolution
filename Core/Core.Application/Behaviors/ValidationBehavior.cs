@@ -1,12 +1,12 @@
 ﻿using Core.Application.Exceptions;
 
 namespace Core.Application.Behaviors;
-public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-       where TRequest : class, IRequest<TResponse>
+public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+       where TRequest : notnull, IRequest<TResponse>
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 
-    public ValidationBehaviour(IEnumerable<IValidator<TRequest>> validators) =>
+    public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators) =>
         _validators = validators ?? throw new ArgumentNullException(nameof(validators));
 
 
