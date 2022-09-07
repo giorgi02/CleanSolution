@@ -4,14 +4,14 @@ using Infrastructure.Documents;
 using Infrastructure.Logger;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.Extensions.Options;
 using Presentation.WebApi.Extensions;
 using Presentation.WebApi.Extensions.Configurations;
 using Presentation.WebApi.Extensions.Middlewares;
 
-var builder = WebApplication.CreateBuilder(args);
 
+var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
+
 builder.Services.AddApplicatonLayer(builder.Configuration);
 
 builder.Services.AddDocumentsLayer(builder.Configuration);
@@ -22,30 +22,29 @@ builder.Services.AddThisLayer(builder.Configuration);
 
 
 var app = builder.Build();
+// Configure the HTTP request pipeline.
 
-app.UseRequestLocalization(app.Services.GetService<IOptions<RequestLocalizationOptions>>()!.Value);
-
-// უნარჩუნებს მომხმარებლის ნამდვილ IP-ებს proxy-ის დროს
+// უნარჩუნებს მომხმარებლის ნამდვილ IP-ებს proxy-ის დროს (შესამოწმებელია)
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
 });
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwaggerMiddleware();
 }
 
-// todo: დავაკვირდე ამ middleware-ს
-app.UseSerilogRequestLogging();
+//app.UseSerilogRequestLogging();
 
 app.UseMiddleware<ExceptionHandler>();
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+//app.UseStaticFiles();
 
 app.UseRouting();
+//app.UseRequestLocalization(app.Services.GetService<IOptions<RequestLocalizationOptions>>()!.Value);
+app.UseRequestLocalization();
 
 app.UseIpRateLimiting();
 

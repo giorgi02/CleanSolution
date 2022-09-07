@@ -1,5 +1,4 @@
-﻿global using Serilog;
-global using System.Reflection;
+﻿global using System.Reflection;
 global using System.Text;
 global using System.Text.Json;
 
@@ -18,7 +17,7 @@ public static class ServiceExtensions
     {
         services.AddControllers(options => options.Filters.Add(typeof(ActionLoggingAttribute)));
 
-        services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+        services.AddFluentValidationAutoValidation();
 
         services.AddHttpContextAccessor(); // IHttpContextAccessor -ის ინექციისთვის
         services.AddScoped<IActiveUserService, ActiveUserService>();

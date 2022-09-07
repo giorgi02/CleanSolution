@@ -3,39 +3,55 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Presentation.WebApi.Extensions.Attributes;
-public class ActionLoggingAttribute : ActionFilterAttribute
-{
-    private const string DurationKey = "DurationKey";
-    private readonly ILogger<ActionLoggingAttribute> _logger;
-    private readonly IActiveUserService _user;
 
-    public ActionLoggingAttribute(ILogger<ActionLoggingAttribute> logger, IActiveUserService user)
+public sealed class ActionLoggingAttribute : ActionFilterAttribute
+{
+    private readonly IActiveUserService _user;
+    private readonly ILogger<ActionLoggingAttribute> _logger;
+    private const string DurationStamp = "DurationStamp";
+
+    public ActionLoggingAttribute(IActiveUserService user, ILogger<ActionLoggingAttribute> logger)
     {
-        _logger = logger;
-        _user = user;
+        _user = user ?? throw new ArgumentNullException(nameof(user));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
+    // => 1, 3
     public override Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
         if (!context.ActionDescriptor.FilterDescriptors.Any(x => x.Filter is SkipActionLoggingAttribute))
         {
-            var request = context.HttpContext.Request;
-            context.HttpContext.Items[DurationKey] = DateTime.Now;
+            context.HttpContext.Items[DurationStamp] = DateTime.Now;
 
+            context.ActionArguments.TryGetValue("request", out var body);
 
-            _logger.LogInformation("*-> request= url: {@RequestUrl}, method: {@RequestMethod}, type: {@Type}, {@ActionArguments}, {@IpAddress}, {@Port}, {@Scheme}, {@Host}, {@Path}, {@UserId}",
-                _user.RequestedUrl, _user.RequestedMethod, request.ContentType, context.ActionArguments, _user.IpAddress, _user.Port, _user.Scheme, _user.Host, _user.Path, _user.UserId);
+            var type = body?.GetType().FullName;
+
+            _logger.LogInformation("*-> request= url: {@RequestedUrl}, method: {@RequestedMethod}, type: {@Type}, {@Body}, {@IpAddress}, {@Port}, {@Scheme}, {@Host}, {@Path}, {@UserId}",
+                _user.RequestedUrl, _user.RequestedMethod, type, body, _user.IpAddress, _user.Port, _user.Scheme, _user.Host, _user.Path, _user.UserId);
         }
 
         return base.OnActionExecutionAsync(context, next);
     }
-
+    // => 2
+    public override void OnActionExecuting(ActionExecutingContext context)
+    {
+        base.OnActionExecuting(context);
+    }
+    // => 4
     public override void OnActionExecuted(ActionExecutedContext context)
+    {
+        // P.S Exception ის დროს აქ შემოდის
+        base.OnActionExecuted(context);
+    }
+
+    // <= 1, 4
+    public override Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
         if (!context.ActionDescriptor.FilterDescriptors.Any(x => x.Filter is SkipActionLoggingAttribute))
         {
-            var request = context.HttpContext.Request;
             var response = context.HttpContext.Response;
+
             var body = context.Result switch
             {
                 JsonResult jsonResult => jsonResult.Value,
@@ -43,11 +59,24 @@ public class ActionLoggingAttribute : ActionFilterAttribute
                 _ => null,
             };
 
-            var duration = (DateTime.Now - Convert.ToDateTime(context.HttpContext.Items[DurationKey])).TotalMilliseconds;
+            var type = body?.GetType().FullName;
 
-            _logger.LogInformation("<-* response= type: {@Type}, StatusCode: {@StatusCode}, {@Body}, {@Duration}", response.ContentType, response.StatusCode, body, duration);
+            var duration = (DateTime.Now - Convert.ToDateTime(context.HttpContext.Items[DurationStamp])).TotalMilliseconds;
+
+            _logger.LogInformation("response= type: {@Type}, statusCode: {@StatusCode}, duration: {@Duration}, {@Body}",
+                type, response.StatusCode, duration, body);
         }
 
-        base.OnActionExecuted(context);
+        return base.OnResultExecutionAsync(context, next);
+    }
+    // <= 2
+    public override void OnResultExecuting(ResultExecutingContext context)
+    {
+        base.OnResultExecuting(context);
+    }
+    // <= 3
+    public override void OnResultExecuted(ResultExecutedContext context)
+    {
+        base.OnResultExecuted(context);
     }
 }
