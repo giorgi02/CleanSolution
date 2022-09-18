@@ -3,7 +3,7 @@ using Core.Application.Exceptions;
 using Core.Application.Interfaces.Repositories;
 
 namespace Core.Application.Interactors.Employees.Queries;
-public sealed class GetEmployeeQuery
+public abstract class GetEmployeeQuery
 {
     public record struct Request(Guid EmployeeId) : IRequest<GetEmployeeDto>;
 

@@ -2,7 +2,7 @@
 using Core.Domain.Enums;
 
 namespace Core.Application.Interactors.Employees.Commands;
-public class EditEmployeeCommand
+public abstract class EditEmployeeCommand
 {
     public sealed record class Request : IRequest
     {

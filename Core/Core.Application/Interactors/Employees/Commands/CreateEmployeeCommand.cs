@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace Core.Application.Interactors.Employees.Commands;
-public sealed class CreateEmployeeCommand
+public abstract class CreateEmployeeCommand
 {
     public sealed record class Request : IRequest<Guid>
     {

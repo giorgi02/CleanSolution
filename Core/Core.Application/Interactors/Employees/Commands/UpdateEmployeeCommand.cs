@@ -5,7 +5,7 @@ using Core.Domain.Enums;
 using Microsoft.Extensions.Localization;
 
 namespace Core.Application.Interactors.Employees.Commands;
-public sealed class UpdateEmployeeCommand
+public abstract class UpdateEmployeeCommand
 {
     public sealed record class Request : IRequest<GetEmployeeDto>
     {

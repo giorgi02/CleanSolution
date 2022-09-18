@@ -4,7 +4,7 @@ using Core.Application.Interfaces.Repositories;
 using Core.Domain.Enums;
 
 namespace Core.Application.Interactors.Employees.Queries;
-public sealed class GetEmployeesQuery
+public abstract class GetEmployeesQuery
 {
     public sealed record class Request : IRequest<Pagination<GetEmployeeDto>>
     {

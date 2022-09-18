@@ -36,18 +36,19 @@
         </member>
         <member name="M:Presentation.WebApi.Extensions.Configurations.HealthCheckConfiguration.AddConfigureHealthChecks(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
-            ჯანმრთელობის შემოწმება (მოიცავს middleware -საც)
-            გამოძახება: https://localhost:44377/health/ready
+            ჯანმრთელობის შემოწმება (service)
+            გამოძახება: https://localhost:44377/health
             </summary>
         </member>
-        <member name="M:Presentation.WebApi.Extensions.Configurations.HealthCheckConfiguration.MapCustomHealthCheck(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder,System.String,System.String)">
+        <member name="M:Presentation.WebApi.Extensions.Configurations.HealthCheckConfiguration.MapCustomHealthCheck(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder,System.String,System.String,System.String)">
             <summary>
             ჯანმრთელობის შემოწმება (middleware)
             Adds a Health Check endpoint to the <see cref="T:Microsoft.AspNetCore.Routing.IEndpointRouteBuilder"/> with the specified template.
             </summary>
             <param name="endpoints">The <see cref="T:Microsoft.AspNetCore.Routing.IEndpointRouteBuilder"/> to add endpoint to.</param>
-            <param name="pattern">The URL pattern of the liveness endpoint.</param>
-            <param name="servicesPattern">The URL pattern of the readiness endpoint.</param>
+            <param name="pattern">URL ის ნიმუში რომელიც გვიჩვენებს ყველა მდგომარეობას</param>
+            <param name="servicesPattern">URL ის ნიმუში რომელიც გვიჩვენებს სერვისების მდგომარეობას</param>
+            <param name="databasesPattern">URL ის ნიმუში რომელიც გვიჩვენებს მონაცემთა ბაზების მდგომარეობას</param>
             <returns></returns>
         </member>
         <member name="M:Presentation.WebApi.Extensions.Services.ActiveUserService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor)">

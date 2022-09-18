@@ -6,8 +6,8 @@ namespace Presentation.WebApi.Extensions.Configurations;
 public static class HealthCheckConfiguration
 {
     /// <summary>
-    /// ჯანმრთელობის შემოწმება (მოიცავს middleware -საც)
-    /// გამოძახება: https://localhost:44377/health/ready
+    /// ჯანმრთელობის შემოწმება (service)
+    /// გამოძახება: https://localhost:44377/health
     /// </summary>
     public static void AddConfigureHealthChecks(this IServiceCollection services, IConfiguration configuration)
     {
@@ -26,7 +26,7 @@ public static class HealthCheckConfiguration
              name: "Database",
              failureStatus: HealthStatus.Degraded,
              timeout: TimeSpan.FromSeconds(1),
-             tags: new string[] { "services" });
+             tags: new string[] { "databases" });
     }
 
     /// <summary>
@@ -34,26 +34,35 @@ public static class HealthCheckConfiguration
     /// Adds a Health Check endpoint to the <see cref="IEndpointRouteBuilder"/> with the specified template.
     /// </summary>
     /// <param name="endpoints">The <see cref="IEndpointRouteBuilder"/> to add endpoint to.</param>
-    /// <param name="pattern">The URL pattern of the liveness endpoint.</param>
-    /// <param name="servicesPattern">The URL pattern of the readiness endpoint.</param>
+    /// <param name="pattern">URL ის ნიმუში რომელიც გვიჩვენებს ყველა მდგომარეობას</param>
+    /// <param name="servicesPattern">URL ის ნიმუში რომელიც გვიჩვენებს სერვისების მდგომარეობას</param>
+    /// <param name="databasesPattern">URL ის ნიმუში რომელიც გვიჩვენებს მონაცემთა ბაზების მდგომარეობას</param>
     /// <returns></returns>
     public static IEndpointRouteBuilder MapCustomHealthCheck(
        this IEndpointRouteBuilder endpoints,
        string pattern = "/health",
-       string servicesPattern = "/health/ready")
+       string servicesPattern = "/health/services",
+       string databasesPattern = "/health/databases"
+        )
     {
         if (endpoints == null)
         {
             throw new ArgumentNullException(nameof(endpoints));
         }
 
-        endpoints.MapHealthChecks(pattern, new HealthCheckOptions()
+        endpoints.MapHealthChecks(servicesPattern, new HealthCheckOptions()
         {
-            Predicate = (check) => !check.Tags.Contains("services"),
+            Predicate = (check) => check.Tags.Contains("services"),
             AllowCachingResponses = false,
             ResponseWriter = WriteResponse,
         });
-        endpoints.MapHealthChecks(servicesPattern, new HealthCheckOptions()
+        endpoints.MapHealthChecks(databasesPattern, new HealthCheckOptions()
+        {
+            Predicate = (check) => check.Tags.Contains("databases"),
+            AllowCachingResponses = false,
+            ResponseWriter = WriteResponse,
+        });
+        endpoints.MapHealthChecks(pattern, new HealthCheckOptions()
         {
             Predicate = (check) => true,
             AllowCachingResponses = false,

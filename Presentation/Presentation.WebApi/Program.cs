@@ -43,7 +43,7 @@ app.UseHttpsRedirection();
 //app.UseStaticFiles();
 
 app.UseRouting();
-//app.UseRequestLocalization(app.Services.GetService<IOptions<RequestLocalizationOptions>>()!.Value);
+
 app.UseRequestLocalization();
 
 app.UseIpRateLimiting();
