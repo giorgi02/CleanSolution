@@ -1,4 +1,5 @@
 ﻿using Core.Application.Interfaces.Services;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace Presentation.WebApi.Extensions.Services;
@@ -13,7 +14,7 @@ public class ActiveUserService : IActiveUserService
     {
         if (context == null) return;
 
-        this.UserId = Guid.TryParse(context.User?.FindFirstValue(ClaimTypes.NameIdentifier), out Guid result) ? result : null;
+        this.UserId = Guid.TryParse(FindUserIdentifier(context), out Guid result) ? result : null;
         this.IpAddress = context.Connection.RemoteIpAddress?.MapToIPv4().ToString();
         this.Port = context.Connection?.RemotePort ?? 0;
 
@@ -23,6 +24,20 @@ public class ActiveUserService : IActiveUserService
         this.Path = context.Request.Path;
         this.QueryString = Convert.ToString(context.Request.QueryString);
         this.RequestedMethod = context.Request.Method;
+    }
+
+    private static string? FindUserIdentifier(HttpContext context)
+    {
+        var idFromIdentity = context.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (idFromIdentity != null) return idFromIdentity;
+
+
+        var token = context.Request.Headers.Authorization.ToString();
+        if (token.Length < "Bearer ".Length) return null;
+
+        var jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(token["Bearer ".Length..]);
+
+        return jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
     }
 
 
