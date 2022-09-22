@@ -17,14 +17,6 @@ public static class CollectionsUtils
         return collection;
     }
 
-    public static TSource? FindSingle<TSource>(this IQueryable<TSource> source, Guid id) where TSource : BaseEntity
-    {
-        if (source == null) throw new NullReferenceException(nameof(source));
-        foreach (TSource element in source)
-            if (element.Id == id) return element;
-
-        return default;
-    }
 
     /// <summary>
     /// დალაგება კლიენტის მოთხოვნისამებრ

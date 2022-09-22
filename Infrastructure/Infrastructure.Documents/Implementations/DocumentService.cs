@@ -24,7 +24,7 @@ internal class DocumentService : IDocumentService
 
         var objectName = fileName.Insert(pointIndex, $"_{hash}_");
 
-        PutObjectArgs putObjectArgs = new PutObjectArgs()
+        var putObjectArgs = new PutObjectArgs()
             .WithBucket(_bucketName)
             .WithObject(objectName)
             .WithStreamData(stream)
@@ -62,18 +62,4 @@ internal class DocumentService : IDocumentService
         }
         return contentType;
     }
-
-    //public static byte[] ReadFully(Stream input)
-    //{
-    //    byte[] buffer = new byte[16 * 1024];
-    //    using (MemoryStream ms = new MemoryStream())
-    //    {
-    //        int read;
-    //        while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-    //        {
-    //            ms.Write(buffer, 0, read);
-    //        }
-    //        return ms.ToArray();
-    //    }
-    //}
 }

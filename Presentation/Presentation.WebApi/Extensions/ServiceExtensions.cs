@@ -9,7 +9,6 @@ using Presentation.WebApi.Extensions.Attributes;
 using Presentation.WebApi.Extensions.Configurations;
 using Presentation.WebApi.Extensions.Services;
 
-
 namespace Presentation.WebApi.Extensions;
 public static class ServiceExtensions
 {
@@ -22,7 +21,6 @@ public static class ServiceExtensions
         services.AddHttpContextAccessor(); // IHttpContextAccessor -ის ინექციისთვის
         services.AddScoped<IActiveUserService, ActiveUserService>();
 
-        services.AddConfigureCors(configuration);
         services.AddSwaggerServices();
         services.AddConfigureHealthChecks(configuration);
 
@@ -31,22 +29,17 @@ public static class ServiceExtensions
         services.AddMemoryCache();
 
         services.AddConfigureRateLimiting(configuration);
-    }
 
-
-    private static void AddConfigureCors(this IServiceCollection services, IConfiguration configuration)
-    {
-        string[] exposedHeaders = configuration.GetSection("ExposedHeaders").Get<string[]>();
         services.AddCors(options =>
         {
-            options.AddPolicy(name: "CorsPolicy", configure => configure
-                //.WithHeaders(HeaderNames.ContentType, HeaderNames.Accept)
-                .AllowAnyOrigin() // დაშვება ეძლევა მოთხოვნას ნებისმიერი წყაროდან
-                .AllowAnyMethod() // დაშვებას იძლევა HTTP ყველა მეთოდზე ("GET", "POST" ..)
-                .AllowAnyHeader() // დაშვება Request-ის Header-ებზე, ძირითადად გამოიყენება preflight ის დროს [OPTIONS] მეთოდისთვის
-                .WithExposedHeaders(exposedHeaders)); // დაშვება Response-ის სპეციფიურ Header-ებზე
+            string[] headers = configuration.GetSection("ExposedHeaders").Get<string[]>();
+            options.AddDefaultPolicy(configure
+                => configure.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithExposedHeaders(headers));
+            // AllowAnyHeader - დაშვება Request-ის Header-ებზე, ძირითადად გამოიყენება preflight ის დროს [OPTIONS] მეთოდისთვის
+            // WithExposedHeaders - დაშვება Response-ის სპეციფიურ Header-ებზე
         });
     }
+
 
     private static void AddConfigureRateLimiting(this IServiceCollection services, IConfiguration configuration)
     {

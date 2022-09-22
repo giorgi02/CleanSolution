@@ -48,7 +48,7 @@ app.UseRequestLocalization();
 
 app.UseIpRateLimiting();
 
-app.UseCors("CorsPolicy");
+app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();

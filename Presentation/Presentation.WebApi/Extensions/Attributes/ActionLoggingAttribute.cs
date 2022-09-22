@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Presentation.WebApi.Extensions.Attributes;
-
 public sealed class ActionLoggingAttribute : ActionFilterAttribute
 {
     private readonly IActiveUserService _user;
@@ -80,3 +79,7 @@ public sealed class ActionLoggingAttribute : ActionFilterAttribute
         base.OnResultExecuted(context);
     }
 }
+
+
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+public class SkipActionLoggingAttribute : ActionFilterAttribute { }
