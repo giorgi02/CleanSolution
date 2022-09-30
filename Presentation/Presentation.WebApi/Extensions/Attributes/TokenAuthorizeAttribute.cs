@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Net.Http.Headers;
 
 namespace Presentation.WebApi.Extensions.Attributes;
-
+[Obsolete]
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class TokenAuthorizeAttribute : Attribute, IAsyncAuthorizationFilter
 {

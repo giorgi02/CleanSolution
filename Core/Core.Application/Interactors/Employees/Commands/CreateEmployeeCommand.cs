@@ -3,7 +3,6 @@ using Core.Application.Interfaces.Services;
 using Core.Domain.Entities;
 using Core.Domain.Enums;
 using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
 
 namespace Core.Application.Interactors.Employees.Commands;
 public abstract class CreateEmployeeCommand
@@ -11,12 +10,10 @@ public abstract class CreateEmployeeCommand
     public sealed record class Request : IRequest<Guid>
     {
         public IFormFile? Picture { get; set; }
-        [Required]
-        [StringLength(maximumLength: 11, MinimumLength = 11, ErrorMessage = "პირადი ნომერი უნდა შედგებოდეს 11 სიმბოლოსგან")]
+        //[Required]
+        //[StringLength(maximumLength: 11, MinimumLength = 11, ErrorMessage = "პირადი ნომერი უნდა შედგებოდეს 11 სიმბოლოსგან")]
         public string? PrivateNumber { get; set; }
-        [Required]
         public string? FirstName { get; set; }
-        [Required]
         public string? LastName { get; set; }
         public Gender Gender { get; set; }
         public ICollection<Language> Languages { get; set; }
@@ -75,7 +72,7 @@ public abstract class CreateEmployeeCommand
 
             RuleFor(x => x.PrivateNumber)
                 .NotNull().WithMessage("პირადი ნომერი ცარიელია")
-                //.Length(11).WithMessage("პირადი ნომერი უნდა შედგებოდეს 11 სიმბოლოსგან")
+                .Length(11).WithMessage("პირადი ნომერი უნდა შედგებოდეს 11 სიმბოლოსგან")
                 .Matches("^[0-9]*$").WithMessage("პირადი ნომერი უნდა შედგებოდეს მხოლოდ ციფრებისგან");
 
             RuleFor(x => x.FirstName)
@@ -90,8 +87,8 @@ public abstract class CreateEmployeeCommand
                 .Must(y => y < DateTime.Now).WithMessage("მიუთითეთ დაბადების თარიღი სწორად")
                 .Must(y => y < DateTime.Now.AddYears(-18) || y > DateTime.Now.AddYears(-100)).WithMessage("ამ ასაკის პიროვნება არ შეიძლება იყოს დასაქმებული");
 
-            RuleFor(x => x.PositionId)
-                .MustAsync(IfExistPosition).WithMessage("მიუთითეთ პოზიცია სწორად");
+            //RuleFor(x => x.PositionId)
+            //    .MustAsync(IfExistPosition).WithMessage("მიუთითეთ პოზიცია სწორად");
         }
 
         private async Task<bool> IfExistPosition(Guid positionId, CancellationToken cancellationToken)

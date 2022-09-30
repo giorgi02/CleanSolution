@@ -1,5 +1,4 @@
-﻿using Core.Domain.Basics;
-using System.Linq.Dynamic.Core;
+﻿using System.Linq.Dynamic.Core;
 using System.Reflection;
 using System.Text;
 

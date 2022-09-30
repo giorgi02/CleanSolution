@@ -72,8 +72,6 @@ public sealed class EmployeesController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPut("{id}", Name = "UpdateEmployee")]
-    //[Authorize(Policy = "EditPolicy")]
-    //[Authorize(Roles = "editor, admin")]
     public async Task<GetEmployeeDto> Update([FromRoute] Guid id, [FromBody] UpdateEmployeeCommand.Request request, CancellationToken cancellationToken = default)
     {
         request.SetId(id);
@@ -88,7 +86,8 @@ public sealed class EmployeesController : ControllerBase
     //}
 
     [HttpDelete("{id}", Name = "DeleteEmployee")]
-    [Authorize(Roles = "admin")]
+    //[Authorize(Policy = "EditPolicy")]
+    [Authorize(Roles = "admin, editor")]
     public async Task Delete([FromRoute] Guid id) =>
         await _mediator.Send(new DeleteEmployeeCommand.Request(id));
 }

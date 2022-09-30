@@ -24,7 +24,7 @@ builder.Services.AddThisLayer(builder.Configuration);
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 
-// უნარჩუნებს მომხმარებლის ნამდვილ IP-ებს proxy-ის დროს (შესამოწმებელია)
+// უნარჩუნებს მომხმარებლის ნამდვილ IP-ებს proxy-ის დროს (გადასამოწმებელია)
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto

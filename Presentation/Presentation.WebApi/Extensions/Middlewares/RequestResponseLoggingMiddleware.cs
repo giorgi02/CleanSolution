@@ -1,14 +1,13 @@
 ﻿namespace Presentation.WebApi.Extensions.Middlewares;
-
 public class RequestResponseLoggingMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly ILogger<RequestResponseLoggingMiddleware> _logger;
 
-    public RequestResponseLoggingMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
+    public RequestResponseLoggingMiddleware(RequestDelegate next, ILogger<RequestResponseLoggingMiddleware> logger)
     {
         _next = next;
-        _logger = loggerFactory.CreateLogger<RequestResponseLoggingMiddleware>();
+        _logger = logger;
     }
 
     public async Task Invoke(HttpContext context)

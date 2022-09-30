@@ -15,7 +15,7 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
         _user = user ?? throw new ArgumentNullException(nameof(user));
     }
 
-    public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         _logger.LogInformation("-> request= url: {@RequestUrl}, method: {@RequestMethod}, type: {@Type}, {@Body}, {@IpAddress}, {@Port}, {@Scheme}, {@Host}, {@Path}, {@UserId}, ",
               _user.RequestedUrl, _user.RequestedMethod, typeof(TRequest).FullName, request, _user.IpAddress, _user.Port, _user.Scheme, _user.Host, _user.Path, _user.UserId);

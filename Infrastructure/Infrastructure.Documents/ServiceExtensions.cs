@@ -10,8 +10,6 @@ namespace Infrastructure.Documents
     {
         public static void AddDocumentsLayer(this IServiceCollection services, IConfiguration configuration)
         {
-            //services.AddMinio(new Uri("s3://accessKey:secretKey@localhost:9000/region"));
-
             services.AddScoped<IDocumentService, DocumentService>();
 
 
