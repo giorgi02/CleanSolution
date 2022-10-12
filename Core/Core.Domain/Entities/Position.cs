@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 
 namespace Core.Domain.Entities;
-public class Position : BaseEntity
+public class Position : BaseEntity, IAggregateRoot
 {
     public string Name { get; private init; }
     public double Salary { get; private init; }

@@ -4,7 +4,7 @@ using Core.Domain.Helpers;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Persistence.Implementations;
-internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where TEntity : BaseEntity
+internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where TEntity : BaseEntity, IAggregateRoot
 {
     protected readonly DataContext _context;
     public Repository(DataContext context) => _context = context;

@@ -3,7 +3,7 @@ using Core.Domain.Helpers;
 using System.Linq.Expressions;
 
 namespace Core.Application.Interfaces;
-public interface IRepository<TKey, TEntity> where TEntity : BaseEntity
+public interface IRepository<TKey, TEntity> where TEntity : BaseEntity, IAggregateRoot
 {
     Task<int> CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
 
