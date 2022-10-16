@@ -11,7 +11,7 @@ public record class Event<TAggregate> where TAggregate : IAggregateRoot
 
     public Guid AggregateId { get; private set; }
     //public int Version { get; set; }
-    public Dictionary<string, object> Data { get; init; }
+    public Dictionary<string, object> Data { get; init; } = null!;
 
     public Event(EventType eventType, Guid aggregateId)
     {

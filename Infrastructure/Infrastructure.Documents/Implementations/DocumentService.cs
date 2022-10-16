@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Minio;
 
 namespace Infrastructure.Documents.Implementations;
-
 internal class DocumentService : IDocumentService
 {
     private readonly MinioClient _minio;

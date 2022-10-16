@@ -17,7 +17,7 @@ public static class DataShaper
         if (source == null) throw new ArgumentNullException(nameof(source));
 
         TSource[] sources = new TSource[] { source };
-        return sources.ShapeData<TSource>(fields).FirstOrDefault();
+        return sources.ShapeAs<TSource>(fields).FirstOrDefault();
     }
 
     /// <summary>
@@ -28,7 +28,7 @@ public static class DataShaper
     /// <param name="source"></param>
     /// <param name="fields"></param>
     /// <returns></returns>
-    public static IEnumerable<ExpandoObject> ShapeData<TSource>(this IEnumerable<TSource> source, string fields)
+    public static IEnumerable<ExpandoObject> ShapeAs<TSource>(this IEnumerable<TSource> source, string fields)
     {
         if (source == null) throw new ArgumentNullException(nameof(source));
 
@@ -39,8 +39,8 @@ public static class DataShaper
         if (string.IsNullOrWhiteSpace(fields))
         {
             // all public properties should be in the ExpandoObject
-            var propertyInfos = typeof(TSource).GetProperties(
-                BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+            var propertyInfos = typeof(TSource)
+                .GetProperties(BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
 
             propertyInfoList.AddRange(propertyInfos);
         }
@@ -58,8 +58,8 @@ public static class DataShaper
                 // use reflection to get the property on the source object
                 // we need to include public and instance, b/c specifying a binding 
                 // flag overwrites the already-existing binding flags.
-                var propertyInfo = typeof(TSource).GetProperty(propertyName,
-                    BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                var propertyInfo = typeof(TSource)
+                    .GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
 
                 if (propertyInfo == null)
                     throw new Exception($"Property {propertyName} wasn't found on {typeof(TSource)}");
