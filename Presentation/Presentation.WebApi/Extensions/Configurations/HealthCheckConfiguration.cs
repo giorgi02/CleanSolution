@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Presentation.WebApi.Extensions.Configurations;
-
 public static class HealthCheckConfiguration
 {
     /// <summary>

@@ -14,7 +14,7 @@ public class ActiveUserService : IActiveUserService
     {
         if (context == null) return;
 
-        this.UserId = Guid.TryParse(FindUserIdentifier(context), out Guid result) ? result : null;
+        this.UserId = Guid.TryParse(FindingUserIdentifier(context), out Guid result) ? result : null;
         this.IpAddress = context.Connection.RemoteIpAddress?.MapToIPv4().ToString();
         this.Port = context.Connection?.RemotePort ?? 0;
 
@@ -26,7 +26,7 @@ public class ActiveUserService : IActiveUserService
         this.RequestedMethod = context.Request.Method;
     }
 
-    private static string? FindUserIdentifier(HttpContext context)
+    private static string? FindingUserIdentifier(HttpContext context)
     {
         var idFromIdentity = context.User?.FindFirstValue(ClaimTypes.NameIdentifier);
         if (idFromIdentity != null) return idFromIdentity;

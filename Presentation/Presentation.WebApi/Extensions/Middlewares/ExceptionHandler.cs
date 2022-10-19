@@ -1,7 +1,5 @@
-﻿using Core.Application.Commons;
-using Core.Application.Exceptions;
+﻿using Core.Application.Exceptions;
 using System.Diagnostics;
-using System.Net;
 
 namespace Presentation.WebApi.Extensions.Middlewares;
 public class ExceptionHandler
@@ -26,34 +24,48 @@ public class ExceptionHandler
 
     private async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        var responce = ResponseFactory.CreateFailure(Activity.Current?.Id ?? context?.TraceIdentifier);
+        string type = "https://tools.ietf.org/html/rfc7231";
+        string title = "One or more validation errors occurred.";
+        int status = StatusCodes.Status400BadRequest;
+        string? traceId = Activity.Current?.Id ?? context?.TraceIdentifier;
+        IDictionary<string, string[]> errors = new Dictionary<string, string[]>(1);
 
         switch (exception)
         {
             case EntityValidationException e:
-                logger.LogWarning(e, "{@ex} {@TraceId}", nameof(EntityValidationException), responce.TraceId);
-                responce.SetStatus(e.StatusCode).SetErrors(e.Errors);
+                status = (int)e.StatusCode;
+                errors = new Dictionary<string, string[]>(e.Errors);
+                logger.LogWarning(e, "{@ex} {@TraceId}", nameof(EntityValidationException), traceId);
                 break;
             case ApplicationBaseException e:
-                logger.LogWarning(e, "{@ex} {@TraceId}", nameof(ApplicationBaseException), responce.TraceId);
-                responce.SetStatus(e.StatusCode).SetErrors(e.Message);
+                status = (int)e.StatusCode;
+                errors.Add("messages", new[] { e.Message });
+                logger.LogWarning(e, "{@ex} {@TraceId}", nameof(ApplicationBaseException), traceId);
                 break;
             case OperationCanceledException e:
-                logger.LogWarning(e, "{@ex} {@TraceId}", nameof(OperationCanceledException), responce.TraceId);
-                responce.SetTitle("Operation Is Canceled.").SetErrors("Operation Is Canceled.");
+                title = "Operation Is Canceled.";
+                errors.Add("messages", new[] { "Operation Is Canceled." });
+                logger.LogWarning(e, "{@ex} {@TraceId}", nameof(OperationCanceledException), traceId);
                 break;
-            case Exception:
+            case Exception e:
+                title = "Server Error.";
+                status = StatusCodes.Status500InternalServerError;
+                errors.Add("messages", new[] { "Internal Server Error." });
                 // todo: დავაკვირდე ამ მეთოდს (Demystify)
-                exception.Demystify();
-                logger.LogError(exception, "{@ex} {@TraceId}", nameof(Exception), responce.TraceId);
-                responce.SetTitle("Server Error.").SetStatus(HttpStatusCode.InternalServerError).SetErrors("Internal Server Error.");
+                logger.LogError(e.Demystify(), "{@ex} {@TraceId}", nameof(Exception), traceId);
                 break;
         }
 
-
+        context!.Response.StatusCode = status;
         context!.Response.ContentType = "application/json";
-        context!.Response.StatusCode = responce.Status;
 
-        await context.Response.WriteAsJsonAsync(responce);
+        await context.Response.WriteAsJsonAsync(new
+        {
+            type,
+            title,
+            status,
+            traceId,
+            errors,
+        });
     }
 }

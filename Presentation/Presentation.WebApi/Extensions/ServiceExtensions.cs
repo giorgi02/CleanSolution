@@ -62,8 +62,8 @@ public static class ServiceExtensions
     //{
     //    services.AddMvc(options =>
     //    {
-    //            // Add XML Content Negotiation
-    //            options.RespectBrowserAcceptHeader = true;
+    //        // Add XML Content Negotiation
+    //        options.RespectBrowserAcceptHeader = true;
     //        options.InputFormatters.Add(new XmlSerializerInputFormatter(options));
     //        options.OutputFormatters.Add(new XmlSerializerOutputFormatter());
     //    });

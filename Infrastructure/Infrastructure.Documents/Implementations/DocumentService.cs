@@ -12,7 +12,7 @@ internal class DocumentService : IDocumentService
     public DocumentService(MinioClient minio, IConfiguration configuration)
     {
         _minio = minio ?? throw new ArgumentNullException(nameof(minio));
-        _bucketName = configuration["Minio:MinioBucket:bucketName"];
+        _bucketName = configuration["Minio:BucketName"];
     }
 
     public async Task<string> SaveAsync(string fileName, string folderName, Stream stream)

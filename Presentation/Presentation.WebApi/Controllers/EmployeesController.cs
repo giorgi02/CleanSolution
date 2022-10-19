@@ -86,8 +86,8 @@ public sealed class EmployeesController : ControllerBase
     //}
 
     [HttpDelete("{id}", Name = "DeleteEmployee")]
-    //[Authorize(Policy = "EditPolicy")]
+    //[Authorize(Policy = "DeletePolicy")]
     [Authorize(Roles = "admin, editor")]
-    public async Task Delete([FromRoute] Guid id) =>
-        await _mediator.Send(new DeleteEmployeeCommand.Request(id));
+    public async Task Delete([FromRoute] Guid id, CancellationToken cancellationToken = default) =>
+        await _mediator.Send(new DeleteEmployeeCommand.Request(id), cancellationToken);
 }

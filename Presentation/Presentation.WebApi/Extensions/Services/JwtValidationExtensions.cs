@@ -28,7 +28,7 @@ public static class JwtValidationExtensions
                     ValidateAudience = true,
                     ValidateIssuerSigningKey = true,
 
-                    //ClockSkew = TimeSpan.Zero, // ანულებს ტოკენის სიცოცხლის ხანგრძლივობას. დეფოლტად არის 5 წუთი
+                    //ClockSkew = TimeSpan.Zero, // ანულებს ტოკენის სიცოცხლის ხანგრძლივობას. default არის 5 წუთი
                     ValidIssuer = configuration["JwtSettings:Issuer"],
                     ValidAudience = configuration["JwtSettings:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]))
@@ -48,12 +48,10 @@ public static class JwtValidationExtensions
                 .RequireAuthenticatedUser()
                 .Build();
 
-            // მისი გამოყენება მოხდება [Authorize(Policy = "EditUsersPolicy")] ატრიბუტით
-            options.AddPolicy("Agent", policy => policy.RequireClaim("roles", "Agent"));
+            // მისი გამოყენება მოხდება [Authorize(Policy = "DeletePolicy")] ატრიბუტით
+            options.AddPolicy("DeletePolicy", policy => policy.RequireClaim("resources", "delete:user"));
 
-            options.AddPolicy("CreateUser", policy => policy.RequireClaim("resources", "create:user"));
-            options.AddPolicy("UpdateUser", policy => policy.RequireClaim("resources", "update:user"));
-            options.AddPolicy("DeleteUser", policy => policy.RequireClaim("resources", "delete:user"));
+            options.AddPolicy("Agent", policy => policy.RequireClaim("roles", "Agent"));
 
             options.AddPolicy("AllowedPeople", policy =>
             {
@@ -74,8 +72,8 @@ public static class JwtValidationExtensions
         IConfiguration configuration,
         string userId,
         string userName,
-        string[] roles,
-        string[] resources)
+        string[] roles
+        )
     {
         List<Claim> claims = new()
         {
@@ -85,10 +83,6 @@ public static class JwtValidationExtensions
 
         foreach (var role in roles)
             claims.Add(new Claim(ClaimTypes.Role, role));
-
-        foreach (var resource in resources)
-            claims.Add(new Claim("resources", resource));
-
 
         // ქმნის JWT ხელმოწერას
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]));
