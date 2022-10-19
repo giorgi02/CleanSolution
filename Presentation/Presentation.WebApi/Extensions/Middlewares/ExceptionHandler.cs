@@ -34,13 +34,8 @@ public class ExceptionHandler
         {
             case EntityValidationException e:
                 status = (int)e.StatusCode;
-                errors = new Dictionary<string, string[]>(e.Errors);
+                errors = e.Messages;
                 logger.LogWarning(e, "{@ex} {@TraceId}", nameof(EntityValidationException), traceId);
-                break;
-            case ApplicationBaseException e:
-                status = (int)e.StatusCode;
-                errors.Add("messages", new[] { e.Message });
-                logger.LogWarning(e, "{@ex} {@TraceId}", nameof(ApplicationBaseException), traceId);
                 break;
             case OperationCanceledException e:
                 title = "Operation Is Canceled.";

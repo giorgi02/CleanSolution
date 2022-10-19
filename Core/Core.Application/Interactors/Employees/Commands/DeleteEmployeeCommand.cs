@@ -1,5 +1,6 @@
 ﻿using Core.Application.Exceptions;
 using Core.Application.Interfaces.Repositories;
+using Core.Application.Localize;
 using Microsoft.Extensions.Localization;
 
 namespace Core.Application.Interactors.Employees.Commands;
@@ -11,9 +12,9 @@ public abstract class DeleteEmployeeCommand
     public sealed class Handler : AsyncRequestHandler<Request>
     {
         private readonly IEmployeeRepository _employeeRepository;
-        private readonly IStringLocalizer<Localize.Resource> _localizer;
+        private readonly IStringLocalizer<Resource> _localizer;
 
-        public Handler(IEmployeeRepository employeeRepository, IStringLocalizer<Localize.Resource> localizer)
+        public Handler(IEmployeeRepository employeeRepository, IStringLocalizer<Resource> localizer)
         {
             _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
             _localizer = localizer ?? throw new ArgumentNullException(nameof(localizer));

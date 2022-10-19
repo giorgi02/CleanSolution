@@ -1,5 +1,6 @@
 ﻿using Core.Application.DTOs;
 using Core.Application.Interfaces.Repositories;
+using Core.Application.Localize;
 using Core.Domain.Entities;
 using Core.Domain.Enums;
 using Microsoft.Extensions.Localization;
@@ -68,14 +69,14 @@ public abstract class UpdateEmployeeCommand
     {
         private readonly IPositionRepository _positionRepository;
 
-        public Validator(IPositionRepository positionRepository, IStringLocalizer<Localize.Resource> localizer)
+        public Validator(IPositionRepository positionRepository, IStringLocalizer<Resource> localizer)
         {
             _positionRepository = positionRepository;
 
             RuleFor(x => x.PrivateNumber)
-                .NotNull().WithMessage(localizer["validation_privatenumber_is_empty"])
-                .Length(11).WithMessage(localizer["validation_privatenumber_is_11_symbol"])
-                .Matches("^[0-9]*$").WithMessage(localizer["validation_privatenumber_is_digits"]);
+                .NotNull().WithMessage(localizer["field_is_empty", "PrivateNumber"])
+                .Length(11).WithMessage(localizer["field_is_11_symbol", "PrivateNumber"])
+                .Matches("^[0-9]*$").WithMessage(localizer["field_is_digits", "PrivateNumber"]);
 
             RuleFor(x => x.FirstName)
                 .NotEmpty().WithMessage("სახელის ველი ცარიელია");

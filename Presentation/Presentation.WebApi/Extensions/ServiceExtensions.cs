@@ -24,7 +24,7 @@ public static class ServiceExtensions
         services.AddSwaggerServices();
         services.AddConfigureHealthChecks(configuration);
 
-        services.AddLocalizeConfiguration(configuration);
+        services.AddLocalizeConfiguration();
 
         services.AddMemoryCache();
 

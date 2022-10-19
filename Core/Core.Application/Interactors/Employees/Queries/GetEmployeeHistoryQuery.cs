@@ -1,6 +1,7 @@
 ﻿using Core.Application.DTOs;
 using Core.Application.Exceptions;
 using Core.Application.Interfaces.Repositories;
+using Core.Application.Localize;
 using Microsoft.Extensions.Localization;
 
 namespace Core.Application.Interactors.Employees.Queries;
@@ -13,9 +14,9 @@ public abstract class GetEmployeeHistoryQuery
     {
         private readonly IEmployeeRepository _repository;
         private readonly IMapper _mapper;
-        private readonly IStringLocalizer<Localize.Resource> _localizer;
+        private readonly IStringLocalizer<Resource> _localizer;
 
-        public Handler(IEmployeeRepository repository, IMapper mapper, IStringLocalizer<Localize.Resource> localizer)
+        public Handler(IEmployeeRepository repository, IMapper mapper, IStringLocalizer<Resource> localizer)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

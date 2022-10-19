@@ -7,7 +7,7 @@ public static class LocalizationService
     /// <summary>
     /// გამოძახება: Headers["Accept-Language"] = "ka-GE"
     /// </summary>
-    public static void AddLocalizeConfiguration(this IServiceCollection services, IConfiguration configuration)
+    public static void AddLocalizeConfiguration(this IServiceCollection services)
     {
         services.AddLocalization(options => options.ResourcesPath = "Resources");
 

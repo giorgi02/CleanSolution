@@ -1,5 +1,5 @@
 ﻿namespace Core.Application.Exceptions;
-public sealed class EntityNotFoundException : ApplicationBaseException
+public sealed class EntityNotFoundException : EntityValidationException
 {
     public override HttpStatusCode StatusCode => HttpStatusCode.NotFound;
 

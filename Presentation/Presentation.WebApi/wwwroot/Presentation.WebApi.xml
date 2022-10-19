@@ -67,12 +67,12 @@
             ავტორიზაციის პარამეტრების დამატება (მეთოდებზე დაშვების შემოწმება)
             </summary>
         </member>
-        <member name="M:Presentation.WebApi.Extensions.Services.JwtValidationExtensions.GenerateJwtToken(Microsoft.Extensions.Configuration.IConfiguration,System.String,System.String,System.String[],System.String[])">
+        <member name="M:Presentation.WebApi.Extensions.Services.JwtValidationExtensions.GenerateJwtToken(Microsoft.Extensions.Configuration.IConfiguration,System.String,System.String,System.String[])">
             <summary>
             ტოკენის გენერირება
             </summary>
         </member>
-        <member name="M:Presentation.WebApi.Extensions.Services.LocalizationService.AddLocalizeConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:Presentation.WebApi.Extensions.Services.LocalizationService.AddLocalizeConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             გამოძახება: Headers["Accept-Language"] = "ka-GE"
             </summary>

@@ -1,5 +1,5 @@
 ﻿namespace Core.Application.Exceptions;
-public sealed class DataObsoleteException : ApplicationBaseException
+public sealed class DataObsoleteException : EntityValidationException
 {
     public override HttpStatusCode StatusCode => HttpStatusCode.Conflict;
 

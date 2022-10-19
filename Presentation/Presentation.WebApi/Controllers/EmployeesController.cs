@@ -3,7 +3,6 @@ using Core.Application.Interactors.Employees.Commands;
 using Core.Application.Interactors.Employees.Queries;
 using Core.Domain.Extensions;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.WebApi.Controllers;
@@ -87,7 +86,7 @@ public sealed class EmployeesController : ControllerBase
 
     [HttpDelete("{id}", Name = "DeleteEmployee")]
     //[Authorize(Policy = "DeletePolicy")]
-    [Authorize(Roles = "admin, editor")]
+    //[Authorize(Roles = "admin, editor")]
     public async Task Delete([FromRoute] Guid id, CancellationToken cancellationToken = default) =>
         await _mediator.Send(new DeleteEmployeeCommand.Request(id), cancellationToken);
 }
