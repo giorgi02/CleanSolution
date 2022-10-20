@@ -15,9 +15,8 @@ public class ActiveUserService : IActiveUserService
         if (context == null) return;
 
         this.UserId = Guid.TryParse(FindingUserIdentifier(context), out Guid result) ? result : null;
-        this.IpAddress = context.Connection.RemoteIpAddress?.MapToIPv4().ToString();
+        this.IpAddress = context.Request.Headers["x-forwarded-for"].FirstOrDefault() ?? context.Connection?.RemoteIpAddress?.MapToIPv4().ToString();
         this.Port = context.Connection?.RemotePort ?? 0;
-
 
         this.Scheme = context.Request.Scheme;
         this.Host = Convert.ToString(context.Request.Host);
