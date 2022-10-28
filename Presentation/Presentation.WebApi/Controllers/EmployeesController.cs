@@ -35,7 +35,7 @@ public sealed class EmployeesController : ControllerBase
 
 
     [HttpPost(Name = "AddEmployee")]
-    public async Task<ActionResult> Add([FromForm] CreateEmployeeCommand.Request request, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<Guid>> Add([FromForm] CreateEmployeeCommand.Request request, CancellationToken cancellationToken = default)
     {
         var result = await _mediator.Send(request, cancellationToken);
         return CreatedAtRoute("GetEmployeeById", new { id = result }, result);

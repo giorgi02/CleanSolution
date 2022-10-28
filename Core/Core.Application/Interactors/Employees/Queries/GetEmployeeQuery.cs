@@ -24,7 +24,7 @@ public abstract class GetEmployeeQuery
             var application = await _repository.ReadAsync(request.EmployeeId);
             if (application is null) throw new EntityNotFoundException("ჩანაწერი ვერ მოიძებნა");
 
-            return await Task.FromResult(_mapper.Map<GetEmployeeDto>(application));
+            return _mapper.Map<GetEmployeeDto>(application);
         }
     }
 }
