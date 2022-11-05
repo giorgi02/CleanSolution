@@ -35,18 +35,24 @@ internal class DocumentService : IDocumentService
         return objectName;
     }
 
+
     public async Task<(byte[] fileData, string fileType, string fileName)> GetAsync(string documentName, string folderName)
     {
-        var ms = new MemoryStream();
+        var statObjectArgs = new StatObjectArgs()
+            .WithBucket(_bucketName)
+            .WithObject(documentName);
 
-        await _minio.StatObjectAsync(_bucketName, folderName + "/" + documentName); //if file not found throws exception
-        await _minio.GetObjectAsync(_bucketName, folderName + "/" + documentName, (stream) =>
-        {
-            stream.CopyTo(ms);
-        });
+        await _minio.StatObjectAsync(statObjectArgs); //if file not found throws exception
+
+        var ms = new MemoryStream();
+        var getObjectArgs = new GetObjectArgs()
+            .WithBucket(_bucketName)
+            .WithObject(documentName)
+            .WithCallbackStream((stream) => stream.CopyTo(ms));
+
+        await _minio.GetObjectAsync(getObjectArgs);
 
         ms.Position = 0;
-        var t = ms.ToArray();
 
         return (ms.ToArray(), GetContetnType(documentName), documentName);
     }
