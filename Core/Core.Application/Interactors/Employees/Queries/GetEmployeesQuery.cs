@@ -2,6 +2,7 @@
 using Core.Application.DTOs;
 using Core.Application.Interfaces.Repositories;
 using Core.Domain.Enums;
+using Mapster;
 
 namespace Core.Application.Interactors.Employees.Queries;
 public abstract class GetEmployeesQuery
@@ -25,12 +26,10 @@ public abstract class GetEmployeesQuery
     public sealed class Handler : IRequestHandler<Request, Pagination<GetEmployeeDto>>
     {
         private readonly IEmployeeRepository _repository;
-        private readonly IMapper _mapper;
 
-        public Handler(IEmployeeRepository repository, IMapper mapper)
+        public Handler(IEmployeeRepository repository)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<Pagination<GetEmployeeDto>> Handle(Request request, CancellationToken cancellationToken)
@@ -41,7 +40,7 @@ public abstract class GetEmployeesQuery
 
             var employees = await _repository.FilterAsync(request.PageIndex, request.PageSize, firatName: request.FirstName, language: languages);
 
-            return _mapper.Map<Pagination<GetEmployeeDto>>(employees);
+            return employees.Adapt<Pagination<GetEmployeeDto>>();
         }
     }
 

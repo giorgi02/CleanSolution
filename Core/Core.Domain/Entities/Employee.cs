@@ -19,9 +19,6 @@ public class Employee : AuditableEntity, IAggregateRoot
     public string? PictureName { get; set; }
 
 
-    //#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    //    private Employee() { /* for deserialization "AutoMapper" */ }
-    //#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public Employee(string privateNumber, string firstName, string lastName, DateTime birthDate, Gender gender)
     {
         this.PrivateNumber = privateNumber;
@@ -31,16 +28,6 @@ public class Employee : AuditableEntity, IAggregateRoot
         this.BirthDate = birthDate;
         this.Language = Language.None;
         this.Phones = Array.Empty<string>();
-    }
-    public Employee(string privateNumber, string firstName, string lastName, DateTime birthDate, Gender gender,
-        Language language, string[] phones, Address? address, Position? position, string? pictureName)
-     : this(privateNumber, firstName, lastName, birthDate, gender)
-    {
-        this.Language = language;
-        this.Phones = phones;
-        this.Address = address;
-        this.Position = position;
-        this.PictureName = pictureName;
     }
 
     public void SetLanguages(ICollection<Language> languages)
@@ -52,7 +39,7 @@ public class Employee : AuditableEntity, IAggregateRoot
         this.Language = language;
     }
 
-    public void Deconstruct(out Guid id, out string privateNumber, out string firstName, out string lastName, out Gender gender, out DateTime birthDate, out string[] phones, out Language language, out Address? address, out Position? position, out string? pictureName)
+    public void Deconstruct(out Guid id, out string privateNumber, out string firstName, out string lastName, out Gender gender, out DateTime birthDate)
     {
         id = this.Id;
         privateNumber = this.PrivateNumber;
@@ -60,11 +47,6 @@ public class Employee : AuditableEntity, IAggregateRoot
         lastName = this.LastName;
         gender = this.Gender;
         birthDate = this.BirthDate;
-        phones = this.Phones;
-        language = this.Language;
-        address = this.Address;
-        position = this.Position;
-        pictureName = this.PictureName;
     }
 
 

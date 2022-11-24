@@ -3,6 +3,7 @@ using Core.Application.Interfaces.Repositories;
 using Core.Application.Localize;
 using Core.Domain.Entities;
 using Core.Domain.Enums;
+using Mapster;
 using Microsoft.Extensions.Localization;
 
 namespace Core.Application.Interactors.Employees.Commands;
@@ -38,13 +39,11 @@ public abstract class UpdateEmployeeCommand
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IPositionRepository _positionRepository;
-        private readonly IMapper _mapper;
 
-        public Handler(IEmployeeRepository employeeRepository, IPositionRepository positionRepository, IMapper mapper)
+        public Handler(IEmployeeRepository employeeRepository, IPositionRepository positionRepository)
         {
             _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
             _positionRepository = positionRepository ?? throw new ArgumentNullException(nameof(positionRepository));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<GetEmployeeDto> Handle(Request request, CancellationToken cancellationToken)
@@ -61,7 +60,7 @@ public abstract class UpdateEmployeeCommand
 
             await _employeeRepository.UpdateAsync(employee, cancellationToken);
 
-            return _mapper.Map<GetEmployeeDto>(employee);
+            return employee.Adapt<GetEmployeeDto>();
         }
     }
 
@@ -89,13 +88,13 @@ public abstract class UpdateEmployeeCommand
             RuleFor(x => x.BirthDate)
                 .Must(y => y < DateTime.Now).WithMessage("მიუთითეთ დაბადების თარიღი სწორად");
 
-            RuleFor(x => x.PositionId)
-                .MustAsync(IfExistPosition).WithMessage("მიუთითეთ პოზიცია სწორად");
+            //RuleFor(x => x.PositionId)
+            //    .MustAsync(IfExistPosition).WithMessage("მიუთითეთ პოზიცია სწორად");
         }
 
-        private async Task<bool> IfExistPosition(Guid positionId, CancellationToken cancellationToken)
-        {
-            return await _positionRepository.CheckAsync(x => x.Id == positionId);
-        }
+        //private async Task<bool> IfExistPosition(Guid positionId, CancellationToken cancellationToken)
+        //{
+        //    return await _positionRepository.CheckAsync(x => x.Id == positionId);
+        //}
     }
 }

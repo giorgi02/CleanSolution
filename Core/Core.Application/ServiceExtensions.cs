@@ -1,5 +1,4 @@
-﻿global using AutoMapper;
-global using FluentValidation;
+﻿global using FluentValidation;
 global using MediatR;
 global using System.Net;
 
@@ -15,7 +14,7 @@ public static class ServiceExtensions
     public static void AddApplicatonLayer(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddMediatR(Assembly.GetExecutingAssembly());
-        services.AddAutoMapper(typeof(AutoMapperProfile));
+        services.RegisterMapsterConfiguration();
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));

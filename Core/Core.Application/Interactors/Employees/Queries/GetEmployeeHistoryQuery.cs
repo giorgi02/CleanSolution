@@ -2,6 +2,7 @@
 using Core.Application.Exceptions;
 using Core.Application.Interfaces.Repositories;
 using Core.Application.Localize;
+using Mapster;
 using Microsoft.Extensions.Localization;
 
 namespace Core.Application.Interactors.Employees.Queries;
@@ -13,13 +14,11 @@ public abstract class GetEmployeeHistoryQuery
     public sealed class Handler : IRequestHandler<Request, GetEmployeeDto>
     {
         private readonly IEmployeeRepository _repository;
-        private readonly IMapper _mapper;
         private readonly IStringLocalizer<Resource> _localizer;
 
-        public Handler(IEmployeeRepository repository, IMapper mapper, IStringLocalizer<Resource> localizer)
+        public Handler(IEmployeeRepository repository, IStringLocalizer<Resource> localizer)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _localizer = localizer ?? throw new ArgumentNullException(nameof(localizer));
         }
 
@@ -35,13 +34,13 @@ public abstract class GetEmployeeHistoryQuery
             var histories = await _repository.GetAggregateEventsAsync(request.EmployeeId, request.Version, request.ActTime);
 
             if (histories == null)
-                return _mapper.Map<GetEmployeeDto>(employee);
+                return employee.Adapt<GetEmployeeDto>();
 
             cancellationToken.ThrowIfCancellationRequested();
 
             employee.Load(histories.OrderByDescending(x => x.Version).ToList());
 
-            return _mapper.Map<GetEmployeeDto>(employee);
+            return employee.Adapt<GetEmployeeDto>();
         }
     }
 }

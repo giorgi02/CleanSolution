@@ -18,7 +18,7 @@ public class Pagination<T>
 
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    private Pagination() { /* for deserialization "AutoMapper" */ }
+    public Pagination() { /* for deserialization "AutoMapper" */ }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     public Pagination(IEnumerable<T> items, long count, int pageIndex, int pageSize)
