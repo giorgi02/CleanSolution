@@ -1,4 +1,5 @@
 ﻿global using Microsoft.EntityFrameworkCore;
+
 using Core.Application.Interfaces.Repositories;
 using Infrastructure.Persistence.Implementations.Repositories;
 using Microsoft.Extensions.Configuration;

@@ -8,36 +8,48 @@ using FluentValidation.AspNetCore;
 using Presentation.WebApi.Extensions.Attributes;
 using Presentation.WebApi.Extensions.Configurations;
 using Presentation.WebApi.Extensions.Services;
+using Serilog;
 
 namespace Presentation.WebApi.Extensions;
 public static class ServiceExtensions
 {
-    public static void AddThisLayer(this IServiceCollection services, IConfiguration configuration)
+    public static void AddThisLayer(this WebApplicationBuilder builder)
     {
-        services.AddControllers(options => options.Filters.Add(typeof(ActionLoggingAttribute)));
+        builder.Services.AddControllers(options => options.Filters.Add(typeof(ActionLoggingAttribute)));
 
-        services.AddFluentValidationAutoValidation();
+        builder.Services.AddFluentValidationAutoValidation();
 
-        services.AddHttpContextAccessor(); // IHttpContextAccessor -ის ინექციისთვის
-        services.AddScoped<IActiveUserService, ActiveUserService>();
+        builder.Services.AddHttpContextAccessor(); // IHttpContextAccessor -ის ინექციისთვის
+        builder.Services.AddScoped<IActiveUserService, ActiveUserService>();
 
-        services.AddSwaggerServices();
-        services.AddConfigureHealthChecks(configuration);
+        builder.Services.AddSwaggerServices();
+        builder.Services.AddConfigureHealthChecks(builder.Configuration);
 
-        services.AddLocalizeConfiguration();
+        builder.Services.AddLocalizeConfiguration();
 
-        services.AddMemoryCache();
+        builder.Services.AddMemoryCache();
 
-        services.AddConfigureRateLimiting(configuration);
+        builder.Services.AddConfigureRateLimiting(builder.Configuration);
 
-        services.AddCors(options =>
+        builder.Host.AddLoggerLayer(builder.Configuration);
+
+        builder.Services.AddCors(options =>
         {
-            string[] headers = configuration.GetSection("ExposedHeaders").Get<string[]>();
+            string[] headers = builder.Configuration.GetSection("ExposedHeaders").Get<string[]>();
             options.AddDefaultPolicy(configure
                 => configure.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithExposedHeaders(headers));
             // AllowAnyHeader - დაშვება Request-ის Header-ებზე, ძირითადად გამოიყენება preflight ის დროს [OPTIONS] მეთოდისთვის
             // WithExposedHeaders - დაშვება Response-ის სპეციფიურ Header-ებზე
         });
+    }
+
+    // დაილოგება Seq ლოგების მენეჯერში
+    public static void AddLoggerLayer(this IHostBuilder host, IConfiguration configuration)
+    {
+        host.UseSerilog((context, config) => config
+            .ReadFrom.Configuration(configuration)
+            .Enrich.WithProperty("Project", "[CleanSolution]")
+            .WriteTo.Seq("http://localhost:5341", period: new TimeSpan(0, 0, 10)));
     }
 
 
