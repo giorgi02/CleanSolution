@@ -23,8 +23,4 @@ public interface IRepository<TKey, TEntity> where TEntity : BaseEntity, IAggrega
     Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate);
 
     Task<IEnumerable<LogEvent>> GetAggregateEventsAsync(TKey id, int? version = null, DateTime? actTime = null);
-
-
-    // todo: კეთდება C# ის ახალი ფუნქციონალით, შვილით გადატვირთვა
-    object Test();
 }

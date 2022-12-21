@@ -1,10 +1,10 @@
 ﻿namespace Presentation.WebApi.Extensions.Middlewares;
-public class RequestResponseLoggingMiddleware
+public class RequestResponseLogging
 {
     private readonly RequestDelegate _next;
-    private readonly ILogger<RequestResponseLoggingMiddleware> _logger;
+    private readonly ILogger<RequestResponseLogging> _logger;
 
-    public RequestResponseLoggingMiddleware(RequestDelegate next, ILogger<RequestResponseLoggingMiddleware> logger)
+    public RequestResponseLogging(RequestDelegate next, ILogger<RequestResponseLogging> logger)
     {
         _next = next;
         _logger = logger;

@@ -97,10 +97,4 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where T
                 (actTime == null || x.ActTime >= actTime))
             .ToListAsync();
     }
-
-    // todo: კეთდება C# ის ახალი ფუნქციონალით, შვილით გადატვირთვა
-    public virtual object Test()
-    {
-        throw new NotImplementedException();
-    }
 }
