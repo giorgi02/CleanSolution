@@ -4,27 +4,25 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Minio.AspNetCore;
 
-namespace Infrastructure.Documents
+namespace Infrastructure.Documents;
+public static class ServiceExtensions
 {
-    public static class ServiceExtensions
+    public static void AddDocumentsLayer(this IServiceCollection services, IConfiguration configuration)
     {
-        public static void AddDocumentsLayer(this IServiceCollection services, IConfiguration configuration)
+        services.AddScoped<IDocumentService, DocumentService>();
+
+
+        services.AddMinio(options =>
         {
-            services.AddScoped<IDocumentService, DocumentService>();
+            options.Endpoint = configuration["Minio:MinioClient:endpoint"];
+            options.AccessKey = configuration["Minio:MinioClient:accessKey"];
+            options.SecretKey = configuration["Minio:MinioClient:secretKey"];
 
-
-            services.AddMinio(options =>
-            {
-                options.Endpoint = configuration["Minio:MinioClient:endpoint"];
-                options.AccessKey = configuration["Minio:MinioClient:accessKey"];
-                options.SecretKey = configuration["Minio:MinioClient:secretKey"];
-
-                //options.ConfigureClient(client =>
-                //{
-                //    client.WithSSL();
-                //    //client.WithSSL().WithTimeout(1000);
-                //});
-            });
-        }
+            //options.ConfigureClient(client =>
+            //{
+            //    client.WithSSL();
+            //    //client.WithSSL().WithTimeout(1000);
+            //});
+        });
     }
 }

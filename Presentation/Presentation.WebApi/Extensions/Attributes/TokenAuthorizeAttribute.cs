@@ -8,7 +8,7 @@ namespace Presentation.WebApi.Extensions.Attributes;
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class TokenAuthorizeAttribute : Attribute, IAsyncAuthorizationFilter
 {
-    private const string _token = "80f38646-de65-445b-8c7e-97035472b6fa";
+    private const string _token = "b8f6f5c3-7da8-4176-8553-076567b4b6b7";
 
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
@@ -16,8 +16,6 @@ public class TokenAuthorizeAttribute : Attribute, IAsyncAuthorizationFilter
         if (allowAnonymous) return;
 
         var token = Convert.ToString(context.HttpContext.Request.Headers[HeaderNames.Authorization]);
-
-        await Task.Delay(0);
 
         if (token == null || token.Replace("Bearer ", "") != _token)
             context.Result = new JsonResult(null)

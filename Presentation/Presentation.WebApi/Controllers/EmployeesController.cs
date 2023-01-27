@@ -29,9 +29,9 @@ public sealed class EmployeesController : ControllerBase
     public async Task<GetEmployeeDto> Get([FromRoute] Guid id, CancellationToken cancellationToken = default) =>
         await _mediator.Send(new GetEmployeeQuery.Request(id), cancellationToken);
 
-    [HttpGet("history/{id}", Name = "GetEmployeeHistoryById")]
-    public async Task<GetEmployeeDto> GetHistory([FromRoute] Guid id, [FromQuery] int? version, DateTime? actTime, CancellationToken cancellationToken = default) =>
-        await _mediator.Send(new GetEmployeeHistoryQuery.Request(id, version, actTime), cancellationToken);
+    //[HttpGet("history/{id}", Name = "GetEmployeeHistoryById")]
+    //public async Task<GetEmployeeDto> GetHistory([FromRoute] Guid id, [FromQuery] int? version, DateTime? actTime, CancellationToken cancellationToken = default) =>
+    //    await _mediator.Send(new GetEmployeeHistoryQuery.Request(id, version, actTime), cancellationToken);
 
 
     [HttpPost(Name = "AddEmployee")]

@@ -11,11 +11,9 @@ public abstract class GetPositionQuery
     public sealed class Handler : IRequestHandler<Request, IEnumerable<GetPositionDto>>
     {
         private readonly IPositionRepository _repository;
-
-        public Handler(IPositionRepository repository)
-        {
+        public Handler(IPositionRepository repository) =>
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        }
+
 
         public async Task<IEnumerable<GetPositionDto>> Handle(Request request, CancellationToken cancellationToken)
         {

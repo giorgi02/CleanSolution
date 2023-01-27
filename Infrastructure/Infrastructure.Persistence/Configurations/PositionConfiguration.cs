@@ -1,4 +1,4 @@
-﻿using Core.Domain.Entities;
+﻿using Core.Domain.Models;
 using Infrastructure.Persistence.Seeds;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

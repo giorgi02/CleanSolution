@@ -1,5 +1,4 @@
 ﻿using Core.Application.Interfaces.Repositories;
-using Infrastructure.Persistence.Implementations.Repositories;
 
 namespace Infrastructure.Persistence.Implementations;
 [Obsolete("Clean Architecture მიდგომისთვის ვფიქრობ ეს პატერნი არ არის მიზანშეწონილი")]

@@ -3,7 +3,7 @@
 namespace Core.Domain.Basics;
 public abstract class BaseEntity
 {
-    public virtual Guid Id { get; init; }
+    public virtual Guid Id { get; set; }
 
 
     public override int GetHashCode()

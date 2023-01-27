@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Presentation.WebApi.Extensions.Attributes;
+
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+public class SkipActionLoggingAttribute : ActionFilterAttribute { }
+
 public sealed class ActionLoggingAttribute : ActionFilterAttribute
 {
     private readonly IActiveUserService _user;
@@ -28,6 +32,9 @@ public sealed class ActionLoggingAttribute : ActionFilterAttribute
 
             _logger.LogInformation("*-> request= url: {@RequestedUrl}, method: {@RequestedMethod}, type: {@Type}, {@Body}, {@IpAddress}, {@Port}, {@Scheme}, {@Host}, {@Path}, {@UserId}",
                 _user.RequestedUrl, _user.RequestedMethod, type, body, _user.IpAddress, _user.Port, _user.Scheme, _user.Host, _user.Path, _user.UserId);
+
+            // todo: ეს მეთოდი დასამუშავებელია
+            _logger.LogInformation($"Headers: {context.HttpContext.Request.Headers.ToDictionary(h => h.Key, h => h.Value)}");
         }
 
         return base.OnActionExecutionAsync(context, next);
@@ -79,7 +86,3 @@ public sealed class ActionLoggingAttribute : ActionFilterAttribute
         base.OnResultExecuted(context);
     }
 }
-
-
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class SkipActionLoggingAttribute : ActionFilterAttribute { }

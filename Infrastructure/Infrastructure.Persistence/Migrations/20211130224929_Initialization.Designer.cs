@@ -24,7 +24,7 @@ namespace Infrastructure.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Core.Domain.Entities.Employee", b =>
+            modelBuilder.Entity("Core.Domain.Models.Employee", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -97,7 +97,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Employes");
                 });
 
-            modelBuilder.Entity("Core.Domain.Entities.Position", b =>
+            modelBuilder.Entity("Core.Domain.Models.Position", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -157,13 +157,13 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("LogEvents");
                 });
 
-            modelBuilder.Entity("Core.Domain.Entities.Employee", b =>
+            modelBuilder.Entity("Core.Domain.Models.Employee", b =>
                 {
-                    b.HasOne("Core.Domain.Entities.Position", "Position")
+                    b.HasOne("Core.Domain.Models.Position", "Position")
                         .WithMany()
                         .HasForeignKey("PositionId");
 
-                    b.OwnsOne("Core.Domain.Entities.Address", "Address", b1 =>
+                    b.OwnsOne("Core.Domain.Models.Address", "Address", b1 =>
                         {
                             b1.Property<Guid>("EmployeeId")
                                 .HasColumnType("uniqueidentifier");

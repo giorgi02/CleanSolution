@@ -1,4 +1,4 @@
-﻿using Core.Domain.Entities;
+﻿using Core.Domain.Models;
 
 namespace Core.Application.DTOs;
 public class GetEmployeeDto

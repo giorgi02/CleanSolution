@@ -1,9 +1,8 @@
 ﻿using Core.Domain.Basics;
-using Core.Domain.Helpers;
 using System.Linq.Expressions;
 
-namespace Core.Application.Interfaces;
-public interface IRepository<TKey, TEntity> where TEntity : BaseEntity, IAggregateRoot
+namespace Core.Application.Interfaces.Repositories;
+public interface IRepository<TKey, TEntity> where TEntity : BaseEntity
 {
     Task<int> CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
 
@@ -21,6 +20,4 @@ public interface IRepository<TKey, TEntity> where TEntity : BaseEntity, IAggrega
     Task<bool> CheckAsync(Expression<Func<TEntity, bool>> predicate);
 
     Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate);
-
-    Task<IEnumerable<LogEvent>> GetAggregateEventsAsync(TKey id, int? version = null, DateTime? actTime = null);
 }

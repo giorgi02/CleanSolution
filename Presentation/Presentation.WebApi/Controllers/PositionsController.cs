@@ -19,7 +19,7 @@ public sealed class PositionsController : ControllerBase
     }
 
     [HttpGet(Name = "GetPositions")]
-    public async Task<IEnumerable<GetPositionDto>> Get(CancellationToken cancellationToken = default) =>
+    public async Task<IEnumerable<GetPositionDto>?> Get(CancellationToken cancellationToken = default) =>
         await _cache.GetOrCreateAsync("positions", async entry =>
         {
             entry.SlidingExpiration = TimeSpan.FromHours(1);

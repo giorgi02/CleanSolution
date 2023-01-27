@@ -1,10 +1,10 @@
 ﻿using Core.Application.Commons;
 using Core.Application.Exceptions;
 using Core.Application.Interfaces.Repositories;
-using Core.Domain.Entities;
 using Core.Domain.Enums;
+using Core.Domain.Models;
 
-namespace Infrastructure.Persistence.Implementations.Repositories;
+namespace Infrastructure.Persistence.Implementations;
 internal sealed class EmployeeRepository : Repository<Employee>, IEmployeeRepository
 {
     public EmployeeRepository(DataContext context) : base(context) { }
@@ -16,12 +16,12 @@ internal sealed class EmployeeRepository : Repository<Employee>, IEmployeeReposi
 
     public override async Task<Employee?> ReadAsync(Guid id)
     {
-        return await this.Including().FirstOrDefaultAsync(x => x.Id == id);
+        return await Including().FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<Pagination<Employee>> FilterAsync(int pageIndex, int pageSize, string? privateNumber = null, string? firstName = null, string? lastName = null, Gender? gender = null, Language? language = null)
     {
-        var employees = this.Including().Where(x =>
+        var employees = Including().Where(x =>
             (privateNumber == null || x.PrivateNumber == privateNumber) &&
             (firstName == null || x.FirstName == firstName) &&
             (lastName == null || x.LastName == lastName) &&
@@ -34,7 +34,7 @@ internal sealed class EmployeeRepository : Repository<Employee>, IEmployeeReposi
 
     public async Task<Pagination<Employee>> SearchAsync(int pageIndex, int pageSize, string text)
     {
-        var employees = this.Including().Where(x => x.PrivateNumber == text || x.FirstName == text || x.LastName == text);
+        var employees = Including().Where(x => x.PrivateNumber == text || x.FirstName == text || x.LastName == text);
 
         return await Pagination<Employee>.CreateAsync(employees, pageIndex, pageSize);
     }

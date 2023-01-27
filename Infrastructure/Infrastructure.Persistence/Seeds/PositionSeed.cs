@@ -1,4 +1,4 @@
-﻿using Core.Domain.Entities;
+﻿using Core.Domain.Models;
 
 namespace Infrastructure.Persistence.Seeds;
 internal static class PositionSeed

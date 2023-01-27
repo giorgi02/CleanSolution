@@ -14,7 +14,7 @@ public class ActiveUserService : IActiveUserService
     {
         if (context == null) return;
 
-        this.UserId = Guid.TryParse(FindingUserIdentifier(context), out Guid result) ? result : null;
+        this.UserId = Guid.TryParse(FindingClaim(context, ClaimTypes.NameIdentifier), out Guid result) ? result : null;
         this.IpAddress = context.Request.Headers["x-forwarded-for"].FirstOrDefault() ?? context.Connection?.RemoteIpAddress?.MapToIPv4().ToString();
         this.Port = context.Connection?.RemotePort ?? 0;
 
@@ -25,9 +25,9 @@ public class ActiveUserService : IActiveUserService
         this.RequestedMethod = context.Request.Method;
     }
 
-    private static string? FindingUserIdentifier(HttpContext context)
+    private static string? FindingClaim(HttpContext context, string claim)
     {
-        var idFromIdentity = context.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+        var idFromIdentity = context.User?.FindFirstValue(claim);
         if (idFromIdentity != null) return idFromIdentity;
 
 
@@ -36,9 +36,8 @@ public class ActiveUserService : IActiveUserService
 
         var jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(token["Bearer ".Length..]);
 
-        return jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+        return jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == claim)?.Value;
     }
-
 
     public Guid? UserId { get; }
     public string? IpAddress { get; }

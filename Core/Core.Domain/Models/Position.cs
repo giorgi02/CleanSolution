@@ -1,11 +1,12 @@
 ﻿using Core.Domain.Basics;
 using System.Linq.Expressions;
 
-namespace Core.Domain.Entities;
-public class Position : BaseEntity, IAggregateRoot
+namespace Core.Domain.Models;
+public class Position : BaseEntity
 {
-    public string Name { get; private init; }
-    public double Salary { get; private init; }
+    public override Guid Id { get; set; }
+    public string Name { get; set; }
+    public double Salary { get; set; }
     public byte? SortIndex { get; set; }
 
 
@@ -15,6 +16,11 @@ public class Position : BaseEntity, IAggregateRoot
         this.Salary = salary;
     }
 
+    public void Deconstruct(out Guid id, out string name)
+    {
+        id = this.Id;
+        name = this.Name;
+    }
     public void Deconstruct(out Guid id, out string name, out double salary)
     {
         id = this.Id;

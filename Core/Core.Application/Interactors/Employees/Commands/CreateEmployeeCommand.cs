@@ -1,7 +1,7 @@
 ﻿using Core.Application.Interfaces.Repositories;
 using Core.Application.Interfaces.Services;
-using Core.Domain.Entities;
 using Core.Domain.Enums;
+using Core.Domain.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace Core.Application.Interactors.Employees.Commands;

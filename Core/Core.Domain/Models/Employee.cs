@@ -2,18 +2,19 @@
 using Core.Domain.Enums;
 using System.Linq.Expressions;
 
-namespace Core.Domain.Entities;
-public class Employee : AuditableEntity, IAggregateRoot
+namespace Core.Domain.Models;
+public class Employee : AuditableEntity
 {
-    public string PrivateNumber { get; private set; }
-    public string FirstName { get; init; }
-    public string LastName { get; init; }
-    public DateTime BirthDate { get; init; }
-    public Gender Gender { get; init; }
+    public override Guid Id { get; set; }
+    public string PrivateNumber { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public DateTime BirthDate { get; set; }
+    public Gender Gender { get; set; }
 
-    public Language Language { get; private set; }
-    public string[] Phones { get; private set; }
-    public Address? Address { get; private set; }
+    public Language Language { get; set; }
+    public string[] Phones { get; set; }
+    public Address? Address { get; set; }
 
     public Position? Position { get; set; }
     public string? PictureName { get; set; }
@@ -24,8 +25,8 @@ public class Employee : AuditableEntity, IAggregateRoot
         this.PrivateNumber = privateNumber;
         this.FirstName = firstName;
         this.LastName = lastName;
-        this.Gender = gender;
         this.BirthDate = birthDate;
+        this.Gender = gender;
         this.Language = Language.None;
         this.Phones = Array.Empty<string>();
     }
@@ -39,6 +40,13 @@ public class Employee : AuditableEntity, IAggregateRoot
         this.Language = language;
     }
 
+    public void Deconstruct(out Guid id, out string privateNumber, out string firstName, out string lastName)
+    {
+        id = this.Id;
+        privateNumber = this.PrivateNumber;
+        firstName = this.FirstName;
+        lastName = this.LastName;
+    }
     public void Deconstruct(out Guid id, out string privateNumber, out string firstName, out string lastName, out Gender gender, out DateTime birthDate)
     {
         id = this.Id;
@@ -48,7 +56,6 @@ public class Employee : AuditableEntity, IAggregateRoot
         gender = this.Gender;
         birthDate = this.BirthDate;
     }
-
 
     public Expression<Func<Employee, bool>> ToFilterExpression() =>
         x => (this.Id == default || x.Id == this.Id)

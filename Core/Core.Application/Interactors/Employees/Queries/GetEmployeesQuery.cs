@@ -26,11 +26,8 @@ public abstract class GetEmployeesQuery
     public sealed class Handler : IRequestHandler<Request, Pagination<GetEmployeeDto>>
     {
         private readonly IEmployeeRepository _repository;
-
-        public Handler(IEmployeeRepository repository)
-        {
+        public Handler(IEmployeeRepository repository) =>
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        }
 
         public async Task<Pagination<GetEmployeeDto>> Handle(Request request, CancellationToken cancellationToken)
         {

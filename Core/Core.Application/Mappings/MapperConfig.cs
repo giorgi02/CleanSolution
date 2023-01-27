@@ -1,6 +1,6 @@
 ﻿using Core.Application.DTOs;
-using Core.Domain.Entities;
 using Core.Domain.Enums;
+using Core.Domain.Models;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
 

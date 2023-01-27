@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Core.Domain.Entities.Employee">
+  <Class Name="Core.Domain.Models.Employee">
     <Position X="4.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAEgACAAAAACgAAAAgAQAAAAAAAQCAAAAoAAAAAg=</HashCode>
@@ -8,7 +8,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Core.Domain.Entities.Position">
+  <Class Name="Core.Domain.Models.Position">
     <Position X="2.75" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAACAAAAAAAAAAAAAAgAQAAAAAAAQAAAAAgAAAAAA=</HashCode>
