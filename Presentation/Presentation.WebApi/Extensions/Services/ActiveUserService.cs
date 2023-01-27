@@ -14,7 +14,7 @@ public class ActiveUserService : IActiveUserService
     {
         if (context == null) return;
 
-        this.UserId = Guid.TryParse(FindingClaim(context, ClaimTypes.NameIdentifier), out Guid result) ? result : null;
+        this.UserId = Guid.TryParse(FindingClaim(context, ClaimTypes.NameIdentifier), out Guid uId) ? uId : null;
         this.IpAddress = context.Request.Headers["x-forwarded-for"].FirstOrDefault() ?? context.Connection?.RemoteIpAddress?.MapToIPv4().ToString();
         this.Port = context.Connection?.RemotePort ?? 0;
 

@@ -4,7 +4,6 @@ using Core.Domain.Models;
 using Infrastructure.Persistence.Configurations;
 using Infrastructure.Persistence.Models;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Text.Json;
 
 namespace Infrastructure.Persistence;
 internal class DataContext : DbContext
