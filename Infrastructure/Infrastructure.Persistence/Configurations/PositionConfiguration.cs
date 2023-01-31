@@ -1,5 +1,4 @@
-﻿using Core.Domain.Models;
-using Infrastructure.Persistence.Seeds;
+﻿using Infrastructure.Persistence.Seeds;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations;

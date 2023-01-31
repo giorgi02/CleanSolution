@@ -1,6 +1,4 @@
-﻿using Core.Domain.Models;
-
-namespace Core.Application.DTOs;
+﻿namespace Core.Application.DTOs;
 public class GetEmployeeDto
 {
     public Guid Id { get; set; }

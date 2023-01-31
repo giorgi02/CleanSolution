@@ -2,7 +2,6 @@
 using Core.Application.Interfaces.Repositories;
 using Core.Application.Localize;
 using Core.Domain.Enums;
-using Core.Domain.Models;
 using Mapster;
 using Microsoft.Extensions.Localization;
 

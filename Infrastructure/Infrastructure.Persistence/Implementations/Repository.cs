@@ -1,9 +1,8 @@
-﻿using Core.Application.Interfaces.Repositories;
-using Core.Domain.Basics;
+﻿using Core.Domain.Basics;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Persistence.Implementations;
-internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where TEntity : BaseEntity
+internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where TEntity : BaseEntity, IAggregateRoot
 {
     protected readonly DataContext _context;
     public Repository(DataContext context) => _context = context;
@@ -85,5 +84,15 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where T
     public virtual async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate)
     {
         return await _context.Set<TEntity>().CountAsync(predicate);
+    }
+
+    public async Task<IEnumerable<LogEvent>> GetAggregateEventsAsync(Guid id, int? version = null, DateTime? actTime = null)
+    {
+        return await _context.LogEvents
+            .Where(x => x.ObjectId == id &&
+                x.ObjectType == typeof(TEntity).Name &&
+                (version == null || x.Version >= version) &&
+                (actTime == null || x.ActTime >= actTime))
+            .ToListAsync();
     }
 }

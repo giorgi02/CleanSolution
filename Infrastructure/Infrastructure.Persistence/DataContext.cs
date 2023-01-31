@@ -1,9 +1,8 @@
 ﻿using Core.Application.Interfaces.Services;
 using Core.Domain.Basics;
-using Core.Domain.Models;
 using Infrastructure.Persistence.Configurations;
-using Infrastructure.Persistence.Models;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Text.Json;
 
 namespace Infrastructure.Persistence;
 internal class DataContext : DbContext
@@ -78,10 +77,10 @@ internal class DataContext : DbContext
         foreach (var item in entry.Properties.Where(x => x.IsModified == true))
             @events.Add(item.Metadata.Name, item.OriginalValue!);
 
-        //this.LogEvents.Add(new(entry.Entity)
-        //{
-        //    EventBody = JsonSerializer.Serialize(@events)
-        //});
+        this.LogEvents.Add(new(entry.Entity)
+        {
+            EventBody = JsonSerializer.Serialize(@events)
+        });
     }
     #endregion
 
