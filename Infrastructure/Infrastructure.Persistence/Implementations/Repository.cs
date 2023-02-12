@@ -1,26 +1,13 @@
-﻿using Core.Domain.Basics;
+﻿using Core.Application.Interfaces.Repositories;
+using Core.Domain.Basics;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Persistence.Implementations;
-internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where TEntity : BaseEntity, IAggregateRoot
+internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where TEntity : BaseEntity
 {
     protected readonly DataContext _context;
     public Repository(DataContext context) => _context = context;
 
-
-    // სრული დაფარვა, ახდენს ყველა იმ კლასთან Include() რომელსაც კი შეიცავს მოცემული კლასი
-    protected virtual IQueryable<TEntity> Including(IQueryable<TEntity> query)
-    {
-        foreach (var item in query)
-        {
-            foreach (var property in item.GetType().GetProperties())
-                if (property.PropertyType.IsClass && property.PropertyType != typeof(string))
-                    query = query.Include(property.Name);
-            break;
-        }
-
-        return query;
-    }
 
     // create
     public virtual async Task<int> CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
@@ -29,17 +16,17 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where T
         return await _context.SaveChangesAsync(cancellationToken);
     }
     // read
-    public virtual async Task<IEnumerable<TEntity>> ReadAsync()
+    public virtual async Task<TEntity?> ReadAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        return await _context.Set<TEntity>().ToListAsync();
+        return await _context.Set<TEntity>().FindAsync(id, cancellationToken);
     }
-    public virtual async Task<TEntity?> ReadAsync(Guid id)
+    public virtual async Task<IEnumerable<TEntity>> ReadAsync(CancellationToken cancellationToken = default)
     {
-        return await _context.Set<TEntity>().FindAsync(id);
+        return await _context.Set<TEntity>().ToListAsync(cancellationToken);
     }
-    public virtual async Task<IEnumerable<TEntity>> ReadAsync(Expression<Func<TEntity, bool>> predicate)
+    public virtual async Task<IEnumerable<TEntity>> ReadAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
     {
-        return await _context.Set<TEntity>().Where(predicate).ToListAsync();
+        return await _context.Set<TEntity>().Where(predicate).ToListAsync(cancellationToken);
     }
     // update
     public virtual async Task<int> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
@@ -49,6 +36,7 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where T
     }
     public virtual async Task<int> UpdateAsync(Guid id, TEntity entity, CancellationToken cancellationToken = default)
     {
+        entity.Id = id;
         var existing = await _context.Set<TEntity>().FindAsync(id);
         if (existing is null) return 0;
 
@@ -84,15 +72,5 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where T
     public virtual async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate)
     {
         return await _context.Set<TEntity>().CountAsync(predicate);
-    }
-
-    public async Task<IEnumerable<LogEvent>> GetAggregateEventsAsync(Guid id, int? version = null, DateTime? actTime = null)
-    {
-        return await _context.LogEvents
-            .Where(x => x.ObjectId == id &&
-                x.ObjectType == typeof(TEntity).Name &&
-                (version == null || x.Version >= version) &&
-                (actTime == null || x.ActTime >= actTime))
-            .ToListAsync();
     }
 }

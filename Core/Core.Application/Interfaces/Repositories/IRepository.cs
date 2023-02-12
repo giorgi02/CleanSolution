@@ -6,9 +6,9 @@ public interface IRepository<TKey, TEntity> where TEntity : BaseEntity
 {
     Task<int> CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
 
-    Task<TEntity?> ReadAsync(TKey id);
-    Task<IEnumerable<TEntity>> ReadAsync();
-    Task<IEnumerable<TEntity>> ReadAsync(Expression<Func<TEntity, bool>> predicate);
+    Task<TEntity?> ReadAsync(TKey id, CancellationToken cancellationToken = default);
+    Task<IEnumerable<TEntity>> ReadAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<TEntity>> ReadAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
     Task<int> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default);
     Task<int> UpdateAsync(TKey id, TEntity entity, CancellationToken cancellationToken = default);

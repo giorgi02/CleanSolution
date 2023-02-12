@@ -14,9 +14,9 @@ internal sealed class EmployeeRepository : Repository<Employee>, IEmployeeReposi
         _context.Employes.Include(x => x.Position);
 
 
-    public override async Task<Employee?> ReadAsync(Guid id)
+    public override async Task<Employee?> ReadAsync(Guid id, CancellationToken cancellationToken)
     {
-        return await Including().FirstOrDefaultAsync(x => x.Id == id);
+        return await Including().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 
     public async Task<Pagination<Employee>> FilterAsync(int pageIndex, int pageSize, string? privateNumber = null, string? firstName = null, string? lastName = null, Gender? gender = null, Language? language = null)

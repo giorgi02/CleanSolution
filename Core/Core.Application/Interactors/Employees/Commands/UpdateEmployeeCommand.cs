@@ -2,6 +2,7 @@
 using Core.Application.Interfaces.Repositories;
 using Core.Application.Localize;
 using Core.Domain.Enums;
+using Core.Domain.Models;
 using Mapster;
 using Microsoft.Extensions.Localization;
 
@@ -10,7 +11,7 @@ public abstract class UpdateEmployeeCommand
 {
     public sealed record class Request : IRequest<GetEmployeeDto>
     {
-        public Guid EmployeeId { get; private set; }
+        internal Guid EmployeeId { get; private set; }
         public int Version { get; set; }
 
         public string? PrivateNumber { get; set; }
@@ -30,7 +31,11 @@ public abstract class UpdateEmployeeCommand
             this.Phones = Array.Empty<string>();
         }
 
-        public void SetId(Guid employeeId) => this.EmployeeId = employeeId;
+        public Request SetEmployeeId(Guid employeeId)
+        {
+            this.EmployeeId = employeeId;
+            return this;
+        }
     }
 
 

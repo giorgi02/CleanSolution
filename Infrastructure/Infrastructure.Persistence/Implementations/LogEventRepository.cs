@@ -20,27 +20,27 @@ internal class LogEventRepository : IEventRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<TAggregate> LoadAsync<TAggregate>(Guid aggregateId) where TAggregate : Aggregate, new()
+    public async Task<TAggregate?> LoadAsync<TAggregate>(Guid aggregateId) where TAggregate : Aggregate, new()
     {
         var events = await _context.LogEvents.Where(x => x.AggregateId == aggregateId).ToListAsync();
 
         return RestoreHistory<TAggregate>(events);
     }
 
-    public async Task<TAggregate> LoadAsync<TAggregate>(Guid aggregateId, long version) where TAggregate : Aggregate, new()
+    public async Task<TAggregate?> LoadAsync<TAggregate>(Guid aggregateId, long version) where TAggregate : Aggregate, new()
     {
         var events = await _context.LogEvents.Where(x => x.AggregateId == aggregateId && x.Version <= version).ToListAsync();
 
         return RestoreHistory<TAggregate>(events);
     }
-    public async Task<TAggregate> LoadAsync<TAggregate>(Guid aggregateId, DateTime timeStamp) where TAggregate : Aggregate, new()
+    public async Task<TAggregate?> LoadAsync<TAggregate>(Guid aggregateId, DateTime timeStamp) where TAggregate : Aggregate, new()
     {
         var events = await _context.LogEvents.Where(x => x.AggregateId == aggregateId && x.TimeStamp <= timeStamp).ToListAsync();
 
         return RestoreHistory<TAggregate>(events);
     }
 
-    private static TAggregate RestoreHistory<TAggregate>(IEnumerable<LogEvent> events) where TAggregate : Aggregate, new()
+    private static TAggregate? RestoreHistory<TAggregate>(IEnumerable<LogEvent> events) where TAggregate : Aggregate, new()
     {
         if (!events.Any()) return null;
 

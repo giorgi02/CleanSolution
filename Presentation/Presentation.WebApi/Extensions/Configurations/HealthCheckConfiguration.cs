@@ -10,7 +10,7 @@ public static class HealthCheckConfiguration
     /// </summary>
     public static void AddConfigureHealthChecks(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException("DefaultConnection");
         var downstreamServiceUrl = configuration["DownstreamService:BaseUrl"];
 
         services.AddHealthChecks()

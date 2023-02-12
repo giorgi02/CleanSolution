@@ -14,9 +14,9 @@ public static class ServiceExtensions
 
         services.AddMinio(options =>
         {
-            options.Endpoint = configuration["Minio:MinioClient:endpoint"];
-            options.AccessKey = configuration["Minio:MinioClient:accessKey"];
-            options.SecretKey = configuration["Minio:MinioClient:secretKey"];
+            options.Endpoint = configuration["Minio:MinioClient:endpoint"] ?? throw new ArgumentNullException("Minio:MinioClient:endpoint");
+            options.AccessKey = configuration["Minio:MinioClient:accessKey"] ?? throw new ArgumentNullException("Minio:MinioClient:accessKey");
+            options.SecretKey = configuration["Minio:MinioClient:secretKey"] ?? throw new ArgumentNullException("Minio:MinioClient:secretKey");
 
             //options.ConfigureClient(client =>
             //{

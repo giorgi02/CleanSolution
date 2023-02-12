@@ -2,8 +2,8 @@
 public abstract class Aggregate : AuditableEntity
 {
     private readonly IList<object> _events = new List<object>();
-
     public override Guid Id { get; set; } = Guid.NewGuid();
+
 
     protected abstract void When(object @event);
     public abstract Type GetEventType(string eventName);

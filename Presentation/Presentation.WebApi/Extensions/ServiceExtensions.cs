@@ -35,7 +35,7 @@ public static class ServiceExtensions
 
         builder.Services.AddCors(options =>
         {
-            string[] headers = builder.Configuration.GetSection("ExposedHeaders").Get<string[]>();
+            string[] headers = builder.Configuration.GetSection("ExposedHeaders").Get<string[]>() ?? throw new ArgumentNullException("ExposedHeaders");
             options.AddDefaultPolicy(configure
                 => configure.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithExposedHeaders(headers));
             // AllowAnyHeader - დაშვება Request-ის Header-ებზე, ძირითადად გამოიყენება preflight ის დროს [OPTIONS] მეთოდისთვის

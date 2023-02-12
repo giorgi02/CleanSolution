@@ -26,15 +26,11 @@ public sealed class EmployeesController : ControllerBase
     }
 
     [HttpGet("{id}", Name = "GetEmployeeById")]
-    public async Task<GetEmployeeDto> Get([FromRoute] Guid id, CancellationToken cancellationToken = default) =>
-        await _mediator.Send(new GetEmployeeQuery.Request(id), cancellationToken);
-
-    //[HttpGet("history/{id}", Name = "GetEmployeeHistoryById")]
-    //public async Task<GetEmployeeDto> GetHistory([FromRoute] Guid id, [FromQuery] int? version, DateTime? actTime, CancellationToken cancellationToken = default) =>
-    //    await _mediator.Send(new GetEmployeeHistoryQuery.Request(id, version, actTime), cancellationToken);
-
+    public async Task<GetEmployeeDto> Get([FromRoute] Guid id, CancellationToken cancellationToken = default)
+        => await _mediator.Send(new GetEmployeeQuery.Request(id), cancellationToken);
 
     [HttpPost(Name = "AddEmployee")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult<Guid>> Add([FromForm] CreateEmployeeCommand.Request request, CancellationToken cancellationToken = default)
     {
         var result = await _mediator.Send(request, cancellationToken);
@@ -72,11 +68,8 @@ public sealed class EmployeesController : ControllerBase
     /// <returns></returns>
     [HttpPut("{id}", Name = "UpdateEmployee")]
     public async Task<GetEmployeeDto> Update([FromRoute] Guid id, [FromBody] UpdateEmployeeCommand.Request request, CancellationToken cancellationToken = default)
-    {
-        request.SetId(id);
+        => await _mediator.Send(request.SetEmployeeId(id), cancellationToken);
 
-        return await _mediator.Send(request, cancellationToken);
-    }
     //// todo: ეს მეთოდი ბოლომდე დავამუშაო
     //[HttpPatch("{id}", Name = "EditEmployee")]
     //public async Task Edit([FromRoute] Guid id, [FromBody] JsonPatchDocument<EditEmployeeCommand.Request> request, CancellationToken cancellationToken = default)
@@ -87,6 +80,6 @@ public sealed class EmployeesController : ControllerBase
     [HttpDelete("{id}", Name = "DeleteEmployee")]
     //[Authorize(Policy = "DeletePolicy")]
     //[Authorize(Roles = "admin, editor")]
-    public async Task Delete([FromRoute] Guid id, CancellationToken cancellationToken = default) =>
-        await _mediator.Send(new DeleteEmployeeCommand.Request(id), cancellationToken);
+    public async Task Delete([FromRoute] Guid id, CancellationToken cancellationToken = default)
+        => await _mediator.Send(new DeleteEmployeeCommand.Request(id), cancellationToken);
 }

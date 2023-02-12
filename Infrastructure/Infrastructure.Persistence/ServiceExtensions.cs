@@ -1,6 +1,7 @@
 ﻿global using Microsoft.EntityFrameworkCore;
 
 using Core.Application.Interfaces.Repositories;
+using Infrastructure.Persistence.Implementations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

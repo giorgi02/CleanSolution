@@ -1,5 +1,6 @@
 ﻿using Core.Application.Commons;
 using Core.Domain.Enums;
+using Core.Domain.Models;
 
 namespace Core.Application.Interfaces.Repositories;
 public interface IEmployeeRepository : IRepository<Guid, Employee>
