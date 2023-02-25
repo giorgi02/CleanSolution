@@ -1,10 +1,44 @@
 ﻿using System.ComponentModel;
-using System.Text;
 using System.Text.Json;
+using System.Text;
+using System.Reflection;
 
 namespace Core.Domain.Extensions;
-public static class Converters
+public static class CommonFunctions
 {
+    /// <summary>
+    /// ღრმა კლონირება
+    /// </summary>
+    public static T? DeepClone<T>(this T obj) where T : notnull, new()
+    {
+        var type = obj.GetType();
+        var result = (T?)Activator.CreateInstance(type);
+
+        do
+            foreach (var field in type!.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
+                field.SetValue(result, field.GetValue(obj));
+        while ((type = type.BaseType) != typeof(object));
+
+        return result;
+    }
+
+    public static int CalculateAge(DateTime birthDate)
+    {
+        int age = DateTime.Now.Year - birthDate.Year;
+        if (DateTime.Now < birthDate.AddYears(age))
+            age--;
+
+        return age;
+    }
+    public static int CalculateAge(DateTime birthDate, DateTime actionDate)
+    {
+        int age = actionDate.Year - birthDate.Year;
+        if (actionDate < birthDate.AddYears(age))
+            age--;
+
+        return age;
+    }
+
     /// <summary>
     /// string-ისგან ობიექტის ფორმირება
     /// </summary>

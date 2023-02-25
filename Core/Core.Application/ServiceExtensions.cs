@@ -13,7 +13,7 @@ public static class ServiceExtensions
 {
     public static void AddApplicatonLayer(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddMediatR(Assembly.GetExecutingAssembly());
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         services.RegisterMapsterConfiguration();
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 

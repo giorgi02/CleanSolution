@@ -1,4 +1,5 @@
 ﻿namespace Presentation.WebApi.Extensions.Middlewares;
+[Obsolete("შეიძლება გამოყენება მხოლოდ დროებით")]
 public class TokenValidation
 {
     private readonly RequestDelegate _next;

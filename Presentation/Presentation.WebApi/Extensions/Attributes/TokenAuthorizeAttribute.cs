@@ -18,7 +18,7 @@ public class TokenAuthorizeAttribute : Attribute, IAsyncAuthorizationFilter
         var token = Convert.ToString(context.HttpContext.Request.Headers[HeaderNames.Authorization]);
 
         if (token == null || token.Replace("Bearer ", "") != _token)
-            context.Result = new JsonResult(null)
+            context.Result = new JsonResult("Token is invalid")
             {
                 StatusCode = StatusCodes.Status401Unauthorized
             };

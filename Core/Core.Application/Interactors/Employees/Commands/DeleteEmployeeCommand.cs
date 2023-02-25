@@ -9,7 +9,7 @@ public abstract class DeleteEmployeeCommand
     public record struct Request(Guid EmployeeId) : IRequest;
 
 
-    public sealed class Handler : AsyncRequestHandler<Request>
+    public sealed class Handler : IRequestHandler<Request>
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IStringLocalizer<Resource> _localizer;
@@ -20,7 +20,7 @@ public abstract class DeleteEmployeeCommand
             _localizer = localizer ?? throw new ArgumentNullException(nameof(localizer));
         }
 
-        protected override async Task Handle(Request request, CancellationToken cancellationToken)
+        public async Task Handle(Request request, CancellationToken cancellationToken)
         {
             var isRecord = await _employeeRepository.CheckAsync(x => x.Id == request.EmployeeId);
 

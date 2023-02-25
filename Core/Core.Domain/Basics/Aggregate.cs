@@ -15,7 +15,7 @@ public abstract class Aggregate : AuditableEntity
         _events.Add(@event);
     }
 
-    public void Load(long version, IEnumerable<object> history)
+    public void Load(int version, IEnumerable<object> history)
     {
         Version = version;
 

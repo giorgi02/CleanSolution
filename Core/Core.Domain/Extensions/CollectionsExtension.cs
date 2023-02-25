@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Text;
 
 namespace Core.Domain.Extensions;
-public static class CollectionsUtils
+public static class CollectionsExtension
 {
     /// <summary>
     /// foreach

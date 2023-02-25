@@ -27,7 +27,7 @@ internal class LogEventRepository : IEventRepository
         return RestoreHistory<TAggregate>(events);
     }
 
-    public async Task<TAggregate?> LoadAsync<TAggregate>(Guid aggregateId, long version) where TAggregate : Aggregate, new()
+    public async Task<TAggregate?> LoadAsync<TAggregate>(Guid aggregateId, int version) where TAggregate : Aggregate, new()
     {
         var events = await _context.LogEvents.Where(x => x.AggregateId == aggregateId && x.Version <= version).ToListAsync();
 

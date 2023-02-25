@@ -3,6 +3,7 @@ using Core.Application.Interfaces.Services;
 using Core.Domain.Enums;
 using Core.Domain.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Core.Application.Interactors.Employees.Commands;
 public abstract class CreateEmployeeCommand
@@ -36,12 +37,13 @@ public abstract class CreateEmployeeCommand
         private readonly IPositionRepository _positionRepository;
         private readonly IDocumentService _documentService;
 
-        public Handler(IEmployeeRepository employeeRepository, IPositionRepository positionRepository, IDocumentService documentService)
+        public Handler(IServiceProvider services)
         {
-            _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
-            _positionRepository = positionRepository ?? throw new ArgumentNullException(nameof(positionRepository));
-            _documentService = documentService ?? throw new ArgumentNullException(nameof(documentService));
+            _employeeRepository = services.GetRequiredService<IEmployeeRepository>();
+            _positionRepository = services.GetRequiredService<IPositionRepository>();
+            _documentService = services.GetRequiredService<IDocumentService>();
         }
+
         public async Task<Guid> Handle(Request request, CancellationToken cancellationToken)
         {
             var employee = new Employee(request.PrivateNumber!, request.FirstName!, request.LastName!, request.BirthDate, request.Gender);
