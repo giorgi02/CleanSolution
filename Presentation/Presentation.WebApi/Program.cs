@@ -1,6 +1,7 @@
 using AspNetCoreRateLimit;
 using Core.Application;
 using Infrastructure.Documents;
+using Infrastructure.Messaging;
 using Infrastructure.Persistence;
 using Presentation.WebApi.Extensions;
 using Presentation.WebApi.Extensions.Configurations;
@@ -12,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplicatonLayer(builder.Configuration);
 
 builder.Services.AddDocumentsLayer(builder.Configuration);
+builder.Services.AddMessagingLayer();
 builder.Services.AddPersistenceLayer(builder.Configuration);
 
 builder.AddThisLayer();

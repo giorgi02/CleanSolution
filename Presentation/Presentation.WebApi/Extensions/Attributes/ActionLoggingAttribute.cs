@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 namespace Presentation.WebApi.Extensions.Attributes;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class SkipActionLoggingAttribute : ActionFilterAttribute { }
+public class SkipActionLoggingAttribute : Attribute { }
 
 public sealed class ActionLoggingAttribute : ActionFilterAttribute
 {

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
-using System.Text.Json;
-using System.Text;
 using System.Reflection;
+using System.Text;
+using System.Text.Json;
 
 namespace Core.Domain.Extensions;
 public static class CommonFunctions

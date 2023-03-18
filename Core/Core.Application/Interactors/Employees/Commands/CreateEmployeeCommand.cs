@@ -36,12 +36,14 @@ public abstract class CreateEmployeeCommand
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IPositionRepository _positionRepository;
         private readonly IDocumentService _documentService;
+        private readonly IMessagingService _messaging;
 
         public Handler(IServiceProvider services)
         {
             _employeeRepository = services.GetRequiredService<IEmployeeRepository>();
             _positionRepository = services.GetRequiredService<IPositionRepository>();
             _documentService = services.GetRequiredService<IDocumentService>();
+            _messaging = services.GetRequiredService<IMessagingService>();
         }
 
         public async Task<Guid> Handle(Request request, CancellationToken cancellationToken)
@@ -58,6 +60,7 @@ public abstract class CreateEmployeeCommand
             cancellationToken.ThrowIfCancellationRequested();
 
             await _employeeRepository.CreateAsync(employee, cancellationToken);
+            await _messaging.EmployeeCreated(employee);
 
             return employee.Id;
         }
