@@ -15,7 +15,7 @@ internal class DocumentService : IDocumentService
         _bucketName = configuration["Minio:BucketName"] ?? throw new ArgumentNullException("Minio:BucketName");
     }
 
-    public async Task<string> SaveAsync(string fileName, string folderName, Stream stream)
+    public async Task<string> SaveAsync(Stream stream, string fileName)
     {
         var pointIndex = fileName.LastIndexOf(".");
 
@@ -30,31 +30,30 @@ internal class DocumentService : IDocumentService
             .WithObjectSize(stream.Length)
             .WithContentType("application/octet-stream");
 
-        await _minio.PutObjectAsync(putObjectArgs);
+        await _minio.PutObjectAsync(putObjectArgs).ConfigureAwait(false);
 
         return objectName;
     }
 
-
-    public async Task<(byte[] fileData, string fileType, string fileName)> GetAsync(string documentName, string folderName)
+    public async Task<(byte[] fileData, string fileType)> GetAsync(string fileName)
     {
         var statObjectArgs = new StatObjectArgs()
             .WithBucket(_bucketName)
-            .WithObject(documentName);
+            .WithObject(fileName);
 
-        await _minio.StatObjectAsync(statObjectArgs); //if file not found throws exception
+        await _minio.StatObjectAsync(statObjectArgs).ConfigureAwait(false); //if file not found throws exception
 
         var ms = new MemoryStream();
         var getObjectArgs = new GetObjectArgs()
             .WithBucket(_bucketName)
-            .WithObject(documentName)
+            .WithObject(fileName)
             .WithCallbackStream((stream) => stream.CopyTo(ms));
 
-        await _minio.GetObjectAsync(getObjectArgs);
+        await _minio.GetObjectAsync(getObjectArgs).ConfigureAwait(false);
 
         ms.Position = 0;
 
-        return (ms.ToArray(), GetContetnType(documentName), documentName);
+        return (ms.ToArray(), GetContetnType(fileName));
     }
 
     private static string GetContetnType(string fileName)

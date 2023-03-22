@@ -55,7 +55,7 @@ public abstract class CreateEmployeeCommand
             cancellationToken.ThrowIfCancellationRequested();
 
             if (request.Picture != null)
-                employee.PictureName = await _documentService.SaveAsync(request.Picture.FileName, "", request.Picture.OpenReadStream());
+                employee.PictureName = await _documentService.SaveAsync(request.Picture.OpenReadStream(), request.Picture.FileName);
 
             cancellationToken.ThrowIfCancellationRequested();
 
