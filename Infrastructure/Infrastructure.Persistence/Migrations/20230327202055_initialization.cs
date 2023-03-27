@@ -2,10 +2,14 @@
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Infrastructure.Persistence.Migrations
 {
-    public partial class Initialization : Migration
+    /// <inheritdoc />
+    public partial class initialization : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -13,11 +17,12 @@ namespace Infrastructure.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ObjectType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ObjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EventBody = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AggregateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AggregateType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Version = table.Column<int>(type: "int", nullable: false),
-                    ActTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    EventType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Data = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,7 +35,8 @@ namespace Infrastructure.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Salary = table.Column<double>(type: "float", nullable: false)
+                    Salary = table.Column<double>(type: "float", nullable: false),
+                    SortIndex = table.Column<byte>(type: "tinyint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -73,13 +79,12 @@ namespace Infrastructure.Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "Positions",
-                columns: new[] { "Id", "Name", "Salary" },
-                values: new object[] { new Guid("53c161b8-415e-402d-80c1-da798aa3d047"), "პროგრამისტი", 2000.0 });
-
-            migrationBuilder.InsertData(
-                table: "Positions",
-                columns: new[] { "Id", "Name", "Salary" },
-                values: new object[] { new Guid("90c8f00f-f112-4929-b630-c174899e9f17"), "ტესტერი", 1000.0 });
+                columns: new[] { "Id", "Name", "Salary", "SortIndex" },
+                values: new object[,]
+                {
+                    { new Guid("53c161b8-415e-402d-80c1-da798aa3d047"), "პროგრამისტი", 2000.0, null },
+                    { new Guid("90c8f00f-f112-4929-b630-c174899e9f17"), "ტესტერი", 1000.0, null }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employes_PositionId",
@@ -93,6 +98,7 @@ namespace Infrastructure.Persistence.Migrations
                 unique: true);
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

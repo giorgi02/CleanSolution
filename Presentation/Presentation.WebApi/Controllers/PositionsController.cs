@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Presentation.WebApi.Controllers;
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/v{version:apiVersion}/[controller]")]
+[ApiVersion("1.0")]
 public sealed class PositionsController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -23,6 +24,10 @@ public sealed class PositionsController : ControllerBase
         await _cache.GetOrCreateAsync("positions", async entry =>
         {
             entry.SlidingExpiration = TimeSpan.FromHours(1);
-            return await _mediator.Send(new GetPositionQuery.Request(), cancellationToken);
+            return await _mediator.Send(new GetPositionsQuery.Request(), cancellationToken);
         });
+
+    [HttpGet("{id:guid}", Name = "GetPosition")]
+    public async Task<GetPositionDto?> Get([FromRoute] Guid id, CancellationToken cancellationToken = default)
+        => await _mediator.Send(new GetPositionQuery.Request(id), cancellationToken);
 }

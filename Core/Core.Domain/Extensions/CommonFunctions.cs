@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Reflection;
 using System.Text;
 using System.Text.Json;
 
@@ -12,14 +11,20 @@ public static class CommonFunctions
     public static T? DeepClone<T>(this T obj) where T : notnull, new()
     {
         var type = obj.GetType();
-        var result = (T?)Activator.CreateInstance(type);
+        var properties = type.GetProperties();
+        var clone = (T?)Activator.CreateInstance(type);
 
-        do
-            foreach (var field in type!.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
-                field.SetValue(result, field.GetValue(obj));
-        while ((type = type.BaseType) != typeof(object));
+        foreach (var property in properties)
+            if (property.CanWrite)
+            {
+                object value = property.GetValue(obj)!;
+                if (value != null && value.GetType().IsClass && !value.GetType().FullName!.StartsWith("System."))
+                    property.SetValue(clone, DeepClone(value));
+                else
+                    property.SetValue(clone, value);
+            }
 
-        return result;
+        return clone;
     }
 
     public static int CalculateAge(DateTime birthDate)

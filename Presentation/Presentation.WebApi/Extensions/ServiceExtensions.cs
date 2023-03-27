@@ -5,6 +5,8 @@ global using System.Text.Json;
 using AspNetCoreRateLimit;
 using Core.Application.Interfaces.Services;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Presentation.WebApi.Extensions.Attributes;
 using Presentation.WebApi.Extensions.Configurations;
 using Presentation.WebApi.Extensions.Services;
@@ -40,6 +42,13 @@ public static class ServiceExtensions
                 => configure.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithExposedHeaders(headers));
             // AllowAnyHeader - დაშვება Request-ის Header-ებზე, ძირითადად გამოიყენება preflight ის დროს [OPTIONS] მეთოდისთვის
             // WithExposedHeaders - დაშვება Response-ის სპეციფიურ Header-ებზე
+        });
+
+        builder.Services.AddApiVersioning(options =>
+        {
+            options.DefaultApiVersion = new ApiVersion(1, 0);
+            options.AssumeDefaultVersionWhenUnspecified = true;
+            options.ApiVersionReader = new UrlSegmentApiVersionReader();
         });
     }
 

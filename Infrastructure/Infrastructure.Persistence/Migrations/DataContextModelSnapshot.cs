@@ -17,10 +17,10 @@ namespace Infrastructure.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "7.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Core.Domain.Models.Employee", b =>
                 {
@@ -109,6 +109,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<double>("Salary")
                         .HasColumnType("float");
 
+                    b.Property<byte?>("SortIndex")
+                        .HasColumnType("tinyint");
+
                     b.HasKey("Id");
 
                     b.ToTable("Positions");
@@ -128,24 +131,29 @@ namespace Infrastructure.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Core.Domain.Helpers.LogEvent", b =>
+            modelBuilder.Entity("Infrastructure.Persistence.Models.LogEvent", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("ActTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EventBody")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("ObjectId")
+                    b.Property<Guid>("AggregateId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ObjectType")
+                    b.Property<string>("AggregateType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EventType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Version")
                         .HasColumnType("int");
