@@ -26,8 +26,7 @@
 //        {
 //            var employee = await _repository.ReadAsync(request.EmployeeId);
 
-//            if (employee is null)
-//                throw new EntityNotFoundException(_localizer["record_not_found"]);
+//            _= employee ?? throw new EntityNotFoundException(_localizer["record_not_found"]);
 
 //            cancellationToken.ThrowIfCancellationRequested();
 

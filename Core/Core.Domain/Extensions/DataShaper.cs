@@ -14,7 +14,7 @@ public static class DataShaper
     /// <returns></returns>
     public static ExpandoObject? ShapeAs<TSource>(this TSource source, string fields)
     {
-        if (source == null) throw new ArgumentNullException(nameof(source));
+        _ = source ?? throw new ArgumentNullException(nameof(source));
 
         TSource[] sources = new TSource[] { source };
         return sources.ShapeAs<TSource>(fields).FirstOrDefault();
@@ -30,7 +30,7 @@ public static class DataShaper
     /// <returns></returns>
     public static IEnumerable<ExpandoObject> ShapeAs<TSource>(this IEnumerable<TSource> source, string fields)
     {
-        if (source == null) throw new ArgumentNullException(nameof(source));
+        _ = source ?? throw new ArgumentNullException(nameof(source));
 
         var expandoObjectList = new List<ExpandoObject>();
 
@@ -61,9 +61,7 @@ public static class DataShaper
                 var propertyInfo = typeof(TSource)
                     .GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
 
-                if (propertyInfo == null)
-                    throw new Exception($"Property {propertyName} wasn't found on {typeof(TSource)}");
-
+                _ = propertyInfo ?? throw new Exception($"Property {propertyName} wasn't found on {typeof(TSource)}");
 
                 propertyInfoList.Add(propertyInfo);
             }

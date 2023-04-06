@@ -26,8 +26,7 @@ public static class CollectionsExtension
     /// <returns></returns>
     public static IQueryable<T> ApplySort<T>(this IQueryable<T> source, string orderby)
     {
-        if (source == null)
-            throw new ArgumentNullException(nameof(source));
+        _ = source ?? throw new ArgumentNullException(nameof(source));
 
         if (string.IsNullOrWhiteSpace(orderby))
             return source;

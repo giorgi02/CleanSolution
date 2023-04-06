@@ -19,7 +19,7 @@ public abstract class GetEmployeeQuery
         public async Task<GetEmployeeDto> Handle(Request request, CancellationToken cancellationToken)
         {
             var application = await _repository.ReadAsync(request.EmployeeId);
-            if (application is null) throw new EntityNotFoundException("ჩანაწერი ვერ მოიძებნა");
+            _ = application ?? throw new EntityNotFoundException("ჩანაწერი ვერ მოიძებნა");
 
             return application.Adapt<GetEmployeeDto>();
         }
