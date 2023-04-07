@@ -44,7 +44,7 @@ public static class HealthCheckConfiguration
        string databasesPattern = "/health/databases"
         )
     {
-        _ = endpoints ?? throw new ArgumentNullException(nameof(endpoints));
+        ArgumentNullException.ThrowIfNull(endpoints);
 
         endpoints.MapHealthChecks(servicesPattern, new HealthCheckOptions()
         {

@@ -14,7 +14,7 @@ public static class DataShaper
     /// <returns></returns>
     public static ExpandoObject? ShapeAs<TSource>(this TSource source, string fields)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         TSource[] sources = new TSource[] { source };
         return sources.ShapeAs<TSource>(fields).FirstOrDefault();
@@ -30,7 +30,7 @@ public static class DataShaper
     /// <returns></returns>
     public static IEnumerable<ExpandoObject> ShapeAs<TSource>(this IEnumerable<TSource> source, string fields)
     {
-        _ = source ?? throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         var expandoObjectList = new List<ExpandoObject>();
 

@@ -1,4 +1,5 @@
-﻿using Core.Application.Interfaces.Repositories;
+﻿using Core.Application.Exceptions;
+using Core.Application.Interfaces.Repositories;
 using Core.Application.Interfaces.Services;
 using Core.Domain.Enums;
 using Core.Domain.Models;
@@ -35,27 +36,30 @@ public abstract class CreateEmployeeCommand
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IPositionRepository _positionRepository;
-        private readonly IDocumentService _documentService;
+        private readonly IDocumentService _documents;
         private readonly IMessagingService _messaging;
 
         public Handler(IServiceProvider services)
         {
             _employeeRepository = services.GetRequiredService<IEmployeeRepository>();
             _positionRepository = services.GetRequiredService<IPositionRepository>();
-            _documentService = services.GetRequiredService<IDocumentService>();
+            _documents = services.GetRequiredService<IDocumentService>();
             _messaging = services.GetRequiredService<IMessagingService>();
         }
 
         public async Task<Guid> Handle(Request request, CancellationToken cancellationToken)
         {
-            var employee = new Employee(request.PrivateNumber!, request.FirstName!, request.LastName!, request.BirthDate, request.Gender);
-            employee.SetLanguages(request.Languages);
-            employee.Position = await _positionRepository.ReadAsync(request.PositionId);
+            var position = await _positionRepository.ReadAsync(request.PositionId);
+            _ = position ?? throw new EntityNotFoundException($"{request.PositionId} ზე ჩანაწერი ვერ მოიძებნა");
 
             cancellationToken.ThrowIfCancellationRequested();
 
+            var employee = new Employee(request.PrivateNumber!, request.FirstName!, request.LastName!, request.BirthDate, request.Gender);
+            employee.SetLanguages(request.Languages);
+            employee.Position = position;
+
             if (request.Picture != null)
-                employee.PictureName = await _documentService.SaveAsync(request.Picture.OpenReadStream(), request.Picture.FileName);
+                employee.PictureName = await _documents.SaveAsync(request.Picture.OpenReadStream(), request.Picture.FileName);
 
             cancellationToken.ThrowIfCancellationRequested();
 

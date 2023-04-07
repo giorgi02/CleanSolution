@@ -1,4 +1,5 @@
 ﻿using Core.Application.DTOs;
+using Core.Application.Exceptions;
 using Core.Application.Interfaces.Repositories;
 using Core.Application.Localize;
 using Core.Domain.Enums;
@@ -52,17 +53,19 @@ public abstract class UpdateEmployeeCommand
 
         public async Task<GetEmployeeDto> Handle(Request request, CancellationToken cancellationToken)
         {
-            var employee = new Employee(request.PrivateNumber!, request.FirstName!, request.LastName!, request.BirthDate, request.Gender)
-            {
-                Id = request.EmployeeId,
-                Version = request.Version
-            };
-            employee.SetLanguages(request.Languages);
-            employee.Position = await _positionRepository.ReadAsync(request.PositionId);
+            var position = await _positionRepository.ReadAsync(request.PositionId);
+            _ = position ?? throw new EntityNotFoundException($"{request.PositionId} ზე ჩანაწერი ვერ მოიძებნა");
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            await _employeeRepository.UpdateAsync(employee, cancellationToken);
+            var employee = new Employee(request.PrivateNumber!, request.FirstName!, request.LastName!, request.BirthDate, request.Gender)
+            {
+                Position = position,
+                Version = request.Version
+            };
+            employee.SetLanguages(request.Languages);
+
+            await _employeeRepository.UpdateAsync(request.EmployeeId, employee, cancellationToken);
 
             return employee.Adapt<GetEmployeeDto>();
         }
