@@ -9,6 +9,8 @@ public static class MapperConfig
 {
     public static void RegisterMapsterConfiguration(this IServiceCollection services)
     {
+        TypeAdapterConfig.GlobalSettings.Default.MapToConstructor(true);
+
         TypeAdapterConfig<Employee, GetEmployeeDto>.NewConfig()
             .Map(dest => dest.Gender, src => src.Gender == Gender.Male ? "კაცი" : "ქალი")
             .Map(dest => dest.Age, src => DateTime.Now.Year - src.BirthDate.Year);
