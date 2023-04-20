@@ -58,7 +58,7 @@ public static class ServiceExtensions
         host.UseSerilog((context, config) => config
             .ReadFrom.Configuration(configuration)
             .Enrich.WithProperty("Project", "[CleanSolution]")
-            .WriteTo.Seq("http://localhost:5341", period: new TimeSpan(0, 0, 10)));
+            .WriteTo.Seq(configuration["Serilog:SeqUrl"]!, period: new TimeSpan(0, 0, 10)));
     }
 
 
