@@ -29,14 +29,14 @@ internal sealed class EmployeeRepository : Repository<Employee>, IEmployeeReposi
             (language == null || x.Language.HasFlag(language))
         );
 
-        return await Pagination<Employee>.CreateAsync(employees, pageIndex, pageSize);
+        return await base.PaginationAsync(employees, pageIndex, pageSize);
     }
 
     public async Task<Pagination<Employee>> SearchAsync(int pageIndex, int pageSize, string text)
     {
         var employees = Including().Where(x => x.PrivateNumber == text || x.FirstName == text || x.LastName == text);
 
-        return await Pagination<Employee>.CreateAsync(employees, pageIndex, pageSize);
+        return await base.PaginationAsync(employees, pageIndex, pageSize);
     }
 
     public override async Task<int> UpdateAsync(Guid id, Employee employee, CancellationToken cancellationToken = default)

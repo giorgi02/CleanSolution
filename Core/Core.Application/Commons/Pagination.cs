@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Primitives;
 
 namespace Core.Application.Commons;
-public class Pagination<T>
+public sealed class Pagination<T>
 {
     public IEnumerable<T> Items { get; private set; }
 
@@ -29,15 +29,6 @@ public class Pagination<T>
         this.TotalCount = count;
         this.Items = items;
     }
-
-    public static Task<Pagination<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
-    {
-        var count = source.Count();
-        var items = source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
-
-        return Task.Run(() => new Pagination<T>(items, count, pageIndex, pageSize));
-    }
-
 
     public Dictionary<string, StringValues> GetParams() => new()
     {

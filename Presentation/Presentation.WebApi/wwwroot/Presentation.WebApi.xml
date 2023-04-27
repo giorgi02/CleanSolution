@@ -51,6 +51,11 @@
             <param name="databasesPattern">URL ის ნიმუში რომელიც გვიჩვენებს მონაცემთა ბაზების მდგომარეობას</param>
             <returns></returns>
         </member>
+        <member name="T:Presentation.WebApi.Extensions.Middlewares.ApiKeyAuthentication">
+            <summary>
+            middleware რომელიც შეიძლება გამოვიყენოთ შიდა სერვისებს შორის, მარტივი ავთენთიფიკაციისთვის
+            </summary>
+        </member>
         <member name="M:Presentation.WebApi.Extensions.Services.ActiveUserService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor)">
             <summary>
             იუზერის მონაცემების და მოთხოვნის ინფორმაციის ამოღება
