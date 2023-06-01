@@ -31,7 +31,7 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<ExceptionHandler>();
 
 app.UseHttpsRedirection();
-//app.UseStaticFiles();
+app.UseStaticFiles();
 
 app.UseRouting();
 

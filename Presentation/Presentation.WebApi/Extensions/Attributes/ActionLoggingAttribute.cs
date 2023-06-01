@@ -5,7 +5,10 @@ using Microsoft.AspNetCore.Mvc.Filters;
 namespace Presentation.WebApi.Extensions.Attributes;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class SkipActionLoggingAttribute : ActionFilterAttribute { }
+public class SkipRequestLoggingAttribute : ActionFilterAttribute { }
+
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+public class SkipResponseLoggingAttribute : ActionFilterAttribute { }
 
 public sealed class ActionLoggingAttribute : ActionFilterAttribute
 {
@@ -22,7 +25,7 @@ public sealed class ActionLoggingAttribute : ActionFilterAttribute
     // => 1, 3
     public override Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
-        if (!context.ActionDescriptor.FilterDescriptors.Any(x => x.Filter is SkipActionLoggingAttribute))
+        if (!context.ActionDescriptor.FilterDescriptors.Any(x => x.Filter is SkipRequestLoggingAttribute))
         {
             context.HttpContext.Items[DurationStamp] = DateTime.Now;
 
@@ -34,7 +37,7 @@ public sealed class ActionLoggingAttribute : ActionFilterAttribute
                 _user.RequestedUrl, _user.RequestedMethod, type, body, _user.IpAddress, _user.Port, _user.Scheme, _user.Host, _user.Path, _user.UserId);
 
             // todo: ეს მეთოდი დასამუშავებელია
-            _logger.LogInformation($"Headers: {context.HttpContext.Request.Headers.ToDictionary(h => h.Key, h => h.Value)}");
+            _logger.LogInformation("headers: {@headers}", context.HttpContext.Request.Headers.ToDictionary(h => h.Key, h => h.Value));
         }
 
         return base.OnActionExecutionAsync(context, next);
@@ -54,7 +57,7 @@ public sealed class ActionLoggingAttribute : ActionFilterAttribute
     // <= 1, 4
     public override Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
-        if (!context.ActionDescriptor.FilterDescriptors.Any(x => x.Filter is SkipActionLoggingAttribute))
+        if (!context.ActionDescriptor.FilterDescriptors.Any(x => x.Filter is SkipResponseLoggingAttribute))
         {
             var response = context.HttpContext.Response;
 

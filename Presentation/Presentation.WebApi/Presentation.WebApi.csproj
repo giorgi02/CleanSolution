@@ -24,13 +24,13 @@
 				<PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
 				<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
 				<PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="7.0.5" />
-				<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+				<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
 				<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5" />
 				<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
 						<PrivateAssets>all</PrivateAssets>
 						<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 				</PackageReference>
-				<PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
+				<PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
 				<PackageReference Include="Serilog.Sinks.Seq" Version="5.2.2" />
 				<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 		</ItemGroup>
