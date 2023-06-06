@@ -4,6 +4,7 @@ using Core.Application.Interactors.Employees.Queries;
 using Core.Domain.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.WebApi.Extensions.Attributes;
 
 namespace Presentation.WebApi.Controllers;
 [Route("api/[controller]")]
@@ -15,7 +16,7 @@ public sealed class EmployeesController : ControllerBase
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
 
-    [HttpGet(Name = "GetEmployees")]
+    [HttpGet(Name = "GetEmployees"), SkipResponseLogging]
     public async Task<IEnumerable<GetEmployeeDto>> Get([FromQuery] GetEmployeesQuery.Request request, CancellationToken cancellationToken = default)
     {
         var result = await _mediator.Send(request, cancellationToken);
