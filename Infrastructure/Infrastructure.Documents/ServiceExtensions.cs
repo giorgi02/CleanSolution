@@ -1,5 +1,6 @@
 ﻿using Core.Application.Interfaces.Services;
 using Infrastructure.Documents.Implementations;
+using Infrastructure.Documents.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Minio.AspNetCore;
@@ -11,12 +12,14 @@ public static class ServiceExtensions
     {
         services.AddScoped<IDocumentService, DocumentService>();
 
+        var minioConfigs = configuration.GetSection("MinioConfigs").Get<MinioConfig>();
+        var minioClient = minioConfigs?.MinioClient;
 
         services.AddMinio(options =>
         {
-            options.Endpoint = configuration["Minio:MinioClient:endpoint"] ?? throw new ArgumentNullException("Minio:MinioClient:endpoint");
-            options.AccessKey = configuration["Minio:MinioClient:accessKey"] ?? throw new ArgumentNullException("Minio:MinioClient:accessKey");
-            options.SecretKey = configuration["Minio:MinioClient:secretKey"] ?? throw new ArgumentNullException("Minio:MinioClient:secretKey");
+            options.Endpoint = minioClient?.Endpoint ?? throw new ArgumentNullException(nameof(minioClient.Endpoint));
+            options.AccessKey = minioClient?.AccessKey ?? throw new ArgumentNullException(nameof(minioClient.AccessKey));
+            options.SecretKey = minioClient?.SecretKey ?? throw new ArgumentNullException(nameof(minioClient.SecretKey));
 
             //options.ConfigureClient(client =>
             //{
