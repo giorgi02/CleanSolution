@@ -65,9 +65,9 @@ public abstract class UpdateEmployeeCommand
             };
             employee.SetLanguages(request.Languages);
 
-            await _employeeRepository.UpdateAsync(request.EmployeeId, employee, cancellationToken);
+            var result = await _employeeRepository.UpdateAsync(request.EmployeeId, employee, cancellationToken);
 
-            return employee.Adapt<GetEmployeeDto>();
+            return result.Adapt<GetEmployeeDto>();
         }
     }
 

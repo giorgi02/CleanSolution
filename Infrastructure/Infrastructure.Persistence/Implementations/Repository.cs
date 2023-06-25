@@ -1,4 +1,5 @@
 ﻿using Core.Application.Commons;
+using Core.Application.Exceptions;
 using Core.Application.Interfaces.Repositories;
 using Core.Domain.Basics;
 using System.Linq.Expressions;
@@ -11,10 +12,11 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where T
 
 
     // create
-    public virtual async Task<int> CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public virtual async Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        _context.Set<TEntity>().Add(entity);
-        return await _context.SaveChangesAsync(cancellationToken);
+        var res = _context.Set<TEntity>().Add(entity);
+        await _context.SaveChangesAsync(cancellationToken);
+        return res.Entity;
     }
     // read
     protected async Task<Pagination<TEntity>> PaginationAsync(IQueryable<TEntity> source, int pageIndex, int pageSize)
@@ -37,25 +39,29 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where T
         return await _context.Set<TEntity>().Where(predicate).ToListAsync(cancellationToken);
     }
     // update
-    public virtual async Task<int> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public virtual async Task<TEntity?> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        _context.Set<TEntity>().Update(entity);
-        return await _context.SaveChangesAsync(cancellationToken);
+        var res = _context.Set<TEntity>().Update(entity);
+        await _context.SaveChangesAsync(cancellationToken);
+        return res.Entity;
     }
-    public virtual async Task<int> UpdateAsync(Guid id, TEntity entity, CancellationToken cancellationToken = default)
+    public virtual async Task<TEntity> UpdateAsync(Guid id, TEntity entity, CancellationToken cancellationToken = default)
     {
         entity.Id = id;
         var existing = await _context.Set<TEntity>().FindAsync(id);
-        if (existing is null) return 0;
+        if (existing is null) throw new DataObsoleteException("ასეთი ობიექტი ან არ არსებობს ან უკვე შეცვლილია");
 
         _context.Entry(existing).CurrentValues.SetValues(entity);
-        return await _context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return existing;
     }
     // todo: შევამოწმო ეს მეთოდი
-    public virtual async Task<int> UpdateSimpleAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public virtual async Task<TEntity?> UpdateSimpleAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         _context.Entry(entity).State = EntityState.Modified;
-        return await _context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        return entity;
     }
     // delete
     public virtual async Task<int> DeleteAsync(Guid id, CancellationToken cancellationToken = default)

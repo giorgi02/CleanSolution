@@ -1,15 +1,17 @@
-﻿using Core.Application.Exceptions;
+﻿using Core.Application.DTOs;
+using Core.Application.Exceptions;
 using Core.Application.Interfaces.Repositories;
 using Core.Application.Interfaces.Services;
 using Core.Domain.Enums;
 using Core.Domain.Models;
+using Mapster;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Core.Application.Interactors.Employees.Commands;
 public abstract class CreateEmployeeCommand
 {
-    public sealed record class Request : IRequest<Guid>
+    public sealed record class Request : IRequest<GetEmployeeDto>
     {
         public IFormFile? Picture { get; set; }
         //[Required]
@@ -32,7 +34,7 @@ public abstract class CreateEmployeeCommand
     }
 
 
-    public sealed class Handler : IRequestHandler<Request, Guid>
+    public sealed class Handler : IRequestHandler<Request, GetEmployeeDto>
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IPositionRepository _positionRepository;
@@ -47,7 +49,7 @@ public abstract class CreateEmployeeCommand
             _messaging = services.GetRequiredService<IMessagingService>();
         }
 
-        public async Task<Guid> Handle(Request request, CancellationToken cancellationToken)
+        public async Task<GetEmployeeDto> Handle(Request request, CancellationToken cancellationToken)
         {
             var position = await _positionRepository.ReadAsync(request.PositionId);
             _ = position ?? throw new EntityNotFoundException($"{request.PositionId} ზე ჩანაწერი ვერ მოიძებნა");
@@ -63,10 +65,10 @@ public abstract class CreateEmployeeCommand
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            await _employeeRepository.CreateAsync(employee, cancellationToken);
+            var result = await _employeeRepository.CreateAsync(employee, cancellationToken);
             await _messaging.EmployeeCreated(employee);
 
-            return employee.Id;
+            return result.Adapt<GetEmployeeDto>();
         }
     }
 

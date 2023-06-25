@@ -13,7 +13,7 @@ internal class MinioBucket
 
 internal class MinioClient
 {
-    public string? Endpoint { get; set; } 
-    public string? AccessKey { get; set; } 
+    public string? Endpoint { get; set; }
+    public string? AccessKey { get; set; }
     public string? SecretKey { get; set; }
 }

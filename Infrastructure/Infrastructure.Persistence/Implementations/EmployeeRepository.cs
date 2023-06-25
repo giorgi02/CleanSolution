@@ -9,9 +9,7 @@ internal sealed class EmployeeRepository : Repository<Employee>, IEmployeeReposi
 {
     public EmployeeRepository(DataContext context) : base(context) { }
 
-
-    public IQueryable<Employee> Including() =>
-        _context.Employes.Include(x => x.Position);
+    private IQueryable<Employee> Including() => _context.Employes.Include(x => x.Position);
 
 
     public override async Task<Employee?> ReadAsync(Guid id, CancellationToken cancellationToken)
@@ -39,13 +37,14 @@ internal sealed class EmployeeRepository : Repository<Employee>, IEmployeeReposi
         return await base.PaginationAsync(employees, pageIndex, pageSize);
     }
 
-    public override async Task<int> UpdateAsync(Guid id, Employee employee, CancellationToken cancellationToken = default)
+    public override async Task<Employee> UpdateAsync(Guid id, Employee employee, CancellationToken cancellationToken = default)
     {
         var existing = await _context.Employes.FindAsync(id);
         if (existing is null || existing.Version != employee.Version)
             throw new DataObsoleteException("ასეთი ობიექტი ან არ არსებობს ან უკვე შეცვლილია");
 
         _context.Entry(existing).CurrentValues.SetValues(employee);
-        return await _context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        return existing;
     }
 }
