@@ -38,7 +38,6 @@ public sealed class EmployeesController : ControllerBase
         return CreatedAtRoute("GetEmployeeById", new { id = result.Id }, result);
     }
 
-
     /// <summary>
     /// თანამშრომლის კორექტირება
     /// </summary>
@@ -78,9 +77,9 @@ public sealed class EmployeesController : ControllerBase
     //    await _mediator.Send(request, cancellationToken);
     //}
 
-    [HttpDelete("{id}", Name = "DeleteEmployee")]
     //[Authorize(Policy = "DeletePolicy")]
     //[Authorize(Roles = "admin, editor")]
+    [HttpDelete("{id}", Name = "DeleteEmployee")]
     public async Task Delete([FromRoute] Guid id, CancellationToken cancellationToken = default)
         => await _mediator.Send(new DeleteEmployeeCommand.Request(id), cancellationToken);
 }
