@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <VSTemplate Version="3.0.0" Type="ProjectGroup" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
-  <TemplateData>
+		<TemplateData>
 
-    <Name>ASP.NET Core Web API (CleanArchitecture)</Name>
-    <Description>სუფთა არქიტექტურის შაბლონი</Description>
-    <TemplateID>WebApi.CSharp</TemplateID>
-    <DefaultName>CleanSolution</DefaultName>
+				<Name>ASP.NET Core Web API (CleanArchitecture)</Name>
+				<Description>სუფთა არქიტექტურის შაბლონი</Description>
+				<TemplateID>WebApi.CSharp</TemplateID>
+				<DefaultName>CleanSolution</DefaultName>
 
-    <Icon>Icon.ico</Icon>
+				<Icon>Icon.ico</Icon>
 
-    <ProjectType>CSharp</ProjectType>
-    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
-    <SortOrder>100</SortOrder>
-    <CreateNewFolder>true</CreateNewFolder>
-    <ProvideDefaultName>true</ProvideDefaultName>
-    <LocationField>Enabled</LocationField>
-    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
-    <LanguageTag>C#</LanguageTag>
+				<ProjectType>CSharp</ProjectType>
+				<NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+				<SortOrder>100</SortOrder>
+				<CreateNewFolder>true</CreateNewFolder>
+				<ProvideDefaultName>true</ProvideDefaultName>
+				<LocationField>Enabled</LocationField>
+				<EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+				<LanguageTag>C#</LanguageTag>
 
-    <ProjectTypeTag>Linux</ProjectTypeTag>
-    <ProjectTypeTag>macOS</ProjectTypeTag>
-    <ProjectTypeTag>Windows</ProjectTypeTag>
-    <ProjectTypeTag>Cloud</ProjectTypeTag>
-    <ProjectTypeTag>Service</ProjectTypeTag>
-    <ProjectTypeTag>Web</ProjectTypeTag>
-    <ProjectTypeTag>API</ProjectTypeTag>
+				<ProjectTypeTag>Linux</ProjectTypeTag>
+				<ProjectTypeTag>macOS</ProjectTypeTag>
+				<ProjectTypeTag>Windows</ProjectTypeTag>
+				<ProjectTypeTag>Cloud</ProjectTypeTag>
+				<ProjectTypeTag>Service</ProjectTypeTag>
+				<ProjectTypeTag>Web</ProjectTypeTag>
+				<ProjectTypeTag>API</ProjectTypeTag>
 
-  </TemplateData>
-  <TemplateContent>
-    <ProjectCollection>
+		</TemplateData>
+		<TemplateContent>
+				<ProjectCollection>
 
-      <SolutionFolder Name="Presentation">
-        <ProjectTemplateLink ProjectName="Presentation.WebApi">
-          Presentation.WebApi\MyTemplate.vstemplate
-        </ProjectTemplateLink>
-      </SolutionFolder>
+						<SolutionFolder Name="Presentation">
+								<ProjectTemplateLink ProjectName="Presentation.WebApi">
+										Presentation.WebApi\MyTemplate.vstemplate
+								</ProjectTemplateLink>
+						</SolutionFolder>
 
-      <SolutionFolder Name="Infrastructure">
-        <ProjectTemplateLink ProjectName="Infrastructure.Persistence" >
-          Infrastructure.Persistence\MyTemplate.vstemplate
-        </ProjectTemplateLink>
-        <ProjectTemplateLink ProjectName="Infrastructure.Logger">
-          Infrastructure.Persistence\MyTemplate.vstemplate
-        </ProjectTemplateLink>
-        <ProjectTemplateLink ProjectName="Infrastructure.Documents">
-          Infrastructure.Persistence\MyTemplate.vstemplate
-        </ProjectTemplateLink>
-      </SolutionFolder>
+						<SolutionFolder Name="Infrastructure">
+								<ProjectTemplateLink ProjectName="Infrastructure.Persistence" >
+										Infrastructure.Persistence\MyTemplate.vstemplate
+								</ProjectTemplateLink>
+								<ProjectTemplateLink ProjectName="Infrastructure.Messaging">
+										Infrastructure.Messaging\MyTemplate.vstemplate
+								</ProjectTemplateLink>
+								<ProjectTemplateLink ProjectName="Infrastructure.Documents">
+										Infrastructure.Documents\MyTemplate.vstemplate
+								</ProjectTemplateLink>
+						</SolutionFolder>
 
-      <SolutionFolder Name="Core">
-        <ProjectTemplateLink ProjectName="Core.Domain">
-          Core.Domain\MyTemplate.vstemplate
-        </ProjectTemplateLink>
-        <ProjectTemplateLink ProjectName="Core.Application" >
-          Core.Application\MyTemplate.vstemplate
-        </ProjectTemplateLink>
-      </SolutionFolder>
+						<SolutionFolder Name="Core">
+								<ProjectTemplateLink ProjectName="Core.Domain">
+										Core.Domain\MyTemplate.vstemplate
+								</ProjectTemplateLink>
+								<ProjectTemplateLink ProjectName="Core.Application" >
+										Core.Application\MyTemplate.vstemplate
+								</ProjectTemplateLink>
+						</SolutionFolder>
 
-    </ProjectCollection>
-  </TemplateContent>
+				</ProjectCollection>
+		</TemplateContent>
 </VSTemplate>
