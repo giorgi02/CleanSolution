@@ -17,7 +17,10 @@ public static class ServiceExtensions
 {
     public static void AddThisLayer(this WebApplicationBuilder builder)
     {
-        builder.Services.AddControllers(options => options.Filters.Add(typeof(ActionLoggingAttribute)));
+        builder.Services.AddControllers(options =>
+        {
+            options.Filters.Add(typeof(ActionLoggingAttribute));
+        });
 
         builder.Services.AddFluentValidationAutoValidation();
 
@@ -33,7 +36,9 @@ public static class ServiceExtensions
 
         builder.Services.AddConfigureRateLimiting(builder.Configuration);
 
-        builder.Host.AddLoggerLayer(builder.Configuration);
+        builder.Host.UseSerilog((context, config) => config
+           .ReadFrom.Configuration(builder.Configuration)
+           .Enrich.WithProperty("Project", "[CleanSolution]"));
 
         builder.Services.AddCors(options =>
         {
@@ -52,19 +57,8 @@ public static class ServiceExtensions
         });
     }
 
-    // დაილოგება Seq ლოგების მენეჯერში
-    public static void AddLoggerLayer(this IHostBuilder host, IConfiguration configuration)
-    {
-        host.UseSerilog((context, config) => config
-            .ReadFrom.Configuration(configuration)
-            .Enrich.WithProperty("Project", "[CleanSolution]")
-            .WriteTo.Seq(configuration["Serilog:SeqUrl"]!, period: new TimeSpan(0, 0, 10)));
-    }
-
-
     private static void AddConfigureRateLimiting(this IServiceCollection services, IConfiguration configuration)
     {
-        //load general configuration from appsettings.json
         services.Configure<IpRateLimitOptions>(configuration.GetSection("IpRateLimiting"));
 
         // inject counter and rules

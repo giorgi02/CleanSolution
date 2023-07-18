@@ -13,7 +13,7 @@ namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
     [Migration("20230327202055_initialization")]
-    partial class initialization
+    partial class Initialization
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
