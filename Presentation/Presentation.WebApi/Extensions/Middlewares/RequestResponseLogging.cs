@@ -12,7 +12,7 @@ public class RequestResponseLogging
 
     public async Task Invoke(HttpContext context)
     {
-        _logger.LogInformation(await FormatRequest(context.Request));
+        await FormatRequest(context.Request);
 
         var originalBodyStream = context.Response.Body;
 
@@ -22,12 +22,12 @@ public class RequestResponseLogging
 
             await _next(context);
 
-            _logger.LogInformation(await FormatResponse(context.Response));
+            await FormatResponse(context.Response);
             await responseBody.CopyToAsync(originalBodyStream);
         }
     }
 
-    private async Task<string> FormatRequest(HttpRequest request)
+    private async Task FormatRequest(HttpRequest request)
     {
         //request.EnableRewind();
         HttpRequestRewindExtensions.EnableBuffering(request);
@@ -39,15 +39,16 @@ public class RequestResponseLogging
         body.Seek(0, SeekOrigin.Begin);
         request.Body = body;
 
-        return $"{request.Scheme} {request.Host}{request.Path} {request.QueryString} {bodyAsText}";
+        _logger.LogInformation("request scheme={@scheme} host={@Host} path={@Path} queryString={@QueryString} body={@Body}",
+             request.Scheme, request.Host, request.Path, request.QueryString, bodyAsText);
     }
 
-    private async Task<string> FormatResponse(HttpResponse response)
+    private async Task FormatResponse(HttpResponse response)
     {
         response.Body.Seek(0, SeekOrigin.Begin);
-        var text = await new StreamReader(response.Body).ReadToEndAsync();
+        var bodyAsText = await new StreamReader(response.Body).ReadToEndAsync();
         response.Body.Seek(0, SeekOrigin.Begin);
 
-        return $"Response {text}";
+        _logger.LogInformation("response body={@Body}", bodyAsText);
     }
 }
