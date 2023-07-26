@@ -3,6 +3,7 @@ using Infrastructure.Messaging.Consumers;
 using Infrastructure.Messaging.Producers;
 using Infrastructure.Messaging.RequestServices;
 using Microsoft.Extensions.DependencyInjection;
+using PropertyGetterServiceReference;
 
 namespace Infrastructure.Messaging;
 public static class ServiceExtensions
@@ -12,6 +13,8 @@ public static class ServiceExtensions
         services.AddHostedService<UpsertPositionConsumer>();
 
         services.AddSingleton<IMessagingService, MessagingServices>();
+
+        services.AddWcfServiceScoped<IPropertyGetterService, PropertyGetterServiceClient>();
 
         services.AddScoped<ICheckPersonsService, CheckPersonsService>();
     }
