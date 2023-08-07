@@ -35,7 +35,7 @@ public sealed class EmployeesController : ControllerBase
     public async Task<ActionResult<GetEmployeeDto>> Add([FromForm] CreateEmployeeCommand.Request request, CancellationToken cancellationToken = default)
     {
         var result = await _mediator.Send(request, cancellationToken);
-        return CreatedAtRoute("GetEmployeeById", new { id = result.Id }, result);
+        return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
     }
 
     /// <summary>

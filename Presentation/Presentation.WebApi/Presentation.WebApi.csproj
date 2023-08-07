@@ -18,11 +18,12 @@
 
 		<ItemGroup>
 		  <Content Remove="C:\Users\giorgi.gelashvili\.nuget\packages\serilog.sinks.graylog\3.0.1\contentFiles\any\net7.0\README.md" />
+		  <Content Remove="C:\Users\giorgi.gelashvili\.nuget\packages\serilog.sinks.graylog\3.0.2\contentFiles\any\net7.0\README.md" />
 		</ItemGroup>
 
 		<ItemGroup>
-				<PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="6.0.2" />
-				<PackageReference Include="AspNetCore.HealthChecks.Uris" Version="6.0.3" />
+				<PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="7.0.0" />
+				<PackageReference Include="AspNetCore.HealthChecks.Uris" Version="7.0.0" />
 				<PackageReference Include="AspNetCoreRateLimit" Version="5.0.0" />
 				<PackageReference Include="Ben.Demystifier" Version="0.4.1" />
 				<PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
