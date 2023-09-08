@@ -6,5 +6,5 @@ public sealed class DataObsoleteException : EntityValidationException
     /// <summary>
     /// ძირითადად გამოიყენება კონკურენტული მოთხოვნებისთვის
     /// </summary>
-    public DataObsoleteException(string message) : base(message) { }
+    public DataObsoleteException(string message, string field = "messages") : base(message, field) { }
 }

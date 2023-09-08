@@ -8,11 +8,11 @@ public class EntityValidationException : Exception
     public EntityValidationException(IDictionary<string, string[]> messages)
             : base("One or more validation errors occurred") => this.Messages = messages;
 
-    public EntityValidationException(string message) : base(message)
+    public EntityValidationException(string message, string field = "messages") : base(message)
     {
         this.Messages = new Dictionary<string, string[]>
         {
-            { "messages", new[] { message } }
+            { field, new[] { message } }
         };
     }
 }

@@ -6,5 +6,5 @@ public sealed class EntityNotFoundException : EntityValidationException
     /// <summary>
     /// მოთხოვნილი ჩანაწერი ვერ მოიძებნა
     /// </summary>
-    public EntityNotFoundException(string message) : base(message) { }
+    public EntityNotFoundException(string message, string field = "messages") : base(message, field) { }
 }
