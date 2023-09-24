@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Infrastructure.Messaging.Consumers;
 internal class UpsertPositionConsumer : BackgroundService
 {
-    private const string topic = "position_upsert";
+    private const string Topic = "position_upsert";
     private readonly string _groupId;
     private readonly string _bootstrapServers;
 
@@ -19,8 +19,8 @@ internal class UpsertPositionConsumer : BackgroundService
     public UpsertPositionConsumer(IMediator mediator, IConfiguration configuration, ILogger<UpsertPositionConsumer> logger)
     {
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        _groupId = configuration["ApacheKafka:Group"] ?? throw new ArgumentNullException("ApacheKafka:Group");
-        _bootstrapServers = configuration["ApacheKafka:BootstrapServers"] ?? throw new ArgumentNullException("ApacheKafka:BootstrapServers");
+        _groupId = configuration["ApacheKafka:Group"] ?? throw new ArgumentNullException(nameof(configuration));
+        _bootstrapServers = configuration["ApacheKafka:BootstrapServers"] ?? throw new ArgumentNullException(nameof(configuration));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
@@ -37,7 +37,7 @@ internal class UpsertPositionConsumer : BackgroundService
         using var consumer = new ConsumerBuilder<Ignore, string>(config).Build();
         try
         {
-            consumer.Subscribe(topic);
+            consumer.Subscribe(Topic);
 
             while (!stoppingToken.IsCancellationRequested)
             {

@@ -18,8 +18,8 @@ public static class ServiceExtensions
         services.AddMinio(options =>
         {
             options.Endpoint = minioClient?.Endpoint ?? throw new ArgumentNullException(nameof(minioClient.Endpoint));
-            options.AccessKey = minioClient?.AccessKey ?? throw new ArgumentNullException(nameof(minioClient.AccessKey));
-            options.SecretKey = minioClient?.SecretKey ?? throw new ArgumentNullException(nameof(minioClient.SecretKey));
+            options.AccessKey = minioClient.AccessKey ?? throw new ArgumentNullException(nameof(minioClient.AccessKey));
+            options.SecretKey = minioClient.SecretKey ?? throw new ArgumentNullException(nameof(minioClient.SecretKey));
 
             //options.ConfigureClient(client =>
             //{

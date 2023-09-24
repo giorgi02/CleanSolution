@@ -12,12 +12,12 @@ internal class DocumentService : IDocumentService
     public DocumentService(MinioClient minio, IConfiguration configuration)
     {
         _minio = minio ?? throw new ArgumentNullException(nameof(minio));
-        _bucketName = configuration["Minio:BucketName"] ?? throw new ArgumentNullException("Minio:BucketName");
+        _bucketName = configuration["Minio:BucketName"] ?? throw new ArgumentNullException(nameof(configuration));
     }
 
     public async Task<string> SaveAsync(Stream stream, string fileName)
     {
-        var pointIndex = fileName.LastIndexOf(".");
+        var pointIndex = fileName.LastIndexOf(".", StringComparison.Ordinal);
 
         var hash = Guid.NewGuid().ToString("N");
 

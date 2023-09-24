@@ -7,7 +7,7 @@ using System.Text.Json;
 namespace Infrastructure.Messaging.Producers;
 internal class MessagingServices : IMessagingService
 {
-    private const string _topic = "employee_created";
+    private const string Topic = "employee_created";
     private readonly string _bootstrapServers;
 
     public MessagingServices(IConfiguration configuration)
@@ -18,10 +18,10 @@ internal class MessagingServices : IMessagingService
     public async Task EmployeeCreated(Employee employee)
     {
         string message = JsonSerializer.Serialize(employee);
-        await SendOrderRequest(_topic, message);
+        await SendOrderRequest(Topic, message);
     }
 
-    private async Task<bool> SendOrderRequest(string topic, string message)
+    private async Task SendOrderRequest(string topic, string message)
     {
         var config = new ProducerConfig
         {
@@ -32,11 +32,9 @@ internal class MessagingServices : IMessagingService
 
         using var producer = new ProducerBuilder<Null, string>(config).Build();
 
-        var result = await producer.ProduceAsync(topic, new Message<Null, string>
+        await producer.ProduceAsync(topic, new Message<Null, string>
         {
             Value = message
         });
-
-        return await Task.FromResult(true);
     }
 }

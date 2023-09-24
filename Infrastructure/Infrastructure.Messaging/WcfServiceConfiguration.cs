@@ -24,10 +24,10 @@ public static class WcfServiceConfiguration
 
         var type = typeof(TImplementation);
 
-        var addressConfig = config.EndpointConfigs?.FirstOrDefault(endpoint => endpoint.Name == type.Name);
+        var addressConfig = config.EndpointConfigs.FirstOrDefault(endpoint => endpoint.Name == type.Name);
         _ = addressConfig ?? throw new ArgumentException($"Can't find endpoint configuration for {type.Name} in service configuration file");
 
-        var bindingConfig = config.BasicHttpBindings?.FirstOrDefault(binding => binding.Name == addressConfig.BindingConfiguration);
+        var bindingConfig = config.BasicHttpBindings.FirstOrDefault(binding => binding.Name == addressConfig.BindingConfiguration);
 
         _ = bindingConfig ?? throw new ArgumentException($"Can't find binding configuration for {addressConfig.Name} in service configuration file");
 

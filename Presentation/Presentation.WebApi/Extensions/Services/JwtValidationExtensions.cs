@@ -27,7 +27,7 @@ public static class JwtValidationExtensions
                     //ClockSkew = TimeSpan.Zero, // ანულებს ტოკენის სიცოცხლის ხანგრძლივობას. default არის 5 წუთი
                     ValidIssuer = configuration["JwtSettings:Issuer"],
                     ValidAudience = configuration["JwtSettings:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"] ?? throw new ArgumentNullException("JwtSettings:Key")))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"] ?? throw new ArgumentNullException(nameof(configuration))))
                 };
             });
     }
@@ -81,7 +81,7 @@ public static class JwtValidationExtensions
             claims.Add(new Claim(ClaimTypes.Role, role));
 
         // ქმნის JWT ხელმოწერას
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"] ?? throw new ArgumentNullException("JwtSettings:Key")));
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"] ?? throw new ArgumentNullException(nameof(configuration))));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
         var tokenDescriptor = new JwtSecurityToken

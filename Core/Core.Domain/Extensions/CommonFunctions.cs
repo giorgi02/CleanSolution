@@ -17,7 +17,7 @@ public static class CommonFunctions
         foreach (var property in properties)
             if (property.CanWrite)
             {
-                object value = property.GetValue(obj)!;
+                object? value = property.GetValue(obj);
                 if (value != null && value.GetType().IsClass && !value.GetType().FullName!.StartsWith("System."))
                     property.SetValue(clone, DeepClone(value));
                 else

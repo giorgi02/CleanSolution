@@ -4,7 +4,7 @@ using Microsoft.OpenApi.Models;
 namespace Presentation.WebApi.Extensions.Configurations;
 public static class SwaggerConfiguration
 {
-    private readonly static string[] _options = { "CleanSolution v1" };
+    private readonly static string[] Options = { "CleanSolution v1" };
 
     // services
     public static void AddSwaggerServices(this IServiceCollection services)
@@ -15,7 +15,7 @@ public static class SwaggerConfiguration
         services.AddSwaggerGen(c =>
         {
             // DTO კლასის სახელების დაგენერირების წესის განსაზღვრა
-            c.CustomSchemaIds(x => x.FullName?[(x.FullName.LastIndexOf('.') + 1)..].Replace('+', '.'));
+            c.CustomSchemaIds(x => x.FullName?[(x.FullName.LastIndexOf('.') + 1)..]?.Replace('+', '.'));
 
             // ავტორიზაციის წესების განსაზღვრა
             var securityScheme = new OpenApiSecurityScheme
@@ -39,7 +39,7 @@ public static class SwaggerConfiguration
                 { securityScheme, Array.Empty<string>() }
             });
             // მეთოდების დახარისხება სხვადასხვა სექციებად
-            foreach (var name in _options)
+            foreach (var name in Options)
             {
                 c.SwaggerDoc(name: name, new OpenApiInfo
                 {
@@ -70,7 +70,7 @@ public static class SwaggerConfiguration
         {
             c.InjectStylesheet("/SwaggerDark.css"); // შავი ფონის დაყენება
 
-            foreach (var name in _options)
+            foreach (var name in Options)
             {
                 c.SwaggerEndpoint(
                     url: $"{name}/swagger.json",

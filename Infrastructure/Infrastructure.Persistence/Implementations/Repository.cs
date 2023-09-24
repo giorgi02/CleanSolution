@@ -48,8 +48,8 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where T
     public virtual async Task<TEntity> UpdateAsync(Guid id, TEntity entity, CancellationToken cancellationToken = default)
     {
         entity.Id = id;
-        var existing = await _context.Set<TEntity>().FindAsync(id);
-        if (existing is null) throw new DataObsoleteException("ასეთი ობიექტი ან არ არსებობს ან უკვე შეცვლილია");
+        var existing = await _context.Set<TEntity>().FindAsync(id, cancellationToken)
+            ?? throw new DataObsoleteException("ასეთი ობიექტი ან არ არსებობს ან უკვე შეცვლილია");
 
         _context.Entry(existing).CurrentValues.SetValues(entity);
         await _context.SaveChangesAsync(cancellationToken);
@@ -66,7 +66,7 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where T
     // delete
     public virtual async Task<int> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var item = await this.ReadAsync(id);
+        var item = await this.ReadAsync(id, cancellationToken);
         if (item is null) return 0;
 
         _context.Set<TEntity>().Remove(item);

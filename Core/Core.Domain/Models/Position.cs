@@ -30,7 +30,7 @@ public class Position : BaseEntity
 
     public Expression<Func<Position, bool>> ToFilterExpression() =>
         x => (this.Id == default || x.Id == this.Id)
-        && (this.Name == default || x.Name == this.Name)
+        && (this.Name == string.Empty || x.Name == this.Name)
         && (this.Salary == default || x.Salary == this.Salary);
 
     public Expression<Func<Position, bool>> ToSearchExpression() =>

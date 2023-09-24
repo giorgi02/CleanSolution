@@ -10,7 +10,7 @@ public static class HealthCheckConfiguration
     /// </summary>
     public static void AddConfigureHealthChecks(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException("DefaultConnection");
+        var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException(nameof(configuration));
         var downstreamServiceUrl = configuration["ExternalServices:GovernmentService"];
 
         services.AddHealthChecks()
@@ -19,13 +19,13 @@ public static class HealthCheckConfiguration
              name: "Downstream API Health Check",
              failureStatus: HealthStatus.Unhealthy,
              timeout: TimeSpan.FromSeconds(3),
-             tags: new string[] { "services" })
+             tags: new[] { "services" })
           .AddSqlServer(
              connectionString,
              name: "Database",
              failureStatus: HealthStatus.Degraded,
              timeout: TimeSpan.FromSeconds(1),
-             tags: new string[] { "databases" });
+             tags: new[] { "databases" });
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ public static class HealthCheckConfiguration
         });
         endpoints.MapHealthChecks(pattern, new HealthCheckOptions()
         {
-            Predicate = (check) => true,
+            Predicate = (_) => true,
             AllowCachingResponses = false,
             ResponseWriter = WriteResponse,
         });

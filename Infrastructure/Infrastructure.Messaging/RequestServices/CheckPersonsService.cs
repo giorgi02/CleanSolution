@@ -29,7 +29,7 @@ internal class CheckPersonsService : ICheckPersonsService
         if (!response.IsSuccessStatusCode)
             throw new EntityNotFoundException(_localizer["person_not_found"]);
 
-        var content = await response.Content.ReadAsStringAsync();
+        var content = await response.Content.ReadAsStringAsync(cancellationToken);
         if (string.IsNullOrWhiteSpace(content))
             throw new EntityNotFoundException(_localizer["person_not_found"]);
 

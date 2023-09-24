@@ -59,12 +59,11 @@ public class Employee : AuditableEntity
 
     public Expression<Func<Employee, bool>> ToFilterExpression() =>
         x => (this.Id == default || x.Id == this.Id)
-        && (this.PrivateNumber == default || x.PrivateNumber == this.PrivateNumber)
-        && (this.FirstName == default || x.FirstName == this.FirstName)
-        && (this.LastName == default || x.LastName == this.LastName)
+        && (this.PrivateNumber == string.Empty || x.PrivateNumber == this.PrivateNumber)
+        && (this.FirstName == string.Empty || x.FirstName == this.FirstName)
+        && (this.LastName == string.Empty || x.LastName == this.LastName)
         && (this.BirthDate == default || x.BirthDate == this.BirthDate)
         && (this.Gender == default || x.Gender == this.Gender)
-        && (this.LastName == default || x.LastName == this.LastName)
         && (this.PictureName == default || x.PictureName == this.PictureName)
         && (this.Address == default || x.Address == this.Address)
         && (this.Position != null && this.Position.ToFilterExpression().Compile().Invoke(x.Position!));

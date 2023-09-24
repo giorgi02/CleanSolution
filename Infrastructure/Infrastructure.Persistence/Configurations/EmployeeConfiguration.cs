@@ -31,7 +31,7 @@ internal sealed class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
         #endregion
 
         #region Concurrency Token ველის მონიშვნა (ოპტიმისტური კონკურენცია)
-        builder.Property(o => o.Version).IsConcurrencyToken(true);
+        builder.Property(o => o.Version).IsConcurrencyToken();
         #endregion
 
         builder.HasQueryFilter(x => !x.DateDeleted.HasValue);

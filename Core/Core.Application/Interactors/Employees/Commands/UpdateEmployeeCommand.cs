@@ -53,7 +53,7 @@ public abstract class UpdateEmployeeCommand
 
         public async Task<GetEmployeeDto> Handle(Request request, CancellationToken cancellationToken)
         {
-            var position = await _positionRepository.ReadAsync(request.PositionId);
+            var position = await _positionRepository.ReadAsync(request.PositionId, cancellationToken);
             _ = position ?? throw new EntityNotFoundException("ზე ჩანაწერი ვერ მოიძებნა", nameof(request.PositionId));
 
             cancellationToken.ThrowIfCancellationRequested();

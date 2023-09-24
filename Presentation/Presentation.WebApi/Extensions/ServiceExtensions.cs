@@ -36,13 +36,13 @@ public static class ServiceExtensions
 
         builder.Services.AddConfigureRateLimiting(builder.Configuration);
 
-        builder.Host.UseSerilog((context, config) => config
+        builder.Host.UseSerilog((_, config) => config
            .ReadFrom.Configuration(builder.Configuration)
            .Enrich.WithProperty("Project", "[CleanSolution]"));
 
         builder.Services.AddCors(options =>
         {
-            string[] headers = builder.Configuration.GetSection("ExposedHeaders").Get<string[]>() ?? throw new ArgumentNullException("ExposedHeaders");
+            string[] headers = builder.Configuration.GetSection("ExposedHeaders").Get<string[]>() ?? throw new ArgumentNullException(nameof(builder.Configuration));
             options.AddDefaultPolicy(configure
                 => configure.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithExposedHeaders(headers));
             // AllowAnyHeader - დაშვება Request-ის Header-ებზე, ძირითადად გამოიყენება preflight ის დროს [OPTIONS] მეთოდისთვის

@@ -11,18 +11,19 @@ public class ApiKeyAuthenticationAttribute : Attribute, IAsyncAuthorizationFilte
 {
     private readonly string _apiKey;
     public ApiKeyAuthenticationAttribute(IConfiguration configuration) =>
-        _apiKey = configuration["ApiKey"] ?? throw new ArgumentNullException("ApiKey");
+        _apiKey = configuration["ApiKey"] ?? throw new ArgumentNullException(nameof(configuration));
 
 
-    public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
+    public Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
         var allowAnonymous = context.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
-        if (allowAnonymous) return;
+        if (allowAnonymous) return Task.CompletedTask;
 
         if (context.HttpContext.Request.Headers["x-api-key"] != _apiKey)
             context.Result = new JsonResult("ApiKey is invalid")
             {
                 StatusCode = StatusCodes.Status401Unauthorized
             };
+        return Task.CompletedTask;
     }
 }

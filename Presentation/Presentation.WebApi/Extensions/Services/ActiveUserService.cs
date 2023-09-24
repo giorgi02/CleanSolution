@@ -15,8 +15,8 @@ public class ActiveUserService : IActiveUserService
         if (context == null) return;
 
         this.UserId = Guid.TryParse(FindingClaim(context, ClaimTypes.NameIdentifier), out Guid uId) ? uId : null;
-        this.IpAddress = context.Request.Headers["x-forwarded-for"].FirstOrDefault() ?? context.Connection?.RemoteIpAddress?.MapToIPv4().ToString();
-        this.Port = context.Connection?.RemotePort ?? 0;
+        this.IpAddress = context.Request.Headers["x-forwarded-for"].FirstOrDefault() ?? context.Connection.RemoteIpAddress?.MapToIPv4().ToString();
+        this.Port = context.Connection.RemotePort;
 
         this.Scheme = context.Request.Scheme;
         this.Host = Convert.ToString(context.Request.Host);
@@ -27,7 +27,7 @@ public class ActiveUserService : IActiveUserService
 
     private static string? FindingClaim(HttpContext context, string claim)
     {
-        var idFromIdentity = context.User?.FindFirstValue(claim);
+        var idFromIdentity = context.User.FindFirstValue(claim);
         if (idFromIdentity != null) return idFromIdentity;
 
 
@@ -46,8 +46,8 @@ public class ActiveUserService : IActiveUserService
     public string? Scheme { get; }
     public string? Host { get; }
     public string? Path { get; }
-    private readonly string? QueryString;
+    public string? QueryString { get; }
 
-    public string? RequestedUrl => $"{this.Scheme}://{this.Host}{this.Path}{this.QueryString}";
+    public string RequestedUrl => $"{this.Scheme}://{this.Host}{this.Path}{this.QueryString}";
     public string? RequestedMethod { get; }
 }

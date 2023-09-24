@@ -12,7 +12,7 @@ internal sealed class EmployeeRepository : Repository<Employee>, IEmployeeReposi
     private IQueryable<Employee> Including() => _context.Employes.Include(x => x.Position);
 
 
-    public override async Task<Employee?> ReadAsync(Guid id, CancellationToken cancellationToken)
+    public override async Task<Employee?> ReadAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await Including().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
@@ -39,7 +39,7 @@ internal sealed class EmployeeRepository : Repository<Employee>, IEmployeeReposi
 
     public override async Task<Employee> UpdateAsync(Guid id, Employee employee, CancellationToken cancellationToken = default)
     {
-        var existing = await _context.Employes.FindAsync(id);
+        var existing = await _context.Employes.FindAsync(id, cancellationToken);
         if (existing is null || existing.Version != employee.Version)
             throw new DataObsoleteException("ასეთი ობიექტი ან არ არსებობს ან უკვე შეცვლილია");
 

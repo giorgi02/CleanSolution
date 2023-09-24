@@ -13,9 +13,9 @@ internal class DataContext : DbContext
     public DbSet<LogEvent> LogEvents => Set<LogEvent>();
 
 
-    private readonly IActiveUserService user;
+    private readonly IActiveUserService _user;
     public DataContext(DbContextOptions<DataContext> options, IActiveUserService user)
-        : base(options) => this.user = user;
+        : base(options) => _user = user;
 
     #region SaveChanges -ების გადატვირთვა
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -38,13 +38,13 @@ internal class DataContext : DbContext
         {
             case EntityState.Added:
                 //entry.Entity.DateCreated = DateTime.Now;
-                entry.Entity.CreatedBy = user.UserId;
+                entry.Entity.CreatedBy = _user.UserId;
                 break;
             case EntityState.Modified:
                 entry.Entity.Version++;
 
                 entry.Entity.DateUpdated = DateTime.UtcNow;
-                entry.Entity.UpdatedBy = user.UserId;
+                entry.Entity.UpdatedBy = _user.UserId;
 
                 // არ შეიცვლება ქვემოთ ჩამოთვლილი ველები
                 entry.Property(nameof(AuditableEntity.CreatedBy)).IsModified = false;
@@ -61,12 +61,12 @@ internal class DataContext : DbContext
 
                 // შეიცვლება მხოლოდ ქვემოთ ჩამოთვლილი ველები
                 entry.Entity.DateDeleted = DateTime.UtcNow;
-                entry.Entity.DeletedBy = user.UserId;
+                entry.Entity.DeletedBy = _user.UserId;
 
                 // ცვლილებების ლოგირება
                 AppendEvents(entry);
                 break;
-        };
+        }
     }
 
     // EventSource ის შენახვა
@@ -75,7 +75,7 @@ internal class DataContext : DbContext
         // ცვლილებების ლოგირება
         Dictionary<string, object> @events = new();
 
-        foreach (var item in entry.Properties.Where(x => x.IsModified == true))
+        foreach (var item in entry.Properties.Where(x => x.IsModified))
             @events.Add(item.Metadata.Name, item.OriginalValue!);
 
         this.LogEvents.Add(new(entry.Entity, 1, @events));
