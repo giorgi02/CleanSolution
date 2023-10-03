@@ -15,7 +15,7 @@ using Serilog;
 namespace Presentation.WebApi.Extensions;
 public static class ServiceExtensions
 {
-    public static void AddThisLayer(this WebApplicationBuilder builder)
+    public static void AddStartup(this WebApplicationBuilder builder)
     {
         builder.Services.AddControllers(options =>
         {
@@ -42,9 +42,11 @@ public static class ServiceExtensions
 
         builder.Services.AddCors(options =>
         {
-            string[] headers = builder.Configuration.GetSection("ExposedHeaders").Get<string[]>() ?? throw new ArgumentNullException(nameof(builder.Configuration));
+            string[] headers = builder.Configuration.GetSection("Cors:ExposedHeaders").Get<string[]>() ?? throw new ArgumentNullException(nameof(builder.Configuration));
+            string[] origins = builder.Configuration.GetSection("Cors:Origins").Get<string[]>() ?? throw new ArgumentNullException(nameof(builder.Configuration));
             options.AddDefaultPolicy(configure
                 => configure.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithExposedHeaders(headers));
+            // => configure.WithOrigins(origins).AllowAnyMethod().AllowAnyHeader().WithExposedHeaders(headers));
             // AllowAnyHeader - დაშვება Request-ის Header-ებზე, ძირითადად გამოიყენება preflight ის დროს [OPTIONS] მეთოდისთვის
             // WithExposedHeaders - დაშვება Response-ის სპეციფიურ Header-ებზე
         });
