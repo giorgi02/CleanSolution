@@ -9,9 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace Core.Application;
-public static class ServiceExtensions
+public static class DependencyInjection
 {
-    public static void AddApplicatonLayer(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddApplicatonLayer(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         services.RegisterMapsterConfiguration();
@@ -19,5 +19,7 @@ public static class ServiceExtensions
 
         //services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+        return services;
     }
 }

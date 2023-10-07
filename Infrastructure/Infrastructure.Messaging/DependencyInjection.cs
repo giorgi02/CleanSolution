@@ -7,9 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using PropertyGetterServiceReference;
 
 namespace Infrastructure.Messaging;
-public static class ServiceExtensions
+public static class DependencyInjection
 {
-    public static void AddMessagingLayer(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddMessagingLayer(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddHostedService<UpsertPositionConsumer>();
 
@@ -18,5 +18,7 @@ public static class ServiceExtensions
         services.AddWcfServiceScoped<IPropertyGetterService, PropertyGetterServiceClient>();
 
         services.AddScoped<ICheckPersonsService, CheckPersonsService>();
+
+        return services;
     }
 }

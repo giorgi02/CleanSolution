@@ -6,9 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Minio.AspNetCore;
 
 namespace Infrastructure.Documents;
-public static class ServiceExtensions
+public static class DependencyInjection
 {
-    public static void AddDocumentsLayer(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddDocumentsLayer(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IDocumentService, DocumentService>();
 
@@ -27,5 +27,7 @@ public static class ServiceExtensions
             //    //client.WithSSL().WithTimeout(1000);
             //});
         });
+
+        return services;
     }
 }

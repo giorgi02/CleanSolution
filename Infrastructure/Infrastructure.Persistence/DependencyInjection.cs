@@ -6,13 +6,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Persistence;
-public static class ServiceExtensions
+public static class DependencyInjection
 {
-    public static void AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         services.AddScoped<IPositionRepository, PositionRepository>();
 
         services.AddDbContext<DataContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+        return services;
     }
 }

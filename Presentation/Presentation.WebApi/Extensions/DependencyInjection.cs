@@ -13,9 +13,9 @@ using Presentation.WebApi.Extensions.Services;
 using Serilog;
 
 namespace Presentation.WebApi.Extensions;
-public static class ServiceExtensions
+public static class DependencyInjection
 {
-    public static void AddStartup(this WebApplicationBuilder builder)
+    public static void AddThisLayer(this WebApplicationBuilder builder)
     {
         builder.Services.AddControllers(options =>
         {
