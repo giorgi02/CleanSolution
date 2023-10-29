@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace Core.Domain.Extensions;
+namespace Core.Domain.Shared;
 public static class CommonFunctions
 {
     /// <summary>

@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Text;
 
-namespace Core.Domain.Extensions;
+namespace Core.Domain.Shared;
 public static class CollectionsExtension
 {
     /// <summary>

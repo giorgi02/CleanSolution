@@ -1,5 +1,4 @@
-﻿using Core.Application.Commons;
-using Core.Application.Exceptions;
+﻿using Core.Application.Exceptions;
 using Core.Application.Interfaces.Repositories;
 using Core.Domain.Basics;
 using System.Linq.Expressions;
@@ -19,13 +18,6 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where T
         return res.Entity;
     }
     // read
-    protected async Task<Pagination<TEntity>> PaginationAsync(IQueryable<TEntity> source, int pageIndex, int pageSize)
-    {
-        var count = await source.CountAsync();
-        var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).AsNoTracking().ToListAsync();
-
-        return new Pagination<TEntity>(items, count, pageIndex, pageSize);
-    }
     public virtual async Task<TEntity?> ReadAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _context.Set<TEntity>().FindAsync(id, cancellationToken);

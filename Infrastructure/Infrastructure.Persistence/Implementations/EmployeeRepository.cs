@@ -17,25 +17,18 @@ internal sealed class EmployeeRepository : Repository<Employee>, IEmployeeReposi
         return await Including().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 
-    public async Task<Pagination<Employee>> FilterAsync(int pageIndex, int pageSize, string? privateNumber = null, string? firstName = null, string? lastName = null, Gender? gender = null, Language? language = null)
-    {
-        var employees = Including().Where(x =>
-            (privateNumber == null || x.PrivateNumber == privateNumber) &&
-            (firstName == null || x.FirstName == firstName) &&
-            (lastName == null || x.LastName == lastName) &&
-            (gender == null || x.Gender == gender) &&
-            (language == null || x.Language.HasFlag(language))
-        );
+    public async Task<Pagination<Employee>> FilterAsync(int pageIndex, int pageSize, string? privateNumber = null, string? firstName = null, string? lastName = null, Gender? gender = null, Language? language = null) =>
+         await this.Including().Where(x =>
+                (privateNumber == null || x.PrivateNumber == privateNumber) &&
+                (firstName == null || x.FirstName == firstName) &&
+                (lastName == null || x.LastName == lastName) &&
+                (gender == null || x.Gender == gender) &&
+                (language == null || x.Language.HasFlag(language))
+            ).OrderByDescending(x => x.DateCreated)
+            .ToPaginatedAsync(pageIndex, pageSize);
 
-        return await base.PaginationAsync(employees, pageIndex, pageSize);
-    }
-
-    public async Task<Pagination<Employee>> SearchAsync(int pageIndex, int pageSize, string text)
-    {
-        var employees = Including().Where(x => x.PrivateNumber == text || x.FirstName == text || x.LastName == text);
-
-        return await base.PaginationAsync(employees, pageIndex, pageSize);
-    }
+    public async Task<Pagination<Employee>> SearchAsync(int pageIndex, int pageSize, string text) =>
+        await this.Including().Where(x => x.PrivateNumber == text || x.FirstName == text || x.LastName == text).ToPaginatedAsync(pageIndex, pageSize);
 
     public override async Task<Employee> UpdateAsync(Guid id, Employee employee, CancellationToken cancellationToken = default)
     {

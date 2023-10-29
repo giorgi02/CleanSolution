@@ -1,7 +1,7 @@
 ﻿using System.Dynamic;
 using System.Reflection;
 
-namespace Core.Domain.Extensions;
+namespace Core.Domain.Shared;
 public static class DataShaper
 {
     /// <summary>
