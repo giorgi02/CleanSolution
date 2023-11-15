@@ -12,7 +12,7 @@ public class EntityValidationException : Exception
     {
         this.Messages = new Dictionary<string, string[]>
         {
-            { field, new[] { message } }
+            { field, [ message ] }
         };
     }
 }

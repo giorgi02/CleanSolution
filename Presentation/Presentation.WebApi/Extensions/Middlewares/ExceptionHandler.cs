@@ -28,24 +28,24 @@ public class ExceptionHandler
         string title = "One or more validation errors occurred.";
         int status = StatusCodes.Status400BadRequest;
         string traceId = Activity.Current?.Id ?? context.TraceIdentifier;
-        IDictionary<string, string[]> errors = new Dictionary<string, string[]>(1);
+        var errors = new Dictionary<string, string[]>(1);
 
         switch (exception)
         {
             case EntityValidationException e:
                 status = (int)e.StatusCode;
-                errors = e.Messages;
+                errors = new(e.Messages);
                 _logger.LogWarning(e, "{@ex} {@TraceId}", nameof(EntityValidationException), traceId);
                 break;
             case OperationCanceledException e:
                 title = "Operation Is Canceled.";
-                errors.Add("messages", new[] { "Operation Is Canceled." });
+                errors.Add("messages", ["Operation Is Canceled."]);
                 _logger.LogWarning(e, "{@ex} {@TraceId}", nameof(OperationCanceledException), traceId);
                 break;
             case { } e:
                 title = "Server Error.";
                 status = StatusCodes.Status500InternalServerError;
-                errors.Add("messages", new[] { "Internal Server Error." });
+                errors.Add("messages", ["Internal Server Error."]);
                 // todo: დავაკვირდე ამ მეთოდს (Demystify)
                 _logger.LogError(e.Demystify(), "{@ex} {@TraceId}", nameof(Exception), traceId);
                 break;

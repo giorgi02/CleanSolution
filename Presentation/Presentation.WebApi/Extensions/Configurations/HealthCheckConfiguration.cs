@@ -19,13 +19,13 @@ public static class HealthCheckConfiguration
              name: "Downstream API Health Check",
              failureStatus: HealthStatus.Unhealthy,
              timeout: TimeSpan.FromSeconds(3),
-             tags: new[] { "services" })
+             tags: ["services"])
           .AddSqlServer(
              connectionString,
              name: "Database",
              failureStatus: HealthStatus.Degraded,
              timeout: TimeSpan.FromSeconds(1),
-             tags: new[] { "databases" });
+             tags: ["databases"]);
     }
 
     /// <summary>

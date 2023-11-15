@@ -4,7 +4,7 @@ using Microsoft.OpenApi.Models;
 namespace Presentation.WebApi.Extensions.Configurations;
 public static class SwaggerConfiguration
 {
-    private readonly static string[] Options = { "CleanSolution v1" };
+    private readonly static string[] Options = [ "CleanSolution v1" ];
 
     // services
     public static void AddSwaggerServices(this IServiceCollection services)

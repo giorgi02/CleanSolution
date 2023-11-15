@@ -16,7 +16,7 @@ public static class DataShaper
     {
         ArgumentNullException.ThrowIfNull(source);
 
-        TSource[] sources = new TSource[] { source };
+        TSource[] sources = [source];
         return sources.ShapeAs<TSource>(fields).FirstOrDefault();
     }
 

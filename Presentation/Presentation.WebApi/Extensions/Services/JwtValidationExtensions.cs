@@ -68,8 +68,7 @@ public static class JwtValidationExtensions
         IConfiguration configuration,
         string userId,
         string userName,
-        string[] roles
-        )
+        string[] roles)
     {
         List<Claim> claims = new()
         {

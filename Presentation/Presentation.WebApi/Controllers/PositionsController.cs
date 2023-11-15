@@ -31,10 +31,12 @@ public sealed class PositionsController : ControllerBase
     public async Task<GetPositionDto?> Get([FromRoute] Guid id, CancellationToken cancellationToken = default)
         => await _mediator.Send(new GetPositionQuery.Request(id), cancellationToken);
 
+    [ResponseCache(Duration = 60)]
     [HttpGet("max-by-salary", Name = "GetMaxBySalary")]
     public async Task<GetPositionDto?> GetMaxBySalary(CancellationToken cancellationToken = default)
         => await _mediator.Send(new GetMaxMinBySalaryQuery.Request(true), cancellationToken);
 
+    [ResponseCache(Duration = 60)]
     [HttpGet("min-by-salary", Name = "GetMinBySalary")]
     public async Task<GetPositionDto?> GetMinBySalary(CancellationToken cancellationToken = default)
         => await _mediator.Send(new GetMaxMinBySalaryQuery.Request(false), cancellationToken);

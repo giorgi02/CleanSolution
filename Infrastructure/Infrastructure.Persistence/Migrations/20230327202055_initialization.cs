@@ -79,7 +79,7 @@ namespace Infrastructure.Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "Positions",
-                columns: new[] { "Id", "Name", "Salary", "SortIndex" },
+                columns: ["Id", "Name", "Salary", "SortIndex"],
                 values: new object[,]
                 {
                     { new Guid("53c161b8-415e-402d-80c1-da798aa3d047"), "პროგრამისტი", 2000.0, null },

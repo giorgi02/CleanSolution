@@ -13,11 +13,11 @@ public static class LocalizationService
 
         services.Configure<RequestLocalizationOptions>(options =>
         {
-            var cultures = new[]
-            {
+            CultureInfo[] cultures =
+            [
                 new CultureInfo("en-US"),
                 new CultureInfo("ka-GE"),
-            };
+            ];
 
             options.SupportedCultures = cultures;
             options.SupportedUICultures = cultures;
