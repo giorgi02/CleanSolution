@@ -1,12 +1,10 @@
 ﻿global using System.Reflection;
 global using System.Text;
 global using System.Text.Json;
-
+using Asp.Versioning;
 using AspNetCoreRateLimit;
 using Core.Application.Interfaces.Services;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Versioning;
 using Presentation.WebApi.Extensions.Attributes;
 using Presentation.WebApi.Extensions.Configurations;
 using Presentation.WebApi.Extensions.Services;
