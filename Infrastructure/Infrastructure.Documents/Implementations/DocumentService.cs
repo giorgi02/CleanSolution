@@ -1,4 +1,5 @@
-﻿using Core.Application.Interfaces.Services;
+﻿using Core.Application.Commons;
+using Core.Application.Interfaces.Services;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Minio;
@@ -12,12 +13,12 @@ internal class DocumentService : IDocumentService
     public DocumentService(MinioClient minio, IConfiguration configuration)
     {
         _minio = minio ?? throw new ArgumentNullException(nameof(minio));
-        _bucketName = configuration["Minio:BucketName"] ?? throw new ArgumentNullException(nameof(configuration));
+        _bucketName = configuration.GetString("Minio:BucketName");
     }
 
     public async Task<string> SaveAsync(Stream stream, string fileName)
     {
-        var pointIndex = fileName.LastIndexOf(".", StringComparison.Ordinal);
+        var pointIndex = fileName.LastIndexOf('.');
 
         var hash = Guid.NewGuid().ToString("N");
 

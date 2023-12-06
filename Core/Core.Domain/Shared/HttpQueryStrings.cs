@@ -23,9 +23,9 @@ public static class HttpQueryStrings
 
         foreach (var p in obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
         {
-            if (p.GetValue(obj, Array.Empty<object>()) != null)
+            if (p.GetValue(obj, []) != null)
             {
-                var value = p.GetValue(obj, Array.Empty<object>());
+                var value = p.GetValue(obj, []);
 
 
                 // DateTime[]

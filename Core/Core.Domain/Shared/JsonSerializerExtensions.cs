@@ -1,5 +1,5 @@
 ﻿namespace System.Text.Json;
-public static partial class JsonSerializerExtension
+public static partial class JsonSerializerExtensions
 {
     public static TValue? DeserializeAnonymous<TValue>(string json, TValue _, JsonSerializerOptions? options = default)
         => JsonSerializer.Deserialize<TValue>(json, options);

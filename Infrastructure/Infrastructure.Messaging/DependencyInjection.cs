@@ -1,4 +1,5 @@
-﻿using Core.Application.Interfaces.Services;
+﻿using Core.Application.Commons;
+using Core.Application.Interfaces.Services;
 using Infrastructure.Messaging.Consumers;
 using Infrastructure.Messaging.Producers;
 using Infrastructure.Messaging.RequestServices;
@@ -11,13 +12,17 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddMessagingLayer(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddHostedService<UpsertPositionConsumer>();
+        services.AddHttpClient("HrPortal", client =>
+        {
+            client.BaseAddress = new Uri(configuration.GetString("ExternalServices:HrPortal"));
+        });
 
+        services.AddHostedService<UpsertPositionConsumer>();
         services.AddSingleton<IMessagingService, MessagingServices>();
 
         services.AddWcfServiceScoped<IPropertyGetterService, PropertyGetterServiceClient>();
 
-        services.AddScoped<ICheckPersonsService, CheckPersonsService>();
+        services.AddSingleton<ICheckPersonsService, CheckPersonsService>();
 
         return services;
     }

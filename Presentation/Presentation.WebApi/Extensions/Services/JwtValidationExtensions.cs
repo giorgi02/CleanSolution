@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Core.Application.Commons;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,8 +11,7 @@ public static class JwtValidationExtensions
     /// <summary>
     /// ავთენთიფიკაციის პარამეტრების დამატება (ტოკენის ვალიდურობის შემოწმება)
     /// </summary>
-    public static void AddJwtAuthenticationConfigs(this IServiceCollection services, IConfiguration configuration)
-    {
+    public static void AddJwtAuthenticationConfigs(this IServiceCollection services, IConfiguration configuration) =>
         services.AddAuthentication()
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
@@ -27,16 +27,15 @@ public static class JwtValidationExtensions
                     //ClockSkew = TimeSpan.Zero, // ანულებს ტოკენის სიცოცხლის ხანგრძლივობას. default არის 5 წუთი
                     ValidIssuer = configuration["JwtSettings:Issuer"],
                     ValidAudience = configuration["JwtSettings:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"] ?? throw new ArgumentNullException(nameof(configuration))))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetString("JwtSettings:Key")))
                 };
             });
-    }
+
 
     /// <summary>
     /// ავტორიზაციის პარამეტრების დამატება (მეთოდებზე დაშვების შემოწმება)
     /// </summary>
-    public static void AddJwtAuthorizationConfigs(this IServiceCollection services)
-    {
+    public static void AddJwtAuthorizationConfigs(this IServiceCollection services) =>
         services.AddAuthorization(options =>
         {
             options.FallbackPolicy = new AuthorizationPolicyBuilder()
@@ -59,7 +58,7 @@ public static class JwtValidationExtensions
                 policy.RequireAssertion(con => con.User.HasClaim(x => x.Type == "resources" && x.Value == "create:user"));
             });
         });
-    }
+
 
     /// <summary>
     /// ტოკენის გენერირება
@@ -70,17 +69,17 @@ public static class JwtValidationExtensions
         string userName,
         string[] roles)
     {
-        List<Claim> claims = new()
-        {
+        List<Claim> claims =
+        [
             new Claim(ClaimTypes.NameIdentifier, userId),
             new Claim("UserName", userName)
-        };
+        ];
 
         foreach (var role in roles)
             claims.Add(new Claim(ClaimTypes.Role, role));
 
         // ქმნის JWT ხელმოწერას
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"] ?? throw new ArgumentNullException(nameof(configuration))));
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetString("JwtSettings:Key")));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
         var tokenDescriptor = new JwtSecurityToken

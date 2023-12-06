@@ -1,8 +1,8 @@
 ﻿global using System.Reflection;
 global using System.Text;
-global using System.Text.Json;
 using Asp.Versioning;
 using AspNetCoreRateLimit;
+using Core.Application.Commons;
 using Core.Application.Interfaces.Services;
 using FluentValidation.AspNetCore;
 using Presentation.WebApi.Extensions.Attributes;
@@ -26,7 +26,6 @@ public static class DependencyInjection
         builder.Services.AddScoped<IActiveUserService, ActiveUserService>();
 
         builder.Services.AddSwaggerServices();
-        builder.Services.AddConfigureHealthChecks(builder.Configuration);
 
         builder.Services.AddLocalizeConfiguration();
 
@@ -38,10 +37,14 @@ public static class DependencyInjection
            .ReadFrom.Configuration(builder.Configuration)
            .Enrich.WithProperty("Project", "[CleanSolution]"));
 
+        builder.Services.AddHealthChecks()
+            .AddSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")!, tags: ["database"])
+            .AddUrlGroup(new Uri(builder.Configuration.GetString("ExternalServices:HrPortal")), tags: ["service"]);
+
         builder.Services.AddCors(options =>
         {
-            string[] headers = builder.Configuration.GetSection("Cors:ExposedHeaders").Get<string[]>() ?? throw new ArgumentNullException(nameof(builder.Configuration));
-            string[] origins = builder.Configuration.GetSection("Cors:Origins").Get<string[]>() ?? throw new ArgumentNullException(nameof(builder.Configuration));
+            string[] headers = builder.Configuration.GetSection("Cors:ExposedHeaders").Get<string[]>() ?? [];
+            string[] origins = builder.Configuration.GetSection("Cors:Origins").Get<string[]>() ?? [];
             options.AddDefaultPolicy(configure
                 => configure.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithExposedHeaders(headers));
             // => configure.WithOrigins(origins).AllowAnyMethod().AllowAnyHeader().WithExposedHeaders(headers));

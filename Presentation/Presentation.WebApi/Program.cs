@@ -1,8 +1,10 @@
 using AspNetCoreRateLimit;
 using Core.Application;
+using HealthChecks.UI.Client;
 using Infrastructure.Documents;
 using Infrastructure.Messaging;
 using Infrastructure.Persistence;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Presentation.WebApi.Extensions;
 using Presentation.WebApi.Extensions.Configurations;
 using Presentation.WebApi.Extensions.Middlewares;
@@ -42,7 +44,11 @@ app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapCustomHealthCheck();
 app.MapControllers();
+
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.Run();

@@ -1,4 +1,5 @@
 ﻿using Confluent.Kafka;
+using Core.Application.Commons;
 using Core.Application.Interfaces.Services;
 using Core.Domain.Models;
 using Microsoft.Extensions.Configuration;
@@ -10,10 +11,9 @@ internal class MessagingServices : IMessagingService
     private const string Topic = "employee_created";
     private readonly string _bootstrapServers;
 
-    public MessagingServices(IConfiguration configuration)
-    {
-        _bootstrapServers = configuration["ApacheKafka:BootstrapServers"] ?? throw new ArgumentNullException(nameof(configuration));
-    }
+    public MessagingServices(IConfiguration configuration) =>
+        _bootstrapServers = configuration.GetString("ApacheKafka:BootstrapServers");
+
 
     public async Task EmployeeCreated(Employee employee)
     {

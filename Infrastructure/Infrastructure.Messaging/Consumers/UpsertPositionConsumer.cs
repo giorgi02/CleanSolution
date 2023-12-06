@@ -1,4 +1,5 @@
 ﻿using Confluent.Kafka;
+using Core.Application.Commons;
 using Core.Application.Interactors.Positions.Notifications;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -19,9 +20,9 @@ internal class UpsertPositionConsumer : BackgroundService
     public UpsertPositionConsumer(IMediator mediator, IConfiguration configuration, ILogger<UpsertPositionConsumer> logger)
     {
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        _groupId = configuration["ApacheKafka:Group"] ?? throw new ArgumentNullException(nameof(configuration));
-        _bootstrapServers = configuration["ApacheKafka:BootstrapServers"] ?? throw new ArgumentNullException(nameof(configuration));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _groupId = configuration.GetString("ApacheKafka:Group");
+        _bootstrapServers = configuration.GetString("ApacheKafka:BootstrapServers");
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)

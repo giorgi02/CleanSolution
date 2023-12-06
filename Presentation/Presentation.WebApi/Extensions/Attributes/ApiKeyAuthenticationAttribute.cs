@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Core.Application.Commons;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -11,7 +12,7 @@ public class ApiKeyAuthenticationAttribute : Attribute, IAsyncAuthorizationFilte
 {
     private readonly string _apiKey;
     public ApiKeyAuthenticationAttribute(IConfiguration configuration) =>
-        _apiKey = configuration["ApiKey"] ?? throw new ArgumentNullException(nameof(configuration));
+        _apiKey = configuration.GetString("ApiKey");
 
 
     public Task OnAuthorizationAsync(AuthorizationFilterContext context)
