@@ -24,7 +24,6 @@ public class ExceptionHandler
 
     private async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        string type = "https://tools.ietf.org/html/rfc7231";
         string title = "One or more validation errors occurred.";
         int status = StatusCodes.Status400BadRequest;
         string traceId = Activity.Current?.Id ?? context.TraceIdentifier;
@@ -54,13 +53,14 @@ public class ExceptionHandler
         context.Response.StatusCode = status;
         context.Response.ContentType = "application/json";
 
-        await context.Response.WriteAsJsonAsync(new
+        var response = new HttpValidationProblemDetails(errors)
         {
-            type,
-            title,
-            status,
-            traceId,
-            errors,
-        });
+            Type = "https://tools.ietf.org/html/rfc7231",
+            Title = title,
+            Status = status,
+        };
+        response.Extensions.Add("traceId", traceId);
+
+        await context.Response.WriteAsJsonAsync(response);
     }
 }
