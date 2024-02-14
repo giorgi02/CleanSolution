@@ -2,7 +2,9 @@
 using Core.Application.Interfaces.Services;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Minio;
+using Minio.DataModel.Args;
 
 namespace Infrastructure.Documents.Implementations;
 internal class DocumentService : IDocumentService
@@ -10,10 +12,10 @@ internal class DocumentService : IDocumentService
     private readonly MinioClient _minio;
     private readonly string _bucketName;
 
-    public DocumentService(MinioClient minio, IConfiguration configuration)
+    public DocumentService(IServiceProvider services)
     {
-        _minio = minio ?? throw new ArgumentNullException(nameof(minio));
-        _bucketName = configuration.GetString("Minio:BucketName");
+        _minio = services.GetRequiredService<MinioClient>();
+        _bucketName = services.GetRequiredService<IConfiguration>().GetString("Minio:BucketName");
     }
 
     public async Task<string> SaveAsync(Stream stream, string fileName)

@@ -7,6 +7,8 @@ internal sealed class PositionConfiguration : IEntityTypeConfiguration<Position>
 {
     public void Configure(EntityTypeBuilder<Position> builder)
     {
+        builder.ToTable(x => x.IsTemporal());
+
         builder.Property(x => x.Name).HasMaxLength(100).IsRequired();
         builder.Property(x => x.Salary).IsRequired();
 

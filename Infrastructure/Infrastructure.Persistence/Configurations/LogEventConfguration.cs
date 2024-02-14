@@ -6,9 +6,9 @@ internal class LogEventConfguration : IEntityTypeConfiguration<LogEvent>
 {
     public void Configure(EntityTypeBuilder<LogEvent> builder)
     {
+        builder.ToTable("Events", "log");
+
         builder.Property(x => x.AggregateType).HasMaxLength(200);
         builder.Property(x => x.EventType).HasMaxLength(200);
-
-        builder.ToTable("Events", "log");
     }
 }
