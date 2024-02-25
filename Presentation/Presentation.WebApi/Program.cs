@@ -5,6 +5,7 @@ using Infrastructure.Documents;
 using Infrastructure.Messaging;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Presentation.Integration.Extensions.Middlewares;
 using Presentation.WebApi.Extensions;
 using Presentation.WebApi.Extensions.Configurations;
 using Presentation.WebApi.Extensions.Middlewares;
@@ -27,6 +28,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwaggerMiddleware();
 }
+
+app.UseCorrelationId();
 
 app.UseMiddleware<ExceptionHandler>();
 

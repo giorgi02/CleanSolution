@@ -5,7 +5,7 @@ using Core.Domain.Enums;
 using Core.Domain.Models;
 
 namespace Infrastructure.Persistence.Implementations;
-internal sealed class EmployeeRepository : Repository<Employee>, IEmployeeRepository
+internal sealed class EmployeeRepository : Repository<Guid, Employee>, IEmployeeRepository
 {
     public EmployeeRepository(DataContext context) : base(context) { }
 
@@ -34,7 +34,7 @@ internal sealed class EmployeeRepository : Repository<Employee>, IEmployeeReposi
     {
         var existing = await _context.Employes.FindAsync(id, cancellationToken);
         if (existing is null || existing.Version != employee.Version)
-            throw new DataObsoleteException("ასეთი ობიექტი ან არ არსებობს ან უკვე შეცვლილია");
+            throw new OperationForbiddenException("ასეთი ობიექტი ან არ არსებობს ან უკვე შეცვლილია");
 
         _context.Entry(existing).CurrentValues.SetValues(employee);
         await _context.SaveChangesAsync(cancellationToken);

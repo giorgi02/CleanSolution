@@ -1,6 +1,5 @@
 ﻿using Core.Domain.Basics;
 using Core.Domain.Enums;
-using System.Linq.Expressions;
 
 namespace Core.Domain.Models;
 public class Employee : AuditableEntity
@@ -56,27 +55,4 @@ public class Employee : AuditableEntity
         gender = this.Gender;
         birthDate = this.BirthDate;
     }
-
-    public Expression<Func<Employee, bool>> ToFilterExpression() =>
-        x => (this.Id == default || x.Id == this.Id)
-        && (this.PrivateNumber == string.Empty || x.PrivateNumber == this.PrivateNumber)
-        && (this.FirstName == string.Empty || x.FirstName == this.FirstName)
-        && (this.LastName == string.Empty || x.LastName == this.LastName)
-        && (this.BirthDate == default || x.BirthDate == this.BirthDate)
-        && (this.Gender == default || x.Gender == this.Gender)
-        && (this.PictureName == default || x.PictureName == this.PictureName)
-        && (this.Address == default || x.Address == this.Address)
-        && (this.Position != null && this.Position.ToFilterExpression().Compile().Invoke(x.Position!));
-
-    public Expression<Func<Employee, bool>> ToSearchExpression() =>
-        x => x.Id == this.Id
-        || x.PrivateNumber == this.PrivateNumber
-        || x.FirstName == this.FirstName
-        || x.LastName == this.LastName
-        || x.BirthDate == this.BirthDate
-        || x.Gender == this.Gender
-        || x.LastName == this.LastName
-        || x.PictureName == this.PictureName
-        || x.Address == this.Address
-        || (this.Position != null && this.Position.ToSearchExpression().Compile().Invoke(x.Position!));
 }

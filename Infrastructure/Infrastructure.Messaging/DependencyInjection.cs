@@ -12,17 +12,19 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddMessagingLayer(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddHttpClient("HrPortal", client =>
+        services.AddTransient<CorrelationDelegatingHandler>();
+
+        services.AddHttpClient<IHrPortalServices, HrPortalServices>(client =>
         {
-            client.BaseAddress = new Uri(configuration.GetString("ExternalServices:HrPortal"));
-        });
+            client.BaseAddress = new Uri(configuration.GetString("ServiceUrls:HrPortal"));
+        }).AddHttpMessageHandler<CorrelationDelegatingHandler>();
+
 
         services.AddHostedService<UpsertPositionConsumer>();
         services.AddSingleton<IMessagingService, MessagingServices>();
 
-        services.AddWcfServiceScoped<IPropertyGetterService, PropertyGetterServiceClient>();
 
-        services.AddSingleton<ICheckPersonsService, CheckPersonsService>();
+        services.AddWcfServiceScoped<IPropertyGetterService, PropertyGetterServiceClient>();
 
         return services;
     }

@@ -1,4 +1,7 @@
-﻿namespace Core.Application.Exceptions;
+﻿using System.Runtime.Serialization;
+
+namespace Core.Application.Exceptions;
+[Serializable]
 public class EntityValidationException : Exception
 {
     public virtual HttpStatusCode StatusCode => HttpStatusCode.BadRequest;
@@ -12,7 +15,18 @@ public class EntityValidationException : Exception
     {
         this.Messages = new Dictionary<string, string[]>
         {
-            { field, [ message ] }
+            { field, new[] { message } }
         };
+    }
+
+    protected EntityValidationException(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
+        Messages = (IDictionary<string, string[]>)info.GetValue(nameof(Messages), typeof(IDictionary<string, string[]>))!;
+    }
+    public override void GetObjectData(SerializationInfo info, StreamingContext context)
+    {
+        base.GetObjectData(info, context);
+
+        info.AddValue(nameof(Messages), this.Messages, typeof(IDictionary<string, string[]>));
     }
 }

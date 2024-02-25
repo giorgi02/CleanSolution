@@ -4,7 +4,10 @@ using Core.Domain.Basics;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Persistence.Implementations;
-internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where TEntity : BaseEntity
+[Obsolete("შედარებით რთული პროექტებისთვის ვფიქრობ ეს პატერნი გამოუსადეგარია")]
+internal abstract class Repository<TKey, TEntity> : IRepository<TKey, TEntity>
+    where TKey : struct
+    where TEntity : BaseEntity
 {
     protected readonly DataContext _context;
     public Repository(DataContext context) => _context = context;
@@ -18,7 +21,7 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where T
         return res.Entity;
     }
     // read
-    public virtual async Task<TEntity?> ReadAsync(Guid id, CancellationToken cancellationToken = default)
+    public virtual async Task<TEntity?> ReadAsync(TKey id, CancellationToken cancellationToken = default)
     {
         return await _context.Set<TEntity>().FindAsync(id, cancellationToken);
     }
@@ -37,11 +40,11 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where T
         await _context.SaveChangesAsync(cancellationToken);
         return res.Entity;
     }
-    public virtual async Task<TEntity> UpdateAsync(Guid id, TEntity entity, CancellationToken cancellationToken = default)
+    public virtual async Task<TEntity> UpdateAsync(TKey id, TEntity entity, CancellationToken cancellationToken = default)
     {
-        entity.Id = id;
+        entity.Id = default;
         var existing = await _context.Set<TEntity>().FindAsync(id, cancellationToken)
-            ?? throw new DataObsoleteException("ასეთი ობიექტი ან არ არსებობს ან უკვე შეცვლილია");
+            ?? throw new OperationForbiddenException("ასეთი ობიექტი ან არ არსებობს ან უკვე შეცვლილია");
 
         _context.Entry(existing).CurrentValues.SetValues(entity);
         await _context.SaveChangesAsync(cancellationToken);
@@ -56,7 +59,7 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity> where T
         return entity;
     }
     // delete
-    public virtual async Task<int> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    public virtual async Task<int> DeleteAsync(TKey id, CancellationToken cancellationToken = default)
     {
         var item = await this.ReadAsync(id, cancellationToken);
         if (item is null) return 0;

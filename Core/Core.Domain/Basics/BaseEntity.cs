@@ -22,10 +22,9 @@ public abstract class BaseEntity
 
         var otherEntity = other as BaseEntity;
 
-        if (object.ReferenceEquals(this, otherEntity))
-            return true;
+        if (otherEntity is null) return false;
 
-        return otherEntity is not null && this.Id.Equals(otherEntity.Id);
+        return this.Id.Equals(otherEntity.Id) && object.ReferenceEquals(this, otherEntity);
     }
 
     public static bool operator ==(BaseEntity? left, BaseEntity? right) => (left, right) switch

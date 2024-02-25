@@ -4,6 +4,7 @@ using Asp.Versioning;
 using AspNetCoreRateLimit;
 using Core.Application.Commons;
 using Core.Application.Interfaces.Services;
+using Core.Domain.Shared;
 using FluentValidation.AspNetCore;
 using Presentation.WebApi.Extensions.Attributes;
 using Presentation.WebApi.Extensions.Configurations;
@@ -19,6 +20,8 @@ public static class DependencyInjection
         {
             options.Filters.Add(typeof(ActionLoggingAttribute));
         });
+
+        builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
         builder.Services.AddFluentValidationAutoValidation();
 

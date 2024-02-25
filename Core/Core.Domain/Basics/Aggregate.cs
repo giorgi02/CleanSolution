@@ -1,7 +1,7 @@
 ﻿namespace Core.Domain.Basics;
 public abstract class Aggregate : AuditableEntity
 {
-    private readonly IList<object> _events = new List<object>();
+    private readonly IList<object> _events = [];
     public override Guid Id { get; set; } = Guid.NewGuid();
 
 
