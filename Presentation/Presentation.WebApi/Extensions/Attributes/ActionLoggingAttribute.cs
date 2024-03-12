@@ -10,17 +10,9 @@ public class SkipRequestLoggingAttribute : ActionFilterAttribute { }
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class SkipResponseLoggingAttribute : ActionFilterAttribute { }
 
-public sealed class ActionLoggingAttribute : ActionFilterAttribute
+public sealed class ActionLoggingAttribute(ILogger<ActionLoggingAttribute> logger) : ActionFilterAttribute
 {
-    private readonly IActiveUserService _user;
-    private readonly ILogger<ActionLoggingAttribute> _logger;
     private const string DurationStamp = "DurationStamp";
-
-    public ActionLoggingAttribute(IActiveUserService user, ILogger<ActionLoggingAttribute> logger)
-    {
-        _user = user ?? throw new ArgumentNullException(nameof(user));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-    }
 
     // => 1, 3
     public override Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
@@ -32,12 +24,13 @@ public sealed class ActionLoggingAttribute : ActionFilterAttribute
             context.ActionArguments.TryGetValue("request", out var body);
 
             var type = body?.GetType().FullName;
+            var user = context.HttpContext.RequestServices.GetRequiredService<IActiveUserService>();
 
-            _logger.LogInformation("*-> request= url: {@RequestedUrl}, method: {@RequestedMethod}, type: {@Type}, {@Body}, {@IpAddress}, {@Port}, {@Scheme}, {@Host}, {@Path}, {@UserId}",
-                _user.RequestedUrl, _user.RequestedMethod, type, body, _user.IpAddress, _user.Port, _user.Scheme, _user.Host, _user.Path, _user.UserId);
+            logger.LogInformation("*-> request= url: {@RequestedUrl}, method: {@RequestedMethod}, type: {@Type}, {@Body}, {@IpAddress}, {@Port}, {@Scheme}, {@Host}, {@Path}, {@UserId}",
+                user.RequestedUrl, user.RequestedMethod, type, body, user.IpAddress, user.Port, user.Scheme, user.Host, user.Path, user.UserId);
 
             // todo: ეს მეთოდი დასამუშავებელია
-            _logger.LogInformation("headers: {@headers}", context.HttpContext.Request.Headers.ToDictionary(h => h.Key, h => h.Value));
+            logger.LogInformation("headers: {@headers}", context.HttpContext.Request.Headers.ToDictionary(h => h.Key, h => h.Value));
         }
 
         return base.OnActionExecutionAsync(context, next);
@@ -72,7 +65,7 @@ public sealed class ActionLoggingAttribute : ActionFilterAttribute
 
             var duration = (DateTime.Now - Convert.ToDateTime(context.HttpContext.Items[DurationStamp])).TotalMilliseconds;
 
-            _logger.LogInformation("response= type: {@Type}, statusCode: {@StatusCode}, duration: {@Duration}, {@Body}",
+            logger.LogInformation("response= type: {@Type}, statusCode: {@StatusCode}, duration: {@Duration}, {@Body}",
                 type, response.StatusCode, duration, body);
         }
 

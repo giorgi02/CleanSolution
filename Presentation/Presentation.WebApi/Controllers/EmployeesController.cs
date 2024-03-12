@@ -9,17 +9,12 @@ using Presentation.WebApi.Extensions.Attributes;
 namespace Presentation.WebApi.Controllers;
 [Route("api/[controller]")]
 [ApiController]
-public sealed class EmployeesController : ControllerBase
+public sealed class EmployeesController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator _mediator;
-    public EmployeesController(IMediator mediator) =>
-        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-
-
     [HttpGet(Name = "GetEmployees"), SkipResponseLogging]
     public async Task<IEnumerable<GetEmployeeDto>> Get([FromQuery] GetEmployeesQuery.Request request, CancellationToken cancellationToken = default)
     {
-        var result = await _mediator.Send(request, cancellationToken);
+        var result = await mediator.Send(request, cancellationToken);
 
         result.GetParams().ForEach(param => Response.Headers.Add(param));
 
@@ -28,13 +23,13 @@ public sealed class EmployeesController : ControllerBase
 
     [HttpGet("{id}", Name = "GetEmployeeById")]
     public async Task<GetEmployeeDto> Get([FromRoute] Guid id, CancellationToken cancellationToken = default)
-        => await _mediator.Send(new GetEmployeeQuery.Request(id), cancellationToken);
+        => await mediator.Send(new GetEmployeeQuery.Request(id), cancellationToken);
 
     [HttpPost(Name = "AddEmployee")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult<GetEmployeeDto>> Add([FromForm] CreateEmployeeCommand.Request request, CancellationToken cancellationToken = default)
     {
-        var result = await _mediator.Send(request, cancellationToken);
+        var result = await mediator.Send(request, cancellationToken);
         return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
     }
 
@@ -68,7 +63,7 @@ public sealed class EmployeesController : ControllerBase
     /// <returns></returns>
     [HttpPut("{id}", Name = "UpdateEmployee")]
     public async Task<GetEmployeeDto> Update([FromRoute] Guid id, [FromBody] UpdateEmployeeCommand.Request request, CancellationToken cancellationToken = default)
-        => await _mediator.Send(request.SetEmployeeId(id), cancellationToken);
+        => await mediator.Send(request.SetEmployeeId(id), cancellationToken);
 
     //// todo: ეს მეთოდი ბოლომდე დავამუშაო
     //[HttpPatch("{id}", Name = "EditEmployee")]
@@ -81,5 +76,5 @@ public sealed class EmployeesController : ControllerBase
     //[Authorize(Roles = "admin, editor")]
     [HttpDelete("{id}", Name = "DeleteEmployee")]
     public async Task Delete([FromRoute] Guid id, CancellationToken cancellationToken = default)
-        => await _mediator.Send(new DeleteEmployeeCommand.Request(id), cancellationToken);
+        => await mediator.Send(new DeleteEmployeeCommand.Request(id), cancellationToken);
 }

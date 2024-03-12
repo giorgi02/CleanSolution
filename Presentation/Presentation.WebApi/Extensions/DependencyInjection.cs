@@ -46,13 +46,13 @@ public static class DependencyInjection
 
         builder.Services.AddCors(options =>
         {
-            string[] headers = builder.Configuration.GetSection("Cors:ExposedHeaders").Get<string[]>() ?? [];
             string[] origins = builder.Configuration.GetSection("Cors:Origins").Get<string[]>() ?? [];
-            options.AddDefaultPolicy(configure
-                => configure.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithExposedHeaders(headers));
-            // => configure.WithOrigins(origins).AllowAnyMethod().AllowAnyHeader().WithExposedHeaders(headers));
+            string[] headers = builder.Configuration.GetSection("Cors:ExposedHeaders").Get<string[]>() ?? [];
+            options.AddDefaultPolicy(configure => configure.WithOrigins(origins).AllowAnyMethod().AllowAnyHeader().WithExposedHeaders(headers));
+            // AllowAnyOrigin - ფრონტის ფრეიმვორკებს ყველა მისამართიდან შეუძლიათ გამოძახება
             // AllowAnyHeader - დაშვება Request-ის Header-ებზე, ძირითადად გამოიყენება preflight ის დროს [OPTIONS] მეთოდისთვის
             // WithExposedHeaders - დაშვება Response-ის სპეციფიურ Header-ებზე
+            // AllowCredentials - 
         });
 
         builder.Services.AddApiVersioning(options =>
