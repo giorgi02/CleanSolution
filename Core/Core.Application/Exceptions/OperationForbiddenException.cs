@@ -1,20 +1,10 @@
-﻿using System.Runtime.Serialization;
-
-namespace Core.Application.Exceptions;
+﻿namespace Core.Application.Exceptions;
+/// <summary>
+/// ძირითადად გამოიყენება კონკურენტული მოთხოვნებისთვის
+/// </summary>
 [Serializable]
-public sealed class OperationForbiddenException : EntityValidationException
+public sealed class OperationForbiddenException(string message, string field = "messages")
+    : EntityValidationException(message, field)
 {
     public override HttpStatusCode StatusCode => HttpStatusCode.Conflict;
-
-    /// <summary>
-    /// ძირითადად გამოიყენება კონკურენტული მოთხოვნებისთვის
-    /// </summary>
-    public OperationForbiddenException(string message, string field = "messages")
-        : base(message, field) { }
-
-    private OperationForbiddenException(SerializationInfo info, StreamingContext context) : base(info, context) { }
-    public override void GetObjectData(SerializationInfo info, StreamingContext context)
-    {
-        base.GetObjectData(info, context);
-    }
 }

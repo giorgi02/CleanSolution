@@ -1,20 +1,10 @@
-﻿using System.Runtime.Serialization;
-
-namespace Core.Application.Exceptions;
+﻿namespace Core.Application.Exceptions;
+/// <summary>
+/// მოთხოვნილი ჩანაწერი ვერ მოიძებნა
+/// </summary>
 [Serializable]
-public sealed class EntityNotFoundException : EntityValidationException
+public sealed class EntityNotFoundException(string message, string field = "messages")
+    : EntityValidationException(message, field)
 {
-    public override HttpStatusCode StatusCode => HttpStatusCode.NotFound;
-
-    /// <summary>
-    /// მოთხოვნილი ჩანაწერი ვერ მოიძებნა
-    /// </summary>
-    public EntityNotFoundException(string message, string field = "messages")
-        : base(message, field) { }
-
-    private EntityNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context) { }
-    public override void GetObjectData(SerializationInfo info, StreamingContext context)
-    {
-        base.GetObjectData(info, context);
-    }
+    public override HttpStatusCode StatusCode => HttpStatusCode.BadRequest;
 }
