@@ -34,6 +34,11 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:Presentation.WebApi.Extensions.Attributes.ActionValidatorAttribute`1">
+            <summary>
+            ეს ატრიბუტი ეძებს FluentValidation ის კლასებიდან რექვესტის შესაბამისს და იძახებს მის შემოწმების მეთოდს
+            </summary>
+        </member>
         <member name="T:Presentation.WebApi.Extensions.Attributes.ApiKeyAuthenticationAttribute">
             <summary>
             attribute რომელიც შეიძლება გამოვიყენოთ შიდა სერვისებს შორის, მარტივი ავთენთიფიკაციისთვის
