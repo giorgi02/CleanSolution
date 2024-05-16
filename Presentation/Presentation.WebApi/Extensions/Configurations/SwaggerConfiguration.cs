@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 namespace Presentation.WebApi.Extensions.Configurations;
@@ -12,10 +13,13 @@ public static class SwaggerConfiguration
         services.AddEndpointsApiExplorer();
 
         // Swagger-ის გენერატორის რეგისტრაცია, 1 ან მეტი Swagger დოკუმენტის განსაზღვრა
-        services.AddSwaggerGen(c =>
+        services.AddSwaggerGen(options =>
         {
+            // nullable enum ის სვაგერის მითითება swaggerის დოკუმნტაციაში
+            options.UseInlineDefinitionsForEnums();
+
             // DTO კლასის სახელების დაგენერირების წესის განსაზღვრა
-            c.CustomSchemaIds(x => x.FullName?[(x.FullName.LastIndexOf('.') + 1)..]?.Replace('+', '.'));
+            options.CustomSchemaIds(x => x.FullName?[(x.FullName.LastIndexOf('.') + 1)..]?.Replace('+', '.'));
 
             // ავტორიზაციის წესების განსაზღვრა
             var securityScheme = new OpenApiSecurityScheme
@@ -33,15 +37,15 @@ public static class SwaggerConfiguration
                     Type = ReferenceType.SecurityScheme
                 }
             };
-            c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            options.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 { securityScheme, Array.Empty<string>() }
             });
             // მეთოდების დახარისხება სხვადასხვა სექციებად
             foreach (var name in Options)
             {
-                c.SwaggerDoc(name: name, new OpenApiInfo
+                options.SwaggerDoc(name: name, new OpenApiInfo
                 {
                     Title = "CleanSolution.Presentation.WebApi",
                     Version = "v1.0",
@@ -58,7 +62,7 @@ public static class SwaggerConfiguration
             // კომენტარების დაყენება Swagger JSON და UI–თვის.
             var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-            c.IncludeXmlComments(xmlPath);
+            options.IncludeXmlComments(xmlPath);
         });
     }
 
