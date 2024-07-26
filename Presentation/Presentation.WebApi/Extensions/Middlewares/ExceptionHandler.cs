@@ -1,4 +1,5 @@
-﻿using Core.Application.Exceptions;
+﻿using Core.Application.Commons;
+using Core.Application.Exceptions;
 using System.Diagnostics;
 
 namespace Presentation.WebApi.Extensions.Middlewares;
@@ -38,13 +39,13 @@ public class ExceptionHandler
                 break;
             case OperationCanceledException e:
                 title = "Operation Is Canceled.";
-                errors.Add("messages", ["Operation Is Canceled."]);
+                errors.Add(ConstantValues.ExceptionMessage, ["Operation Is Canceled."]);
                 _logger.LogWarning(e, "{@ex} {@TraceId}", nameof(OperationCanceledException), traceId);
                 break;
             case { } e:
                 title = "Server Error.";
                 status = StatusCodes.Status500InternalServerError;
-                errors.Add("messages", ["Internal Server Error."]);
+                errors.Add(ConstantValues.ExceptionMessage, ["Internal Server Error."]);
                 // todo: დავაკვირდე ამ მეთოდს (Demystify)
                 _logger.LogError(e.Demystify(), "{@ex} {@TraceId}", nameof(Exception), traceId);
                 break;

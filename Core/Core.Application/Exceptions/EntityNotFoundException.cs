@@ -1,9 +1,11 @@
-﻿namespace Core.Application.Exceptions;
+﻿using Core.Application.Commons;
+
+namespace Core.Application.Exceptions;
 /// <summary>
 /// მოთხოვნილი ჩანაწერი ვერ მოიძებნა
 /// </summary>
 [Serializable]
-public sealed class EntityNotFoundException(string message, string field = "messages")
+public sealed class EntityNotFoundException(string message, string field = ConstantValues.ExceptionMessage)
     : EntityValidationException(message, field)
 {
     public override HttpStatusCode StatusCode => HttpStatusCode.BadRequest;

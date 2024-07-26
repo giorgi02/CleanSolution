@@ -1,4 +1,6 @@
-﻿namespace Core.Application.Exceptions;
+﻿using Core.Application.Commons;
+
+namespace Core.Application.Exceptions;
 [Serializable]
 public class EntityValidationException : Exception
 {
@@ -9,7 +11,7 @@ public class EntityValidationException : Exception
     public EntityValidationException(IDictionary<string, string[]> messages)
             : base("One or more validation errors occurred") => this.Messages = messages;
 
-    public EntityValidationException(string message, string field = "messages") : base(message)
+    public EntityValidationException(string message, string field = ConstantValues.ExceptionMessage) : base(message)
     {
         this.Messages = new Dictionary<string, string[]>
         {
