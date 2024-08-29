@@ -15,8 +15,8 @@ public static class SwaggerConfiguration
         // Swagger-ის გენერატორის რეგისტრაცია, 1 ან მეტი Swagger დოკუმენტის განსაზღვრა
         services.AddSwaggerGen(options =>
         {
-            // nullable enum ის სვაგერის მითითება swaggerის დოკუმნტაციაში
-            //options.UseInlineDefinitionsForEnums();
+            // nullable ველების აღწერა swagger ის დოკუმნტაციაში
+            options.UseAllOfToExtendReferenceSchemas();
 
             // DTO კლასის სახელების დაგენერირების წესის განსაზღვრა
             options.CustomSchemaIds(x => x.FullName?[(x.FullName.LastIndexOf('.') + 1)..]?.Replace('+', '.'));
