@@ -16,7 +16,7 @@ public static class SwaggerConfiguration
         services.AddSwaggerGen(options =>
         {
             // nullable enum ის სვაგერის მითითება swaggerის დოკუმნტაციაში
-            options.UseInlineDefinitionsForEnums();
+            //options.UseInlineDefinitionsForEnums();
 
             // DTO კლასის სახელების დაგენერირების წესის განსაზღვრა
             options.CustomSchemaIds(x => x.FullName?[(x.FullName.LastIndexOf('.') + 1)..]?.Replace('+', '.'));
