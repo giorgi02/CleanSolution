@@ -13,7 +13,11 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplicatonLayer(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            cfg.NotificationPublisher = new TaskWhenAllPublisher(); // default: new ForeachAwaitPublisher();
+        });
         services.RegisterMapsterConfiguration();
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
