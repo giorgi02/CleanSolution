@@ -8,7 +8,7 @@ using Mapster;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Core.Application.Interactors.Employees.Commands;
+namespace Core.Application.Interactors.Commands;
 public abstract class CreateEmployeeCommand
 {
     public sealed record class Request : IRequest<GetEmployeeDto>
@@ -28,8 +28,8 @@ public abstract class CreateEmployeeCommand
 
         public Request()
         {
-            this.Languages = new HashSet<Language>();
-            this.Phones = Array.Empty<string>();
+            Languages = new HashSet<Language>();
+            Phones = Array.Empty<string>();
         }
     }
 

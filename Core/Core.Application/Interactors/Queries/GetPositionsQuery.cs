@@ -2,7 +2,7 @@
 using Core.Application.Interfaces.Repositories;
 using Mapster;
 
-namespace Core.Application.Interactors.Positions.Queries;
+namespace Core.Application.Interactors.Queries;
 public abstract class GetPositionsQuery
 {
     public record struct Request : IRequest<IEnumerable<GetPositionDto>>;

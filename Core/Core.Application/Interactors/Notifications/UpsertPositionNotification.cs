@@ -1,4 +1,4 @@
-﻿namespace Core.Application.Interactors.Positions.Notifications;
+﻿namespace Core.Application.Interactors.Notifications;
 public abstract class UpsertPositionNotification
 {
     public sealed record class Request : INotification
@@ -13,7 +13,7 @@ public abstract class UpsertPositionNotification
     {
         public async Task Handle(Request request, CancellationToken cancellationToken)
         {
-            await Task.Delay(500);
+            await Task.Delay(500, cancellationToken);
         }
     }
 }

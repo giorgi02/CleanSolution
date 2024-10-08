@@ -1,7 +1,6 @@
 ﻿using Asp.Versioning;
 using Core.Application.DTOs;
-using Core.Application.Interactors.Positions.Queries;
-using MediatR;
+using Core.Application.Interactors.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 

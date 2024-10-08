@@ -1,8 +1,7 @@
 ﻿using Core.Application.DTOs;
-using Core.Application.Interactors.Employees.Commands;
-using Core.Application.Interactors.Employees.Queries;
+using Core.Application.Interactors.Commands;
+using Core.Application.Interactors.Queries;
 using Core.Domain.Shared;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.WebApi.Extensions.Attributes;
 

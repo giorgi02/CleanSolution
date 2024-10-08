@@ -4,6 +4,7 @@ global using System.Net;
 
 using Core.Application.Behaviors;
 using Core.Application.Mappings;
+using MediatR.NotificationPublishers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;

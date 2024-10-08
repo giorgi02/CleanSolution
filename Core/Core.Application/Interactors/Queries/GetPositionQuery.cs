@@ -1,12 +1,11 @@
 ﻿using Core.Application.DTOs;
 using Core.Application.Interfaces.Repositories;
-using Core.Domain.Models;
 using Mapster;
 
-namespace Core.Application.Interactors.Positions.Queries;
-public abstract class GetMaxMinBySalaryQuery
+namespace Core.Application.Interactors.Queries;
+public abstract class GetPositionQuery
 {
-    public record struct Request(bool IsRequiredMax = true) : IRequest<GetPositionDto?>;
+    public record struct Request(Guid Id) : IRequest<GetPositionDto?>;
 
 
     public sealed class Handler : IRequestHandler<Request, GetPositionDto?>
@@ -18,13 +17,7 @@ public abstract class GetMaxMinBySalaryQuery
 
         public async Task<GetPositionDto?> Handle(Request request, CancellationToken cancellationToken)
         {
-            var positions = await _repository.ReadAsync(cancellationToken);
-
-            Position? position;
-            if (request.IsRequiredMax)
-                position = positions.MaxBy(x => x.Salary);
-            else
-                position = positions.MinBy(x => x.Salary);
+            var position = await _repository.ReadAsync(request.Id, cancellationToken);
 
             return position?.Adapt<GetPositionDto>();
         }

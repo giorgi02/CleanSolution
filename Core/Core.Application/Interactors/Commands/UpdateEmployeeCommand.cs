@@ -7,7 +7,7 @@ using Core.Domain.Models;
 using Mapster;
 using Microsoft.Extensions.Localization;
 
-namespace Core.Application.Interactors.Employees.Commands;
+namespace Core.Application.Interactors.Commands;
 public abstract class UpdateEmployeeCommand
 {
     public sealed record class Request : IRequest<GetEmployeeDto>
@@ -28,13 +28,13 @@ public abstract class UpdateEmployeeCommand
 
         public Request()
         {
-            this.Languages = new HashSet<Language>();
-            this.Phones = Array.Empty<string>();
+            Languages = new HashSet<Language>();
+            Phones = Array.Empty<string>();
         }
 
         public Request SetEmployeeId(Guid employeeId)
         {
-            this.EmployeeId = employeeId;
+            EmployeeId = employeeId;
             return this;
         }
     }

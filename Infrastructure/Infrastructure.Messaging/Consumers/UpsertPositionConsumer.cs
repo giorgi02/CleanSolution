@@ -1,6 +1,6 @@
 ﻿using Confluent.Kafka;
 using Core.Application.Commons;
-using Core.Application.Interactors.Positions.Notifications;
+using Core.Application.Interactors.Notifications;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;

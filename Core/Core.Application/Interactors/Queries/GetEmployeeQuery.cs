@@ -3,7 +3,7 @@ using Core.Application.Exceptions;
 using Core.Application.Interfaces.Repositories;
 using Mapster;
 
-namespace Core.Application.Interactors.Employees.Queries;
+namespace Core.Application.Interactors.Queries;
 public abstract class GetEmployeeQuery
 {
     public record struct Request(Guid EmployeeId) : IRequest<GetEmployeeDto>;

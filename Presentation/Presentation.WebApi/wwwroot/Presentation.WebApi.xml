@@ -4,7 +4,7 @@
         <name>Presentation.WebApi</name>
     </assembly>
     <members>
-        <member name="M:Presentation.WebApi.Controllers.EmployeesController.Update(System.Guid,Core.Application.Interactors.Employees.Commands.UpdateEmployeeCommand.Request,System.Threading.CancellationToken)">
+        <member name="M:Presentation.WebApi.Controllers.EmployeesController.Update(System.Guid,Core.Application.Interactors.Commands.UpdateEmployeeCommand.Request,System.Threading.CancellationToken)">
             <summary>
             თანამშრომლის კორექტირება
             </summary>

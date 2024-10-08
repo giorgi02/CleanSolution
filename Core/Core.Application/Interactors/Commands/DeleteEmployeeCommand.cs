@@ -3,7 +3,7 @@ using Core.Application.Interfaces.Repositories;
 using Core.Application.Localize;
 using Microsoft.Extensions.Localization;
 
-namespace Core.Application.Interactors.Employees.Commands;
+namespace Core.Application.Interactors.Commands;
 public abstract class DeleteEmployeeCommand
 {
     public record struct Request(Guid EmployeeId) : IRequest;

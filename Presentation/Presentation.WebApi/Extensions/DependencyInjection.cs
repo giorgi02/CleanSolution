@@ -1,15 +1,19 @@
-﻿global using System.Reflection;
+﻿global using MediatR;
+global using System.Reflection;
 global using System.Text;
 using Asp.Versioning;
 using AspNetCoreRateLimit;
 using Core.Application.Commons;
+using Core.Application.DTOs;
 using Core.Application.Interfaces.Services;
 using Core.Domain.Shared;
 using FluentValidation.AspNetCore;
 using Presentation.WebApi.Extensions.Attributes;
 using Presentation.WebApi.Extensions.Configurations;
 using Presentation.WebApi.Extensions.Services;
+using Presentation.WebApi.Workers;
 using Serilog;
+using System.Reactive.Subjects;
 
 namespace Presentation.WebApi.Extensions;
 public static class DependencyInjection
@@ -61,6 +65,13 @@ public static class DependencyInjection
             options.AssumeDefaultVersionWhenUnspecified = true;
             options.ApiVersionReader = new UrlSegmentApiVersionReader();
         });
+
+        //Observable Registartions
+        builder.Services.AddSingleton<ReplaySubject<QueueItemDto>>();
+        builder.Services.AddSingleton<IObservable<QueueItemDto>>(x => x.GetRequiredService<ReplaySubject<QueueItemDto>>());
+        builder.Services.AddSingleton<IObserver<QueueItemDto>>(x => x.GetRequiredService<ReplaySubject<QueueItemDto>>());
+
+        builder.Services.AddHostedService<LongRunningTaskWorker>();
     }
 
     private static void AddConfigureRateLimiting(this IServiceCollection services, IConfiguration configuration)
