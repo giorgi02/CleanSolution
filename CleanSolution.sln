@@ -9,14 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{250E49EF-F020-4376-907A-2227BE539852}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Template", "Template", "{73632141-D428-42F8-9E00-378D7CE0CABE}"
-	ProjectSection(SolutionItems) = preProject
-		Template\clean-architecture.png = Template\clean-architecture.png
-		Template\CleanSolution.Template.vstemplate = Template\CleanSolution.Template.vstemplate
-		Template\Icon.ico = Template\Icon.ico
-		Template\README.Md = Template\README.Md
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Documents", "Infrastructure\Infrastructure.Documents\Infrastructure.Documents.csproj", "{E80E8533-FA84-48E7-BE3C-1EAC79CE7BA1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Persistence", "Infrastructure\Infrastructure.Persistence\Infrastructure.Persistence.csproj", "{7387650A-7007-4C0D-9AA7-41335EA7096E}"
@@ -27,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Domain", "Core\Core.Do
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Messaging", "Infrastructure\Infrastructure.Messaging\Infrastructure.Messaging.csproj", "{7F40611A-11A0-45A9-AF4A-6AA96F5DE7CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation.WebApi", "Presentation\Presentation.WebApi\Presentation.WebApi.csproj", "{AEE4719D-6608-43DD-B6FB-AF310DE46F53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation.WebApi", "Presentation\Presentation.WebApi\Presentation.WebApi.csproj", "{AEE4719D-6608-43DD-B6FB-AF310DE46F53}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
