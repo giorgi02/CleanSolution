@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Giorgi Gelashvili",
+    "classifications": [ "Web", "API", "Web API" ],
+    "identity": "Clean.Solution",
+    "name": "Clean Solution",
+    "description": "CleanArchitecture-ის საწყისი პროექტი best practices-ებით",
+    "shortName": "cleansol",
+    "sourceName":"CleanSolution",
+    "tags": {
+      "language": "C#",
+      "type": "project"
+    }
+  }
