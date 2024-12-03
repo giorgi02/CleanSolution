@@ -25,7 +25,7 @@ public static class DependencyInjection
             options.Filters.Add(typeof(ActionLoggingAttribute));
         });
 
-        builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+        builder.Services.AddSingleton(TimeProvider.System);
 
         builder.Services.AddFluentValidationAutoValidation();
 

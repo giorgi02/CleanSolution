@@ -3,7 +3,7 @@ global using MediatR;
 global using System.Net;
 
 using Core.Application.Behaviors;
-using Core.Application.Mappings;
+using Core.Application.Commons;
 using MediatR.NotificationPublishers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

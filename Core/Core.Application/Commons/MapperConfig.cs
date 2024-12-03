@@ -4,10 +4,10 @@ using Core.Domain.Models;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Core.Application.Mappings;
+namespace Core.Application.Commons;
 public static class MapperConfig
 {
-    public static void RegisterMapsterConfiguration(this IServiceCollection _)
+    public static void RegisterMapsterConfiguration(this IServiceCollection services)
     {
         TypeAdapterConfig.GlobalSettings.Default.MapToConstructor(true);
 

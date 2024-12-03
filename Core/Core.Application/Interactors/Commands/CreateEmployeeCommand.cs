@@ -76,10 +76,12 @@ public abstract class CreateEmployeeCommand
     public sealed class Validator : AbstractValidator<Request>
     {
         private readonly IPositionRepository _positionRepository;
+        private readonly TimeProvider _timeProvider;
 
-        public Validator(IPositionRepository positionRepository)
+        public Validator(IPositionRepository positionRepository, TimeProvider timeProvider)
         {
             _positionRepository = positionRepository;
+            _timeProvider = timeProvider;
 
             RuleFor(x => x.PrivateNumber)
                 .NotNull().WithMessage("პირადი ნომერი ცარიელია")
@@ -95,8 +97,8 @@ public abstract class CreateEmployeeCommand
             RuleFor(x => x.Gender).IsInEnum().WithMessage("მიუთითეთ სქესი სწორად");
 
             RuleFor(x => x.BirthDate)
-                .Must(y => y < DateTime.Now).WithMessage("მიუთითეთ დაბადების თარიღი სწორად")
-                .Must(y => y < DateTime.Now.AddYears(-18) || y > DateTime.Now.AddYears(-100)).WithMessage("ამ ასაკის პიროვნება არ შეიძლება იყოს დასაქმებული");
+                .Must(y => y < _timeProvider.GetLocalNow()).WithMessage("მიუთითეთ დაბადების თარიღი სწორად")
+                .Must(y => y < _timeProvider.GetLocalNow().AddYears(-18) || y > _timeProvider.GetLocalNow().AddYears(-100)).WithMessage("ამ ასაკის პიროვნება არ შეიძლება იყოს დასაქმებული");
 
             //RuleFor(x => x.PositionId)
             //    .MustAsync(IfExistPosition).WithMessage("მიუთითეთ პოზიცია სწორად");
