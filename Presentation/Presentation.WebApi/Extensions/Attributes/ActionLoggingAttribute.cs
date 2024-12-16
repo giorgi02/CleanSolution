@@ -15,8 +15,10 @@ public sealed class ActionLoggingAttribute(ILogger<ActionLoggingAttribute> logge
     private const string DurationStamp = "DurationStamp";
 
     // => 1, 3
-    public override Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+    public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
+        await base.OnActionExecutionAsync(context, next);
+
         if (!context.ActionDescriptor.FilterDescriptors.Any(x => x.Filter is SkipRequestLoggingAttribute))
         {
             context.HttpContext.Items[DurationStamp] = DateTime.Now;
@@ -32,8 +34,6 @@ public sealed class ActionLoggingAttribute(ILogger<ActionLoggingAttribute> logge
             // todo: ეს მეთოდი დასამუშავებელია
             logger.LogInformation("headers: {@headers}", context.HttpContext.Request.Headers.ToDictionary(h => h.Key, h => h.Value));
         }
-
-        return base.OnActionExecutionAsync(context, next);
     }
     // => 2
     public override void OnActionExecuting(ActionExecutingContext context)
@@ -48,8 +48,10 @@ public sealed class ActionLoggingAttribute(ILogger<ActionLoggingAttribute> logge
     }
 
     // <= 1, 4
-    public override Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
+    public override async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
+        await base.OnResultExecutionAsync(context, next);
+
         if (!context.ActionDescriptor.FilterDescriptors.Any(x => x.Filter is SkipResponseLoggingAttribute))
         {
             var response = context.HttpContext.Response;
@@ -68,8 +70,6 @@ public sealed class ActionLoggingAttribute(ILogger<ActionLoggingAttribute> logge
             logger.LogInformation("response= type: {@Type}, statusCode: {@StatusCode}, duration: {@Duration}, {@Body}",
                 type, response.StatusCode, duration, body);
         }
-
-        return base.OnResultExecutionAsync(context, next);
     }
     // <= 2
     public override void OnResultExecuting(ResultExecutingContext context)

@@ -32,10 +32,10 @@ public class ExceptionHandler
 
         switch (exception)
         {
-            case EntityValidationException e:
+            case ApiValidationException e:
                 status = (int)e.StatusCode;
                 errors = new(e.Messages);
-                _logger.LogWarning(e, "{@ex} {@TraceId}", nameof(EntityValidationException), traceId);
+                _logger.LogWarning(e, "{@ex} {@TraceId}", nameof(ApiValidationException), traceId);
                 break;
             case OperationCanceledException e:
                 title = "Operation Is Canceled.";

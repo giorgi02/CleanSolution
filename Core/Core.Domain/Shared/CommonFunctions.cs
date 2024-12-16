@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.Text;
-using System.Text.Json;
+﻿using System.Text;
 
 namespace Core.Domain.Shared;
 public static class CommonFunctions

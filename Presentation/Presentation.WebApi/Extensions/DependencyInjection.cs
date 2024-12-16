@@ -6,7 +6,6 @@ using AspNetCoreRateLimit;
 using Core.Application.Commons;
 using Core.Application.DTOs;
 using Core.Application.Interfaces.Services;
-using Core.Domain.Shared;
 using FluentValidation.AspNetCore;
 using Presentation.WebApi.Extensions.Attributes;
 using Presentation.WebApi.Extensions.Configurations;

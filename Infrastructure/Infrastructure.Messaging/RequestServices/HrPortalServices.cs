@@ -23,7 +23,7 @@ internal class HrPortalServices : IHrPortalServices
         catch (Exception ex)
         {
             _logger.LogWarning(ex, "HrPortalServices.GetEmployee პრობლემა HrPortal სერვისის გამოძახებისას");
-            throw new EntityValidationException("პრობლემა HrPortal სერვისის გამოძახებისას");
+            throw new ApiValidationException("პრობლემა HrPortal სერვისის გამოძახებისას");
         }
     }
 }

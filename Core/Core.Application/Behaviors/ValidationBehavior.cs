@@ -31,7 +31,7 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
                 .ToDictionary(x => x.Key, x => x.Values);
 
             if (errorsDictionary.Any())
-                throw new EntityValidationException(errorsDictionary);
+                throw new ApiValidationException(errorsDictionary);
         }
         return await next();
     }
