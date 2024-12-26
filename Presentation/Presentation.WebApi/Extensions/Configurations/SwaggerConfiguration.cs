@@ -59,8 +59,7 @@ public static class SwaggerConfiguration
             }
 
             // კომენტარების დაყენება Swagger JSON და UI–თვის.
-            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, "SwaggerDescription.xml");
             options.IncludeXmlComments(xmlPath);
         });
     }
