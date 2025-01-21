@@ -3,7 +3,7 @@
 namespace Core.Application.Commons;
 public sealed class Pagination<T>
 {
-    public IEnumerable<T> Items { get; private set; }
+    public IEnumerable<T> Items { get; private set; } = null!;
 
     public long PageSize { get; private set; }
     public long PageIndex { get; private set; }
@@ -15,20 +15,14 @@ public sealed class Pagination<T>
     public bool HasNextPage => this.PageIndex < this.TotalPages;
 
 
-
-
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    public Pagination() { /* for deserialization "Mapster" */ }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-
-    public Pagination(IEnumerable<T> items, long count, long pageIndex, long pageSize)
+    public static Pagination<T> Create(IEnumerable<T> items, long count, long pageIndex, long pageSize) => new()
     {
-        this.PageIndex = pageIndex;
-        this.PageSize = pageSize;
-        this.TotalCount = count;
+        PageIndex = pageIndex,
+        PageSize = pageSize,
+        TotalCount = count,
 
-        this.Items = items;
-    }
+        Items = items
+    };
 
     public Dictionary<string, StringValues> GetParams() => new()
     {
