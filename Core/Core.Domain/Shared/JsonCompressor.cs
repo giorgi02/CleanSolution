@@ -7,11 +7,11 @@ public static class JsonCompressor
     public static byte[] Compress(string json)
     {
         using var outputStream = new MemoryStream();
-        using (var brotliStream = new BrotliStream(outputStream, CompressionLevel.Optimal))
-        {
-            var jsonBytes = Encoding.UTF8.GetBytes(json);
-            brotliStream.Write(jsonBytes, 0, jsonBytes.Length);
-        }
+        using var brotliStream = new BrotliStream(outputStream, CompressionLevel.Optimal);
+
+        var jsonBytes = Encoding.UTF8.GetBytes(json);
+        brotliStream.Write(jsonBytes, 0, jsonBytes.Length);
+
         return outputStream.ToArray();
     }
 

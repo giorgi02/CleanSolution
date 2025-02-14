@@ -47,7 +47,7 @@
         <member name="M:Presentation.WebApi.Extensions.Services.ActiveUserService.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor)">
             <summary>
             იუზერის მონაცემების და მოთხოვნის ინფორმაციის ამოღება
-            საჭიროა ორივე კონსტრუქტორი: პირველი IoC კონტეინერისთვის გამოიყენება, მეორე ხელიტ შექმნისთვის.
+            საჭიროა ორივე კონსტრუქტორი: პირველი IoC კონტეინერისთვის გამოიყენება, მეორე ხელით შექმნისთვის.
             </summary>
         </member>
         <member name="M:Presentation.WebApi.Extensions.Services.JwtValidationExtensions.AddJwtAuthenticationConfigs(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">

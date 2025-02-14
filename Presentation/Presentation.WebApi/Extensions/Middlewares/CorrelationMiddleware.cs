@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Presentation.Integration.Extensions.Middlewares;
+namespace Presentation.WebApi.Extensions.Middlewares;
 public static class CorrelationMiddleware
 {
     public static WebApplication UseCorrelationId(this WebApplication app)

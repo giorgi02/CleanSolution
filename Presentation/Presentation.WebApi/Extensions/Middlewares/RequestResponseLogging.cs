@@ -1,15 +1,6 @@
 ﻿namespace Presentation.WebApi.Extensions.Middlewares;
-public class RequestResponseLogging
+public class RequestResponseLogging(RequestDelegate next, ILogger<RequestResponseLogging> logger)
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger<RequestResponseLogging> _logger;
-
-    public RequestResponseLogging(RequestDelegate next, ILogger<RequestResponseLogging> logger)
-    {
-        _next = next;
-        _logger = logger;
-    }
-
     public async Task Invoke(HttpContext context)
     {
         await FormatRequest(context.Request);
@@ -20,7 +11,7 @@ public class RequestResponseLogging
 
         context.Response.Body = responseBody;
 
-        await _next(context);
+        await next(context);
 
         await FormatResponse(context.Response);
         await responseBody.CopyToAsync(originalBodyStream);
@@ -38,7 +29,7 @@ public class RequestResponseLogging
         body.Seek(0, SeekOrigin.Begin);
         request.Body = body;
 
-        _logger.LogInformation("request scheme={@scheme} host={@Host} path={@Path} queryString={@QueryString} body={@Body}",
+        logger.LogInformation("request scheme={@scheme} host={@Host} path={@Path} queryString={@QueryString} body={@Body}",
              request.Scheme, request.Host, request.Path, request.QueryString, bodyAsText);
     }
 
@@ -48,6 +39,6 @@ public class RequestResponseLogging
         var bodyAsText = await new StreamReader(response.Body).ReadToEndAsync();
         response.Body.Seek(0, SeekOrigin.Begin);
 
-        _logger.LogInformation("response body={@Body}", bodyAsText);
+        logger.LogInformation("response body={@Body}", bodyAsText);
     }
 }

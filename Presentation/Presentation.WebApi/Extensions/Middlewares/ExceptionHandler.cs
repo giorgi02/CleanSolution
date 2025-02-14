@@ -3,19 +3,13 @@ using Core.Application.Exceptions;
 using System.Diagnostics;
 
 namespace Presentation.WebApi.Extensions.Middlewares;
-public class ExceptionHandler
+public class ExceptionHandler(RequestDelegate next, ILogger<ExceptionHandler> logger)
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger<ExceptionHandler> _logger;
-
-    public ExceptionHandler(RequestDelegate next, ILogger<ExceptionHandler> logger) =>
-        (this._next, this._logger) = (next, logger);
-
     public async Task InvokeAsync(HttpContext context)
     {
         try
         {
-            await _next(context);
+            await next(context);
         }
         catch (Exception ex)
         {
@@ -35,19 +29,18 @@ public class ExceptionHandler
             case ApiValidationException e:
                 status = (int)e.StatusCode;
                 errors = new(e.Messages);
-                _logger.LogWarning(e, "{@ex} {@TraceId}", nameof(ApiValidationException), traceId);
+                logger.LogWarning(e, "{@ex} {@TraceId}", nameof(ApiValidationException), traceId);
                 break;
             case OperationCanceledException e:
                 title = "Operation Is Canceled.";
                 errors.Add(ConstantValues.ExceptionMessage, ["Operation Is Canceled."]);
-                _logger.LogWarning(e, "{@ex} {@TraceId}", nameof(OperationCanceledException), traceId);
+                logger.LogWarning(e, "{@ex} {@TraceId}", nameof(OperationCanceledException), traceId);
                 break;
             case { } e:
                 title = "Server Error.";
                 status = StatusCodes.Status500InternalServerError;
                 errors.Add(ConstantValues.ExceptionMessage, ["Internal Server Error."]);
-                // todo: დავაკვირდე ამ მეთოდს (Demystify)
-                _logger.LogError(e.Demystify(), "{@ex} {@TraceId}", nameof(Exception), traceId);
+                logger.LogError(e, "{@ex} {@TraceId}", nameof(Exception), traceId);
                 break;
         }
 

@@ -25,5 +25,5 @@ public abstract class Aggregate : AuditableEntity
         }
     }
 
-    public object[] GetChanges() => _events.ToArray();
+    public object[] GetChanges() => [.. _events];
 }

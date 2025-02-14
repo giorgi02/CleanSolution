@@ -7,7 +7,7 @@ public class ActiveUserService : IActiveUserService
 {
     /// <summary>
     /// იუზერის მონაცემების და მოთხოვნის ინფორმაციის ამოღება
-    /// საჭიროა ორივე კონსტრუქტორი: პირველი IoC კონტეინერისთვის გამოიყენება, მეორე ხელიტ შექმნისთვის.
+    /// საჭიროა ორივე კონსტრუქტორი: პირველი IoC კონტეინერისთვის გამოიყენება, მეორე ხელით შექმნისთვის.
     /// </summary>
     public ActiveUserService(IHttpContextAccessor httpContextAccessor) : this(httpContextAccessor.HttpContext) { }
     public ActiveUserService(HttpContext? context)

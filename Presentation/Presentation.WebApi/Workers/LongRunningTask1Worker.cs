@@ -5,8 +5,8 @@ using System.Diagnostics;
 namespace Presentation.WebApi.Workers;
 public class LongRunningTask1Worker : BackgroundService
 {
-    private readonly IObservable<QueueItemDto> _stream;
     private readonly IServiceProvider _services;
+    private readonly IObservable<QueueItemDto> _stream;
     private IDisposable? _subscription;
 
     public LongRunningTask1Worker(IServiceProvider services)

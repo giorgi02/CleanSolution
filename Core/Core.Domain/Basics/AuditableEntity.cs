@@ -1,10 +1,6 @@
 ﻿namespace Core.Domain.Basics;
 public abstract class AuditableEntity : BaseEntity
 {
-    /// <summary>
-    /// ჩანაწერის ცვლილების რიგითი ნომერი
-    /// გვიცავს გაუთვალისწინებელი, განმეორებითი Update -ებისგან
-    /// </summary>
     public virtual int Version { get; set; } = -1;
 
     public virtual DateTime DateCreated { get; set; }

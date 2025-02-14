@@ -3,14 +3,13 @@ using Infrastructure.Persistence.Configurations;
 using Infrastructure.Persistence.Models;
 
 namespace Infrastructure.Persistence;
-internal class DataContext : DbContext
+internal class DataContext(DbContextOptions<DataContext> options)
+    : DbContext(options)
 {
     public DbSet<Employee> Employes => Set<Employee>();
     public DbSet<Position> Positions => Set<Position>();
     internal DbSet<LogEvent> LogEvents => Set<LogEvent>();
 
-
-    public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
