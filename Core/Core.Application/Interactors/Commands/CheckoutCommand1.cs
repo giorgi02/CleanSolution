@@ -1,20 +1,13 @@
 ﻿using Core.Application.DTOs;
 
 namespace Core.Application.Interactors.Commands;
-public abstract class CheckoutCommand
+public abstract class CheckoutCommand1
 {
-    public record struct Request(int itemsCount, decimal amount) : IRequest<Response>;
+    public record struct Request(int ItemsCount, decimal Amount) : IRequest<Response>;
 
 
-    public sealed class Handler : IRequestHandler<Request, Response>
+    public sealed class Handler(IObserver<QueueItemDto> stream) : IRequestHandler<Request, Response>
     {
-        private readonly IObserver<QueueItemDto> _stream;
-
-        public Handler(IObserver<QueueItemDto> stream)
-        {
-            _stream = stream;
-        }
-
         public Task<Response> Handle(Request request, CancellationToken cancellationToken)
         {
             var response = new Response
@@ -26,10 +19,10 @@ public abstract class CheckoutCommand
             var queueItem = new QueueItemDto
             {
                 OrderId = response.OrderId,
-                Text = $"შეკვეთა {request.itemsCount} {request.amount}"
+                Text = $"შეკვეთა {request.ItemsCount} {request.Amount}"
             };
 
-            _stream.OnNext(queueItem);
+            stream.OnNext(queueItem);
 
             return Task.FromResult(response);
         }

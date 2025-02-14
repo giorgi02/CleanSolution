@@ -1,6 +1,6 @@
 ﻿namespace Core.Domain.Enums;
 [Flags]
-public enum Language : byte
+public enum Language
 {
     None = 0,
 

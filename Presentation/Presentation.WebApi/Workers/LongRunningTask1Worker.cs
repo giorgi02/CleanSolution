@@ -1,14 +1,15 @@
 ﻿using Core.Application.DTOs;
 using Core.Application.Interactors.Notifications;
+using System.Diagnostics;
 
 namespace Presentation.WebApi.Workers;
-public class LongRunningTaskWorker : BackgroundService
+public class LongRunningTask1Worker : BackgroundService
 {
     private readonly IObservable<QueueItemDto> _stream;
     private readonly IServiceProvider _services;
     private IDisposable? _subscription;
 
-    public LongRunningTaskWorker(IServiceProvider services)
+    public LongRunningTask1Worker(IServiceProvider services)
     {
         _services = services;
         _stream = services.GetRequiredService<IObservable<QueueItemDto>>();
@@ -28,6 +29,7 @@ public class LongRunningTaskWorker : BackgroundService
 
     private async Task ProcessItemAsync(QueueItemDto item)
     {
+        Debug.WriteLine("Run LongRunningTask1Worker");
         using var scope = _services.CreateScope();
         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
         await mediator.Publish(new CheckoutProcessCommand.Request(item));

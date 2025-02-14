@@ -10,6 +10,6 @@ internal static class EfCoreExtensions
         var count = await source.CountAsync(cancellationToken);
         var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).AsNoTracking().ToListAsync(cancellationToken);
 
-        return new Pagination<TEntity>(items, count, pageIndex, pageSize);
+        return Pagination<TEntity>.Create(items, count, pageIndex, pageSize);
     }
 }

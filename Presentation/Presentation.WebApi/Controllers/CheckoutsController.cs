@@ -6,8 +6,13 @@ namespace Presentation.WebApi.Controllers;
 [ApiController]
 public class CheckoutsController(IMediator mediator) : ControllerBase
 {
-    [HttpPost]
+    [HttpPost("a1")]
     [ProducesResponseType(StatusCodes.Status202Accepted)]
-    public async Task<ActionResult<CheckoutCommand.Response>> Checkout(CheckoutCommand.Request request, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<CheckoutCommand1.Response>> Checkout1(CheckoutCommand1.Request request, CancellationToken cancellationToken = default)
+        => Accepted(await mediator.Send(request, cancellationToken));
+
+    [HttpPost("a2")]
+    [ProducesResponseType(StatusCodes.Status202Accepted)]
+    public async Task<ActionResult<CheckoutCommand2.Response>> Checkout2(CheckoutCommand2.Request request, CancellationToken cancellationToken = default)
         => Accepted(await mediator.Send(request, cancellationToken));
 }

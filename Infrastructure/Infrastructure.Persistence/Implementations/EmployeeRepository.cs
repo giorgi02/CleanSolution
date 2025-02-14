@@ -17,13 +17,13 @@ internal sealed class EmployeeRepository : Repository<Guid, Employee>, IEmployee
         return await Including().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 
-    public async Task<Pagination<Employee>> FilterAsync(int pageIndex, int pageSize, string? privateNumber = null, string? firstName = null, string? lastName = null, Gender? gender = null, Language? language = null) =>
+    public async Task<Pagination<Employee>> FilterAsync(int pageIndex, int pageSize, string? privateNumber = null, string? firstName = null, string? lastName = null, Gender? gender = null, Language language = Language.None) =>
          await this.Including().Where(x =>
                 (privateNumber == null || x.PrivateNumber == privateNumber) &&
                 (firstName == null || x.FirstName == firstName) &&
                 (lastName == null || x.LastName == lastName) &&
                 (gender == null || x.Gender == gender) &&
-                (language == null || x.Language.HasFlag(language))
+                (language == Language.None || x.Language.HasFlag(language))
             ).OrderByDescending(x => x.DateCreated)
             .ToPaginatedAsync(pageIndex, pageSize);
 

@@ -1,5 +1,4 @@
 ﻿global using MediatR;
-global using System.Reflection;
 global using System.Text;
 using Asp.Versioning;
 using AspNetCoreRateLimit;
@@ -13,6 +12,7 @@ using Presentation.WebApi.Extensions.Services;
 using Presentation.WebApi.Workers;
 using Serilog;
 using System.Reactive.Subjects;
+using System.Threading.Channels;
 
 namespace Presentation.WebApi.Extensions;
 public static class DependencyInjection
@@ -70,7 +70,14 @@ public static class DependencyInjection
         builder.Services.AddSingleton<IObservable<QueueItemDto>>(x => x.GetRequiredService<ReplaySubject<QueueItemDto>>());
         builder.Services.AddSingleton<IObserver<QueueItemDto>>(x => x.GetRequiredService<ReplaySubject<QueueItemDto>>());
 
-        builder.Services.AddHostedService<LongRunningTaskWorker>();
+        builder.Services.AddHostedService<LongRunningTask1Worker>();
+        builder.Services.AddHostedService<LongRunningTask2Worker>();
+
+        builder.Services.AddSingleton(_ => Channel.CreateUnbounded<QueueItemDto>(new UnboundedChannelOptions
+        {
+            SingleReader = true,
+            AllowSynchronousContinuations = false,
+        }));
     }
 
     private static void AddConfigureRateLimiting(this IServiceCollection services, IConfiguration configuration)
