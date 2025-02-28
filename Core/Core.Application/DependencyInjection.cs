@@ -1,8 +1,6 @@
 ﻿global using FluentValidation;
 global using MediatR;
 global using System.Net;
-
-using Core.Application.Behaviors;
 using Core.Application.Commons;
 using MediatR.NotificationPublishers;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +20,6 @@ public static class DependencyInjection
         services.RegisterMapsterConfiguration();
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-        //services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
         return services;

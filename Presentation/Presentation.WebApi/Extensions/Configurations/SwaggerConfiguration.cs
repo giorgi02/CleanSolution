@@ -11,16 +11,12 @@ public static class SwaggerConfiguration
     {
         services.AddEndpointsApiExplorer();
 
-        // Swagger-ის გენერატორის რეგისტრაცია, 1 ან მეტი Swagger დოკუმენტის განსაზღვრა
         services.AddSwaggerGen(options =>
         {
-            // nullable ველების აღწერა swagger ის დოკუმნტაციაში
             options.UseAllOfToExtendReferenceSchemas();
 
-            // DTO კლასის სახელების დაგენერირების წესის განსაზღვრა
             options.CustomSchemaIds(x => x.FullName?[(x.FullName.LastIndexOf('.') + 1)..]?.Replace('+', '.'));
 
-            // ავტორიზაციის წესების განსაზღვრა
             var securityScheme = new OpenApiSecurityScheme
             {
                 Scheme = "bearer",
@@ -41,7 +37,7 @@ public static class SwaggerConfiguration
             {
                 { securityScheme, Array.Empty<string>() }
             });
-            // მეთოდების დახარისხება სხვადასხვა სექციებად
+
             foreach (var name in Options)
             {
                 options.SwaggerDoc(name: name, new OpenApiInfo
@@ -58,7 +54,6 @@ public static class SwaggerConfiguration
                 });
             }
 
-            // კომენტარების დაყენება Swagger JSON და UI–თვის.
             var xmlPath = Path.Combine(AppContext.BaseDirectory, "SwaggerDescription.xml");
             options.IncludeXmlComments(xmlPath);
         });
@@ -70,8 +65,6 @@ public static class SwaggerConfiguration
         app.UseSwagger();
         app.UseSwaggerUI(c =>
         {
-            c.InjectStylesheet("/SwaggerDark.css"); // შავი ფონის დაყენება
-
             foreach (var name in Options)
             {
                 c.SwaggerEndpoint(

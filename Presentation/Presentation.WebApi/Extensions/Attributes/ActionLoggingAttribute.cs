@@ -28,10 +28,9 @@ public sealed class ActionLoggingAttribute(ILogger<ActionLoggingAttribute> logge
             var type = body?.GetType().FullName;
             var user = context.HttpContext.RequestServices.GetRequiredService<IActiveUserService>();
 
-            logger.LogInformation("*-> request= url: {@RequestedUrl}, method: {@RequestedMethod}, type: {@Type}, {@Body}, {@IpAddress}, {@Port}, {@Scheme}, {@Host}, {@Path}, {@UserId}",
-                user.RequestedUrl, user.RequestedMethod, type, body, user.IpAddress, user.Port, user.Scheme, user.Host, user.Path, user.UserId);
+            logger.LogInformation("*-> request= url: type: {@Type}, {@Body}, {@IpAddress}, {@UserId}",
+                type, body, user.IpAddress, user.UserId);
 
-            // todo: ეს მეთოდი დასამუშავებელია
             logger.LogInformation("headers: {@headers}", context.HttpContext.Request.Headers.ToDictionary(h => h.Key, h => h.Value));
         }
     }
@@ -43,7 +42,6 @@ public sealed class ActionLoggingAttribute(ILogger<ActionLoggingAttribute> logge
     // => 4
     public override void OnActionExecuted(ActionExecutedContext context)
     {
-        // P.S Exception ის დროს აქ შემოდის
         base.OnActionExecuted(context);
     }
 

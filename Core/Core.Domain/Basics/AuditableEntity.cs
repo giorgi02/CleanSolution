@@ -1,8 +1,6 @@
 ﻿namespace Core.Domain.Basics;
 public abstract class AuditableEntity : BaseEntity
 {
-    public virtual int Version { get; set; } = -1;
-
     public virtual DateTime DateCreated { get; set; }
     public virtual string CreatedBy { get; set; } = null!;
 

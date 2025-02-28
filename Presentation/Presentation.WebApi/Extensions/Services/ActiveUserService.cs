@@ -5,24 +5,14 @@ using System.Security.Claims;
 namespace Presentation.WebApi.Extensions.Services;
 public class ActiveUserService : IActiveUserService
 {
-    /// <summary>
-    /// იუზერის მონაცემების და მოთხოვნის ინფორმაციის ამოღება
-    /// საჭიროა ორივე კონსტრუქტორი: პირველი IoC კონტეინერისთვის გამოიყენება, მეორე ხელით შექმნისთვის.
-    /// </summary>
     public ActiveUserService(IHttpContextAccessor httpContextAccessor) : this(httpContextAccessor.HttpContext) { }
     public ActiveUserService(HttpContext? context)
     {
         if (context == null) return;
 
-        this.UserId = Guid.TryParse(FindingClaim(context, ClaimTypes.NameIdentifier), out Guid uId) ? uId : null;
-        this.IpAddress = context.Request.Headers["x-forwarded-for"].FirstOrDefault() ?? context.Connection.RemoteIpAddress?.MapToIPv4().ToString();
-        this.Port = context.Connection.RemotePort;
-
-        this.Scheme = context.Request.Scheme;
-        this.Host = Convert.ToString(context.Request.Host);
-        this.Path = context.Request.Path;
-        this.QueryString = Convert.ToString(context.Request.QueryString);
-        this.RequestedMethod = context.Request.Method;
+        this.UserId = FindingClaim(context, ClaimTypes.NameIdentifier);
+        this.IpAddress = context.Request.Headers["x-forwarded-for"].FirstOrDefault()
+            ?? context.Connection.RemoteIpAddress?.MapToIPv4().ToString();
     }
 
     private static string? FindingClaim(HttpContext context, string claim)
@@ -39,15 +29,6 @@ public class ActiveUserService : IActiveUserService
         return jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == claim)?.Value;
     }
 
-    public Guid? UserId { get; }
+    public string? UserId { get; }
     public string? IpAddress { get; }
-    public int Port { get; }
-
-    public string? Scheme { get; }
-    public string? Host { get; }
-    public string? Path { get; }
-    public string? QueryString { get; }
-
-    public string RequestedUrl => $"{this.Scheme}://{this.Host}{this.Path}{this.QueryString}";
-    public string? RequestedMethod { get; }
 }

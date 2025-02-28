@@ -11,8 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Domain", "Core\Core.Domain\Core.Domain.csproj", "{AE07DC5E-179E-47B9-A57C-DB53D72F0755}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Documents", "Infrastructure\Infrastructure.Documents\Infrastructure.Documents.csproj", "{B145D937-A65C-4F5F-9130-F2E8CD6C4CC9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Messaging", "Infrastructure\Infrastructure.Messaging\Infrastructure.Messaging.csproj", "{14B8E1CD-0FAD-4C8C-A96A-8348E07064EE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Persistence", "Infrastructure\Infrastructure.Persistence\Infrastructure.Persistence.csproj", "{6CF9DB76-860A-4DBC-97D3-BA7097E0F1D3}"
@@ -33,10 +31,6 @@ Global
 		{AE07DC5E-179E-47B9-A57C-DB53D72F0755}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE07DC5E-179E-47B9-A57C-DB53D72F0755}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE07DC5E-179E-47B9-A57C-DB53D72F0755}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B145D937-A65C-4F5F-9130-F2E8CD6C4CC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B145D937-A65C-4F5F-9130-F2E8CD6C4CC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B145D937-A65C-4F5F-9130-F2E8CD6C4CC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B145D937-A65C-4F5F-9130-F2E8CD6C4CC9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{14B8E1CD-0FAD-4C8C-A96A-8348E07064EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{14B8E1CD-0FAD-4C8C-A96A-8348E07064EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14B8E1CD-0FAD-4C8C-A96A-8348E07064EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -63,7 +57,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{AE07DC5E-179E-47B9-A57C-DB53D72F0755} = {DEB7F10E-5AC2-4B70-8E90-60C8727BF156}
-		{B145D937-A65C-4F5F-9130-F2E8CD6C4CC9} = {AA0A4CF0-14C6-444B-BD3B-E568E18399FE}
 		{14B8E1CD-0FAD-4C8C-A96A-8348E07064EE} = {AA0A4CF0-14C6-444B-BD3B-E568E18399FE}
 		{6CF9DB76-860A-4DBC-97D3-BA7097E0F1D3} = {AA0A4CF0-14C6-444B-BD3B-E568E18399FE}
 		{10C5A269-7B58-4DF7-A249-365B4029F124} = {DEB7F10E-5AC2-4B70-8E90-60C8727BF156}

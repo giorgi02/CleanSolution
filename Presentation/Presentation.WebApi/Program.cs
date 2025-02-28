@@ -1,7 +1,5 @@
-using AspNetCoreRateLimit;
 using Core.Application;
 using HealthChecks.UI.Client;
-using Infrastructure.Documents;
 using Infrastructure.Messaging;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -15,35 +13,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddThisLayer();
 
 builder.Services.AddApplicatonLayer(builder.Configuration);
-
-builder.Services.AddDocumentsLayer(builder.Configuration);
 builder.Services.AddMessagingLayer(builder.Configuration);
 builder.Services.AddPersistenceLayer(builder.Configuration);
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwaggerMiddleware();
-}
+
+app.UseSwaggerMiddleware();
 
 app.UseCorrelationId();
 
 app.UseMiddleware<ExceptionHandler>();
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseRequestLocalization();
-
-app.UseIpRateLimiting();
 
 app.UseCors();
 
-app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

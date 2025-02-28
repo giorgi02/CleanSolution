@@ -10,8 +10,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-        services.AddScoped<IPositionRepository, PositionRepository>();
+        services.AddScoped<ITodoItemRepository, TodoItemRepository>();
 
         services.AddDbContext<DataContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 

@@ -3,5 +3,7 @@
 namespace Core.Application.Interfaces.Services;
 public interface IMessagingService
 {
-    Task EmployeeCreated(Employee employee);
+    Task TodoItemCreated(TodoItem todoItem);
+    Task TodoItemUpdated(TodoItem todoItem);
+    Task TodoItemDeleted(TodoItem todoItem);
 }

@@ -4,9 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Presentation.WebApi.Extensions.Attributes;
-/// <summary>
-/// attribute რომელიც შეიძლება გამოვიყენოთ შიდა სერვისებს შორის, მარტივი ავთენთიფიკაციისთვის
-/// </summary>
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class ApiKeyAuthenticationAttribute : Attribute, IAsyncAuthorizationFilter
 {

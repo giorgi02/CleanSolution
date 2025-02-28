@@ -1,6 +1,6 @@
 ﻿using Core.Application.Exceptions;
 
-namespace Core.Application.Behaviors;
+namespace Core.Application.Commons;
 public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;

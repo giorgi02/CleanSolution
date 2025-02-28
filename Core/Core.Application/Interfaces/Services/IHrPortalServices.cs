@@ -3,5 +3,5 @@
 namespace Core.Application.Interfaces.Services;
 public interface IHrPortalServices
 {
-    Task<Employee?> GetEmployee(string personalNumber, CancellationToken cancellationToken);
+    Task<TodoItem?> GetEmployee(string personalNumber, CancellationToken cancellationToken);
 }
