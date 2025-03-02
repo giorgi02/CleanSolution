@@ -12,9 +12,7 @@ public class ValidationBehaviorNotReturn<TRequest, _> : IPipelineBehavior<TReque
     {
         if (_validator != null)
         {
-            var context = new ValidationContext<TRequest>(request);
-
-            var validationResult = await _validator.ValidateAsync(context, cancellationToken);
+            var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
             if (!validationResult.IsValid)
                 throw new ApiValidationException(validationResult.ToDictionary());

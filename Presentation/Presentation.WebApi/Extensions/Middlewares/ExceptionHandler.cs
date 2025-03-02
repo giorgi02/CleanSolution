@@ -19,42 +19,39 @@ public class ExceptionHandler(RequestDelegate next, ILogger<ExceptionHandler> lo
 
     private async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        string title = "One or more validation errors occurred.";
-        int status = StatusCodes.Status400BadRequest;
         string traceId = Activity.Current?.Id ?? context.TraceIdentifier;
-        var errors = new Dictionary<string, string[]>(1);
+
+        var problemDetails = new HttpValidationProblemDetails
+        {
+            Type = "https://tools.ietf.org/html/rfc7231",
+            Title = "One or more validation errors occurred.",
+            Status = StatusCodes.Status400BadRequest,
+        };
+        problemDetails.Extensions.Add("traceId", Activity.Current?.Id);
 
         switch (exception)
         {
             case ApiValidationException e:
-                status = (int)e.StatusCode;
-                errors = new(e.Messages);
+                problemDetails.Status = (int)e.StatusCode;
+                problemDetails.Errors = e.Messages;
                 logger.LogWarning(e, "{@ex} {@TraceId}", nameof(ApiValidationException), traceId);
                 break;
             case OperationCanceledException e:
-                title = "Operation Is Canceled.";
-                errors.Add(ConstantValues.ExceptionMessage, ["Operation Is Canceled."]);
+                problemDetails.Title = "Operation Is Canceled.";
+                problemDetails.Errors.Add(ConstantValues.ExceptionMessage, ["Operation Is Canceled."]);
                 logger.LogWarning(e, "{@ex} {@TraceId}", nameof(OperationCanceledException), traceId);
                 break;
             case { } e:
-                title = "Server Error.";
-                status = StatusCodes.Status500InternalServerError;
-                errors.Add(ConstantValues.ExceptionMessage, ["Internal Server Error."]);
+                problemDetails.Title = "Server Error.";
+                problemDetails.Status = StatusCodes.Status500InternalServerError;
+                problemDetails.Errors.Add(ConstantValues.ExceptionMessage, ["Internal Server Error."]);
                 logger.LogError(e, "{@ex} {@TraceId}", nameof(Exception), traceId);
                 break;
         }
 
-        context.Response.StatusCode = status;
+        context.Response.StatusCode = problemDetails.Status.Value;
         context.Response.ContentType = "application/json";
 
-        var response = new HttpValidationProblemDetails(errors)
-        {
-            Type = "https://tools.ietf.org/html/rfc7231",
-            Title = title,
-            Status = status,
-        };
-        response.Extensions.Add("traceId", traceId);
-
-        await context.Response.WriteAsJsonAsync(response);
+        await context.Response.WriteAsJsonAsync(problemDetails);
     }
 }
