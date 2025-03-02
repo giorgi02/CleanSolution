@@ -44,7 +44,7 @@ internal abstract class Repository<TKey, TEntity> : IRepository<TKey, TEntity>
     {
         entity.Id = default;
         var existing = await _context.Set<TEntity>().FindAsync(id, cancellationToken)
-            ?? throw new OperationForbiddenException("ასეთი ობიექტი ან არ არსებობს ან უკვე შეცვლილია");
+            ?? throw OperationForbiddenException.Create("ასეთი ობიექტი ან არ არსებობს ან უკვე შეცვლილია");
 
         _context.Entry(existing).CurrentValues.SetValues(entity);
         await _context.SaveChangesAsync(cancellationToken);

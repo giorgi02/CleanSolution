@@ -34,7 +34,7 @@ internal sealed class EmployeeRepository : Repository<Guid, Employee>, IEmployee
     {
         var existing = await _context.Employes.FindAsync(id, cancellationToken);
         if (existing is null || existing.Version != employee.Version)
-            throw new OperationForbiddenException("ასეთი ობიექტი ან არ არსებობს ან უკვე შეცვლილია");
+            throw OperationForbiddenException.Create("ასეთი ობიექტი ან არ არსებობს ან უკვე შეცვლილია");
 
         _context.Entry(existing).CurrentValues.SetValues(employee);
         await _context.SaveChangesAsync(cancellationToken);

@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Cronos" Version="0.9.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Core.Application\Core.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Infrastructure.Messaging\Infrastructure.Messaging.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Infrastructure.Persistence\Infrastructure.Persistence.csproj" />
   </ItemGroup>
 </Project>
