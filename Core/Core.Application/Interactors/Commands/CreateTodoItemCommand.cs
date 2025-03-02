@@ -37,7 +37,7 @@ public abstract class CreateTodoItemCommand
         {
             RuleFor(x => x.Title)
                 .NotNull().WithMessage("Title ცარიელია")
-                .MinimumLength(1).WithMessage("Title უნდა შედგებოდეს ერთზე მეტი სიმბოლოსგან");
+                .MinimumLength(11).WithMessage("Title უნდა შედგებოდეს ერთზე მეტი სიმბოლოსგან");
         }
     }
 }

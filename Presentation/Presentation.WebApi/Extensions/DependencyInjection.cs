@@ -2,7 +2,6 @@
 global using System.Text;
 using Core.Application.Commons;
 using Core.Application.Interfaces.Services;
-using FluentValidation.AspNetCore;
 using Presentation.WebApi.Extensions.Attributes;
 using Presentation.WebApi.Extensions.Configurations;
 using Presentation.WebApi.Extensions.Services;
@@ -19,8 +18,6 @@ public static class DependencyInjection
         });
 
         builder.Services.AddSingleton(TimeProvider.System);
-
-        builder.Services.AddFluentValidationAutoValidation();
 
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddScoped<IActiveUserService, ActiveUserService>();
