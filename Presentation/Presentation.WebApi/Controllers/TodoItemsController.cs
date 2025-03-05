@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using Core.Application.Commons;
 using Core.Application.DTOs;
 using Core.Application.Interactors.Commands;
 using Core.Application.Interactors.Queries;
@@ -19,13 +20,6 @@ public sealed class TodoItemsController(IMediator mediator) : ControllerBase
         => await mediator.Send(new GetTodoItemQuery.Request(id), cancellationToken);
 
     [HttpGet]
-    public async Task<IEnumerable<GetTodoItemDto>> Get([FromQuery] GetTodoItemsQuery.Request request, CancellationToken cancellationToken = default)
-    {
-        var result = await mediator.Send(request, cancellationToken);
-
-        foreach (var item in result.GetParams())
-            Response.Headers.Add(item);
-
-        return result.Items;
-    }
+    public async Task<Pagination<GetTodoItemDto>> Get([FromQuery] GetTodoItemsQuery.Request request, CancellationToken cancellationToken = default)
+        => await mediator.Send(request, cancellationToken);
 }

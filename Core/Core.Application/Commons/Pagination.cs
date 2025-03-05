@@ -1,10 +1,19 @@
-﻿using Microsoft.Extensions.Primitives;
-
-namespace Core.Application.Commons;
+﻿namespace Core.Application.Commons;
 public sealed class Pagination<T>
 {
-    public IEnumerable<T> Items { get; private set; } = null!;
+    public PaginationMetaData Meta { get; private set; } = null!;
+    public IEnumerable<T> Data { get; private set; } = null!;
 
+
+    public static Pagination<T> Create(IEnumerable<T> data, long count, long pageIndex, long pageSize) => new()
+    {
+        Meta = new PaginationMetaData(count, pageIndex, pageSize),
+        Data = data
+    };
+}
+
+public sealed class PaginationMetaData
+{
     public long PageSize { get; private set; }
     public long PageIndex { get; private set; }
 
@@ -14,25 +23,10 @@ public sealed class Pagination<T>
     public bool HasPreviousPage => PageIndex > 1;
     public bool HasNextPage => this.PageIndex < this.TotalPages;
 
-
-    public static Pagination<T> Create(IEnumerable<T> items, long count, long pageIndex, long pageSize) => new()
+    public PaginationMetaData(long count, long pageIndex, long pageSize)
     {
-        PageIndex = pageIndex,
-        PageSize = pageSize,
-        TotalCount = count,
-
-        Items = items
-    };
-
-    public Dictionary<string, StringValues> GetParams() => new()
-    {
-        [nameof(PageIndex)] = PageIndex.ToString(),
-        [nameof(PageSize)] = PageSize.ToString(),
-
-        [nameof(TotalPages)] = TotalPages.ToString(),
-        [nameof(TotalCount)] = TotalCount.ToString(),
-
-        [nameof(HasPreviousPage)] = HasPreviousPage.ToString(),
-        [nameof(HasNextPage)] = HasNextPage.ToString(),
-    };
+        PageIndex = pageIndex;
+        PageSize = pageSize;
+        TotalCount = count;
+    }
 }
