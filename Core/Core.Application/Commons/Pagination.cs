@@ -1,38 +1,33 @@
-﻿using Microsoft.Extensions.Primitives;
-
-namespace Core.Application.Commons;
+﻿namespace Core.Application.Commons;
 public sealed class Pagination<T>
 {
-    public IEnumerable<T> Items { get; private set; } = null!;
-
-    public long PageSize { get; private set; }
-    public long PageIndex { get; private set; }
-
-    public long TotalCount { get; private set; }
-    public long TotalPages => (long)Math.Ceiling((double)this.TotalCount / this.PageSize);
-
-    public bool HasPreviousPage => PageIndex > 1;
-    public bool HasNextPage => this.PageIndex < this.TotalPages;
+    public MetaData Meta { get; private set; } = null!;
+    public IEnumerable<T> Data { get; private set; } = null!;
 
 
-    public static Pagination<T> Create(IEnumerable<T> items, long count, long pageIndex, long pageSize) => new()
+    public static Pagination<T> Create(IEnumerable<T> data, long count, long pageIndex, long pageSize) => new()
     {
-        PageIndex = pageIndex,
-        PageSize = pageSize,
-        TotalCount = count,
-
-        Items = items
+        Meta = new MetaData(count, pageIndex, pageSize),
+        Data = data
     };
 
-    public Dictionary<string, StringValues> GetParams() => new()
+
+    public sealed class MetaData
     {
-        [nameof(PageIndex)] = PageIndex.ToString(),
-        [nameof(PageSize)] = PageSize.ToString(),
+        public long PageSize { get; private set; }
+        public long PageIndex { get; private set; }
 
-        [nameof(TotalPages)] = TotalPages.ToString(),
-        [nameof(TotalCount)] = TotalCount.ToString(),
+        public long TotalCount { get; private set; }
+        public long TotalPages => (long)Math.Ceiling((double)this.TotalCount / this.PageSize);
 
-        [nameof(HasPreviousPage)] = HasPreviousPage.ToString(),
-        [nameof(HasNextPage)] = HasNextPage.ToString(),
-    };
+        public bool HasPreviousPage => PageIndex > 1;
+        public bool HasNextPage => this.PageIndex < this.TotalPages;
+
+        public MetaData(long count, long pageIndex, long pageSize)
+        {
+            PageIndex = pageIndex;
+            PageSize = pageSize;
+            TotalCount = count;
+        }
+    }
 }

@@ -1,7 +1,7 @@
-﻿using Core.Application.DTOs;
+﻿using Core.Application.Commons;
+using Core.Application.DTOs;
 using Core.Application.Interactors.Commands;
 using Core.Application.Interactors.Queries;
-using Core.Domain.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.WebApi.Extensions.Attributes;
 
@@ -11,14 +11,8 @@ namespace Presentation.WebApi.Controllers;
 public sealed class EmployeesController(IMediator mediator) : ControllerBase
 {
     [HttpGet(Name = "GetEmployees"), SkipResponseLogging]
-    public async Task<IEnumerable<GetEmployeeDto>> Get([FromQuery] GetEmployeesQuery.Request request, CancellationToken cancellationToken = default)
-    {
-        var result = await mediator.Send(request, cancellationToken);
-
-        result.GetParams().ForEach(param => Response.Headers.Add(param));
-
-        return result.Items;
-    }
+    public async Task<Pagination<GetEmployeeDto>> Get([FromQuery] GetEmployeesQuery.Request request, CancellationToken cancellationToken = default)
+        => await mediator.Send(request, cancellationToken);
 
     [HttpGet("{id}", Name = "GetEmployeeById")]
     public async Task<GetEmployeeDto> Get([FromRoute] Guid id, CancellationToken cancellationToken = default)
