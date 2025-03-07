@@ -18,7 +18,7 @@ public static class SwaggerConfiguration
             options.UseAllOfToExtendReferenceSchemas();
 
             // DTO კლასის სახელების დაგენერირების წესის განსაზღვრა
-            options.CustomSchemaIds(x => x.FullName?[(x.FullName.LastIndexOf('.') + 1)..]?.Replace('+', '.'));
+            options.CustomSchemaIds(x => x.FullName?.Replace("+", "").Replace("`", ""));
 
             // ავტორიზაციის წესების განსაზღვრა
             var securityScheme = new OpenApiSecurityScheme
