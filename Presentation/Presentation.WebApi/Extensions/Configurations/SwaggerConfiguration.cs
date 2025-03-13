@@ -15,7 +15,7 @@ public static class SwaggerConfiguration
         {
             options.UseAllOfToExtendReferenceSchemas();
 
-            options.CustomSchemaIds(x => x.FullName?[(x.FullName.LastIndexOf('.') + 1)..]?.Replace('+', '.'));
+            options.CustomSchemaIds(x => x.FullName?.Replace('+', '.'));
 
             var securityScheme = new OpenApiSecurityScheme
             {
@@ -65,6 +65,8 @@ public static class SwaggerConfiguration
         app.UseSwagger();
         app.UseSwaggerUI(c =>
         {
+            c.InjectStylesheet("/SwaggerDark.css"); 
+
             foreach (var name in Options)
             {
                 c.SwaggerEndpoint(
