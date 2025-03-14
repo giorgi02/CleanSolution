@@ -1,4 +1,4 @@
-﻿using Core.Application.Exceptions;
+﻿using Core.Shared;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Core.Application.Behaviors;

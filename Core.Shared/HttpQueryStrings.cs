@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Text;
 
-namespace Core.Domain.Shared;
+namespace Core.Shared;
 public static class HttpQueryStrings
 {
     private static readonly StringBuilder Query = new();

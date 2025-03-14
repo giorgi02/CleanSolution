@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Core.Domain.Shared;
+namespace Core.Shared;
 public static class CommonFunctions
 {
     /// <summary>
@@ -17,7 +17,7 @@ public static class CommonFunctions
             {
                 object? value = property.GetValue(obj);
                 if (value != null && value.GetType().IsClass && !value.GetType().FullName!.StartsWith("System."))
-                    property.SetValue(clone, DeepClone(value));
+                    property.SetValue(clone, value.DeepClone());
                 else
                     property.SetValue(clone, value);
             }

@@ -1,7 +1,7 @@
 ﻿using System.IO.Compression;
 using System.Text;
 
-namespace Core.Domain.Shared;
+namespace Core.Shared;
 public static class JsonCompressor
 {
     public static byte[] Compress(string json)

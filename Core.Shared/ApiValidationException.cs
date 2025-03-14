@@ -1,6 +1,6 @@
-﻿using Core.Application.Commons;
+﻿using System.Net;
 
-namespace Core.Application.Exceptions;
+namespace Core.Shared;
 [Serializable]
 public class ApiValidationException : Exception
 {
@@ -9,11 +9,11 @@ public class ApiValidationException : Exception
 
 
     public ApiValidationException(IDictionary<string, string[]> messages)
-            : base("One or more validation errors occurred") => this.Messages = messages;
+            : base("One or more validation errors occurred") => Messages = messages;
 
     public ApiValidationException(string message, string field = ConstantValues.ExceptionMessage) : base(message)
     {
-        this.Messages = new Dictionary<string, string[]>
+        Messages = new Dictionary<string, string[]>
         {
             [field] = [message]
         };

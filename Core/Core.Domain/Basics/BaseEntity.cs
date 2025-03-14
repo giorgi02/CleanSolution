@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-
-namespace Core.Domain.Basics;
+﻿namespace Core.Domain.Basics;
 public abstract class BaseEntity
 {
     public virtual Guid Id { get; set; }
