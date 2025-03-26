@@ -30,6 +30,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseCorrelationId();
 
+app.UseResponseCompression();
+
 app.UseMiddleware<ExceptionHandler>();
 
 app.UseHttpsRedirection();

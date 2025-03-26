@@ -1,5 +1,4 @@
 ﻿using Core.Application.Interfaces.Services;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Presentation.WebApi.Extensions.Attributes;

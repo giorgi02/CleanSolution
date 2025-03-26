@@ -1,11 +1,4 @@
-﻿using Core.Application.Commons;
-using Core.Application.DTOs;
-using Core.Application.Interactors.Commands;
-using Core.Application.Interactors.Queries;
-using Microsoft.AspNetCore.Mvc;
-using Presentation.WebApi.Extensions.Attributes;
-
-namespace Presentation.WebApi.Controllers;
+﻿namespace Presentation.WebApi.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public sealed class EmployeesController(IMediator mediator) : ControllerBase

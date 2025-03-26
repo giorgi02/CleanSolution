@@ -1,11 +1,16 @@
-﻿global using MediatR;
+﻿global using Core.Application.Commons;
+global using Core.Application.DTOs;
+global using Core.Application.Interactors.Commands;
+global using Core.Application.Interactors.Queries;
+global using MediatR;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.Extensions.Caching.Memory;
+global using Presentation.WebApi.Extensions.Attributes;
 global using System.Text;
 using Asp.Versioning;
 using AspNetCoreRateLimit;
-using Core.Application.Commons;
-using Core.Application.DTOs;
 using Core.Application.Interfaces.Services;
-using Presentation.WebApi.Extensions.Attributes;
+using Microsoft.AspNetCore.ResponseCompression;
 using Presentation.WebApi.Extensions.Configurations;
 using Presentation.WebApi.Extensions.Services;
 using Presentation.WebApi.Workers;
@@ -62,19 +67,9 @@ public static class DependencyInjection
             options.ApiVersionReader = new UrlSegmentApiVersionReader();
         });
 
-        //Observable Registartions
-        builder.Services.AddSingleton<ReplaySubject<QueueItemDto>>();
-        builder.Services.AddSingleton<IObservable<QueueItemDto>>(x => x.GetRequiredService<ReplaySubject<QueueItemDto>>());
-        builder.Services.AddSingleton<IObserver<QueueItemDto>>(x => x.GetRequiredService<ReplaySubject<QueueItemDto>>());
+        builder.Services.AddObservable();
 
-        builder.Services.AddHostedService<LongRunningTask1Worker>();
-        builder.Services.AddHostedService<LongRunningTask2Worker>();
-
-        builder.Services.AddSingleton(_ => Channel.CreateUnbounded<QueueItemDto>(new UnboundedChannelOptions
-        {
-            SingleReader = true,
-            AllowSynchronousContinuations = false,
-        }));
+        builder.Services.AddCompression();
     }
 
     private static void AddConfigureRateLimiting(this IServiceCollection services, IConfiguration configuration)
@@ -91,6 +86,40 @@ public static class DependencyInjection
 
         // inject counter and rules stores
         services.AddInMemoryRateLimiting();
+    }
+
+    private static void AddCompression(this IServiceCollection services)
+    {
+        services.AddResponseCompression(options =>
+        {
+            options.EnableForHttps = true; // Compress HTTPS responses
+            options.Providers.Add<GzipCompressionProvider>(); // usage: gzip
+            options.Providers.Add<BrotliCompressionProvider>(); // usage: rb
+        });
+        services.Configure<GzipCompressionProviderOptions>(options =>
+        {
+            options.Level = System.IO.Compression.CompressionLevel.Fastest;
+        });
+        services.Configure<BrotliCompressionProviderOptions>(options =>
+        {
+            options.Level = System.IO.Compression.CompressionLevel.Optimal;
+        });
+    }
+
+    private static void AddObservable(this IServiceCollection services)
+    {
+        services.AddSingleton<ReplaySubject<QueueItemDto>>();
+        services.AddSingleton<IObservable<QueueItemDto>>(x => x.GetRequiredService<ReplaySubject<QueueItemDto>>());
+        services.AddSingleton<IObserver<QueueItemDto>>(x => x.GetRequiredService<ReplaySubject<QueueItemDto>>());
+
+        services.AddHostedService<LongRunningTask1Worker>();
+        services.AddHostedService<LongRunningTask2Worker>();
+
+        services.AddSingleton(_ => Channel.CreateUnbounded<QueueItemDto>(new UnboundedChannelOptions
+        {
+            SingleReader = true,
+            AllowSynchronousContinuations = false,
+        }));
     }
 
     //private static void AddConfigureXml(this IServiceCollection services)

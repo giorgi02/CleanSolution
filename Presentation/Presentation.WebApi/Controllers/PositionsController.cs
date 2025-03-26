@@ -1,8 +1,4 @@
 ﻿using Asp.Versioning;
-using Core.Application.DTOs;
-using Core.Application.Interactors.Queries;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace Presentation.WebApi.Controllers;
 [ApiController]

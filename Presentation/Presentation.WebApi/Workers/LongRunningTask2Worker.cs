@@ -1,5 +1,4 @@
-﻿using Core.Application.DTOs;
-using Core.Application.Interactors.Notifications;
+﻿using Core.Application.Interactors.Notifications;
 using System.Diagnostics;
 using System.Threading.Channels;
 
