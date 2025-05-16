@@ -4,15 +4,23 @@
 public sealed class EmployeesController(IMediator mediator) : ControllerBase
 {
     [HttpGet(Name = "GetEmployees"), SkipResponseLogging]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(HttpValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<Pagination<GetEmployeeDto>> Get([FromQuery] GetEmployeesQuery.Request request, CancellationToken cancellationToken = default)
         => await mediator.Send(request, cancellationToken);
 
     [HttpGet("{id}", Name = "GetEmployeeById")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(HttpValidationProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<GetEmployeeDto> Get([FromRoute] Guid id, CancellationToken cancellationToken = default)
         => await mediator.Send(new GetEmployeeQuery.Request(id), cancellationToken);
 
     [HttpPost(Name = "AddEmployee")]
     [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(HttpValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<GetEmployeeDto>> Add([FromForm] CreateEmployeeCommand.Request request, CancellationToken cancellationToken = default)
     {
         var result = await mediator.Send(request, cancellationToken);
@@ -48,6 +56,9 @@ public sealed class EmployeesController(IMediator mediator) : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPut("{id}", Name = "UpdateEmployee")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(HttpValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<GetEmployeeDto> Update([FromRoute] Guid id, [FromBody] UpdateEmployeeCommand.Request request, CancellationToken cancellationToken = default)
         => await mediator.Send(request.SetEmployeeId(id), cancellationToken);
 
@@ -61,6 +72,9 @@ public sealed class EmployeesController(IMediator mediator) : ControllerBase
     //[Authorize(Policy = "DeletePolicy")]
     //[Authorize(Roles = "admin, editor")]
     [HttpDelete("{id}", Name = "DeleteEmployee")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(HttpValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task Delete([FromRoute] Guid id, CancellationToken cancellationToken = default)
         => await mediator.Send(new DeleteEmployeeCommand.Request(id), cancellationToken);
 }
