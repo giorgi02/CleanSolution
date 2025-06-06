@@ -41,9 +41,11 @@ public static class DependencyInjection
 
         builder.Services.AddConfigureRateLimiting(builder.Configuration);
 
-        builder.Host.UseSerilog((_, config) => config
-           .ReadFrom.Configuration(builder.Configuration)
-           .Enrich.WithProperty("Project", "[CleanSolution]"));
+        var serilogLogger = new LoggerConfiguration()
+            .ReadFrom.Configuration(builder.Configuration)
+            .Enrich.WithProperty("Project", "[MyProject]")
+            .CreateLogger();
+        builder.Logging.AddSerilog(serilogLogger, dispose: true);
 
         builder.Services.AddHealthChecks()
             .AddSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")!, tags: ["database"])

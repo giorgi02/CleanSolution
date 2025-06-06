@@ -1,7 +1,7 @@
 ﻿namespace Core.Application.Interfaces.Services;
 public interface IActiveUserService
 {
-    Guid? UserId { get; }
+    string? UserId { get; }
     string? IpAddress { get; }
     int Port { get; }
 

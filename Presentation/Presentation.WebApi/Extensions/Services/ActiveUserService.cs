@@ -14,7 +14,7 @@ public class ActiveUserService : IActiveUserService
     {
         if (context == null) return;
 
-        this.UserId = Guid.TryParse(FindingClaim(context, ClaimTypes.NameIdentifier), out Guid uId) ? uId : null;
+        this.UserId = FindingClaim(context, ClaimTypes.NameIdentifier);
         this.IpAddress = context.Request.Headers["x-forwarded-for"].FirstOrDefault() ?? context.Connection.RemoteIpAddress?.MapToIPv4().ToString();
         this.Port = context.Connection.RemotePort;
 
@@ -39,7 +39,7 @@ public class ActiveUserService : IActiveUserService
         return jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == claim)?.Value;
     }
 
-    public Guid? UserId { get; }
+    public string? UserId { get; }
     public string? IpAddress { get; }
     public int Port { get; }
 
