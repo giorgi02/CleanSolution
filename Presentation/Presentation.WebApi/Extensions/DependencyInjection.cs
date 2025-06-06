@@ -43,7 +43,7 @@ public static class DependencyInjection
 
         var serilogLogger = new LoggerConfiguration()
             .ReadFrom.Configuration(builder.Configuration)
-            .Enrich.WithProperty("Project", "[MyProject]")
+            .Enrich.WithProperty("Project", "[CleanSolution]")
             .CreateLogger();
         builder.Logging.AddSerilog(serilogLogger, dispose: true);
 
