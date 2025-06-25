@@ -1,19 +1,19 @@
+using Core.Application.Commons;
 using Core.Application.Interactors.Notifications;
-using Cronos;
-using MediatR;
+using Core.Shared;
 
 namespace Presentation.Worker;
 public class Worker : BackgroundService
 {
-    private readonly IServiceProvider _services;
-    private readonly CronExpression _cron;
+    private readonly SlimTaskScheduler _slimTaskScheduler;
     private readonly ILogger<Worker> _logger;
+    private readonly IConfiguration _configuration;
 
     public Worker(IServiceProvider services)
     {
-        _services = services;
+        _slimTaskScheduler = services.GetRequiredService<SlimTaskScheduler>();
         _logger = services.GetRequiredService<ILogger<Worker>>();
-        _cron = CronExpression.Parse("*/5 * * * *");
+        _configuration = services.GetRequiredService<IConfiguration>();
     }
 
     public override async Task StartAsync(CancellationToken cancellationToken)
@@ -30,24 +30,11 @@ public class Worker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        while (!stoppingToken.IsCancellationRequested)
+        await _slimTaskScheduler.ExecutePeriodicallyAsync(async serviceProvider =>
         {
-            try
-            {
-                using var scope = _services.CreateScope();
-                var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-                await mediator.Publish(new UpsertPositionNotification.Request(), stoppingToken);
-
-                var now = DateTimeOffset.Now;
-                var next = _cron.GetNextOccurrence(now, TimeZoneInfo.Local)!.Value;
-                var delay = next - now;
-
-                await Task.Delay(delay, stoppingToken);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error");
-            }
-        }
+            var request = new UpsertPositionNotification.Request();
+            var handler = serviceProvider.GetRequiredService<UpsertPositionNotification.Handler>();
+            await handler.Handle(request, stoppingToken);
+        }, _configuration.GetString("CrosExpression"), stoppingToken);
     }
 }

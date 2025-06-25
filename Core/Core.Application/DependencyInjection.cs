@@ -12,7 +12,7 @@ using System.Reflection;
 namespace Core.Application;
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApplicatonLayer(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddApplicatonLayer(this IServiceCollection services, IConfiguration _)
     {
         services.AddMediatR(cfg =>
         {
