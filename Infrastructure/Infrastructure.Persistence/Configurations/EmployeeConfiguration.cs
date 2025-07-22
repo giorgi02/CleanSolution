@@ -34,6 +34,6 @@ internal sealed class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
         builder.Property(o => o.Version).IsConcurrencyToken();
         #endregion
 
-        builder.HasQueryFilter(x => !x.DateDeleted.HasValue);
+        builder.HasQueryFilter(x => !x.DeletedAt.HasValue);
     }
 }

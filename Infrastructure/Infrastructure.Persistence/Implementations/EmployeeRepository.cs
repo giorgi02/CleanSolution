@@ -24,7 +24,7 @@ internal sealed class EmployeeRepository : Repository<Guid, Employee>, IEmployee
                 (lastName == null || x.LastName == lastName) &&
                 (gender == null || x.Gender == gender) &&
                 (language == Language.None || x.Language.HasFlag(language))
-            ).OrderByDescending(x => x.DateCreated)
+            ).OrderByDescending(x => x.CreatedAt)
             .ToPaginatedAsync(pageIndex, pageSize);
 
     public async Task<Pagination<Employee>> SearchAsync(int pageIndex, int pageSize, string text) =>
