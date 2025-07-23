@@ -56,10 +56,10 @@ internal class DocumentService : IDocumentService
 
         ms.Position = 0;
 
-        return (ms.ToArray(), GetContetnType(fileName));
+        return (ms.ToArray(), GetContentType(fileName));
     }
 
-    private static string GetContetnType(string fileName)
+    private static string GetContentType(string fileName)
     {
         var provider = new FileExtensionContentTypeProvider();
 

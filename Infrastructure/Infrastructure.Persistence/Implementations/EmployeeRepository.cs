@@ -9,7 +9,7 @@ internal sealed class EmployeeRepository : Repository<Guid, Employee>, IEmployee
 {
     public EmployeeRepository(DataContext context) : base(context) { }
 
-    private IQueryable<Employee> Including() => _context.Employes.Include(x => x.Position);
+    private IQueryable<Employee> Including() => _context.Employees.Include(x => x.Position);
 
 
     public override async Task<Employee?> ReadAsync(Guid id, CancellationToken cancellationToken = default)
@@ -32,7 +32,7 @@ internal sealed class EmployeeRepository : Repository<Guid, Employee>, IEmployee
 
     public override async Task<Employee> UpdateAsync(Guid id, Employee employee, CancellationToken cancellationToken = default)
     {
-        var existing = await _context.Employes.FindAsync(id, cancellationToken);
+        var existing = await _context.Employees.FindAsync(id, cancellationToken);
         if (existing is null || existing.Version != employee.Version)
             throw OperationForbiddenException.Create("ასეთი ობიექტი ან არ არსებობს ან უკვე შეცვლილია");
 
