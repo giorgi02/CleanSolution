@@ -1,6 +1,7 @@
 ﻿using Core.Application.Interfaces.Services;
 using Core.Domain.Models;
 using Core.Shared;
+using Infrastructure.Messaging.Helpers;
 using Microsoft.Extensions.Logging;
 using System.Net.Http.Json;
 
@@ -11,7 +12,7 @@ internal class HrPortalServices(HttpClient httpClient, ILogger<HrPortalServices>
     {
         try
         {
-            return await httpClient.GetFromJsonAsync<Employee>($"api/employees/{personalNumber}", cancellationToken);
+            return await httpClient.GetFromJsonAsync<Employee>($"{HrServiceEndpoints.GetEmployee}/{personalNumber}", cancellationToken);
         }
         catch (Exception ex)
         {
