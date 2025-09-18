@@ -1,5 +1,4 @@
-﻿using Core.Application.Exceptions;
-using Core.Application.Interfaces.Repositories;
+﻿using Core.Application.Interfaces.Repositories;
 using Core.Application.Localize;
 using Microsoft.Extensions.Localization;
 

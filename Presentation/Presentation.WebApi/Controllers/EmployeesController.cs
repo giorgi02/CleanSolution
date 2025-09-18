@@ -1,4 +1,6 @@
-﻿namespace Presentation.WebApi.Controllers;
+﻿using Core.Shared;
+
+namespace Presentation.WebApi.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public sealed class EmployeesController(IMediator mediator) : ControllerBase

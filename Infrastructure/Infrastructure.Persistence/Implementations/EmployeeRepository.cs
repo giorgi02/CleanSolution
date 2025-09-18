@@ -1,8 +1,8 @@
-﻿using Core.Application.Commons;
-using Core.Application.Exceptions;
-using Core.Application.Interfaces.Repositories;
+﻿using Core.Application.Interfaces.Repositories;
 using Core.Domain.Enums;
 using Core.Domain.Models;
+using Core.Shared;
+using Core.Shared.Exceptions;
 
 namespace Infrastructure.Persistence.Implementations;
 internal sealed class EmployeeRepository : Repository<Guid, Employee>, IEmployeeRepository

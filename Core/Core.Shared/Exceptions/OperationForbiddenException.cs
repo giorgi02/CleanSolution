@@ -1,6 +1,6 @@
-﻿using Core.Shared;
+﻿using System.Net;
 
-namespace Core.Application.Exceptions;
+namespace Core.Shared.Exceptions;
 /// <summary>
 /// ძირითადად გამოიყენება კონკურენტული მოთხოვნებისთვის
 /// </summary>

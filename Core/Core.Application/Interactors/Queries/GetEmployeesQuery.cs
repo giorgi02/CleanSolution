@@ -1,7 +1,7 @@
-﻿using Core.Application.Commons;
-using Core.Application.DTOs;
+﻿using Core.Application.DTOs;
 using Core.Application.Interfaces.Repositories;
 using Core.Domain.Enums;
+using Core.Shared;
 using Mapster;
 
 namespace Core.Application.Interactors.Queries;

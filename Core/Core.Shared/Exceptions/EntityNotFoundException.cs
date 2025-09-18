@@ -1,11 +1,11 @@
-﻿using Core.Shared;
+﻿using System.Net;
 
-namespace Core.Application.Exceptions;
+namespace Core.Shared.Exceptions;
 /// <summary>
 /// მოთხოვნილი ჩანაწერი ვერ მოიძებნა
 /// </summary>
 [Serializable]
-public sealed class EntityNotFoundException(string message, string field = Shared.ConstantValues.ExceptionMessage)
+public sealed class EntityNotFoundException(string message, string field = ConstantValues.ExceptionMessage)
     : ApiValidationException(message, field)
 {
     public override HttpStatusCode StatusCode => HttpStatusCode.BadRequest;

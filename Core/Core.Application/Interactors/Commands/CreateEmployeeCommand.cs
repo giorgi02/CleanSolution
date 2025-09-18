@@ -1,5 +1,4 @@
 ﻿using Core.Application.DTOs;
-using Core.Application.Exceptions;
 using Core.Application.Interfaces.Repositories;
 using Core.Application.Interfaces.Services;
 using Core.Domain.Enums;

@@ -1,7 +1,6 @@
-﻿global using FluentValidation;
+﻿global using Core.Shared.Exceptions;
+global using FluentValidation;
 global using MediatR;
-global using System.Net;
-
 using Core.Application.Behaviors;
 using Core.Application.Commons;
 using MediatR.NotificationPublishers;

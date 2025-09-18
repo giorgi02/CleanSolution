@@ -1,4 +1,4 @@
-﻿namespace Core.Application.Commons;
+﻿namespace Core.Shared;
 public sealed class Pagination<T>
 {
     public MetaData Meta { get; private set; } = null!;
@@ -18,10 +18,10 @@ public sealed class Pagination<T>
         public long PageIndex { get; private set; }
 
         public long TotalCount { get; private set; }
-        public long TotalPages => (long)Math.Ceiling((double)this.TotalCount / this.PageSize);
+        public long TotalPages => (long)Math.Ceiling((double)TotalCount / PageSize);
 
         public bool HasPreviousPage => PageIndex > 1;
-        public bool HasNextPage => this.PageIndex < this.TotalPages;
+        public bool HasNextPage => PageIndex < TotalPages;
 
         public MetaData(long count, long pageIndex, long pageSize)
         {

@@ -1,5 +1,4 @@
-﻿global using Core.Application.Commons;
-global using Core.Application.DTOs;
+﻿global using Core.Application.DTOs;
 global using Core.Application.Interactors.Commands;
 global using Core.Application.Interactors.Queries;
 global using MediatR;
@@ -10,6 +9,7 @@ global using System.Text;
 using Asp.Versioning;
 using AspNetCoreRateLimit;
 using Core.Application.Interfaces.Services;
+using Core.Shared;
 using Microsoft.AspNetCore.ResponseCompression;
 using Presentation.WebApi.Extensions.Configurations;
 using Presentation.WebApi.Extensions.Services;

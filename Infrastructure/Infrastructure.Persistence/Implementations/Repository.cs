@@ -1,6 +1,6 @@
-﻿using Core.Application.Exceptions;
-using Core.Application.Interfaces.Repositories;
+﻿using Core.Application.Interfaces.Repositories;
 using Core.Domain.Basics;
+using Core.Shared.Exceptions;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Persistence.Implementations;

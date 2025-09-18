@@ -1,5 +1,5 @@
-﻿using Core.Application.Commons;
-using Core.Domain.Basics;
+﻿using Core.Domain.Basics;
+using Core.Shared;
 
 namespace Infrastructure.Persistence;
 internal static class EfCoreExtensions

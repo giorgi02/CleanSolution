@@ -1,4 +1,3 @@
-using Core.Application.Commons;
 using Core.Application.Interactors.Notifications;
 using Core.Shared;
 
