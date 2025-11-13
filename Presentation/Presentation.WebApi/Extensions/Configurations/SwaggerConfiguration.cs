@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace Presentation.WebApi.Extensions.Configurations;
 public static class SwaggerConfiguration
@@ -29,18 +29,18 @@ public static class SwaggerConfiguration
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.Http,
                 Description = "ქვედა ტექსტბოქსში ჩაწერეთ **_მხოლოდ_** თქვენი JWT Bearer token !",
-
-                Reference = new OpenApiReference
-                {
-                    Id = JwtBearerDefaults.AuthenticationScheme,
-                    Type = ReferenceType.SecurityScheme
-                }
+                
+                //Reference = new OpenApiReference
+                //{
+                //    Id = JwtBearerDefaults.AuthenticationScheme,
+                //    Type = ReferenceType.SecurityScheme
+                //}
             };
-            options.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
-            options.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
-                { securityScheme, Array.Empty<string>() }
-            });
+            //options.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
+            //options.AddSecurityRequirement(new OpenApiSecurityRequirement
+            //{
+            //    { securityScheme, Array.Empty<string>() }
+            //});
             // მეთოდების დახარისხება სხვადასხვა სექციებად
             foreach (var name in Options)
             {
