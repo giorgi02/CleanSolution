@@ -25,7 +25,8 @@ public static class DependencyInjection
     {
         builder.Services.AddControllers(options =>
         {
-            options.Filters.Add(typeof(ActionLoggingAttribute));
+            options.Filters.Add<ActionLoggingAttribute>();
+            options.Filters.Add<FluentValidationFilter>();
         });
 
         builder.Services.AddSingleton(TimeProvider.System);
