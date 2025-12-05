@@ -2,6 +2,7 @@
 using System.Globalization;
 
 namespace Presentation.WebApi.Extensions.Services;
+
 public static class LocalizationService
 {
     /// <summary>

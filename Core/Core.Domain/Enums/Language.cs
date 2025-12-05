@@ -1,4 +1,5 @@
 ﻿namespace Core.Domain.Enums;
+
 [Flags]
 public enum Language
 {

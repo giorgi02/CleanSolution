@@ -1,6 +1,7 @@
 ﻿using System.Net;
 
 namespace Core.Shared;
+
 [Serializable]
 public class ApiValidationException : Exception
 {

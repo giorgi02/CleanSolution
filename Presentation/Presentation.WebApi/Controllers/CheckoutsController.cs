@@ -1,4 +1,5 @@
 ﻿namespace Presentation.WebApi.Controllers;
+
 [Route("api/[controller]")]
 [ApiController]
 public class CheckoutsController(IMediator mediator) : ControllerBase

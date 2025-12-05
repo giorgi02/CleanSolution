@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System.Net.Http.Json;
 
 namespace Infrastructure.Messaging.RequestServices;
+
 internal class HrPortalServices(HttpClient httpClient, ILogger<HrPortalServices> logger) : IHrPortalServices
 {
     public async Task<Employee?> GetEmployee(string personalNumber, CancellationToken cancellationToken = default)

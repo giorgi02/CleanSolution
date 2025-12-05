@@ -1,6 +1,7 @@
 ﻿using Core.Domain.Basics;
 
 namespace Core.Application.Interfaces.Repositories;
+
 public interface IEventRepository
 {
     Task SaveAsync<TAggregate>(TAggregate aggregate) where TAggregate : Aggregate, new();

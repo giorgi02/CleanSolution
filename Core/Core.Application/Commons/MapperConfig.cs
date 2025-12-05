@@ -5,6 +5,7 @@ using Mapster;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Core.Application.Commons;
+
 public static class MapperConfig
 {
     public static void RegisterMapsterConfiguration(this IServiceCollection services)

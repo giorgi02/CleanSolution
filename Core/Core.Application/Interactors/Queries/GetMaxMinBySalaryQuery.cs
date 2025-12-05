@@ -4,6 +4,7 @@ using Core.Domain.Models;
 using Mapster;
 
 namespace Core.Application.Interactors.Queries;
+
 public abstract class GetMaxMinBySalaryQuery
 {
     public record struct Request(bool IsRequiredMax = true) : IRequest<GetPositionDto?>;

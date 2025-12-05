@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Core.Shared;
+
 public static class SlimTaskSchedulerExtensions
 {
     public static IServiceCollection AddSlimTaskScheduler(this IServiceCollection services)

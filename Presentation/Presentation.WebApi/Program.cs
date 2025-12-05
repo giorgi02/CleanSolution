@@ -1,4 +1,4 @@
-using AspNetCoreRateLimit;
+﻿using AspNetCoreRateLimit;
 using Core.Application;
 using HealthChecks.UI.Client;
 using Infrastructure.Documents;
@@ -6,13 +6,13 @@ using Infrastructure.Messaging;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Presentation.WebApi.Extensions;
-using Presentation.WebApi.Extensions.Configurations;
 using Presentation.WebApi.Extensions.Middlewares;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
-builder.AddThisLayer();
+builder.AddStartup();
 
 builder.Services.AddApplicatonLayer(builder.Configuration);
 
@@ -25,7 +25,10 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwaggerMiddleware();
+    app.MapOpenApi();
+
+    app.MapScalarApiReference(); // UI-ის გენერაცია /scalar/v1 მისამართზე
+    app.UseCustomSwaggerUI(); // UI-ის გენერაცია /swagger/index.html მისამართზე
 }
 
 app.UseCorrelationId();

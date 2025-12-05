@@ -2,6 +2,7 @@
 using System.Diagnostics;
 
 namespace Presentation.WebApi.Extensions.Middlewares;
+
 public class ExceptionHandler(RequestDelegate next, ILogger<ExceptionHandler> logger)
 {
     public async Task InvokeAsync(HttpContext context)

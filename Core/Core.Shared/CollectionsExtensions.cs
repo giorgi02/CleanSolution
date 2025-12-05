@@ -1,4 +1,5 @@
 ﻿namespace Core.Shared;
+
 public static class CollectionsExtensions
 {
     /// <summary>

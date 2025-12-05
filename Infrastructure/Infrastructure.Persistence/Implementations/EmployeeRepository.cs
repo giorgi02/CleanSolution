@@ -5,6 +5,7 @@ using Core.Shared;
 using Core.Shared.Exceptions;
 
 namespace Infrastructure.Persistence.Implementations;
+
 internal sealed class EmployeeRepository : Repository<Guid, Employee>, IEmployeeRepository
 {
     public EmployeeRepository(DataContext context) : base(context) { }

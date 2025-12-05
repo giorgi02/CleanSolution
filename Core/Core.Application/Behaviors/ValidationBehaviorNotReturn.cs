@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Core.Application.Behaviors;
+
 public class ValidationBehaviorNotReturn<TRequest, _> : IPipelineBehavior<TRequest, Unit> where TRequest : IRequest
 {
     private readonly IValidator<TRequest>? _validator;

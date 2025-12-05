@@ -3,6 +3,7 @@ using Core.Application.Localize;
 using Microsoft.Extensions.Localization;
 
 namespace Core.Application.Interactors.Commands;
+
 public abstract class DeleteEmployeeCommand
 {
     public record struct Request(Guid EmployeeId) : IRequest;

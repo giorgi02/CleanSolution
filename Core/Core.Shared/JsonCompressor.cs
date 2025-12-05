@@ -2,6 +2,7 @@
 using System.Text;
 
 namespace Core.Shared;
+
 public static class JsonCompressor
 {
     public static byte[] Compress(string json)

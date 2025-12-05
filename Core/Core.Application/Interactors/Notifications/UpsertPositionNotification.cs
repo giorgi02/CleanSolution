@@ -1,4 +1,5 @@
 ﻿namespace Core.Application.Interactors.Notifications;
+
 public abstract class UpsertPositionNotification
 {
     public sealed record class Request : INotification

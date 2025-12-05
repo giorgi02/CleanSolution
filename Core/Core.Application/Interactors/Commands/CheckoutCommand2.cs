@@ -2,6 +2,7 @@
 using System.Threading.Channels;
 
 namespace Core.Application.Interactors.Commands;
+
 public abstract class CheckoutCommand2
 {
     public record struct Request(int ItemsCount, decimal Amount) : IRequest<Response>;

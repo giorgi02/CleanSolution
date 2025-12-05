@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations;
+
 internal class LogEventConfguration : IEntityTypeConfiguration<LogEvent>
 {
     public void Configure(EntityTypeBuilder<LogEvent> builder)

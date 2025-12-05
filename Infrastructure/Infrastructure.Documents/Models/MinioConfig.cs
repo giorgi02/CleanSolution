@@ -1,4 +1,5 @@
 ﻿namespace Infrastructure.Documents.Models;
+
 internal class MinioConfig
 {
     public MinioBucket MinioBucket { get; set; } = null!;

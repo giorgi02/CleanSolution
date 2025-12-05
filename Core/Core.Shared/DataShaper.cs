@@ -2,6 +2,7 @@
 using System.Reflection;
 
 namespace Core.Shared;
+
 public static class DataShaper
 {
     /// <summary>

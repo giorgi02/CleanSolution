@@ -1,6 +1,7 @@
 ﻿using Core.Application.Interfaces.Repositories;
 
 namespace Infrastructure.Persistence.Implementations;
+
 [Obsolete("Clean Architecture მიდგომისთვის ვფიქრობ ეს პატერნი არ არის მიზანშეწონილი")]
 internal class UnitOfWork : IDisposable
 {

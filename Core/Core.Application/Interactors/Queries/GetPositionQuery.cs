@@ -3,6 +3,7 @@ using Core.Application.Interfaces.Repositories;
 using Mapster;
 
 namespace Core.Application.Interactors.Queries;
+
 public abstract class GetPositionQuery
 {
     public record struct Request(Guid Id) : IRequest<GetPositionDto?>;

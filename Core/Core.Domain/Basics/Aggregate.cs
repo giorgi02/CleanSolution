@@ -1,4 +1,5 @@
 ﻿namespace Core.Domain.Basics;
+
 public abstract class Aggregate : AuditableEntity
 {
     private readonly IList<object> _events = [];

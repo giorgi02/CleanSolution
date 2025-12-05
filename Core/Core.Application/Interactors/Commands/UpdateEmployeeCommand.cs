@@ -7,6 +7,7 @@ using Mapster;
 using Microsoft.Extensions.Localization;
 
 namespace Core.Application.Interactors.Commands;
+
 public abstract class UpdateEmployeeCommand
 {
     public sealed record class Request : IRequest<GetEmployeeDto>

@@ -3,6 +3,7 @@ using Core.Application.DTOs;
 using Core.Domain.Models;
 
 namespace Core.Application.Interactors.Queries;
+
 public abstract class GetFakeEmployeesQuery
 {
     public record struct Request : IRequest<List<GetEmployeeDto>>;

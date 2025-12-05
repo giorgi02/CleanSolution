@@ -1,4 +1,5 @@
 ﻿namespace Core.Shared;
+
 public sealed class Pagination<T>
 {
     public MetaData Meta { get; private set; } = null!;

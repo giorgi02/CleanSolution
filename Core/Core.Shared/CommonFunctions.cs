@@ -1,6 +1,7 @@
 ﻿using System.Text;
 
 namespace Core.Shared;
+
 public static class CommonFunctions
 {
     /// <summary>

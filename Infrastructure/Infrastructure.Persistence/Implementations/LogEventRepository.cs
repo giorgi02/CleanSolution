@@ -4,6 +4,7 @@ using Infrastructure.Persistence.Models;
 using System.Text.Json;
 
 namespace Infrastructure.Persistence.Implementations;
+
 internal class LogEventRepository : IEventRepository
 {
     private readonly DataContext _context;

@@ -6,6 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace Presentation.WebApi.Extensions.Services;
+
 public static class JwtValidationExtensions
 {
     /// <summary>

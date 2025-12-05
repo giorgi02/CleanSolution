@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Minio.AspNetCore;
 
 namespace Infrastructure.Documents;
+
 public static class DependencyInjection
 {
     public static IServiceCollection AddDocumentsLayer(this IServiceCollection services, IConfiguration configuration)

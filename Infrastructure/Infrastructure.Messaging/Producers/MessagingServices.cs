@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using System.Text.Json;
 
 namespace Infrastructure.Messaging.Producers;
+
 internal class MessagingServices : IMessagingService
 {
     private const string Topic = "employee_created";

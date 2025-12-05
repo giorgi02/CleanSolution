@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Core.Application.Interactors.Commands;
+
 public abstract class CreateEmployeeCommand
 {
     public sealed record class Request : IRequest<GetEmployeeDto>

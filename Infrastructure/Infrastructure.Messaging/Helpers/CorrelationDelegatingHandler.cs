@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 
 namespace Infrastructure.Messaging.Helpers;
+
 internal class CorrelationDelegatingHandler : DelegatingHandler
 {
     protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)

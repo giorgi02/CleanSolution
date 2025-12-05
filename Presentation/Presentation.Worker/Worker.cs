@@ -2,6 +2,7 @@ using Core.Application.Interactors.Notifications;
 using Core.Shared;
 
 namespace Presentation.Worker;
+
 public class Worker : BackgroundService
 {
     private readonly SlimTaskScheduler _slimTaskScheduler;

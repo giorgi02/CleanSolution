@@ -1,4 +1,5 @@
 ﻿namespace Core.Domain.Basics;
+
 public abstract class AuditableEntity : BaseEntity
 {
     public virtual int Version { get; set; } = -1;

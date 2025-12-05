@@ -1,6 +1,7 @@
 ﻿using Core.Domain.Basics;
 
 namespace Core.Domain.Models;
+
 public class Position : BaseEntity
 {
     public override Guid Id { get; set; }

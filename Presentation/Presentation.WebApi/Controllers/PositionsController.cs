@@ -1,8 +1,9 @@
 ﻿using Asp.Versioning;
 
 namespace Presentation.WebApi.Controllers;
+
 [ApiController]
-[Route("api/v{version:apiVersion}/[controller]")]
+[Route("api/v1/[controller]")]
 [ApiVersion("1.0")]
 public sealed class PositionsController(IMediator mediator, IMemoryCache cache) : ControllerBase
 {

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading.Channels;
 
 namespace Presentation.WebApi.Workers;
+
 public class LongRunningTask2Worker(IServiceProvider services, Channel<QueueItemDto> channel) : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)

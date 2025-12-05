@@ -2,6 +2,7 @@
 using Core.Domain.Enums;
 
 namespace Core.Domain.Models;
+
 public class Employee : AuditableEntity
 {
     public override Guid Id { get; set; }

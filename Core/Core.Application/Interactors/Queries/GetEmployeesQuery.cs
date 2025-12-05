@@ -5,6 +5,7 @@ using Core.Shared;
 using Mapster;
 
 namespace Core.Application.Interactors.Queries;
+
 public abstract class GetEmployeesQuery
 {
     public sealed record class Request : IRequest<Pagination<GetEmployeeDto>>

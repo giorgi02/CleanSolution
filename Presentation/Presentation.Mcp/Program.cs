@@ -4,7 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddMcpServer()
-    .WithHttpTransport() 
+    .WithHttpTransport()
     .WithTools<EchoTool>();
 
 var app = builder.Build();

@@ -1,6 +1,7 @@
 ﻿using Core.Domain.Enums;
 
 namespace Core.Application.DTOs;
+
 public class SetEmployeeDto
 {
     public string? PrivateNumber { get; set; }

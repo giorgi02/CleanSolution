@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 
 namespace Core.Application.Interfaces.Repositories;
+
 public interface IRepository<TKey, TEntity> where TEntity : BaseEntity
 {
     Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellationToken = default);

@@ -1,4 +1,5 @@
 ﻿namespace Presentation.WebApi.Extensions.Middlewares;
+
 public class RequestResponseLogging(RequestDelegate next, ILogger<RequestResponseLogging> logger)
 {
     public async Task Invoke(HttpContext context)

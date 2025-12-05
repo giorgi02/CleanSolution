@@ -1,6 +1,7 @@
 ﻿using Core.Application.DTOs;
 
 namespace Core.Application.Interactors.Commands;
+
 public abstract class CheckoutCommand1
 {
     public record struct Request(int ItemsCount, decimal Amount) : IRequest<Response>;

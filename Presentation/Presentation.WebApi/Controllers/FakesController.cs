@@ -1,4 +1,5 @@
 ﻿namespace Presentation.WebApi.Controllers;
+
 [Route("api/[controller]")]
 [ApiController]
 public class FakesController(IMediator mediator) : ControllerBase

@@ -3,6 +3,7 @@ using Infrastructure.Persistence.Configurations;
 using Infrastructure.Persistence.Models;
 
 namespace Infrastructure.Persistence;
+
 internal class DataContext(DbContextOptions<DataContext> options)
     : DbContext(options)
 {

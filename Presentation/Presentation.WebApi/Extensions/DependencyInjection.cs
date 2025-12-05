@@ -11,7 +11,6 @@ using AspNetCoreRateLimit;
 using Core.Application.Interfaces.Services;
 using Core.Shared;
 using Microsoft.AspNetCore.ResponseCompression;
-using Presentation.WebApi.Extensions.Configurations;
 using Presentation.WebApi.Extensions.Services;
 using Presentation.WebApi.Workers;
 using Serilog;
@@ -19,9 +18,10 @@ using System.Reactive.Subjects;
 using System.Threading.Channels;
 
 namespace Presentation.WebApi.Extensions;
+
 public static class DependencyInjection
 {
-    public static void AddThisLayer(this WebApplicationBuilder builder)
+    public static void AddStartup(this WebApplicationBuilder builder)
     {
         builder.Services.AddControllers(options =>
         {
@@ -33,7 +33,7 @@ public static class DependencyInjection
         builder.Services.AddHttpContextAccessor(); // IHttpContextAccessor -ის ინექციისთვის
         builder.Services.AddScoped<IActiveUserService, ActiveUserService>();
 
-        builder.Services.AddSwaggerServices();
+        builder.Services.AddOpenApiInfo();
 
         builder.Services.AddLocalizeConfiguration();
 

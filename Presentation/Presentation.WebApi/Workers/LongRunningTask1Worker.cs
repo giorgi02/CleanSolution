@@ -2,6 +2,7 @@
 using System.Diagnostics;
 
 namespace Presentation.WebApi.Workers;
+
 public class LongRunningTask1Worker : BackgroundService
 {
     private readonly IServiceProvider _services;

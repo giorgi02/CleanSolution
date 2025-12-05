@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace Presentation.WebApi.Extensions.Services;
+
 public class ActiveUserService : IActiveUserService
 {
     /// <summary>

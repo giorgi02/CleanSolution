@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using System.Text.Json;
 
 namespace Infrastructure.Messaging.Consumers;
+
 internal class UpsertPositionConsumer : BackgroundService
 {
     private const string Topic = "position_upsert";

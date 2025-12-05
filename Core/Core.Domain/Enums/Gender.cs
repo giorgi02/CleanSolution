@@ -1,4 +1,5 @@
 ﻿namespace Core.Domain.Enums;
+
 public enum Gender
 {
     Female = 0,

@@ -7,6 +7,7 @@ using Minio;
 using Minio.DataModel.Args;
 
 namespace Infrastructure.Documents.Implementations;
+
 internal class DocumentService : IDocumentService
 {
     private readonly MinioClient _minio;

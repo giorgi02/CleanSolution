@@ -2,6 +2,7 @@
 using System.Text;
 
 namespace Core.Shared;
+
 public static class HttpQueryStrings
 {
     private static readonly StringBuilder Query = new();

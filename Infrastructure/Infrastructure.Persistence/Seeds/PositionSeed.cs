@@ -1,6 +1,7 @@
 ﻿using Core.Domain.Models;
 
 namespace Infrastructure.Persistence.Seeds;
+
 internal static class PositionSeed
 {
     internal readonly static Position[] Seeding =

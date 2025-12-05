@@ -1,4 +1,5 @@
 ﻿namespace Core.Application.Interfaces.Services;
+
 public interface IDocumentService
 {
     Task<string> SaveAsync(Stream stream, string fileName);

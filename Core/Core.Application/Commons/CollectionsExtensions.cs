@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Text;
 
 namespace Core.Application.Commons;
+
 public static class CollectionsExtensions
 {
     /// <summary>

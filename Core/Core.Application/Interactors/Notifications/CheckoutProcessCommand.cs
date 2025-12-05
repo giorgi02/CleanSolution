@@ -2,6 +2,7 @@
 using System.Diagnostics;
 
 namespace Core.Application.Interactors.Notifications;
+
 public abstract class CheckoutProcessCommand
 {
     public record class Request(QueueItemDto Item) : INotification;

@@ -4,6 +4,7 @@ using Core.Shared.Exceptions;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Persistence.Implementations;
+
 [Obsolete("შედარებით რთული პროექტებისთვის ვფიქრობ ეს პატერნი გამოუსადეგარია")]
 internal abstract class Repository<TKey, TEntity> : IRepository<TKey, TEntity>
     where TKey : struct

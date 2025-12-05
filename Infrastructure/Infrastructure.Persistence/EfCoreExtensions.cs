@@ -2,6 +2,7 @@
 using Core.Shared;
 
 namespace Infrastructure.Persistence;
+
 internal static class EfCoreExtensions
 {
     public static async Task<Pagination<TEntity>> ToPaginatedAsync<TEntity>(this IQueryable<TEntity> source, int pageIndex, int pageSize, CancellationToken cancellationToken = default)

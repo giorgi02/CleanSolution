@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 
 namespace Core.Shared;
+
 public static partial class JsonSerializerExtensions
 {
     public static TValue? DeserializeAnonymous<TValue>(string json, TValue _, JsonSerializerOptions? options = default)

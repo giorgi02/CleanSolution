@@ -2,6 +2,7 @@
 using System.Text.Json;
 
 namespace Infrastructure.Persistence.Models;
+
 internal class LogEvent
 {
     public Guid Id { get; set; } = Guid.NewGuid();

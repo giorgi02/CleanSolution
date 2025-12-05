@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.ServiceModel;
 
 namespace Infrastructure.Messaging.Helpers;
+
 public static class WcfServiceConfiguration
 {
     public static void AddWcfServiceSingleton<TServiceType, TImplementation>(this IServiceCollection services) =>
