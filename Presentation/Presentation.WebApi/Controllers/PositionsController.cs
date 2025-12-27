@@ -3,8 +3,8 @@
 namespace Presentation.WebApi.Controllers;
 
 [ApiController]
-[Route("api/v1/[controller]")]
 [ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 public sealed class PositionsController(IMediator mediator, IMemoryCache cache) : ControllerBase
 {
     [HttpGet(Name = "GetPositions")]

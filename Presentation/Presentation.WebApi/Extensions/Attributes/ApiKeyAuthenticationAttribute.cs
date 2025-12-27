@@ -1,4 +1,4 @@
-﻿using Core.Shared;
+﻿using Core.Shared.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 

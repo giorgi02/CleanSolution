@@ -1,5 +1,6 @@
 using Core.Application.Interactors.Notifications;
 using Core.Shared;
+using Core.Shared.Exceptions;
 
 namespace Presentation.Worker;
 

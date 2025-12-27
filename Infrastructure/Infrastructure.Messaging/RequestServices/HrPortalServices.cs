@@ -1,6 +1,6 @@
 ﻿using Core.Application.Interfaces.Services;
 using Core.Domain.Models;
-using Core.Shared;
+using Core.Shared.Exceptions;
 using Infrastructure.Messaging.Helpers;
 using Microsoft.Extensions.Logging;
 using System.Net.Http.Json;

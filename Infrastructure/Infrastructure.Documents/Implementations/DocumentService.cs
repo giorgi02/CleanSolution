@@ -1,5 +1,5 @@
 ﻿using Core.Application.Interfaces.Services;
-using Core.Shared;
+using Core.Shared.Exceptions;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

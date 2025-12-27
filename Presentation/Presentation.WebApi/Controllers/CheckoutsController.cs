@@ -1,7 +1,10 @@
-﻿namespace Presentation.WebApi.Controllers;
+﻿using Asp.Versioning;
 
-[Route("api/[controller]")]
+namespace Presentation.WebApi.Controllers;
+
 [ApiController]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 public class CheckoutsController(IMediator mediator) : ControllerBase
 {
     [HttpPost("a1")]

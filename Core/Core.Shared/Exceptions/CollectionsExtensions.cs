@@ -1,4 +1,4 @@
-﻿namespace Core.Shared;
+﻿namespace Core.Shared.Exceptions;
 
 public static class CollectionsExtensions
 {

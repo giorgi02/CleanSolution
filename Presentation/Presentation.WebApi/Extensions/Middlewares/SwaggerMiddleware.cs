@@ -6,10 +6,7 @@ public static class SwaggerMiddleware
     {
         app.UseSwaggerUI(options =>
         {
-            options.InjectStylesheet("/SwaggerDark.css"); // შავი ფონის დაყენება
-
             options.SwaggerEndpoint("/openapi/v1.json", "v1");
-
         });
 
         return app;

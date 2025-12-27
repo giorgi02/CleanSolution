@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace Core.Shared;
+namespace Core.Shared.Extensions;
 
 public static partial class JsonSerializerExtensions
 {

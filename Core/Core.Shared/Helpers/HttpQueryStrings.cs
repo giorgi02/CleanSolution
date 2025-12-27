@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Text;
 
-namespace Core.Shared;
+namespace Core.Shared.Helpers;
 
 public static class HttpQueryStrings
 {

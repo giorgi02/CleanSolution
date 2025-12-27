@@ -1,7 +1,7 @@
 ﻿using Confluent.Kafka;
 using Core.Application.Interfaces.Services;
 using Core.Domain.Models;
-using Core.Shared;
+using Core.Shared.Exceptions;
 using Microsoft.Extensions.Configuration;
 using System.Text.Json;
 

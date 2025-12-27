@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Core.Shared;
+namespace Core.Shared.Exceptions;
 
 [Serializable]
 public class ApiValidationException : Exception

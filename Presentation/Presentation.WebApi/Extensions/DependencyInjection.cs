@@ -9,7 +9,7 @@ global using System.Text;
 using Asp.Versioning;
 using AspNetCoreRateLimit;
 using Core.Application.Interfaces.Services;
-using Core.Shared;
+using Core.Shared.Exceptions;
 using Microsoft.AspNetCore.ResponseCompression;
 using Presentation.WebApi.Extensions.Services;
 using Presentation.WebApi.Workers;
@@ -65,9 +65,13 @@ public static class DependencyInjection
 
         builder.Services.AddApiVersioning(options =>
         {
-            options.DefaultApiVersion = new ApiVersion(1, 0);
+            options.DefaultApiVersion = ApiVersion.Default;
             options.AssumeDefaultVersionWhenUnspecified = true;
-            options.ApiVersionReader = new UrlSegmentApiVersionReader();
+            options.ReportApiVersions = true;
+        }).AddApiExplorer(options =>
+        {
+            options.GroupNameFormat = "'v'VVV";
+            options.SubstituteApiVersionInUrl = true;
         });
 
         builder.Services.AddObservable();

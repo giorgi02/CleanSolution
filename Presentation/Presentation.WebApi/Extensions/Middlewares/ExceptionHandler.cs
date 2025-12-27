@@ -1,4 +1,5 @@
 ﻿using Core.Shared;
+using Core.Shared.Exceptions;
 using System.Diagnostics;
 
 namespace Presentation.WebApi.Extensions.Middlewares;

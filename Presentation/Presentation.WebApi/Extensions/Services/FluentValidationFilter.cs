@@ -1,4 +1,5 @@
 ﻿using Core.Shared;
+using Core.Shared.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc.Filters;
 

@@ -1,4 +1,4 @@
-﻿using Core.Shared;
+﻿using Core.Shared.Exceptions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;

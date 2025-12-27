@@ -1,5 +1,5 @@
 ﻿using Core.Application.Interfaces.Services;
-using Core.Shared;
+using Core.Shared.Exceptions;
 using Infrastructure.Messaging.Consumers;
 using Infrastructure.Messaging.Helpers;
 using Infrastructure.Messaging.Producers;

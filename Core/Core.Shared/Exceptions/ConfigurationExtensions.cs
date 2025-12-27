@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Core.Shared;
+namespace Core.Shared.Exceptions;
 
 public static class ConfigurationExtensions
 {
