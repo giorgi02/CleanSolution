@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/Core/">
+    <Project Path="Core/Core.Application/Core.Application.csproj" />
+    <Project Path="Core/Core.Domain/Core.Domain.csproj" />
+    <Project Path="Core/Core.Shared/Core.Shared.csproj" />
+  </Folder>
+  <Folder Name="/Infrastructure/">
+    <Project Path="Infrastructure/Infrastructure.Documents/Infrastructure.Documents.csproj" />
+    <Project Path="Infrastructure/Infrastructure.Messaging/Infrastructure.Messaging.csproj" />
+    <Project Path="Infrastructure/Infrastructure.Persistence/Infrastructure.Persistence.csproj" />
+  </Folder>
+  <Folder Name="/Presentation/">
+    <Project Path="Presentation/Presentation.Mcp/Presentation.Mcp.csproj" />
+    <Project Path="Presentation/Presentation.WebApi/Presentation.WebApi.csproj" />
+    <Project Path="Presentation/Presentation.Worker/Presentation.Worker.csproj" />
+  </Folder>
+</Solution>
