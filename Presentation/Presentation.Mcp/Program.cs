@@ -2,11 +2,22 @@
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services
-    .AddMcpServer()
-    .WithHttpTransport()
+builder.WebHost.UseUrls("http://localhost:5280");
+
+builder.Services.AddMcpServer()
+    .WithHttpTransport((options) =>
+    {
+        options.Stateless = true;
+    })
     .WithTools<EchoTool>();
 
+builder.Logging.AddConsole(options =>
+{
+    options.LogToStandardErrorThreshold = LogLevel.Trace;
+});
+
 var app = builder.Build();
+
 app.MapMcp();
-app.Run();
+
+await app.RunAsync();
