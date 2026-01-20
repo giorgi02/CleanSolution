@@ -47,7 +47,7 @@ public class ExceptionHandler(RequestDelegate next, ILogger<ExceptionHandler> lo
             case { } e:
                 problemDetails = new ProblemDetails
                 {
-                    Type = "https://datatracker.ietf.org/doc/html/rfc9110#section-15.6",
+                    Type = "https://datatracker.ietf.org/doc/html/rfc9110#section-15.6.1",
                     Status = StatusCodes.Status500InternalServerError,
                     Title = "Server Error.",
                     Detail = "Internal Server Error.",
