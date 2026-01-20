@@ -27,7 +27,7 @@ public class ExceptionHandler(RequestDelegate next, ILogger<ExceptionHandler> lo
             case ApiValidationException e:
                 problemDetails = new ValidationProblemDetails
                 {
-                    Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5",
+                    Type = "https://datatracker.ietf.org/doc/html/rfc9110#section-15.5",
                     Status = (int)e.StatusCode,
                     Title = "One or more validation errors occurred.",
                     Errors = e.Messages
@@ -37,7 +37,7 @@ public class ExceptionHandler(RequestDelegate next, ILogger<ExceptionHandler> lo
             case OperationCanceledException e:
                 problemDetails = new ProblemDetails
                 {
-                    Type = "https://datatracker.ietf.org/doc/html/rfc7231",
+                    Type = "https://datatracker.ietf.org/doc/html/rfc9110",
                     Status = StatusCodes.Status499ClientClosedRequest,
                     Title = "Operation Is Canceled.",
                     Detail = "Operation Is Canceled.",
@@ -47,7 +47,7 @@ public class ExceptionHandler(RequestDelegate next, ILogger<ExceptionHandler> lo
             case { } e:
                 problemDetails = new ProblemDetails
                 {
-                    Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6",
+                    Type = "https://datatracker.ietf.org/doc/html/rfc9110#section-15.6",
                     Status = StatusCodes.Status500InternalServerError,
                     Title = "Server Error.",
                     Detail = "Internal Server Error.",
