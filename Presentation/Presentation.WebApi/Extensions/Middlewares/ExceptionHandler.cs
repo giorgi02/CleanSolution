@@ -1,5 +1,4 @@
-﻿using Core.Shared;
-using Core.Shared.Exceptions;
+﻿using Core.Shared.Exceptions;
 using System.Diagnostics;
 
 namespace Presentation.WebApi.Extensions.Middlewares;
@@ -21,36 +20,44 @@ public class ExceptionHandler(RequestDelegate next, ILogger<ExceptionHandler> lo
     private async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
         string traceId = Activity.Current?.Id ?? context.TraceIdentifier;
-
-        var problemDetails = new HttpValidationProblemDetails
-        {
-            Type = "https://tools.ietf.org/html/rfc7231",
-            Title = "One or more validation errors occurred.",
-            Status = StatusCodes.Status400BadRequest,
-        };
-        problemDetails.Extensions.Add("traceId", Activity.Current?.Id);
+        ProblemDetails problemDetails = null!;
 
         switch (exception)
         {
             case ApiValidationException e:
-                problemDetails.Status = (int)e.StatusCode;
-                problemDetails.Errors = e.Messages;
-                logger.LogWarning(e, "{@ex} {@TraceId}", nameof(ApiValidationException), traceId);
+                problemDetails = new ValidationProblemDetails
+                {
+                    Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5",
+                    Status = (int)e.StatusCode,
+                    Title = "One or more validation errors occurred.",
+                    Errors = e.Messages
+                };
+                logger.LogWarning(e, "{location} {traceId}", nameof(ApiValidationException), traceId);
                 break;
             case OperationCanceledException e:
-                problemDetails.Title = "Operation Is Canceled.";
-                problemDetails.Errors.Add(ConstantValues.ExceptionMessage, ["Operation Is Canceled."]);
-                logger.LogWarning(e, "{@ex} {@TraceId}", nameof(OperationCanceledException), traceId);
+                problemDetails = new ProblemDetails
+                {
+                    Type = "https://datatracker.ietf.org/doc/html/rfc7231",
+                    Status = StatusCodes.Status499ClientClosedRequest,
+                    Title = "Operation Is Canceled.",
+                    Detail = "Operation Is Canceled.",
+                };
+                logger.LogWarning(e, "{location} {traceId}", nameof(OperationCanceledException), traceId);
                 break;
             case { } e:
-                problemDetails.Title = "Server Error.";
-                problemDetails.Status = StatusCodes.Status500InternalServerError;
-                problemDetails.Errors.Add(ConstantValues.ExceptionMessage, ["Internal Server Error."]);
-                logger.LogError(e, "{@ex} {@TraceId}", nameof(Exception), traceId);
+                problemDetails = new ProblemDetails
+                {
+                    Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6",
+                    Status = StatusCodes.Status500InternalServerError,
+                    Title = "Server Error.",
+                    Detail = "Internal Server Error.",
+                };
+                logger.LogError(e, "{location} {traceId}", nameof(Exception), traceId);
                 break;
         }
 
-        context.Response.StatusCode = problemDetails.Status.Value;
+        problemDetails.Extensions.Add("traceId", traceId);
+        context.Response.StatusCode = problemDetails.Status ?? StatusCodes.Status500InternalServerError;
         context.Response.ContentType = "application/json";
 
         await context.Response.WriteAsJsonAsync(problemDetails);
