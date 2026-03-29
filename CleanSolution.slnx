@@ -14,4 +14,8 @@
     <Project Path="Presentation/Presentation.WebApi/Presentation.WebApi.csproj" />
     <Project Path="Presentation/Presentation.Worker/Presentation.Worker.csproj" />
   </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".mcp.json" />
+    <File Path="README.md" />
+  </Folder>
 </Solution>

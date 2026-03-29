@@ -1,0 +1,8 @@
+{
+    "servers": {
+        "roslyn-codelens": {
+            "command": "dnx",
+            "args": [ "RoslynCodeLens.Mcp@1.1.1", "--yes" ]
+        }
+    }
+}
