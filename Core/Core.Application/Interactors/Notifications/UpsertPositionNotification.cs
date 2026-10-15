@@ -2,7 +2,7 @@
 
 public abstract class UpsertPositionNotification
 {
-    public sealed record class Request : INotification
+    public sealed record class Request : IRequest
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = null!;
@@ -10,7 +10,7 @@ public abstract class UpsertPositionNotification
         public byte? SortIndex { get; set; }
     }
 
-    public sealed class Handler : INotificationHandler<Request>
+    public sealed class Handler : IRequestHandler<Request>
     {
         public async Task Handle(Request request, CancellationToken cancellationToken)
         {

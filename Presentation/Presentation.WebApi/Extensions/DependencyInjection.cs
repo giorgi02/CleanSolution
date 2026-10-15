@@ -1,7 +1,6 @@
 ﻿global using Core.Application.DTOs;
 global using Core.Application.Interactors.Commands;
 global using Core.Application.Interactors.Queries;
-global using MediatR;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.Extensions.Caching.Memory;
 global using Presentation.WebApi.Extensions.Attributes;

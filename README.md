@@ -23,8 +23,7 @@ This is a .NET 9 project template built using Clean Architecture principles, ens
   - Queries: მონაცემების მოძიება და ფილტრაცია
   - Notifications: Event handling
   - DTOs: Data Transfer Objects
-  - Behaviors: Validation behaviors
-  - Technologies: MediatR, FluentValidation, Mapster, Bogus
+  - Technologies: FluentValidation, Mapster, Bogus
 
 - **Core.Shared** - საერთო უტილიტები და გაფართოებები
   - Extensions, helpers და shared utilities
@@ -51,7 +50,6 @@ This is a .NET 9 project template built using Clean Architecture principles, ens
 
 - **.NET 9.0**
 - **Entity Framework Core 9.0**
-- **MediatR** - CQRS pattern implementation
 - **FluentValidation** - Input validation
 - **Mapster** - Object mapping
 - **Serilog** - Structured logging
@@ -131,7 +129,7 @@ CleanSolution/
 ## 🎯 ძირითადი ფუნქციები / Key Features
 
 - ✅ Clean Architecture პრინციპები
-- ✅ CQRS pattern with MediatR
+- ✅ CQRS pattern (DI-registered handlers)
 - ✅ Repository pattern
 - ✅ Validation pipeline
 - ✅ API versioning

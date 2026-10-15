@@ -19,7 +19,7 @@ public class LongRunningTask2Worker(IServiceProvider services, Channel<QueueItem
     {
         Debug.WriteLine("Run LongRunningTask2Worker");
         using var scope = services.CreateScope();
-        var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-        await mediator.Publish(new CheckoutProcessCommand.Request(item));
+        var handler = scope.ServiceProvider.GetRequiredService<CheckoutProcessCommand.Handler>();
+        await handler.Handle(new CheckoutProcessCommand.Request(item), CancellationToken.None);
     }
 }

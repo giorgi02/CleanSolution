@@ -5,19 +5,19 @@ namespace Presentation.WebApi.Controllers;
 [ApiController]
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
-public class CheckoutsController(IMediator mediator) : ControllerBase
+public class CheckoutsController : ControllerBase
 {
     [HttpPost("a1")]
     [ProducesResponseType(StatusCodes.Status202Accepted)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<CheckoutCommand1.Response>> Checkout1(CheckoutCommand1.Request request, CancellationToken cancellationToken = default)
-        => Accepted(await mediator.Send(request, cancellationToken));
+    public async Task<ActionResult<CheckoutCommand1.Response>> Checkout1(CheckoutCommand1.Request request, [FromServices] CheckoutCommand1.Handler handler, CancellationToken cancellationToken = default)
+        => Accepted(await handler.Handle(request, cancellationToken));
 
     [HttpPost("a2")]
     [ProducesResponseType(StatusCodes.Status202Accepted)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<CheckoutCommand2.Response>> Checkout2(CheckoutCommand2.Request request, CancellationToken cancellationToken = default)
-        => Accepted(await mediator.Send(request, cancellationToken));
+    public async Task<ActionResult<CheckoutCommand2.Response>> Checkout2(CheckoutCommand2.Request request, [FromServices] CheckoutCommand2.Handler handler, CancellationToken cancellationToken = default)
+        => Accepted(await handler.Handle(request, cancellationToken));
 }

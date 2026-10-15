@@ -1,8 +1,8 @@
 ﻿using Confluent.Kafka;
 using Core.Application.Interactors.Notifications;
 using Core.Shared.Exceptions;
-using MediatR;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
@@ -15,12 +15,12 @@ internal class UpsertPositionConsumer : BackgroundService
     private readonly string _groupId;
     private readonly string _bootstrapServers;
 
-    private readonly IMediator _mediator;
+    private readonly IServiceProvider _services;
     private readonly ILogger<UpsertPositionConsumer> _logger;
 
-    public UpsertPositionConsumer(IMediator mediator, IConfiguration configuration, ILogger<UpsertPositionConsumer> logger)
+    public UpsertPositionConsumer(IServiceProvider services, IConfiguration configuration, ILogger<UpsertPositionConsumer> logger)
     {
-        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        _services = services ?? throw new ArgumentNullException(nameof(services));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _groupId = configuration.GetString("ApacheKafka:Group");
         _bootstrapServers = configuration.GetString("ApacheKafka:BootstrapServers");
@@ -46,7 +46,12 @@ internal class UpsertPositionConsumer : BackgroundService
                 var consumeResult = await Task.Run(() => consumer.Consume(stoppingToken), stoppingToken);
                 var request = JsonSerializer.Deserialize<UpsertPositionNotification.Request>(consumeResult.Message.Value);
 
-                if (request != null) await _mediator.Publish(request, stoppingToken);
+                if (request != null)
+                {
+                    using var scope = _services.CreateScope();
+                    var handler = scope.ServiceProvider.GetRequiredService<UpsertPositionNotification.Handler>();
+                    await handler.Handle(request, stoppingToken);
+                }
 
                 _logger.LogInformation("messaging type={@type}, body={@body}", nameof(UpsertPositionConsumer), request);
             }

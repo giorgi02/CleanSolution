@@ -41,7 +41,7 @@
 
 ### 2.2 Builder
 - `ProducerBuilder<Null, string>` / `ConsumerBuilder<Ignore, string>` Kafka-ში ([MessagingServices.cs](Infrastructure/Infrastructure.Messaging/Producers/MessagingServices.cs), [UpsertPositionConsumer.cs](Infrastructure/Infrastructure.Messaging/Consumers/UpsertPositionConsumer.cs))
-- `LoggerConfiguration()...CreateLogger()` Serilog-ში ([DependencyInjection.cs:45](Presentation/Presentation.WebApi/Extensions/DependencyInjection.cs#L45))
+- `LoggerConfiguration()...CreateLogger()` Serilog-ში ([DependencyInjection.cs:44](Presentation/Presentation.WebApi/Extensions/DependencyInjection.cs#L44))
 - Fluent Builder MinIO-სთვის: `new PutObjectArgs().WithBucket(...).WithObject(...)...` ([DocumentService.cs:30-35](Infrastructure/Infrastructure.Documents/Implementations/DocumentService.cs#L30-L35))
 - FluentValidation Rule Builder — `RuleFor(...).NotEmpty()...WithMessage(...)` ([CreateEmployeeCommand.cs:86-101](Core/Core.Application/Interactors/Commands/CreateEmployeeCommand.cs#L86-L101))
 
@@ -49,84 +49,72 @@
 [WcfServiceConfiguration.ImplementationFactory<T>](Infrastructure/Infrastructure.Messaging/Helpers/WcfServiceConfiguration.cs#L19-L39) — configuration-ის მიხედვით ქმნის WCF კლიენტებს.
 
 ### 2.4 Singleton (DI მართული)
-- `IObservable<QueueItemDto>`, `IObserver<QueueItemDto>`, `Channel<QueueItemDto>` — სინგლტონებად დარეგისტრირებული ([DependencyInjection.cs:117-129](Presentation/Presentation.WebApi/Extensions/DependencyInjection.cs#L117-L129))
-- `TimeProvider.System` ([DependencyInjection.cs:32](Presentation/Presentation.WebApi/Extensions/DependencyInjection.cs#L32))
+- `IObservable<QueueItemDto>`, `IObserver<QueueItemDto>`, `Channel<QueueItemDto>` — სინგლტონებად დარეგისტრირებული ([DependencyInjection.cs:116-128](Presentation/Presentation.WebApi/Extensions/DependencyInjection.cs#L116-L128))
+- `TimeProvider.System` ([DependencyInjection.cs:31](Presentation/Presentation.WebApi/Extensions/DependencyInjection.cs#L31))
 
 ---
 
 ## 3. სტრუქტურული პატერნები (Structural)
 
 ### 3.1 Repository
-- ზოგადი [IRepository<TKey, TEntity>](Core/Core.Application/Interfaces/Repositories/IRepository.cs)
-- სპეციფიური: [IEmployeeRepository](Core/Core.Application/Interfaces/Repositories/IEmployeeRepository.cs), [IPositionRepository](Core/Core.Application/Interfaces/Repositories/IPositionRepository.cs), [IEventRepository](Core/Core.Application/Interfaces/Repositories/IEventRepository.cs)
-- ბაზური [Repository<TKey, TEntity>](Infrastructure/Infrastructure.Persistence/Implementations/Repository.cs) (მონიშნულია `[Obsolete]`-ად — გრძელვადიანი არჩევანი არ ყოფილა)
+სპეციფიური რეპოზიტორები, მხოლოდ საჭირო მეთოდებით (ზოგადი ბაზური კლასის გარეშე): [IEmployeeRepository](Core/Core.Application/Interfaces/Repositories/IEmployeeRepository.cs), [IPositionRepository](Core/Core.Application/Interfaces/Repositories/IPositionRepository.cs), [IEventRepository](Core/Core.Application/Interfaces/Repositories/IEventRepository.cs)
 
-### 3.2 Unit of Work
-[UnitOfWork](Infrastructure/Infrastructure.Persistence/Implementations/UnitOfWork.cs) კლასი (ასევე `[Obsolete]` — ავტორი თვლის რომ Clean Architecture-ისთვის არ ერგება).
-
-### 3.3 Adapter
+### 3.2 Adapter
 - [HrPortalServices](Infrastructure/Infrastructure.Messaging/RequestServices/HrPortalServices.cs) — გარე HTTP API-ს ადაპტირებს `IHrPortalServices` ინტერფეისზე
 - [DocumentService](Infrastructure/Infrastructure.Documents/Implementations/DocumentService.cs) — MinIO SDK-ს ფარავს `IDocumentService` ინტერფეისით
 - [MessagingServices](Infrastructure/Infrastructure.Messaging/Producers/MessagingServices.cs) — Kafka-ს ფარავს `IMessagingService` ინტერფეისით
 
-### 3.4 Facade
+### 3.3 Facade
 - `DependencyInjection` სტატიკური კლასები ([Application](Core/Core.Application/DependencyInjection.cs), [Persistence](Infrastructure/Infrastructure.Persistence/DependencyInjection.cs), [Documents](Infrastructure/Infrastructure.Documents/DependencyInjection.cs), [Messaging](Infrastructure/Infrastructure.Messaging/DependencyInjection.cs)) — თითო ფენის რეგისტრაცია ერთი მეთოდით
 
-### 3.5 Decorator
-- **Pipeline Behaviors**: [ValidationBehaviorForReturn<TRequest,TResponse>](Core/Core.Application/Behaviors/ValidationBehaviorForReturn.cs) და [ValidationBehaviorNotReturn<TRequest,_>](Core/Core.Application/Behaviors/ValidationBehaviorNotReturn.cs) — MediatR pipeline-ში decorator-ად მუშაობს
+### 3.4 Decorator
 - **Middleware Pipeline** ASP.NET Core-ში ([Program.cs:34-54](Presentation/Presentation.WebApi/Program.cs#L34-L54))
 - **DelegatingHandler**: [CorrelationDelegatingHandler](Infrastructure/Infrastructure.Messaging/Helpers/CorrelationDelegatingHandler.cs) — HTTP კლიენტს გადააწერს `x-correlation-id` ჰედერს
 
-### 3.6 Proxy
+### 3.5 Proxy
 WCF Service Reference [PropertyGetterServiceReference/Reference.cs](Infrastructure/Infrastructure.Messaging/Connected%20Services/PropertyGetterServiceReference/Reference.cs) — გენერირებული proxy კლასი.
 
-### 3.7 Extension Object (C# extension methods)
+### 3.6 Extension Object (C# extension methods)
 [CollectionsExtensions](Core/Core.Shared/Exceptions/CollectionsExtensions.cs), [ConfigurationExtensions](Core/Core.Shared/Exceptions/ConfigurationExtensions.cs), [DateTimeExtensions](Core/Core.Shared/Extensions/DateTimeExtensions.cs), [HttpClientExtension](Core/Core.Shared/Exceptions/HttpClientExtension.cs), [EfCoreExtensions](Infrastructure/Infrastructure.Persistence/EfCoreExtensions.cs)
 
 ---
 
 ## 4. ქცევითი პატერნები (Behavioral)
 
-### 4.1 Mediator
-MediatR-ის გამოყენება [DependencyInjection.cs:17-21](Core/Core.Application/DependencyInjection.cs#L17-L21). Controller-ები მხოლოდ `mediator.Send(...)`-ს იძახიან ([EmployeesController.cs](Presentation/Presentation.WebApi/Controllers/EmployeesController.cs)).
-
-### 4.2 Chain of Responsibility
-- MediatR `IPipelineBehavior<,>` ჯაჭვი ([ValidationBehaviorForReturn.cs](Core/Core.Application/Behaviors/ValidationBehaviorForReturn.cs))
+### 4.1 Chain of Responsibility
 - ASP.NET Core middleware pipeline ([ExceptionHandler.cs](Presentation/Presentation.WebApi/Extensions/Middlewares/ExceptionHandler.cs), [RequestResponseLogging.cs](Presentation/Presentation.WebApi/Extensions/Middlewares/RequestResponseLogging.cs))
 - HTTP `DelegatingHandler` ჯაჭვი
 
-### 4.3 Strategy
-- `NotificationPublisher = new TaskWhenAllPublisher()` ([DependencyInjection.cs:20](Core/Core.Application/DependencyInjection.cs#L20)) — გადასარჩევია `ForeachAwaitPublisher` ან `TaskWhenAllPublisher`
-- Compression providers (`Gzip`/`Brotli`) ([DependencyInjection.cs:103-104](Presentation/Presentation.WebApi/Extensions/DependencyInjection.cs#L103-L104))
+### 4.2 Strategy
+- Compression providers (`Gzip`/`Brotli`) ([DependencyInjection.cs:102-103](Presentation/Presentation.WebApi/Extensions/DependencyInjection.cs#L102-L103))
 - [GetMaxMinBySalaryQuery](Core/Core.Application/Interactors/Queries/GetMaxMinBySalaryQuery.cs#L25-L28) — `IsRequiredMax` ფლაგით სხვადასხვა LINQ სტრატეგია
 
-### 4.4 Observer / Publish-Subscribe
+### 4.3 Observer / Publish-Subscribe
 - **Rx.NET**: `ReplaySubject<QueueItemDto>`, `IObservable<>`/`IObserver<>` ([CheckoutCommand1.cs](Core/Core.Application/Interactors/Commands/CheckoutCommand1.cs) + [LongRunningTask1Worker.cs](Presentation/Presentation.WebApi/Workers/LongRunningTask1Worker.cs))
-- **MediatR Notifications**: [UpsertPositionNotification](Core/Core.Application/Interactors/Notifications/UpsertPositionNotification.cs), [CheckoutProcessCommand](Core/Core.Application/Interactors/Notifications/CheckoutProcessCommand.cs)
+- **Notification handler-ები**: [UpsertPositionNotification](Core/Core.Application/Interactors/Notifications/UpsertPositionNotification.cs), [CheckoutProcessCommand](Core/Core.Application/Interactors/Notifications/CheckoutProcessCommand.cs) — worker-ები და Kafka consumer საკუთარ scope-ში პირდაპირ იძახებენ `Handler.Handle(...)`-ს
 - **Kafka producer/consumer** ([MessagingServices.cs](Infrastructure/Infrastructure.Messaging/Producers/MessagingServices.cs), [UpsertPositionConsumer.cs](Infrastructure/Infrastructure.Messaging/Consumers/UpsertPositionConsumer.cs))
 
-### 4.5 Command
-ყველა MediatR `IRequest` / `IRequest<T>` — ეს არის ნამდვილი Command pattern ([CreateEmployeeCommand.Request](Core/Core.Application/Interactors/Commands/CreateEmployeeCommand.cs#L14)).
+### 4.4 Command
+თითო use case-ში `Request` (ბრძანების ობიექტი) და მისი `Handler` — Command pattern ([CreateEmployeeCommand.Request](Core/Core.Application/Interactors/Commands/CreateEmployeeCommand.cs#L14)). `Request`-ები [IRequest / IRequest&lt;T&gt;](Core/Core.Application/Interactors/IRequest.cs)-ს, handler-ები კი [IRequestHandler](Core/Core.Application/Interactors/IRequestHandler.cs)-ს იმპლემენტაციას აკეთებენ — მარკერ ინტერფეისებია, runtime-ზე არაფერს აკეთებს (მხოლოდ `Handle`-ის სიგნატურას აფიქსირებს).
 
-### 4.6 Template Method
-- [Repository<TKey,TEntity>](Infrastructure/Infrastructure.Persistence/Implementations/Repository.cs) — `virtual` მეთოდები, რომელთა გადატვირთვა შესაძლებელია ([EmployeeRepository](Infrastructure/Infrastructure.Persistence/Implementations/EmployeeRepository.cs)-ში `ReadAsync` და `UpdateAsync` გადატვირთულია)
+### 4.5 Template Method
 - `BackgroundService.ExecuteAsync()` ([Worker.cs](Presentation/Presentation.Worker/Worker.cs), [UpsertPositionConsumer.cs](Infrastructure/Infrastructure.Messaging/Consumers/UpsertPositionConsumer.cs))
 - [Aggregate.When()](Core/Core.Domain/Basics/Aggregate.cs#L9) — abstract template method
 
-### 4.7 Memento (Event Sourcing-ის ნაწილი)
+### 4.6 Memento (Event Sourcing-ის ნაწილი)
 [Aggregate.Load()](Core/Core.Domain/Basics/Aggregate.cs#L19-L27) — state-ის აღდგენა მოვლენებიდან.
 
-### 4.8 Specification / Predicate
-[IRepository.ReadAsync(Expression<Func<TEntity, bool>>)](Core/Core.Application/Interfaces/Repositories/IRepository.cs#L12), `CheckAsync`, `CountAsync` — predicate-ით ფილტრაცია.
+### 4.7 Specification / Predicate
+[IEmployeeRepository.CheckAsync(Expression<Func<Employee, bool>>)](Core/Core.Application/Interfaces/Repositories/IEmployeeRepository.cs#L20), [IPositionRepository.CheckAsync](Core/Core.Application/Interfaces/Repositories/IPositionRepository.cs#L11) — predicate-ით ფილტრაცია.
 
-### 4.9 Producer-Consumer
+### 4.8 Producer-Consumer
 - `System.Threading.Channels.Channel<T>` ([CheckoutCommand2](Core/Core.Application/Interactors/Commands/CheckoutCommand2.cs) → [LongRunningTask2Worker](Presentation/Presentation.WebApi/Workers/LongRunningTask2Worker.cs))
 - Kafka
 
-### 4.10 Iterator
+### 4.9 Iterator
 LINQ-ის გამოყენება ფართოდ, `IEnumerable<T>` ყველგან.
 
-### 4.11 Visitor / Configuration (EF Core)
+### 4.10 Visitor / Configuration (EF Core)
 [IEntityTypeConfiguration<Employee>](Infrastructure/Infrastructure.Persistence/Configurations/EmployeeConfiguration.cs) — `Configure(EntityTypeBuilder)` ფაქტიურად Visitor-ის გამოყენებაა.
 
 ---
@@ -136,16 +124,17 @@ LINQ-ის გამოყენება ფართოდ, `IEnumerable<T>` 
 ### 5.1 Dependency Injection (IoC)
 ნაგებია Microsoft.Extensions.DependencyInjection-ზე. ჩანს `AddScoped`, `AddSingleton`, `AddTransient`, `AddHostedService`, `AddHttpClient` ფართოდ.
 
+Handler-ები რეგისტრირდება [AddHandlers](Core/Core.Application/DependencyInjection.cs#L24)-ში და კონტროლერის მეთოდებს `[FromServices]` პარამეტრით მიეწოდება (method injection, მაგ. [EmployeesController](Presentation/Presentation.WebApi/Controllers/EmployeesController.cs)).
+
 ### 5.2 Service Locator (Anti-pattern, მაგრამ გამოყენებულია)
 - [CreateEmployeeCommand.Handler](Core/Core.Application/Interactors/Commands/CreateEmployeeCommand.cs#L44-L50) — `services.GetRequiredService<...>()` კონსტრუქტორში
 - [DocumentService](Infrastructure/Infrastructure.Documents/Implementations/DocumentService.cs#L16-L20)
 - [Worker](Presentation/Presentation.Worker/Worker.cs#L13-L18)
-- [ValidationBehavior](Core/Core.Application/Behaviors/ValidationBehaviorForReturn.cs#L9)
 
 (კონსტრუქტორ-ინექციასთან შერეული მიდგომა.)
 
 ### 5.3 Options Pattern
-- `Configure<IpRateLimitOptions>(...)` ([DependencyInjection.cs:84](Presentation/Presentation.WebApi/Extensions/DependencyInjection.cs#L84))
+- `Configure<IpRateLimitOptions>(...)` ([DependencyInjection.cs:83](Presentation/Presentation.WebApi/Extensions/DependencyInjection.cs#L83))
 - `Configure<GzipCompressionProviderOptions>`, `Configure<BrotliCompressionProviderOptions>`
 - `MinioConfig` ([Models/MinioConfig.cs](Infrastructure/Infrastructure.Documents/Models/MinioConfig.cs))
 
@@ -155,11 +144,10 @@ LINQ-ის გამოყენება ფართოდ, `IEnumerable<T>` 
 - [FluentValidationFilter](Presentation/Presentation.WebApi/Extensions/Services/FluentValidationFilter.cs)
 
 ### 5.5 Lazy Initialization
-- [UnitOfWork](Infrastructure/Infrastructure.Persistence/Implementations/UnitOfWork.cs#L16-L17) — `_positionRepository ??= new ...`
 - `IMemoryCache.GetOrCreateAsync(...)` ([PositionsController.cs:15-19](Presentation/Presentation.WebApi/Controllers/PositionsController.cs#L15-L19))
 
 ### 5.6 Optimistic Concurrency
-[EmployeeConfiguration.cs:35](Infrastructure/Infrastructure.Persistence/Configurations/EmployeeConfiguration.cs#L35) — `IsConcurrencyToken()` და [Repository.UpdateAsync](Infrastructure/Infrastructure.Persistence/Implementations/EmployeeRepository.cs#L37) — `Version` შემოწმება.
+[EmployeeConfiguration.cs:35](Infrastructure/Infrastructure.Persistence/Configurations/EmployeeConfiguration.cs#L35) — `IsConcurrencyToken()` და [EmployeeRepository.UpdateAsync](Infrastructure/Infrastructure.Persistence/Implementations/EmployeeRepository.cs#L46) — `Version` შემოწმება.
 
 ### 5.7 Soft Delete
 [EmployeeConfiguration.cs:38](Infrastructure/Infrastructure.Persistence/Configurations/EmployeeConfiguration.cs#L38) — `HasQueryFilter(x => !x.DeletedAt.HasValue)`.
@@ -194,7 +182,6 @@ LINQ-ის გამოყენება ფართოდ, `IEnumerable<T>` 
 ## 6. გადასახედი / შესაცვლელი მომენტები
 
 - **Service Locator** გამოყენებულია რამდენიმე ადგილას — საუკეთესო პრაქტიკაა მისი თავიდან აცილება და სუფთა კონსტრუქტორ-ინექციის გამოყენება.
-- ავტორმა თვითონ მონიშნა [Repository](Infrastructure/Infrastructure.Persistence/Implementations/Repository.cs) და [UnitOfWork](Infrastructure/Infrastructure.Persistence/Implementations/UnitOfWork.cs) `[Obsolete]`-ად — ე.ი. იცის რომ ეს ზოგადი პატერნები ყოველთვის არ ერგება Clean Architecture-ს.
 - [DataContext](Infrastructure/Infrastructure.Persistence/DataContext.cs)-ში დაკომენტებული Audit/EventSourcing ლოგიკა — ჩანს რომ მიდგომის შერჩევა მიმდინარეობს.
 
 ---

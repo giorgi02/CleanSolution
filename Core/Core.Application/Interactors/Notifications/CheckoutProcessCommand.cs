@@ -5,10 +5,10 @@ namespace Core.Application.Interactors.Notifications;
 
 public abstract class CheckoutProcessCommand
 {
-    public record class Request(QueueItemDto Item) : INotification;
+    public record class Request(QueueItemDto Item) : IRequest;
 
 
-    public sealed class Handler : INotificationHandler<Request>
+    public sealed class Handler : IRequestHandler<Request>
     {
         public async Task Handle(Request request, CancellationToken cancellationToken)
         {

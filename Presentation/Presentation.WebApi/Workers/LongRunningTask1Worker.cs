@@ -31,7 +31,7 @@ public class LongRunningTask1Worker : BackgroundService
     {
         Debug.WriteLine("Run LongRunningTask1Worker");
         using var scope = _services.CreateScope();
-        var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-        await mediator.Publish(new CheckoutProcessCommand.Request(item));
+        var handler = scope.ServiceProvider.GetRequiredService<CheckoutProcessCommand.Handler>();
+        await handler.Handle(new CheckoutProcessCommand.Request(item), CancellationToken.None);
     }
 }

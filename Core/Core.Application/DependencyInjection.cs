@@ -1,9 +1,9 @@
 ﻿global using Core.Shared.Exceptions;
 global using FluentValidation;
-global using MediatR;
-using Core.Application.Behaviors;
 using Core.Application.Commons;
-using MediatR.NotificationPublishers;
+using Core.Application.Interactors.Commands;
+using Core.Application.Interactors.Notifications;
+using Core.Application.Interactors.Queries;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -14,18 +14,32 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplicatonLayer(this IServiceCollection services, IConfiguration _)
     {
-        services.AddMediatR(cfg =>
-        {
-            cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-            cfg.NotificationPublisher = new TaskWhenAllPublisher(); // default: new ForeachAwaitPublisher();
-        });
+        services.AddHandlers();
         services.RegisterMapsterConfiguration();
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-        //services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviorForReturn<,>));
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviorNotReturn<,>));
-
         return services;
+    }
+
+    private static void AddHandlers(this IServiceCollection services)
+    {
+        // commands
+        services.AddTransient<CheckoutCommand1.Handler>();
+        services.AddTransient<CheckoutCommand2.Handler>();
+        services.AddTransient<CreateEmployeeCommand.Handler>();
+        services.AddTransient<DeleteEmployeeCommand.Handler>();
+        services.AddTransient<UpdateEmployeeCommand.Handler>();
+
+        // queries
+        services.AddTransient<GetEmployeeQuery.Handler>();
+        services.AddTransient<GetEmployeesQuery.Handler>();
+        services.AddTransient<GetFakeEmployeesQuery.Handler>();
+        services.AddTransient<GetMaxMinBySalaryQuery.Handler>();
+        services.AddTransient<GetPositionQuery.Handler>();
+        services.AddTransient<GetPositionsQuery.Handler>();
+
+        // notifications
+        services.AddTransient<CheckoutProcessCommand.Handler>();
+        services.AddTransient<UpsertPositionNotification.Handler>();
     }
 }
