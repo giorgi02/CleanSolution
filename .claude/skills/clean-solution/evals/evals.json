@@ -1,0 +1,26 @@
+{
+  "skill_name": "clean-solution",
+  "evals": [
+    {
+      "id": 1,
+      "name": "eval-1-new-solution",
+      "prompt": "შემიქმენი ახალი solution სახელად InventoryHub ჩვენი CleanSolution არქიტექტურით, საქაღალდეში {OUTPUT_DIR}. მჭირდება Kafka messaging და cron worker, MinIO და MCP არ მინდა. შემდეგ დაამატე Product ენთითი: Name (სავალდებულო, max 200), Sku (უნიკალური, 20 სიმბოლო), Price (decimal), Category (enum: Electronics, Food, Clothing) — სრული CRUD REST endpoint-ებით.",
+      "expected_output": "A new InventoryHub solution (.slnx) with Core.Shared/Domain/Application, Infrastructure.Persistence/Messaging, Presentation.WebApi/Worker (no Documents, no Mcp), building cleanly, plus a Product entity with configuration, repository, Create/Update/Delete/Get/GetList use cases with validators, registered handlers and a versioned controller.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "eval-2-department",
+      "prompt": "In this solution ({OUTPUT_DIR}\\CleanSolution) add a Department entity: Name (required, max 100) and Code (unique, max 10 chars). Expose CRUD endpoints for departments, and let employees optionally belong to a department - creating/updating an employee should accept a DepartmentId. Build it when you're done.",
+      "expected_output": "Department entity + EF configuration (applied in OnModelCreating) + repository port/implementation registered + CRUD use cases with validators registered in AddHandlers + versioned DepartmentsController; Employee gets an optional DepartmentId used by create/update commands; English messages; no service locator; solution builds.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "eval-3-integrations",
+      "prompt": "ამ solution-ში ({OUTPUT_DIR}\\CleanSolution) ორი ინტეგრაცია მჭირდება:\n1) გარე Payroll REST API (base URL კონფიგურაციიდან): GET api/salaries/{privateNumber} აბრუნებს { privateNumber, grossSalary, currency }. დაამატე endpoint GET /api/v1/employees/{id}/salary, რომელიც თანამშრომლის ხელფასს Payroll-იდან დააბრუნებს.\n2) თანამშრომლის წაშლისას Kafka-ში გაიგზავნოს employee_deleted მოვლენა (employee id და private number).\nბოლოს დააბილდე.",
+      "expected_output": "Port IPayrollServices in Core.Application, typed HttpClient adapter in Infrastructure.Messaging using ExternalServices:Payroll (key present in appsettings) with correlation handler and error wrapping, a GetEmployeeSalaryQuery use case registered and exposed via EmployeesController; IMessagingService gains EmployeeDeleted implemented with a long-lived producer, published by DeleteEmployeeCommand after the delete; solution builds.",
+      "files": []
+    }
+  ]
+}
