@@ -10,13 +10,13 @@ namespace Infrastructure.Documents.Implementations;
 
 internal class DocumentService : IDocumentService
 {
-    private readonly MinioClient _minio;
+    private readonly IMinioClient _minio;
     private readonly string _bucketName;
 
     public DocumentService(IServiceProvider services)
     {
-        _minio = services.GetRequiredService<MinioClient>();
-        _bucketName = services.GetRequiredService<IConfiguration>().GetString("Minio:BucketName");
+        _minio = services.GetRequiredService<IMinioClient>();
+        _bucketName = services.GetRequiredService<IConfiguration>().GetString("MinioConfigs:MinioBucket:BucketName");
     }
 
     public async Task<string> SaveAsync(Stream stream, string fileName)

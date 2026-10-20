@@ -1,6 +1,4 @@
-﻿using Presentation.Mcp.Tools;
-
-var builder = WebApplication.CreateBuilder(args);
+﻿var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseUrls("http://localhost:5555");
 
@@ -10,7 +8,7 @@ builder.Services.AddMcpServer()
         options.Stateless = true;
     })
     .WithToolsFromAssembly();
-    //.WithTools<EchoTool>();
+//.WithTools<EchoTool>();
 
 builder.Logging.AddConsole(options =>
 {

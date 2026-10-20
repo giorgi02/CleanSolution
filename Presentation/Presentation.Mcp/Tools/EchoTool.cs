@@ -7,7 +7,7 @@ namespace Presentation.Mcp.Tools;
 public class EchoTool
 {
     [McpServerTool, Description("Echoes the message back to the client.")]
-    public static string Echo([Description("text which should be sent")] string message) 
+    public static string Echo([Description("text which should be sent")] string message)
         => $"Hello from C#: {message}";
 
     [McpServerTool, Description("Reverses the message.")]

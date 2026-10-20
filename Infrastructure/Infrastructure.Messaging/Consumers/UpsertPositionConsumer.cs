@@ -12,6 +12,8 @@ namespace Infrastructure.Messaging.Consumers;
 internal class UpsertPositionConsumer : BackgroundService
 {
     private const string Topic = "position_upsert";
+    private const long ErrorLogIntervalMs = 30_000;
+    private readonly Dictionary<string, long> _lastErrorLogs = [];
     private readonly string _groupId;
     private readonly string _bootstrapServers;
 
@@ -33,10 +35,14 @@ internal class UpsertPositionConsumer : BackgroundService
             GroupId = _groupId,
             BootstrapServers = _bootstrapServers,
             AutoOffsetReset = AutoOffsetReset.Earliest,
-            EnableAutoOffsetStore = true
+            EnableAutoOffsetStore = true,
+            ReconnectBackoffMs = 5000,
+            ReconnectBackoffMaxMs = 30000
         };
 
-        using var consumer = new ConsumerBuilder<Ignore, string>(config).Build();
+        using var consumer = new ConsumerBuilder<Ignore, string>(config)
+            .SetLogHandler((_, log) => LogKafka(log))
+            .Build();
         try
         {
             consumer.Subscribe(Topic);
@@ -67,4 +73,38 @@ internal class UpsertPositionConsumer : BackgroundService
             _logger.LogError(ex, nameof(UpsertPositionConsumer));
         }
     }
+
+    // librdkafka repeats the same connection failure several times per second while a broker is unreachable
+    private void LogKafka(LogMessage log)
+    {
+        var level = ToLogLevel(log.Level);
+
+        if (level >= LogLevel.Error && !IsErrorLogDue(log.Facility))
+            return;
+
+        _logger.Log(level, "{location} {facility} {message}", nameof(UpsertPositionConsumer), log.Facility, log.Message);
+    }
+
+    private bool IsErrorLogDue(string facility)
+    {
+        lock (_lastErrorLogs)
+        {
+            var now = Environment.TickCount64;
+
+            if (_lastErrorLogs.TryGetValue(facility, out var last) && now - last < ErrorLogIntervalMs)
+                return false;
+
+            _lastErrorLogs[facility] = now;
+            return true;
+        }
+    }
+
+    private static LogLevel ToLogLevel(SyslogLevel level) => level switch
+    {
+        SyslogLevel.Emergency or SyslogLevel.Alert or SyslogLevel.Critical => LogLevel.Critical,
+        SyslogLevel.Error => LogLevel.Error,
+        SyslogLevel.Warning => LogLevel.Warning,
+        SyslogLevel.Notice or SyslogLevel.Info => LogLevel.Information,
+        _ => LogLevel.Debug
+    };
 }

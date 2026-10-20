@@ -10,6 +10,7 @@ using AspNetCoreRateLimit;
 using Core.Application.Interfaces.Services;
 using Core.Shared.Exceptions;
 using Microsoft.AspNetCore.ResponseCompression;
+using Presentation.WebApi.Extensions.Middlewares;
 using Presentation.WebApi.Extensions.Services;
 using Presentation.WebApi.Workers;
 using Serilog;
@@ -27,6 +28,8 @@ public static class DependencyInjection
             options.Filters.Add<ActionLoggingAttribute>();
             options.Filters.Add<FluentValidationFilter>();
         });
+
+        builder.Services.AddExceptionHandler();
 
         builder.Services.AddSingleton(TimeProvider.System);
 

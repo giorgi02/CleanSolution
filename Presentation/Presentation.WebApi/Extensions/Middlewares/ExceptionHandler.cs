@@ -1,25 +1,32 @@
 ﻿using Core.Shared.Exceptions;
+using Microsoft.AspNetCore.Diagnostics;
 using System.Diagnostics;
 
 namespace Presentation.WebApi.Extensions.Middlewares;
 
-public class ExceptionHandler(RequestDelegate next, ILogger<ExceptionHandler> logger)
+public static class ExceptionHandlerExtensions
 {
-    public async Task InvokeAsync(HttpContext context)
+    public static IServiceCollection AddExceptionHandler(this IServiceCollection services)
     {
-        try
+        services.AddProblemDetails(options =>
         {
-            await next(context);
-        }
-        catch (Exception ex)
-        {
-            await HandleExceptionAsync(context, ex);
-        }
-    }
+            options.CustomizeProblemDetails = context =>
+            {
+                context.ProblemDetails.Extensions.TryAdd("traceId", Activity.Current?.Id ?? context.HttpContext.TraceIdentifier);
+            };
+        });
 
-    private async Task HandleExceptionAsync(HttpContext context, Exception exception)
+        services.AddExceptionHandler<ExceptionHandler>();
+
+        return services;
+    }
+}
+
+public sealed class ExceptionHandler(IProblemDetailsService problemDetailsService, ILogger<ExceptionHandler> logger) : IExceptionHandler
+{
+    public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
-        string traceId = Activity.Current?.Id ?? context.TraceIdentifier;
+        string traceId = Activity.Current?.Id ?? httpContext.TraceIdentifier;
         ProblemDetails problemDetails = null!;
 
         switch (exception)
@@ -56,10 +63,13 @@ public class ExceptionHandler(RequestDelegate next, ILogger<ExceptionHandler> lo
                 break;
         }
 
-        problemDetails.Extensions.Add("traceId", traceId);
-        context.Response.StatusCode = problemDetails.Status ?? StatusCodes.Status500InternalServerError;
-        context.Response.ContentType = "application/json";
+        httpContext.Response.StatusCode = problemDetails.Status ?? StatusCodes.Status500InternalServerError;
 
-        await context.Response.WriteAsJsonAsync(problemDetails);
+        return await problemDetailsService.TryWriteAsync(new ProblemDetailsContext
+        {
+            HttpContext = httpContext,
+            ProblemDetails = problemDetails,
+            Exception = exception
+        });
     }
 }

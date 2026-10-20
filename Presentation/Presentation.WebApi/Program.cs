@@ -35,7 +35,8 @@ app.UseCorrelationId();
 
 app.UseResponseCompression();
 
-app.UseMiddleware<ExceptionHandler>();
+app.UseExceptionHandler();
+app.UseStatusCodePages();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
